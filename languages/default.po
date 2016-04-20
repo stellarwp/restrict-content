@@ -1,0 +1,114 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Restrict Content\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-21 10:58-0600\n"
+"PO-Revision-Date: 2012-09-21 10:58-0600\n"
+"Last-Translator: Pippin Williamson <pippin@pippinsplugins.com>\n"
+"Language-Team: Pippin's Plugins <pippin@pippinsplugins.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__;_x\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: United States\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../includes/metabox.php:17
+msgid "User Level"
+msgstr ""
+
+#: ../includes/metabox.php:20
+msgid "Choose the user level that can see this page / post"
+msgstr ""
+
+#: ../includes/metabox.php:25
+msgid "Hide from Feed?"
+msgstr ""
+
+#: ../includes/metabox.php:28
+msgid "Hide the excerpt of this post / page from the Feed?"
+msgstr ""
+
+#: ../includes/metabox.php:55
+msgid "Use these options to restrict this entire entry, or the [restrict ...] ... [/restrict] short code to restrict partial content."
+msgstr ""
+
+#: ../includes/settings.php:15
+#: ../includes/settings.php:105
+msgid "Restrict Content Settings"
+msgstr ""
+
+#: ../includes/settings.php:21
+msgid "Options saved"
+msgstr ""
+
+#: ../includes/settings.php:29
+msgid "Short Code Messages"
+msgstr ""
+
+#: ../includes/settings.php:32
+msgid "Restricted Message"
+msgstr ""
+
+#: ../includes/settings.php:35
+msgid "When using the [restrict ... ] .... [/restrict] Short Code, this is the message displayed when a user does not have the appropriate permissions."
+msgstr ""
+
+#: ../includes/settings.php:36
+msgid "The <strong>{userlevel}</strong> tag will be automatically replaced with the permission level needed."
+msgstr ""
+
+#: ../includes/settings.php:40
+msgid "User Level Restriction Messages"
+msgstr ""
+
+#: ../includes/settings.php:43
+msgid "Adminstrators"
+msgstr ""
+
+#: ../includes/settings.php:46
+msgid "Message displayed when a user does not have permission to view Adminstrator restricted content"
+msgstr ""
+
+#: ../includes/settings.php:50
+msgid "Editors"
+msgstr ""
+
+#: ../includes/settings.php:53
+msgid "Message displayed when a user does not have permission to view Editor restricted content"
+msgstr ""
+
+#: ../includes/settings.php:57
+msgid "Authors"
+msgstr ""
+
+#: ../includes/settings.php:60
+msgid "Message displayed when a user does not have permission to view Author restricted content"
+msgstr ""
+
+#: ../includes/settings.php:64
+msgid "Contributors"
+msgstr ""
+
+#: ../includes/settings.php:67
+msgid "Message displayed when a user does not have permission to view Contributor restricted content"
+msgstr ""
+
+#: ../includes/settings.php:71
+msgid "Subscribers"
+msgstr ""
+
+#: ../includes/settings.php:74
+msgid "Message displayed when a user does not have permission to view Subscriber restricted content"
+msgstr ""
+
+#: ../includes/settings.php:81
+msgid "Save Options"
+msgstr ""
+
+#: ../includes/settings.php:105
+msgid "Restrict Content"
+msgstr ""
+
