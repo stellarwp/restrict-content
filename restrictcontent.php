@@ -1,14 +1,14 @@
 <?php
-/*
-Plugin Name: Restrict Content
-Plugin URL: http://pippinsplugins.com/restricted-content-plugin-free/
-Description: Restrict Content to registered users only. This is a simple plugin that will allow you to easily restrict complete posts / pages to logged in users only.
-Version: 2.1.3
-Author: Pippin Williamson
-Author URI: http://pippinsplugins.com
-Contributors: mordauk
-Tags: Restrict content, member only, registered, logged in, restricted access, restrict access, limiit access, read-only, read only
-*/
+/**
+ * Plugin Name: Restrict Content
+ * Plugin URL: http://pippinsplugins.com/restricted-content-plugin-free/
+ * Description: Restrict Content to registered users only. This is a simple plugin that will allow you to easily restrict complete posts / pages to logged in users only.
+ * Version: 2.1.3
+ * Author: Pippin Williamson
+ * Author URI: http://pippinsplugins.com
+ * Contributors: mordauk
+ * Tags: Restrict content, member only, registered, logged in, restricted access, restrict access, limiit access, read-only, read only
+ */
 
 
 /*******************************************
@@ -22,6 +22,11 @@ if( ! defined('RC_PLUGIN_DIR' ) ) {
 	define('RC_PLUGIN_DIR', dirname(__FILE__));
 }
 
+/**
+ * Load textdomain
+ *
+ * @return void
+ */
 function rc_textdomain() {
 
 	// Set filter for plugin's languages directory
