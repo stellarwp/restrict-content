@@ -19,17 +19,15 @@ Content restriction works both with shortcodes and drop-down menu of access leve
 
 = Pro version available! =
 
-The Pro version of Restrict Content provides a significant additional feature set, including:
+The [Pro version of Restrict Content](https://restrictcontentpro.com) provides a significant additional feature set, including:
 
 * Account registration
 * Log in and password reset forms
 * Complete member management
 * Discount codes
 * Payment tracking
-* Integration with popular payment systems, including Stripe, PayPal, 2Checkout, and more.
-* And much more. See the [Features](https://restrictcontentpro.com) page for additional details.
-
-Check out [Restrict Content Pro](https://restrictcontentpro.com).
+* Integration with popular payment systems, including Stripe, PayPal, Authorize.net, 2Checkout, and more.
+* And much more. See the [Features](https://restrictcontentpro.com/tour/features/) page for additional details.
 
 == Installation ==
 
@@ -59,16 +57,16 @@ There is also a short code for showing content only to users that are not logged
 
 = Does this plugin include frontend log in or registration forms? =
 
-No, this free plugin simply provides options to restrict content to existing user accounts. The [Pro](https://restrictcontentpro.com) version does, however, include frontend registration and log in forms, along with much, much more. See the [Features](https://restrictcontentpro.com) page for details.
+No, this free plugin simply provides options to restrict content to existing user accounts. The [Pro](https://restrictcontentpro.com) version does, however, include frontend registration and log in forms, along with much, much more. See the [Features](https://restrictcontentpro.com/tour/features/) page for details.
 
 = Does this plugin support custom user roles? =
 
 Not at this time.
 
- == Screenshots ==
- 
- Go to the demo page to see examples:
- 
+== Screenshots ==
+
+Go to the demo page to see examples:
+
 http://pippinsplugins.com/restricted-content-plugin-free/
 
 == Changelog ==
