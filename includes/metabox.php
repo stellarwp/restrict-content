@@ -164,7 +164,7 @@ function rcSaveData( $post_id ) {
 	foreach ( $metabox['fields'] as $field ) {
 
 		$old = get_post_meta( $post_id, $field['id'], true );
-		$new = sanitize_text_field( $_POST[ $field['id'] ] );
+		$new = isset( $_POST[ $field['id'] ] ) ? sanitize_text_field( $_POST[ $field['id'] ] ) : '';
 
 		if ( $new && $new != $old ) {
 
