@@ -62,3 +62,21 @@ function rc_not_logged_in( $atts, $content = null ) {
 }
 
 add_shortcode( 'not_logged_in', 'rc_not_logged_in' );
+
+/**
+ * Adds the [login_form] shortcode
+ *
+ * @param array $atts Shortcode attributes
+ *
+ * @return string
+ */
+function rc_login_form_shortcode( $atts ) {
+
+	$atts = shortcode_atts( array(
+		'redirect' => rc_get_current_url(),
+		'class' => 'rc_form'
+	), $atts, 'login_form' );
+
+	return rc_login_form_fields( array( 'redirect' => $atts['redirect'], 'class' => $atts['class'] ) );
+}
+add_shortcode( 'login_form', 'rc_login_form_shortcode' );
