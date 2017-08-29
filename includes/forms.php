@@ -297,9 +297,11 @@ function rc_lost_password_check_email_message() {
 
 	if ( ! is_user_logged_in() ) : ?>
 
-	<p>
-		<?php esc_html_e( 'Check your e-mail for the confirmation link.', 'restrict-content' ); ?>
-	</p>
+		<div class="rc-message">
+			<p class="rc-info">
+				<?php esc_html_e( 'Check your e-mail for the confirmation link.', 'restrict-content' ); ?>
+			</p>
+		</div>
 
 	<?php else : ?>
 

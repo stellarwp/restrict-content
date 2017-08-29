@@ -1,0 +1,21 @@
+.rc-message {
+	margin: 0 0 10px;
+}
+
+.rc-error {
+	padding: 5px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px solid #c00;
+	background: #ffebe8;
+}
+
+.rc-info {
+	padding: 5px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px solid #e6db55;
+	background: #ffffe0;
+}
