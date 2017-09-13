@@ -497,7 +497,7 @@ function rc_register_form_fields( array $args = array() ) {
 
 			<p id="rc_submit_wrap">
 				<input type="hidden" name="rc_register_nonce" id="rc_register_nonce" value="<?php echo wp_create_nonce( 'rc-register-nonce' ); ?>"/>
-				<input type="hidden" name="rc_redirect" value="<?php echo esc_url( $args['redirect'] ); ?>"/>
+				<input type="hidden" name="rc_redirect" id="rc_redirect" value="<?php echo esc_url( $args['redirect'] ); ?>"/>
 				<input type="submit" name="rc_submit_registration" id="rc_submit_registration" value="<?php esc_attr_e( 'Register', 'restrict-content' ); ?>"/>
 			</p>
 		</form>
@@ -555,7 +555,7 @@ function rc_process_registration_form() {
 		'user_password' => $user_data['password']
 	) );
 
-	$redirect_url = ! empty( $_POST['rc_redirect'] ) ? $_POST['rc_redirect'] : home_url();
+	$redirect_url = ! empty( $_POST['rc_redirect'] ) ? esc_url( $_POST['rc_redirect'] ) : esc_url( home_url() );
 
 	wp_send_json_success( array(
 		'success' => true,
@@ -563,7 +563,7 @@ function rc_process_registration_form() {
 		'redirect' => $redirect_url
 	) );
 
-	wp_safe_redirect( esc_url( $redirect_url ) );
+	wp_safe_redirect( $redirect_url );
 	exit;
 }
 add_action( 'init', 'rc_process_registration_form' );
