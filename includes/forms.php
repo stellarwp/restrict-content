@@ -47,7 +47,13 @@ function rc_login_form_fields( array $args = array() ) {
 
 		if ( ! is_user_logged_in() ) :
 
-			rc_show_error_messages( 'login' ); ?>
+			rc_show_error_messages( 'login' );
+
+			if ( isset( $_GET['password-reset'] ) && $_GET['password-reset'] == 'true' ) : ?>
+				<div class="rc-message">
+					<p class="rc-success"><?php _e( 'Password changed successfully. Please log in with your new password.', 'restrict-content' ); ?></p>
+				</div>
+			<?php endif; ?>
 
 			<form id="rc_login_form"  class="<?php esc_attr_e( $args['class'] ); ?>" method="POST" action="<?php echo esc_url( rc_get_current_url() ); ?>">
 				<fieldset class="rc_login_data">
@@ -157,6 +163,16 @@ add_action( 'init', 'rc_process_login_form' );
 function rc_lost_password_form() {
 
 	if ( ! is_user_logged_in() ) :
+
+		if ( isset( $_GET['rc_key_error'] ) && 'invalidkey' === $_GET['rc_key_error'] ) {
+
+			rc_errors()->add( 'password_expired_key', __( 'Your password reset key is invalid. Please try again.', 'restrict-content' ), 'lostpassword' );
+
+		} elseif ( isset( $_GET['rc_key_error'] ) && 'expiredkey' === $_GET['rc_key_error'] ) {
+
+			rc_errors()->add( 'password_expired_key', __( 'Your password reset key has expired. Please try again.', 'restrict-content' ), 'lostpassword' );
+
+		}
 
 		rc_show_error_messages( 'lostpassword' ); ?>
 
@@ -325,13 +341,7 @@ function rc_change_password_form( $args = array() ) {
 
 	$args = wp_parse_args( $args, array( 'redirect' => rc_get_current_url() ) );
 
-	rc_show_error_messages( 'password' );
-
-	if ( isset( $_GET['password-reset'] ) && $_GET['password-reset'] == 'true' ) : ?>
-		<div class="rc_message success">
-			<span><?php _e( 'Password changed successfully', 'restrict-content' ); ?></span>
-		</div>
-	<?php endif; ?>
+	rc_show_error_messages( 'password' ); ?>
 
 	<form id="rc_password_form"  class="rc_form" method="POST" action="<?php echo esc_url( rc_get_current_url() ); ?>">
 		<fieldset class="rc_change_password_fieldset">
@@ -394,8 +404,8 @@ function rc_process_change_password_form() {
 
 			setcookie(
 				'wp-resetpass-' . COOKIEHASH,
-				'',
-				0,
+				' ',
+				time() - YEAR_IN_SECONDS,
 				current( explode( '?', wp_unslash( $_SERVER['REQUEST_URI'] ) ) ),
 				COOKIE_DOMAIN,
 				is_ssl(),
@@ -408,6 +418,223 @@ function rc_process_change_password_form() {
 			exit;
 		}
 
+	} elseif ( is_wp_error( $user ) ) {
+
+		if ( 'expired_key' === $user->get_error_code() ) {
+			wp_safe_redirect( esc_url( $_POST['rc_redirect'] ) . '?rc_action=lostpassword&rc_key_error=expiredkey' );
+		} else {
+			wp_safe_redirect( esc_url( $_POST['rc_redirect'] ) . '?rc_action=lostpassword&rc_key_error=invalidkey' );
+		}
+
 	}
 }
 add_action( 'init', 'rc_process_change_password_form' );
+
+/**
+ * Displays the register form fields.
+ *
+ * @param array $args
+ *
+ * @return string
+ */
+function rc_register_form_fields( array $args = array() ) {
+
+	$args = wp_parse_args(
+		$args,
+		array(
+			'redirect' => rc_get_current_url(),
+			'class' => 'rc_form',
+			'registered_message' => __( 'You are already registered.', 'restrict-content' ),
+			'logged_out_header' => __( 'Register New Account', 'restrict-content' )
+		)
+	);
+
+	if ( ! empty( $_GET['redirect'] ) ) {
+		$args['redirect'] = urldecode( $_GET['redirect'] );
+	}
+
+	ob_start();
+
+	$header = ! is_user_logged_in() ? $args['logged_out_header'] : $args['registered_message'] ?>
+
+	<h3 class="rc_header">
+		<?php echo esc_html( $header ); ?>
+	</h3>
+
+	<?php rc_show_error_messages( 'register' );
+
+	if ( ! is_user_logged_in() ) :
+
+	?>
+
+		<form id="rc_registration_form" class="<?php echo esc_attr( $args['class'] ); ?>" method="post" action="<?php echo esc_url( rc_get_current_url() ); ?>">
+			<fieldset class="rc_user_fieldset">
+				<p id="rc_user_login_wrap">
+					<label for="rc_user_login"><?php _e( 'Username', 'restrict-content' ); ?></label>
+					<input name="rc_user_login" id="rc_user_login" class="required" type="text" <?php if( isset( $_POST['rc_user_login'] ) ) { echo 'value="' . esc_attr( $_POST['rc_user_login'] ) . '"'; } ?> required/>
+				</p>
+				<p id="rc_user_email_wrap">
+					<label for="rc_user_email"><?php _e( 'Email', 'restrict-content' ); ?></label>
+					<input name="rc_user_email" id="rc_user_email" class="required" type="text" <?php if( isset( $_POST['rc_user_email'] ) ) { echo 'value="' . esc_attr( $_POST['rc_user_email'] ) . '"'; } ?> required/>
+				</p>
+				<p id="rc_user_first_wrap">
+					<label for="rc_user_first"><?php _e( 'First Name', 'restrict-content' ); ?></label>
+					<input name="rc_user_first" id="rc_user_first" type="text" <?php if( isset( $_POST['rc_user_first'] ) ) { echo 'value="' . esc_attr( $_POST['rc_user_first'] ) . '"'; } ?>/>
+				</p>
+				<p id="rc_user_last_wrap">
+					<label for="rc_user_last"><?php _e( 'Last Name', 'restrict-content' ); ?></label>
+					<input name="rc_user_last" id="rc_user_last" type="text" <?php if( isset( $_POST['rc_user_last'] ) ) { echo 'value="' . esc_attr( $_POST['rc_user_last'] ) . '"'; } ?>/>
+				</p>
+				<p id="rc_password_wrap">
+					<label for="rc_password"><?php _e( 'Password', 'restrict-content' ); ?></label>
+					<input name="rc_user_pass" id="rc_password" class="required" type="password" required/>
+				</p>
+				<p id="rc_password_again_wrap">
+					<label for="rc_password_again"><?php _e( 'Password Again', 'restrict-content' ); ?></label>
+					<input name="rc_user_pass_confirm" id="rc_password_again" class="required" type="password" required/>
+				</p>
+			</fieldset>
+
+			<p id="rc_submit_wrap">
+				<input type="hidden" name="rc_register_nonce" id="rc_register_nonce" value="<?php echo wp_create_nonce( 'rc-register-nonce' ); ?>"/>
+				<input type="hidden" name="rc_redirect" value="<?php echo esc_url( $args['redirect'] ); ?>"/>
+				<input type="submit" name="rc_submit_registration" id="rc_submit_registration" value="<?php esc_attr_e( 'Register', 'restrict-content' ); ?>"/>
+			</p>
+		</form>
+		<?php
+	endif;
+	return ob_get_clean();
+}
+
+/**
+ * Processes the registration form and creates the user's account.
+ */
+function rc_process_registration_form() {
+
+	if ( ! isset( $_POST['rc_register_nonce'] ) || ! wp_verify_nonce( $_POST['rc_register_nonce'], 'rc-register-nonce' ) ) {
+		return;
+	}
+
+	$user_data = rc_validate_user_data( $_POST );
+
+	$errors = rc_errors()->get_error_messages();
+
+	if ( ! empty( $errors ) ) {
+
+		wp_send_json_error( array(
+			'success' => false,
+			'errors' => rc_get_error_messages_html( 'register' ),
+		) );
+
+		return;
+
+	}
+
+	if ( $user_data['need_new'] ) {
+
+		$display_name = $user_data['first_name'] . ' ' . $user_data['last_name'];
+		$display_name = ! empty( $display_name ) ? $display_name : $user_data['login'];
+
+		$user_data['id'] = wp_insert_user( array(
+			'user_login' => $user_data['login'],
+			'user_pass' => $user_data['password'],
+			'user_email' => $user_data['email'],
+			'first_name' => $user_data['first_name'],
+			'last_name' => $user_data['last_name'],
+			'display_name' => $display_name,
+			'user_register' => date( 'Y-m-d H:i:s' ),
+		) );
+	}
+
+	if ( empty( $user_data['id'] ) ) {
+		return;
+	}
+
+	wp_signon( array(
+		'user_login' => $user_data['login'],
+		'user_password' => $user_data['password']
+	) );
+
+	$redirect_url = ! empty( $_POST['rc_redirect'] ) ? $_POST['rc_redirect'] : home_url();
+
+	wp_send_json_success( array(
+		'success' => true,
+		'user' => $user_data,
+		'redirect' => $redirect_url
+	) );
+
+	wp_safe_redirect( esc_url( $redirect_url ) );
+	exit;
+}
+add_action( 'init', 'rc_process_registration_form' );
+add_action( 'wp_ajax_rc_process_registration_form', 'rc_process_registration_form' );
+add_action( 'wp_ajax_nopriv_rc_process_registration_form', 'rc_process_registration_form' );
+
+/**
+ * Validates the user data for registration.
+ *
+ * @param array $data
+ *
+ * @return array
+ */
+function rc_validate_user_data( array $data ) {
+
+	$user = array();
+
+	$data = array_map( 'trim', $data );
+
+	if ( ! is_user_logged_in() ) {
+
+		$user['need_new'] = true;
+		$user['id'] = 0;
+		$user['login'] = ! empty( $data['rc_user_login'] ) ? sanitize_text_field( $data['rc_user_login'] ) : false;
+		$user['email'] = ! empty( $data['rc_user_email'] ) ? sanitize_email( $data['rc_user_email'] ) : false;
+		$user['first_name'] = ! empty( $data['rc_user_first'] ) ? sanitize_text_field( $data['rc_user_first'] ) : false;
+		$user['last_name'] = ! empty( $data['rc_user_last'] ) ? sanitize_text_field( $data['rc_user_last'] ) : false;
+		$user['password'] = ! empty( $data['rc_user_pass'] ) ? sanitize_text_field( $data['rc_user_pass'] ) : false;
+		$user['password_confirm'] = ! empty( $data['rc_user_pass_confirm'] ) ? sanitize_text_field( $data['rc_user_pass_confirm'] ) : false;
+
+	} else {
+
+		$user_data = get_userdata( get_current_user_id() );
+
+		$user['need_new'] = false;
+		$user['id'] = $user_data->ID;
+		$user['login'] = $user_data->user_login;
+		$user['email'] = $user_data->user_email;
+	}
+
+	if ( $user['need_new'] ) {
+
+		if ( empty( $user['login'] ) ) {
+			rc_errors()->add( 'username_empty', __( 'Please enter a username', 'restrict-content' ), 'register' );
+		}
+
+		if ( username_exists( $user['login'] ) ) {
+			rc_errors()->add( 'username_unavailable', __( 'Username already taken', 'restrict-content' ), 'register' );
+		}
+
+		$sanitized_username = sanitize_user( $user['login'], false );
+		if ( strtolower( $sanitized_username ) !== strtolower( $user['login'] ) ) {
+			rc_errors()->add( 'username_invalid', __( 'Invalid username', 'restrict-content' ), 'register' );
+		}
+
+		if ( ! is_email( $user['email'] ) ) {
+			rc_errors()->add( 'email_invalid', __( 'Invalid email', 'restrict-content' ), 'register' );
+		}
+
+		if ( email_exists( $user['email'] ) ) {
+			rc_errors()->add( 'email_used', __( 'Email already registered', 'restrict-content' ), 'register' );
+		}
+
+		if ( empty( $user['password'] ) ) {
+			rc_errors()->add( 'password_empty', __( 'Please enter a password', 'restrict-content' ), 'register' );
+		}
+
+		if ( $user['password'] !== $user['password_confirm'] ) {
+			rc_errors()->add( 'password_mismatch', __( 'Passwords do not match', 'restrict-content' ), 'register' );
+		}
+	}
+
+	return $user;
+}
