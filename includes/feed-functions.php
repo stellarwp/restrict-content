@@ -30,11 +30,11 @@ add_action( 'rss_head', 'rcCheckFeed' );
  */
 function rcIsFeed( $content ) {
 	$custom_meta = get_post_custom( $post->ID );
-	$rcUserLevel = isset( $custom_meta['rcUserLevel'] ) ? $custom_meta['rcUserLevel'][0] : false;
+	$rcp_user_level = isset( $custom_meta['rcp_user_level'] ) ? $custom_meta['rcp_user_level'][0] : false;
 	$rcFeedHide  = isset( $custom_meta['rcFeedHide'] ) ? $custom_meta['rcFeedHide'][0] : false;
 
 	if ( is_feed() && $rcFeedHide == 'on' ) {
-		return sprintf( __( 'This content is restricted to %ss', 'restrict-content' ), $rcUserLevel );
+		return sprintf( __( 'This content is restricted to %ss', 'restrict-content' ), $rcp_user_level );
 	} else {
 		return $content;
 	}

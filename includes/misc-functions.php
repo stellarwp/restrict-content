@@ -114,6 +114,6 @@ function rc_filter_get_post_meta( $value, $object_id, $key ) {
 		return $value;
 	}
 
-	return get_post_meta( $object_id, 'rcp_user_level' );
+	return get_post_meta( $object_id, 'rcp_user_level', true );
 }
 add_filter( 'get_post_metadata', 'rc_filter_get_post_meta', 10, 3 );

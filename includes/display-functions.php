@@ -19,9 +19,9 @@ function rcMetaDisplayEditor( $content ) {
 	global $rc_options;
 	global $post;
 
-	$rcUserLevel = get_post_meta( $post->ID, 'rcUserLevel', true );
+	$rcp_user_level = get_post_meta( $post->ID, 'rcp_user_level', true );
 
-	if ( $rcUserLevel == 'Administrator' ) {
+	if ( $rcp_user_level == 'Administrator' ) {
 		return do_shortcode( $rc_options['editor_message'] );
 	} else {
 		return $content;
@@ -39,9 +39,9 @@ function rcMetaDisplayAuthor( $content ) {
 	global $rc_options;
 	global $post;
 
-	$rcUserLevel = get_post_meta( $post->ID, 'rcUserLevel', true );
+	$rcp_user_level = get_post_meta( $post->ID, 'rcp_user_level', true );
 
-	if ( $rcUserLevel == 'Administrator' || $rcUserLevel == 'Editor' ) {
+	if ( $rcp_user_level == 'Administrator' || $rcp_user_level == 'Editor' ) {
 		return do_shortcode( $rc_options['author_message'] );
 	} else {
 		// return the content unfilitered
@@ -60,9 +60,9 @@ function rcMetaDisplayContributor( $content ) {
 	global $rc_options;
 	global $post;
 
-	$rcUserLevel = get_post_meta( $post->ID, 'rcUserLevel', true );
+	$rcp_user_level = get_post_meta( $post->ID, 'rcp_user_level', true );
 
-	if ( $rcUserLevel == 'Administrator' || $rcUserLevel == 'Editor' || $rcUserLevel == 'Author' ) {
+	if ( $rcp_user_level == 'Administrator' || $rcp_user_level == 'Editor' || $rcp_user_level == 'Author' ) {
 		return do_shortcode( $rc_options['contributor_message'] );
 	} else {
 		// return the content unfilitered
@@ -81,9 +81,9 @@ function rcMetaDisplaySubscriber( $content ) {
 	global $rc_options;
 	global $post;
 
-	$rcUserLevel = get_post_meta( $post->ID, 'rcUserLevel', true );
+	$rcp_user_level = get_post_meta( $post->ID, 'rcp_user_level', true );
 
-	if ( $rcUserLevel == 'Administrator' || $rcUserLevel == 'Editor' || $rcUserLevel == 'Author' || $rcUserLevel == 'Contributor' ) {
+	if ( $rcp_user_level == 'Administrator' || $rcp_user_level == 'Editor' || $rcp_user_level == 'Author' || $rcp_user_level == 'Contributor' ) {
 		return do_shortcode( $rc_options['subscriber_message'] );
 	} else {
 		// return the content unfilitered
@@ -102,10 +102,10 @@ function rcMetaDisplayNone( $content ) {
 	global $rc_options;
 	global $post;
 
-	$rcUserLevel = get_post_meta( $post->ID, 'rcUserLevel', true );
+	$rcp_user_level = get_post_meta( $post->ID, 'rcp_user_level', true );
 
-	if ( ! current_user_can( 'read' ) && ( $rcUserLevel == 'Administrator' || $rcUserLevel == 'Editor' || $rcUserLevel == 'Author' || $rcUserLevel == 'Contributor' || $rcUserLevel == 'Subscriber' ) ) {
-		$userLevelMessage = strtolower( $rcUserLevel );
+	if ( ! current_user_can( 'read' ) && ( $rcp_user_level == 'Administrator' || $rcp_user_level == 'Editor' || $rcp_user_level == 'Author' || $rcp_user_level == 'Contributor' || $rcp_user_level == 'Subscriber' ) ) {
+		$userLevelMessage = strtolower( $rcp_user_level );
 
 		return do_shortcode( $rc_options[ $userLevelMessage . '_message' ] );
 	} else {

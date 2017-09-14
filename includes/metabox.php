@@ -22,7 +22,7 @@ function rc_get_metabox() {
 		'fields'   => array(
 			array(
 				'name'    => __( 'User Level', 'restrict-content' ),
-				'id'      => 'rcUserLevel',
+				'id'      => 'rcp_user_level',
 				'type'    => 'select',
 				'desc'    => __( 'Choose the user level that can see this page / post', 'restrict-content' ),
 				'options' => array(
