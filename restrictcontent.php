@@ -18,6 +18,10 @@
 // load the plugin options
 $rc_options = get_option( 'rc_settings' );
 
+if ( ! defined( 'RC_PLUGIN_VERSION' ) ) {
+	define( 'RC_PLUGIN_VERSION', '2.2' );
+}
+
 if( ! defined('RC_PLUGIN_DIR' ) ) {
 	define('RC_PLUGIN_DIR', dirname(__FILE__));
 }
@@ -46,6 +50,7 @@ add_action( 'init', 'rc_textdomain' );
 require_once  RC_PLUGIN_DIR . '/includes/misc-functions.php';
 require_once  RC_PLUGIN_DIR . '/includes/forms.php';
 require_once  RC_PLUGIN_DIR . '/includes/scripts.php';
+require_once  RC_PLUGIN_DIR . '/includes/upgrades.php';
 include(RC_PLUGIN_DIR . '/includes/settings.php');
 include(RC_PLUGIN_DIR . '/includes/shortcodes.php');
 include(RC_PLUGIN_DIR . '/includes/metabox.php');

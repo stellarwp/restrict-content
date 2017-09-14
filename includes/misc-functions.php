@@ -97,3 +97,23 @@ function rc_get_error_messages_html( $error_id = '' ) {
 	return $html;
 
 }
+
+/**
+ * Filters applicable get_post_meta calls.
+ *
+ * @since 2.2
+ */
+function rc_filter_get_post_meta( $value, $object_id, $key ) {
+
+	if ( 'rcUserLevel' !== $key ) {
+		return $value;
+	}
+
+	// Return if the upgrade hasn't been run
+	if ( ! get_option( 'rc_user_level_post_meta_updated', false ) ) {
+		return $value;
+	}
+
+	return get_post_meta( $object_id, 'rcp_user_level' );
+}
+add_filter( 'get_post_metadata', 'rc_filter_get_post_meta', 10, 3 );
