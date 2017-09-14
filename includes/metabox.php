@@ -121,6 +121,16 @@ function rcShowMetaBox() {
 	}
 
 	echo '</table>';
+
+	echo '<hr>';
+	echo '<h4>' . __( 'Unlock more restriction options with Restrict Content Pro', 'restrict-content' ) . '</h4>';
+	echo '<p>' .
+		sprintf(
+			__( 'Need more flexibility with restrictions? Restrict Content Pro enables you to restrict content based on subscription levels, user levels, custom roles, and more! <a href="%s" target="_blank" rel="noopener noreferrer">Learn more...</a>', 'restrict-content' ),
+			'https://restrictcontentpro.com/utm_source=Restrict%20Content&utm_medium=plugin&utm_campaign=RCIntegrations&utm_content=Post%20Meta%20Restrictions'
+		) .
+	'</p>';
+
 }
 
 /**
