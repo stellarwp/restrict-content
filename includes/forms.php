@@ -31,15 +31,15 @@ function rc_login_form_fields( array $args = array() ) {
 
 	ob_start();
 
-	if ( isset($_REQUEST['rc_action']) && $_REQUEST['rc_action'] === "lostpassword") {
+	if ( isset( $_REQUEST['rc_action'] ) && $_REQUEST['rc_action'] === "lostpassword" ) {
 
 		echo rc_lost_password_form();
 
-	} elseif ( isset($_REQUEST['rc_action']) && $_REQUEST['rc_action'] === "lostpassword_checkemail") {
+	} elseif ( isset( $_REQUEST['rc_action'] ) && $_REQUEST['rc_action'] === "lostpassword_checkemail" ) {
 
 		echo rc_lost_password_check_email_message();
 
-	} elseif ( isset($_REQUEST['rc_action']) && ( $_REQUEST['rc_action'] === "lostpassword_reset" || $_REQUEST['rc_action'] === "reset-password" ) ) {
+	} elseif ( isset( $_REQUEST['rc_action'] ) && ( $_REQUEST['rc_action'] === "lostpassword_reset" || $_REQUEST['rc_action'] === "reset-password" ) ) {
 
 		echo rc_change_password_form( $args );
 
@@ -55,7 +55,7 @@ function rc_login_form_fields( array $args = array() ) {
 				</div>
 			<?php endif; ?>
 
-			<form id="rc_login_form"  class="<?php esc_attr_e( $args['class'] ); ?>" method="POST" action="<?php echo esc_url( rc_get_current_url() ); ?>">
+			<form id="rc_login_form"  class="<?php echo esc_attr( $args['class'] ); ?>" method="POST" action="<?php echo esc_url( rc_get_current_url() ); ?>">
 				<fieldset class="rc_login_data">
 
 					<p>
@@ -145,9 +145,9 @@ function rc_process_login_form() {
 		$redirect = ! empty( $_POST['rc_redirect'] ) ? $_POST['rc_redirect'] : home_url();
 
 		wp_signon( array(
-			'user_login' => $user->user_login,
+			'user_login'    => $user->user_login,
 			'user_password' => $_POST['rc_user_pass'],
-			'remember' => isset( $_POST['rc_user_remember'] )
+			'remember'      => isset( $_POST['rc_user_remember'] )
 		) );
 
 		wp_safe_redirect( esc_url_raw( $redirect ) );
@@ -219,7 +219,7 @@ function rc_process_lost_password_form() {
 	$errors = rc_send_password_reset_email();
 
 	if ( ! is_wp_error( $errors ) ) {
-		$redirect_to = esc_url($_POST['rc_redirect']) . '?rc_action=lostpassword_checkemail';
+		$redirect_to = esc_url( $_POST['rc_redirect'] ) . '?rc_action=lostpassword_checkemail';
 		wp_redirect( $redirect_to );
 		exit();
 	}
@@ -259,7 +259,7 @@ function rc_send_password_reset_email() {
 	}
 
 	if ( ! $user_data ) {
-		rc_errors()->add( 'invalidcombo', __('Invalid username or e-mail.', 'restrict-content' ), 'lostpassword' );
+		rc_errors()->add( 'invalidcombo', __( 'Invalid username or e-mail.', 'restrict-content' ), 'lostpassword' );
 		return false;
 	}
 
@@ -322,7 +322,7 @@ function rc_lost_password_check_email_message() {
 	<?php else : ?>
 
 		<div class="rc_logged_in">
-			<a href="<?php echo wp_logout_url( home_url() ); ?>">
+			<a href="<?php echo esc_url( wp_logout_url( home_url() ) ); ?>">
 				<?php _e( 'Log out', 'restrict-content' ); ?>
 			</a>
 		</div>
@@ -442,10 +442,10 @@ function rc_register_form_fields( array $args = array() ) {
 	$args = wp_parse_args(
 		$args,
 		array(
-			'redirect' => rc_get_current_url(),
-			'class' => 'rc_form',
+			'redirect'           => rc_get_current_url(),
+			'class'              => 'rc_form',
 			'registered_message' => __( 'You are already registered.', 'restrict-content' ),
-			'logged_out_header' => __( 'Register New Account', 'restrict-content' )
+			'logged_out_header'  => __( 'Register New Account', 'restrict-content' )
 		)
 	);
 
@@ -536,12 +536,12 @@ function rc_process_registration_form() {
 		$display_name = ! empty( $display_name ) ? $display_name : $user_data['login'];
 
 		$user_data['id'] = wp_insert_user( array(
-			'user_login' => $user_data['login'],
-			'user_pass' => $user_data['password'],
-			'user_email' => $user_data['email'],
-			'first_name' => $user_data['first_name'],
-			'last_name' => $user_data['last_name'],
-			'display_name' => $display_name,
+			'user_login'    => $user_data['login'],
+			'user_pass'     => $user_data['password'],
+			'user_email'    => $user_data['email'],
+			'first_name'    => $user_data['first_name'],
+			'last_name'     => $user_data['last_name'],
+			'display_name'  => $display_name,
 			'user_register' => date( 'Y-m-d H:i:s' ),
 		) );
 	}
@@ -558,8 +558,8 @@ function rc_process_registration_form() {
 	$redirect_url = ! empty( $_POST['rc_redirect'] ) ? esc_url( $_POST['rc_redirect'] ) : esc_url( home_url() );
 
 	wp_send_json_success( array(
-		'success' => true,
-		'user' => $user_data,
+		'success'  => true,
+		'user'     => $user_data,
 		'redirect' => $redirect_url
 	) );
 
