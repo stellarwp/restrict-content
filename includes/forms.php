@@ -118,11 +118,11 @@ function rc_process_login_form() {
 
 	if ( is_email( $_POST['rc_user_login'] ) && ! username_exists( $_POST['rc_user_login'] ) ) {
 
-		$user = get_user_by( 'email', $_POST['rc_user_login'] );
+		$user = get_user_by( 'email', sanitize_email( $_POST['rc_user_login'] ) );
 
 	} else {
 
-		$user = get_user_by( 'login', $_POST['rc_user_login'] );
+		$user = get_user_by( 'login', sanitize_user( $_POST['rc_user_login'] ) );
 
 	}
 
@@ -134,11 +134,8 @@ function rc_process_login_form() {
 		rc_errors()->add( 'empty_password', __( 'Please enter a password', 'restrict-content' ), 'login' );
 	}
 
-	if ( $user ) {
-		// check the user's login with their password
-		if ( ! wp_check_password( $_POST['rc_user_pass'], $user->user_pass, $user->ID ) ) {
-			rc_errors()->add( 'empty_password', __( 'Incorrect password', 'restrict-content' ), 'login' );
-		}
+	if ( $user && ! wp_check_password( $_POST['rc_user_pass'], $user->user_pass, $user->ID ) ) {
+		rc_errors()->add( 'empty_password', __( 'Incorrect password', 'restrict-content' ), 'login' );
 	}
 
 	$errors = rc_errors()->get_error_messages();
@@ -247,9 +244,13 @@ function rc_send_password_reset_email() {
 		rc_errors()->add( 'empty_username', __( 'Enter a username or email address.', 'restrict-content' ), 'lostpassword' );
 		return false;
 
-	} elseif ( is_email( $_POST['rc_user_login'] ) ) {
+	}
 
-		$user_data = get_user_by( 'email', trim( $_POST['rc_user_login'] ) );
+	$user_login = sanitize_text_field( $_POST['rc_user_login'] );
+
+	if ( is_email( $user_login ) ) {
+
+		$user_data = get_user_by( 'email', trim( $user_login ) );
 
 		if ( empty( $user_data ) ) {
 			rc_errors()->add( 'invalid_email', __( 'There is no user registered with that email address.', 'restrict-content' ), 'lostpassword' );
@@ -257,9 +258,7 @@ function rc_send_password_reset_email() {
 
 	} else {
 
-		$login = trim( $_POST['rc_user_login'] );
-
-		$user_data = get_user_by( 'login', $login );
+		$user_data = get_user_by( 'login', trim( $user_login ) );
 
 	}
 
