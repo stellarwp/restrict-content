@@ -1,0 +1,20 @@
+.rc-message {
+	margin: 0 0 10px;
+}
+
+.rc-message p {
+	padding: 5px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.rc-error {
+	border: 1px solid #c00;
+	background: #ffebe8;
+}
+
+.rc-info, .rc-success {
+	border: 1px solid #e6db55;
+	background: #ffffe0;
+}
