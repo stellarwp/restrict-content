@@ -66,6 +66,7 @@ add_shortcode( 'not_logged_in', 'rc_not_logged_in' );
 /**
  * Adds the [login_form] shortcode
  *
+ * @since 2.2
  * @param array $atts Shortcode attributes
  *
  * @return string
@@ -84,6 +85,7 @@ add_shortcode( 'login_form', 'rc_login_form_shortcode' );
 /**
  * Adds the [register_form] shortcode
  *
+ * @since 2.2
  * @param array $atts Shortcode attributes
  *
  * @return string

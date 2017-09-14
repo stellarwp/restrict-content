@@ -15,6 +15,7 @@
  * lost password "check your email" message, change password form,
  * or the login form template.
  *
+ * @since 2.2
  * @param array $args Arguments to override the defaults (including redirect URL).
  *
  * @return string HTML content
@@ -102,6 +103,8 @@ function rc_login_form_fields( array $args = array() ) {
 
 /**
  * Processes the login form
+ *
+ * @since 2.2
  */
 function rc_process_login_form() {
 
@@ -159,6 +162,8 @@ add_action( 'init', 'rc_process_login_form' );
 
 /**
  * Displays the lost password form fields
+ *
+ * @since 2.2
  */
 function rc_lost_password_form() {
 
@@ -205,6 +210,8 @@ function rc_lost_password_form() {
 
 /**
  * Processes the lost password form
+ *
+ * @since 2.2
  */
 function rc_process_lost_password_form() {
 
@@ -228,6 +235,8 @@ add_action( 'init', 'rc_process_lost_password_form' );
 
 /**
  * Sends the password reset email.
+ *
+ * @since 2.2
  *
  * @return bool
  */
@@ -308,6 +317,8 @@ function rc_send_password_reset_email() {
 
 /**
  * Displays the check email message on the lost password form.
+ *
+ * @since 2.2
  */
 function rc_lost_password_check_email_message() {
 
@@ -333,6 +344,7 @@ function rc_lost_password_check_email_message() {
 /**
  * Displays the change password form fields.
  *
+ * @since 2.2
  * @param array $args Arguments to override the defaults.
  *
  * @return string
@@ -433,6 +445,7 @@ add_action( 'init', 'rc_process_change_password_form' );
 /**
  * Displays the register form fields.
  *
+ * @since 2.2
  * @param array $args
  *
  * @return string
@@ -508,6 +521,8 @@ function rc_register_form_fields( array $args = array() ) {
 
 /**
  * Processes the registration form and creates the user's account.
+ *
+ * @since 2.2
  */
 function rc_process_registration_form() {
 
@@ -573,6 +588,7 @@ add_action( 'wp_ajax_nopriv_rc_process_registration_form', 'rc_process_registrat
 /**
  * Validates the user data for registration.
  *
+ * @since 2.2
  * @param array $data
  *
  * @return array

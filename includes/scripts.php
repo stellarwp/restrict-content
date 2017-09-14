@@ -10,6 +10,8 @@
 
 /**
  * Registers and enqueues the form CSS file.
+ *
+ * @since 2.2
  */
 function rc_register_plugin_styles() {
 

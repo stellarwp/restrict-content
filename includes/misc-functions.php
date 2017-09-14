@@ -1,9 +1,8 @@
 <?php
 /**
- * Get current URL.
+ * Gets the URL to the current page, including detection for https.
  *
- * Returns the URL to the current page, including detection for https.
- *
+ * @since 2.2
  * @return string
  */
 function rc_get_current_url() {
@@ -40,6 +39,7 @@ function rc_get_current_url() {
 /**
  * Stores error messages
  *
+ * @since 2.2
  * @return WP_Error
  */
 function rc_errors() {
@@ -50,6 +50,7 @@ function rc_errors() {
 /**
  * Displays the HTML for error messages
  *
+ * @since 2.2
  * @param string $error_id
  *
  * @return void
@@ -63,6 +64,7 @@ function rc_show_error_messages( $error_id = '' ) {
 /**
  * Retrieves the HTML for error messages
  *
+ * @since 2.2
  * @param string $error_id
  *
  * @return string
