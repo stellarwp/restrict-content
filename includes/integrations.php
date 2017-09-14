@@ -45,7 +45,7 @@ function rc_add_woocommerce_product_data_tab_html() {
 			<p>
 				<?php printf(
 					__( 'Restrict Content Pro enables you to control access to who can view and/or purchase your products, and optionally you can offer member-only discounts to paid subscribers. <a href="%s" target="_blank" rel="noopener noreferrer">Learn more...</a>', 'restrict-content' ),
-					'https://restrictcontentpro.com/tour/features/woocommerce-integration/?utm_source=Restrict%20Content&utm_medium=plugin&utm_campaign=RCIntegrations&utm_content=WooCommerce%20Access%20Control'
+					'https://restrictcontentpro.com/?utm_campaign=restrict-content&utm_medium=admin&utm_source=integration&utm_content=woocommerce-product'
 				); ?>
 			</p>
 		</div>

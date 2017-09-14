@@ -87,6 +87,27 @@ function rc_settings_page() {
 					</tr>
 				</table>
 
+				<hr>
+				<h4><?php _e( 'Need more control?' ); ?></h4>
+				<p><?php _e( "Take your membership site to the next level with Restrict Content Pro. With RCP, you can:", 'restrict-content' ); ?></p>
+				<p>
+					<ul class="rc-settings-list" style="list-style-type: disc; list-style-position: inside">
+						<li><?php _e( 'Charge for access and add a recurring revenue stream to your business. PayPal, Stripe, 2Checkout, Authorize.net, Braintree, and Manual Payments are all supported.', 'restrict-content' ); ?></li>
+						<li><?php _e( 'Send and receive emails when members sign up, renew, cancel, and expire.', 'restrict-content' ); ?></li>
+						<li><?php _e( 'Generate invoices for subscription payments.', 'restrict-content' ); ?></li>
+						<li><?php _e( 'Prevent account sharing.', 'restrict-content' ); ?></li>
+						<li><?php _e( 'Subscribe members to your MailChimp, AWeber, ConvertKit, ActiveCampaign, Campaign Monitor, GetResponse, or MailPoet mailing lists', 'restrict-content' ); ?></li>
+						<li><?php _e( 'Drip content on a schedule.', 'restrict-content' ); ?></li>
+						<li><?php _e( 'Offer group accounts to businesses and other organizations.', 'restrict-content' ); ?></li>
+						<li><?php _e( 'Sell websites using WordPress multisite.', 'restrict-content' ); ?></li>
+						<li><?php _e( '... and a lot more!', 'restrict-content' ); ?></li>
+					</ul>
+					<?php printf(
+						__( '<a href="%s" target="_blank" rel="noopener noreferrer">Find out more...</a>', 'restrict-content' ),
+						'https://restrictcontentpro.com/?utm_campaign=restrict-content&utm_medium=admin&utm_source=settings&utm_content=main'
+					); ?>
+				</p>
+
 				<!-- save the options -->
 				<p class="submit">
 					<input type="submit" class="button-primary" value="<?php _e( 'Save Options', 'restrict-content' ); ?>"/>
@@ -106,7 +127,7 @@ function rc_settings_page() {
  * @return void
  */
 function rc_register_settings() {
-	
+
 	register_setting( 'rc_settings_group', 'rc_settings' );
 }
 
