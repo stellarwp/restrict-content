@@ -2,113 +2,401 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Restrict Content\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-21 10:58-0600\n"
-"PO-Revision-Date: 2012-09-21 10:58-0600\n"
+"POT-Creation-Date: 2017-09-15 11:50-0400\n"
+"PO-Revision-Date: 2017-09-15 11:51-0400\n"
 "Last-Translator: Pippin Williamson <pippin@pippinsplugins.com>\n"
 "Language-Team: Pippin's Plugins <pippin@pippinsplugins.com>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _e;__;_x\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-Language: English\n"
-"X-Poedit-Country: United States\n"
+"X-Generator: Poedit 1.8.12\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../includes/metabox.php:17
+#: ../includes/feed-functions.php:37
+#, php-format
+msgid "This content is restricted to %ss"
+msgstr ""
+
+#: ../includes/forms.php:55
+msgid "Password changed successfully. Please log in with your new password."
+msgstr ""
+
+#: ../includes/forms.php:63 ../includes/forms.php:485
+msgid "Username"
+msgstr ""
+
+#: ../includes/forms.php:68 ../includes/forms.php:501
+msgid "Password"
+msgstr ""
+
+#: ../includes/forms.php:74
+msgid "Remember me"
+msgstr ""
+
+#: ../includes/forms.php:79
+msgid "Lost your password?"
+msgstr ""
+
+#: ../includes/forms.php:95 ../includes/forms.php:201 ../includes/forms.php:336
+msgid "Log out"
+msgstr ""
+
+#: ../includes/forms.php:130
+msgid "Invalid username or email"
+msgstr ""
+
+#: ../includes/forms.php:134 ../includes/forms.php:646
+msgid "Please enter a password"
+msgstr ""
+
+#: ../includes/forms.php:138
+msgid "Incorrect password"
+msgstr ""
+
+#: ../includes/forms.php:171
+msgid "Your password reset key is invalid. Please try again."
+msgstr ""
+
+#: ../includes/forms.php:175
+msgid "Your password reset key has expired. Please try again."
+msgstr ""
+
+#: ../includes/forms.php:184
+msgid "Username or E-mail:"
+msgstr ""
+
+#: ../includes/forms.php:244
+msgid "Enter a username or email address."
+msgstr ""
+
+#: ../includes/forms.php:256
+msgid "There is no user registered with that email address."
+msgstr ""
+
+#: ../includes/forms.php:270 ../includes/forms.php:275
+msgid "Invalid username or e-mail."
+msgstr ""
+
+#: ../includes/forms.php:285
+msgid "Someone requested that the password be reset for the following account:"
+msgstr ""
+
+#: ../includes/forms.php:287
+#, php-format
+msgid "Username: %s"
+msgstr ""
+
+#: ../includes/forms.php:288
+msgid "If this was a mistake, just ignore this email and nothing will happen."
+msgstr ""
+
+#: ../includes/forms.php:289
+msgid "To reset your password, visit the following address:"
+msgstr ""
+
+#: ../includes/forms.php:306
+#, php-format
+msgid "[%s] Password Reset"
+msgstr ""
+
+#: ../includes/forms.php:311
+msgid ""
+"The email could not be sent. If this problem persists, please contact "
+"support."
+msgstr ""
+
+#: ../includes/forms.php:403
+msgid "Please enter a password and confirm it."
+msgstr ""
+
+#: ../includes/forms.php:407
+msgid "Passwords do not match."
+msgstr ""
+
+#: ../includes/forms.php:459 ../includes/shortcodes.php:98
+msgid "You are already registered."
+msgstr ""
+
+#: ../includes/forms.php:460 ../includes/shortcodes.php:99
+msgid "Register New Account"
+msgstr ""
+
+#: ../includes/forms.php:489
+msgid "Email"
+msgstr ""
+
+#: ../includes/forms.php:493
+msgid "First Name"
+msgstr ""
+
+#: ../includes/forms.php:497
+msgid "Last Name"
+msgstr ""
+
+#: ../includes/forms.php:505
+msgid "Password Again"
+msgstr ""
+
+#: ../includes/forms.php:625
+msgid "Please enter a username"
+msgstr ""
+
+#: ../includes/forms.php:629
+msgid "Username already taken"
+msgstr ""
+
+#: ../includes/forms.php:634
+msgid "Invalid username"
+msgstr ""
+
+#: ../includes/forms.php:638
+msgid "Invalid email"
+msgstr ""
+
+#: ../includes/forms.php:642
+msgid "Email already registered"
+msgstr ""
+
+#: ../includes/forms.php:650
+msgid "Passwords do not match"
+msgstr ""
+
+#: ../includes/integrations.php:22
+msgid "Access Control"
+msgstr ""
+
+#: ../includes/integrations.php:43
+msgid "Unlock product access control features with Restrict Content Pro"
+msgstr ""
+
+#: ../includes/integrations.php:47
+#, php-format
+msgid ""
+"Restrict Content Pro enables you to control access to who can view and/or "
+"purchase your products, and optionally you can offer member-only discounts "
+"to paid subscribers. <a href=\"%s\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">Learn more...</a>"
+msgstr ""
+
+#: ../includes/metabox.php:19
+msgid "Restrict this content"
+msgstr ""
+
+#: ../includes/metabox.php:24
 msgid "User Level"
 msgstr ""
 
-#: ../includes/metabox.php:20
+#: ../includes/metabox.php:27
 msgid "Choose the user level that can see this page / post"
 msgstr ""
 
-#: ../includes/metabox.php:25
+#: ../includes/metabox.php:29
+msgid "None"
+msgstr ""
+
+#: ../includes/metabox.php:30
+msgid "Administrator"
+msgstr ""
+
+#: ../includes/metabox.php:31
+msgid "Editor"
+msgstr ""
+
+#: ../includes/metabox.php:32
+msgid "Author"
+msgstr ""
+
+#: ../includes/metabox.php:33
+msgid "Contributor"
+msgstr ""
+
+#: ../includes/metabox.php:34
+msgid "Subscriber"
+msgstr ""
+
+#: ../includes/metabox.php:39
 msgid "Hide from Feed?"
 msgstr ""
 
-#: ../includes/metabox.php:28
+#: ../includes/metabox.php:42
 msgid "Hide the excerpt of this post / page from the Feed?"
 msgstr ""
 
-#: ../includes/metabox.php:55
-msgid "Use these options to restrict this entire entry, or the [restrict ...] ... [/restrict] short code to restrict partial content."
+#: ../includes/metabox.php:97
+msgid ""
+"Use these options to restrict this entire entry, or the [restrict ...] ... [/"
+"restrict] short code to restrict partial content."
 msgstr ""
 
-#: ../includes/settings.php:15
-#: ../includes/settings.php:105
+#: ../includes/metabox.php:126
+msgid "Unlock more restriction options with Restrict Content Pro"
+msgstr ""
+
+#: ../includes/metabox.php:129
+#, php-format
+msgid ""
+"Need more flexibility with restrictions? Restrict Content Pro enables you to "
+"restrict content based on subscription levels, user levels, custom roles, "
+"and more! <a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">Learn "
+"more...</a>"
+msgstr ""
+
+#: ../includes/scripts.php:37
+msgid "Please wait..."
+msgstr ""
+
+#: ../includes/scripts.php:38
+msgid "Register"
+msgstr ""
+
+#: ../includes/settings.php:22 ../includes/settings.php:143
 msgid "Restrict Content Settings"
 msgstr ""
 
-#: ../includes/settings.php:21
+#: ../includes/settings.php:30
 msgid "Options saved"
 msgstr ""
 
-#: ../includes/settings.php:29
+#: ../includes/settings.php:39
 msgid "Short Code Messages"
 msgstr ""
 
-#: ../includes/settings.php:32
+#: ../includes/settings.php:42
 msgid "Restricted Message"
 msgstr ""
 
-#: ../includes/settings.php:35
-msgid "When using the [restrict ... ] .... [/restrict] Short Code, this is the message displayed when a user does not have the appropriate permissions."
-msgstr ""
-
-#: ../includes/settings.php:36
-msgid "The <strong>{userlevel}</strong> tag will be automatically replaced with the permission level needed."
-msgstr ""
-
-#: ../includes/settings.php:40
-msgid "User Level Restriction Messages"
-msgstr ""
-
-#: ../includes/settings.php:43
-msgid "Adminstrators"
+#: ../includes/settings.php:45
+msgid ""
+"When using the [restrict ... ] .... [/restrict] Short Code, this is the "
+"message displayed when a user does not have the appropriate permissions."
 msgstr ""
 
 #: ../includes/settings.php:46
-msgid "Message displayed when a user does not have permission to view Adminstrator restricted content"
+msgid ""
+"The <strong>{userlevel}</strong> tag will be automatically replaced with the "
+"permission level needed."
 msgstr ""
 
-#: ../includes/settings.php:50
-msgid "Editors"
+#: ../includes/settings.php:51
+msgid "User Level Restriction Messages"
 msgstr ""
 
-#: ../includes/settings.php:53
-msgid "Message displayed when a user does not have permission to view Editor restricted content"
+#: ../includes/settings.php:54
+msgid "Administrators"
 msgstr ""
 
 #: ../includes/settings.php:57
-msgid "Authors"
+msgid ""
+"Message displayed when a user does not have permission to view Adminstrator "
+"restricted content"
 msgstr ""
 
-#: ../includes/settings.php:60
-msgid "Message displayed when a user does not have permission to view Author restricted content"
+#: ../includes/settings.php:61
+msgid "Editors"
 msgstr ""
 
 #: ../includes/settings.php:64
-msgid "Contributors"
+msgid ""
+"Message displayed when a user does not have permission to view Editor "
+"restricted content"
 msgstr ""
 
-#: ../includes/settings.php:67
-msgid "Message displayed when a user does not have permission to view Contributor restricted content"
+#: ../includes/settings.php:68
+msgid "Authors"
 msgstr ""
 
 #: ../includes/settings.php:71
+msgid ""
+"Message displayed when a user does not have permission to view Author "
+"restricted content"
+msgstr ""
+
+#: ../includes/settings.php:75
+msgid "Contributors"
+msgstr ""
+
+#: ../includes/settings.php:78
+msgid ""
+"Message displayed when a user does not have permission to view Contributor "
+"restricted content"
+msgstr ""
+
+#: ../includes/settings.php:82
 msgid "Subscribers"
 msgstr ""
 
-#: ../includes/settings.php:74
-msgid "Message displayed when a user does not have permission to view Subscriber restricted content"
+#: ../includes/settings.php:85
+msgid ""
+"Message displayed when a user does not have permission to view Subscriber "
+"restricted content"
 msgstr ""
 
-#: ../includes/settings.php:81
+#: ../includes/settings.php:91
+msgid "Need more control?"
+msgstr ""
+
+#: ../includes/settings.php:92
+msgid ""
+"Take your membership site to the next level with Restrict Content Pro. With "
+"RCP, you can:"
+msgstr ""
+
+#: ../includes/settings.php:95
+msgid ""
+"Charge for access and add a recurring revenue stream to your business. "
+"PayPal, Stripe, 2Checkout, Authorize.net, Braintree, and Manual Payments are "
+"all supported."
+msgstr ""
+
+#: ../includes/settings.php:96
+msgid ""
+"Send and receive emails when members sign up, renew, cancel, and expire."
+msgstr ""
+
+#: ../includes/settings.php:97
+msgid "Generate invoices for subscription payments."
+msgstr ""
+
+#: ../includes/settings.php:98
+msgid "Prevent account sharing."
+msgstr ""
+
+#: ../includes/settings.php:99
+msgid ""
+"Subscribe members to your MailChimp, AWeber, ConvertKit, ActiveCampaign, "
+"Campaign Monitor, GetResponse, or MailPoet mailing lists"
+msgstr ""
+
+#: ../includes/settings.php:100
+msgid "Drip content on a schedule."
+msgstr ""
+
+#: ../includes/settings.php:101
+msgid "Offer group accounts to businesses and other organizations."
+msgstr ""
+
+#: ../includes/settings.php:102
+msgid "Sell websites using WordPress multisite."
+msgstr ""
+
+#: ../includes/settings.php:103
+msgid "... and a lot more!"
+msgstr ""
+
+#: ../includes/settings.php:106
+#, php-format
+msgid ""
+"<a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">Find out more..."
+"</a>"
+msgstr ""
+
+#: ../includes/settings.php:113
 msgid "Save Options"
 msgstr ""
 
-#: ../includes/settings.php:105
+#: ../includes/settings.php:143
 msgid "Restrict Content"
 msgstr ""
-
