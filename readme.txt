@@ -3,7 +3,7 @@ Author URI: http://pippinsplugins.com
 Author: Pippin Williamson
 Contributors: mordauk, mindctrl, nosegraze
 Donate link: http://pippinsplugins.com/support-the-site
-Tags: Restrict content, member, members, membership, memberships, member only, registered, registration form, login form, logged in, restricted access, restrict access, limiit access, read-only, read only, access control
+Tags: Restrict content, member, members, membership, memberships, member only, registration form, login form, restricted access, limit access, read only, access control
 Requires at least: 3.9
 Tested up to: 4.5
 Stable tag: 2.1.3
@@ -17,7 +17,7 @@ For example, you can restrict content to only Administrators, Editors, Authors, 
 
 Content restriction works both with shortcodes and drop-down menu of access levels for post, pages, and most custom post types.
 
-Also includes frontend forms for user registration, login, and password reset so your members can do all these actions on the front end of your site without going to the wp-admin or wp-login.php pages.
+Also includes frontend forms for user registration, login, and password reset so your members can do all these actions on the front end of your site without going to the wp-admin or wp-login.php pages. Display these with the [login_form] and [register_form] shortcodes.
 
 = Pro version available! =
 
