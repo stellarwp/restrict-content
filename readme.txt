@@ -1,33 +1,36 @@
 === Restrict Content ===
 Author URI: http://pippinsplugins.com
 Author: Pippin Williamson
-Contributors: mordauk
+Contributors: mordauk, mindctrl, nosegraze
 Donate link: http://pippinsplugins.com/support-the-site
-Tags: Restrict content, member only, registered, logged in, restricted access, restrict access, limiit access, read-only, read only
+Tags: Restrict content, member, members, membership, memberships, member only, registered, registration form, login form, logged in, restricted access, restrict access, limiit access, read-only, read only, access control
 Requires at least: 3.9
 Tested up to: 4.5
 Stable tag: 2.1.3
 
-Restrict Content to registered users only. This is a simple plugin that will allow you to easily restrict complete posts / pages to logged in users only. Levels of restriction may also be set. For example, you can restrict content to only Administrators, Editors, Authors, and Subscribers.
+Restrict Content to registered users only. This is a simple membership plugin that will allow you to easily restrict complete posts / pages to logged in users only. Levels of restriction may also be set. For example, you can restrict content to only Administrators, Editors, Authors, Contributors, and Subscribers.
 
 == Description ==
 
-Restrict Content to registered users only. This is a simple plugin that will allow you to easily restrict complete posts / pages to logged in users only. Levels of restriction may also be set. 
-For example, you can restrict content to only Administrators, Editors, Authors, and Subscribers.
+Restrict Content to registered users only. This is a simple membership plugin that will allow you to easily restrict complete posts / pages to logged in users only. Levels of restriction may also be set.
+For example, you can restrict content to only Administrators, Editors, Authors, Contributors, and Subscribers.
 
 Content restriction works both with shortcodes and drop-down menu of access levels for post, pages, and most custom post types.
 
+Also includes frontend forms for user registration, login, and password reset so your members can do all these actions on the front end of your site without going to the wp-admin or wp-login.php pages.
+
 = Pro version available! =
 
-The [Pro version of Restrict Content](https://restrictcontentpro.com) provides a significant additional feature set, including:
+The [Pro version of Restrict Content](https://restrictcontentpro.com/?utm_campaign=restrict-content&utm_medium=readme&utm_source=description&utm_content=first-mention) provides a significant additional feature set, including:
 
-* Account registration
-* Log in and password reset forms
-* Complete member management
+* Payments - including one-time payments and recurring subscriptions.
+* Integration with popular payment systems, including Stripe, PayPal Standard, PayPal Express, PayPal Pro, Authorize.net, 2Checkout, and Braintree.
 * Discount codes
-* Payment tracking
-* Integration with popular payment systems, including Stripe, PayPal, Authorize.net, 2Checkout, and more.
-* And much more. See the [Features](https://restrictcontentpro.com/tour/features/) page for additional details.
+* Printable HTML invoices
+* Complete member management
+* Prevent account sharing
+* WooCommerce integration
+* And much more. See the [Features](https://restrictcontentpro.com/tour/features/?utm_campaign=restrict-content&utm_medium=readme&utm_source=description&utm_content=features-link) page for additional details.
 
 == Installation ==
 
@@ -57,11 +60,11 @@ There is also a short code for showing content only to users that are not logged
 
 = Does this plugin include frontend log in or registration forms? =
 
-No, this free plugin simply provides options to restrict content to existing user accounts. The [Pro](https://restrictcontentpro.com) version does, however, include frontend registration and log in forms, along with much, much more. See the [Features](https://restrictcontentpro.com/tour/features/) page for details.
+Yes! Frontend forms are provided for user registration, login, and password reset.
 
 = Does this plugin support custom user roles? =
 
-Not at this time.
+No. If you need custom role support, check out [Restrict Content Pro](https://restrictcontentpro.com/?utm_campaign=restrict-content&utm_medium=readme&utm_source=faq&utm_content=custom-roles)
 
 == Screenshots ==
 
@@ -70,6 +73,14 @@ Go to the demo page to see examples:
 http://pippinsplugins.com/restricted-content-plugin-free/
 
 == Changelog ==
+
+= 2.2 =
+* New: Login form shortcode - [login_form]
+* New: Password reset form - part of the [login_form] shortcode
+* New: User registration form - [register_form] shortcode
+* New: Improved compatibility with Restrict Content Pro, allowing for seamless upgrades
+* Fix: Undefined index PHP notice
+* Tweak: General code cleanup and improvements
 
 = 2.1.3 =
 
@@ -101,7 +112,7 @@ http://pippinsplugins.com/restricted-content-plugin-free/
 
 * Fixed a problem with the not logged in short code.
 
-= 2.0.2 = 
+= 2.0.2 =
 
 * Added new [not_logged_in] short code.
 
@@ -127,7 +138,7 @@ http://pippinsplugins.com/restricted-content-plugin-free/
 
 * Fixed a problem with the not logged in short code.
 
-= 2.0.2 = 
+= 2.0.2 =
 
 * Added new [not_logged_in] short code.
 
