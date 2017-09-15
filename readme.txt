@@ -5,8 +5,8 @@ Contributors: mordauk, mindctrl, nosegraze
 Donate link: http://pippinsplugins.com/support-the-site
 Tags: Restrict content, member, members, membership, memberships, member only, registration form, login form, restricted access, limit access, read only, access control
 Requires at least: 3.9
-Tested up to: 4.5
-Stable tag: 2.1.3
+Tested up to: 4.8.1
+Stable tag: 2.2
 
 Restrict Content to registered users only. This is a simple membership plugin that will allow you to easily restrict complete posts / pages to logged in users only. Levels of restriction may also be set. For example, you can restrict content to only Administrators, Editors, Authors, Contributors, and Subscribers.
 
