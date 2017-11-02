@@ -41,7 +41,7 @@ function restrict_shortcode( $atts, $content = null ) {
 	if ( $atts['userlevel'] == 'none' && is_user_logged_in() ) {
 		return do_shortcode( $content );
 	} else {
-		return '<span style="color: red;">' . str_replace( '{userlevel}', $atts['userlevel'], $rc_options['shortcode_message'] ) . '</span>';
+		return '<span class="rc-restricted-content-message">' . str_replace( '{userlevel}', $atts['userlevel'], $rc_options['shortcode_message'] ) . '</span>';
 	}
 }
 
