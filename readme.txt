@@ -8,20 +8,26 @@ Requires at least: 3.9
 Tested up to: 4.8.1
 Stable tag: 2.2
 
-Restrict Content to registered users only. This is a simple membership plugin that will allow you to easily restrict complete posts / pages to logged in users only. Levels of restriction may also be set. For example, you can restrict content to only Administrators, Editors, Authors, Contributors, and Subscribers.
+Restrict Content provides simple ways to limit access to content to registered users that are logged into your website. This is a simple membership plugin that will allow you to easily restrict complete posts / pages to logged in users only and to provide simple log in and registration  forms on the frontend of your website.
 
 == Description ==
 
-Restrict Content to registered users only. This is a simple membership plugin that will allow you to easily restrict complete posts / pages to logged in users only. Levels of restriction may also be set.
-For example, you can restrict content to only Administrators, Editors, Authors, Contributors, and Subscribers.
+Restrict Content provides simple ways to limit access to content to registered users that are logged into your website. This is a simple membership plugin that will allow you to easily restrict complete posts / pages to logged in users only and to provide simple log in and registration  forms on the frontend of your website.
 
 Content restriction works both with shortcodes and drop-down menu of access levels for post, pages, and most custom post types.
 
 Also includes frontend forms for user registration, login, and password reset so your members can do all these actions on the front end of your site without going to the wp-admin or wp-login.php pages. Display these with the [login_form] and [register_form] shortcodes.
 
-= Pro version available! =
+= Features of the plugin =
 
-The [Pro version of Restrict Content](https://restrictcontentpro.com/?utm_campaign=restrict-content&utm_medium=readme&utm_source=description&utm_content=first-mention) provides a significant additional feature set, including:
+* Limit access to content with a shortcode, i.e. `[restrict]This content is limited to logged in users.[/restrict]`.
+* Limit access to full content via a simple interface on the edit post, page, and custom post type screens.
+* Display a registration form for new accounts on any page of your website with `[register_form]`.
+* Display a log in form for existing users on any page of your website with `[login_form]`.
+
+A [Pro version of Restrict Content](https://restrictcontentpro.com/?utm_campaign=restrict-content&utm_medium=readme&utm_source=description&utm_content=first-mention) is also available with an extensive feature set.
+
+= Restrict Content Pro features =
 
 * Payments - including one-time payments and recurring subscriptions.
 * Integration with popular payment systems, including Stripe, PayPal Standard, PayPal Express, PayPal Pro, Authorize.net, 2Checkout, and Braintree.
@@ -31,6 +37,8 @@ The [Pro version of Restrict Content](https://restrictcontentpro.com/?utm_campai
 * Prevent account sharing
 * WooCommerce integration
 * And much more. See the [Features](https://restrictcontentpro.com/tour/features/?utm_campaign=restrict-content&utm_medium=readme&utm_source=description&utm_content=features-link) page for additional details.
+
+Visit the Restrict Content Pro website for more information about the Pro version.
 
 == Installation ==
 
