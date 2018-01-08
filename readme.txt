@@ -1,11 +1,10 @@
 === Restrict Content ===
-Author URI: http://pippinsplugins.com
+Author URI: https://restrictcontentpro.com
 Author: Pippin Williamson
 Contributors: mordauk, mindctrl, nosegraze
-Donate link: http://pippinsplugins.com/support-the-site
 Tags: Restrict content, member, members, membership, memberships, member only, registration form, login form, restricted access, limit access, read only, access control
 Requires at least: 3.9
-Tested up to: 4.8.1
+Tested up to: 4.9.1
 Stable tag: 2.2
 
 Restrict Content provides simple ways to limit access to content to registered users that are logged into your website. This is a simple membership plugin that will allow you to easily restrict complete posts / pages to logged in users only and to provide simple log in and registration  forms on the frontend of your website.
