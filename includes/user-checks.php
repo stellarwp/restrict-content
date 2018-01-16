@@ -39,3 +39,4 @@ function rcCheckUser() {
 }
 
 add_action( 'loop_start', 'rcCheckUser' );
+add_action( 'rest_api_init', 'rcCheckUser' );
