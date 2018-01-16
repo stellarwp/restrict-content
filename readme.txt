@@ -135,6 +135,10 @@ http://pippinsplugins.com/restricted-content-plugin-free/
 
 == Upgrade Notice ==
 
+= 2.2.1 =
+
+Removed hard-coded red color from restriction message and deactivate plugin when pro version is activated.
+
 = 2.1 =
 
 * Improved settings page to match core WordPress UI
