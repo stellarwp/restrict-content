@@ -4,8 +4,8 @@ Author: Pippin Williamson
 Contributors: mordauk, mindctrl, nosegraze
 Tags: Restrict content, member, members, membership, memberships, member only, registration form, login form, restricted access, limit access, read only, access control
 Requires at least: 3.9
-Tested up to: 4.9.1
-Stable tag: 2.2.1
+Tested up to: 4.9.2
+Stable tag: 2.2.2
 
 Restrict Content provides simple ways to limit access to content to registered users that are logged into your website. This is a simple membership plugin that will allow you to easily restrict complete posts / pages to logged in users only and to provide simple log in and registration  forms on the frontend of your website.
 
@@ -80,6 +80,9 @@ Go to the demo page to see examples:
 http://pippinsplugins.com/restricted-content-plugin-free/
 
 == Changelog ==
+
+= 2.2.2 =
+* Fix: Content visibility in the REST API.
 
 = 2.2.1 =
 * Tweak: Remove hard-coded red color from restricted message. A class `rc-restricted-content-message` has been added to the span tag if you'd like to add the color back in with CSS.
