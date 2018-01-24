@@ -7,15 +7,15 @@ Requires at least: 3.9
 Tested up to: 4.9.2
 Stable tag: 2.2.2
 
-Restrict Content provides simple ways to limit access to content to registered users that are logged into your website. This is a simple membership plugin that will allow you to easily restrict complete posts / pages to logged in users only and to provide simple log in and registration  forms on the frontend of your website.
+Run your own membership website using the Restrict Content membership plugin for WordPress.
 
 == Description ==
 
-Restrict Content provides simple ways to limit access to content to registered users that are logged into your website. This is a simple membership plugin that will allow you to easily restrict complete posts / pages to logged in users only and to provide simple log in and registration  forms on the frontend of your website.
+Restrict Content is a simple membership plugin that enables you to easily restrict access to your content to logged-in users only.
 
-Content restriction works both with shortcodes and drop-down menu of access levels for post, pages, and most custom post types.
+Content restriction works both with partial content restrictions using shortcodes, as well as full page restrictions for post, pages, and most custom post types.
 
-Also includes frontend forms for user registration, login, and password reset so your members can do all these actions on the front end of your site without going to the wp-admin or wp-login.php pages. Display these with the [login_form] and [register_form] shortcodes.
+Restrict Content also includes frontend forms for user registration, login, and password reset so your members can do all these actions on the front end of your site without going to the wp-admin or wp-login.php pages. Display these with the [login_form] and [register_form] shortcodes.
 
 = Features of the plugin =
 
