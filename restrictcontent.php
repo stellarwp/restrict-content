@@ -3,7 +3,7 @@
  * Plugin Name: Restrict Content
  * Plugin URL: http://pippinsplugins.com/restricted-content-plugin-free/
  * Description: Restrict Content to registered users only. This is a simple plugin that will allow you to easily restrict complete posts / pages to logged in users only.
- * Version: 2.2.2
+ * Version: 2.2.3
  * Author: Pippin Williamson
  * Author URI: http://pippinsplugins.com
  * Contributors: mordauk
@@ -19,7 +19,7 @@
 $rc_options = get_option( 'rc_settings' );
 
 if ( ! defined( 'RC_PLUGIN_VERSION' ) ) {
-	define( 'RC_PLUGIN_VERSION', '2.2.2' );
+	define( 'RC_PLUGIN_VERSION', '2.2.3' );
 }
 
 if( ! defined('RC_PLUGIN_DIR' ) ) {
