@@ -529,11 +529,13 @@ function rc_process_registration_form() {
 		return;
 	}
 
+	$is_ajax = ! empty( $_POST['rc_ajax_registration'] );
+
 	$user_data = rc_validate_user_data( $_POST );
 
 	$errors = rc_errors()->get_error_messages();
 
-	if ( ! empty( $errors ) ) {
+	if ( ! empty( $errors ) && $is_ajax ) {
 
 		wp_send_json_error( array(
 			'success' => false,
@@ -542,6 +544,10 @@ function rc_process_registration_form() {
 
 		return;
 
+	}
+
+	if ( ! empty( $errors ) ) {
+		return;
 	}
 
 	if ( $user_data['need_new'] ) {
@@ -571,11 +577,13 @@ function rc_process_registration_form() {
 
 	$redirect_url = ! empty( $_POST['rc_redirect'] ) ? esc_url( $_POST['rc_redirect'] ) : esc_url( home_url() );
 
-	wp_send_json_success( array(
-		'success'  => true,
-		'user'     => $user_data,
-		'redirect' => $redirect_url
-	) );
+	if ( $is_ajax ) {
+		wp_send_json_success( array(
+			'success'  => true,
+			'user'     => $user_data,
+			'redirect' => $redirect_url
+		) );
+	}
 
 	wp_safe_redirect( $redirect_url );
 	exit;

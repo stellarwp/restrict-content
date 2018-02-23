@@ -15,6 +15,7 @@ jQuery(document).ready(function($) {
 		$.ajax({
 			data: {
 				action: 'rc_process_registration_form',
+				rc_ajax_registration: true,
 				rc_user_login: form.find('#rc_user_login').val(),
 				rc_user_email: form.find('#rc_user_email').val(),
 				rc_user_pass: form.find('#rc_password').val(),
