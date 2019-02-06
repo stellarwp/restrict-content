@@ -4,7 +4,7 @@ Author: Pippin Williamson
 Contributors: mordauk, mindctrl, nosegraze
 Tags: Restrict content, member, members, membership, memberships, member only, registration form, login form, restricted access, limit access, read only, access control
 Requires at least: 3.9
-Tested up to: 4.9.4
+Tested up to: 5.0.3
 Stable tag: 2.2.3
 
 Run your own membership website using the Restrict Content membership plugin for WordPress.
