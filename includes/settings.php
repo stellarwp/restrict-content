@@ -54,7 +54,7 @@ function rc_settings_page() {
 						<th><?php _e( 'Administrators', 'restrict-content' ); ?></th>
 						<td>
 							<input id="rc_settings[administrator_message]" class="large-text" name="rc_settings[administrator_message]" type="text" value="<?php echo isset( $rc_options['administrator_message'] ) ? esc_attr( $rc_options['administrator_message'] ) : ''; ?>"/><br/>
-							<label class="description" for="rc_settings[administrator_message]"><?php _e( 'Message displayed when a user does not have permission to view Adminstrator restricted content', 'restrict-content' ); ?></label><br/>
+							<label class="description" for="rc_settings[administrator_message]"><?php _e( 'Message displayed when a user does not have permission to view Administrator restricted content', 'restrict-content' ); ?></label><br/>
 						</td>
 					</tr>
 					<tr valign="top">
