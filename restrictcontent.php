@@ -4,8 +4,8 @@
  * Plugin URL: http://pippinsplugins.com/restricted-content-plugin-free/
  * Description: Restrict Content to registered users only. This is a simple plugin that will allow you to easily restrict complete posts / pages to logged in users only.
  * Version: 2.2.3
- * Author: Pippin Williamson
- * Author URI: http://pippinsplugins.com
+ * Author: Sandhills Development, LLC
+ * Author URI: https://sandhillsdev.com
  * Contributors: mordauk
  * Tags: Restrict content, member only, registered, logged in, restricted access, restrict access, limiit access, read-only, read only
  */

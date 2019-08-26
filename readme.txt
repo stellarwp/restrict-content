@@ -1,6 +1,6 @@
 === Restrict Content ===
-Author URI: https://restrictcontentpro.com
-Author: Pippin Williamson
+Author URI: https://sandhillsdev.com
+Author: Sandhills Development, LLC
 Contributors: mordauk, mindctrl, nosegraze
 Tags: Restrict content, member, members, membership, memberships, member only, registration form, login form, restricted access, limit access, read only, access control
 Requires at least: 3.9
