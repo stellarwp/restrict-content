@@ -140,20 +140,36 @@ function rc_process_login_form() {
 
 	$errors = rc_errors()->get_error_messages();
 
-	if ( empty( $errors ) ) {
-
-		$redirect = ! empty( $_POST['rc_redirect'] ) ? $_POST['rc_redirect'] : home_url();
-
-		wp_signon( array(
-			'user_login'    => $user->user_login,
-			'user_password' => $_POST['rc_user_pass'],
-			'remember'      => isset( $_POST['rc_user_remember'] )
-		) );
-
-		wp_safe_redirect( esc_url_raw( $redirect ) );
-
-		exit;
+	// Exit early if we have errors at this point.
+	if ( ! empty( $errors ) ) {
+		return;
 	}
+
+	$user = wp_signon( array(
+		'user_login'    => $user->user_login,
+		'user_password' => $_POST['rc_user_pass'],
+		'remember'      => isset( $_POST['rc_user_remember'] )
+	) );
+
+	// Add error message if the login failed.
+	if ( is_wp_error( $user ) ) {
+		rc_errors()->add( $user->get_error_code(), $user->get_error_message(), 'login' );
+	}
+
+	// Refresh error messages.
+	$errors = rc_errors()->get_error_messages();
+
+	// If we have new errors, exit.
+	if ( ! empty( $errors ) ) {
+		return;
+	}
+
+	// Redirect to the success page.
+	$redirect = ! empty( $_POST['rc_redirect'] ) ? $_POST['rc_redirect'] : home_url();
+
+	wp_safe_redirect( esc_url_raw( $redirect ) );
+
+	exit;
 }
 add_action( 'init', 'rc_process_login_form' );
 
