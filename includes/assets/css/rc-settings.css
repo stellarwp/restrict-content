@@ -1,0 +1,155 @@
+/* Content */
+.has-sidebar .rc-pro-features {
+	display: none;
+}
+
+/* Sidebar */
+.rc-settings-sidebar {
+	padding-top: 27px;
+}
+
+.rc-settings-sidebar-content {
+	background-color: #fff;
+	text-align: center;
+	border: 1px solid #ddd;
+	box-sizing: border-box;
+	max-width: 380px;
+}
+
+.rc-settings-sidebar-content p {
+	font-size: 14px;
+	line-height: 1.5;
+	margin-top: 0;
+}
+
+/* Sidebar header section */
+.rc-sidebar-header-section {
+	background-color: #2a76d2;
+	line-height: 1;
+	padding: 26px 20px 24px;
+	border-bottom: 3px dashed #fafafa;
+}
+
+/* Sidebar description section */
+.rc-sidebar-description-section {
+	background-color: #fafafa;
+	padding: 16px 20px;
+	border-bottom: 1px solid #ddd;
+}
+
+.rc-sidebar-description-section .sidebar-description {
+	margin: 0;
+}
+
+/* Sidebar coupon section */
+.rc-sidebar-coupon-section {
+	font-size: 14px;
+	padding: 16px 20px;
+}
+
+.rc-sidebar-coupon-section label {
+	display: block;
+	line-height: 1.4;
+	margin-bottom: 6px;
+}
+
+.rc-sidebar-coupon-section label strong {
+	color: #253b51;
+	font-weight: 700;
+}
+
+.rc-sidebar-coupon-section input {
+	background: #ebf4f9;
+	font-size: 22px;
+	font-weight: 600;
+	text-align: center;
+	padding: 10px;
+	border: 2px dashed #2a76d2;
+	border-radius: 4px;
+	margin-bottom: 16px;
+	box-shadow: none;
+	width: 100%;
+}
+
+.rc-sidebar-coupon-section input:focus {
+	border: 2px dashed #2a76d2;
+	box-shadow: none;
+}
+
+.rc-settings-sidebar-content .coupon-note {
+	color: #6c7883;
+	font-size: 13px;
+	font-style: italic;
+	margin: 0;
+}
+
+.rc-settings-sidebar-content .coupon-note a {
+	color: #253b51;
+}
+
+.rc-settings-sidebar-content .coupon-note a:hover {
+	text-decoration: none;
+}
+
+/* Sidebar footer section */
+.rc-sidebar-footer-section {
+	background-color: #fafafa;
+	padding: 16px 20px;
+	border-top: 1px solid #ddd;
+}
+
+.rc-sidebar-footer-section .cta-button {
+	display: block;
+	background-color: #b685c9;
+	color: #fff;
+	text-decoration: none;
+	font-size: 20px;
+	font-weight: 700;
+	text-transform: uppercase;
+	padding: 17px 10px;
+	border-radius: 4px;
+	width: 100%;
+	box-sizing: border-box;
+	transition: background-color .2s;
+}
+
+.rc-sidebar-footer-section .cta-button:hover {
+	background-color: #a577b7;
+}
+
+/* Sidebar after */
+.rc-sidebar-logo-section .rc-logo-wrap {
+	padding-top: 1em;
+	text-align: right;
+	margin-right: 20px;
+	max-width: 380px;
+}
+
+.rc-sidebar-logo-section .rc-logo {
+	max-width: 160px;
+}
+
+/* Sidebar responsive behavior */
+@media all and ( min-width: 1000px ) {
+
+	.has-sidebar .rc-settings-content {
+		float: left;
+		width: 62%;
+	}
+
+	.has-sidebar .rc-settings-sidebar {
+		float: right;
+		width: 35%;
+	}
+}
+
+@media all and ( min-width: 1240px ) {
+
+	.has-sidebar .rc-settings-content {
+		width: 69%;
+	}
+
+	.has-sidebar .rc-settings-sidebar {
+		width: 28%;
+	}
+}

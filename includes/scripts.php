@@ -15,8 +15,8 @@
  */
 function rc_register_plugin_styles() {
 
-	wp_register_style( 'rc-forms', trailingslashit( plugins_url() ) . 'restrict-content/includes/css/rc-forms.css', array(), '20170828' );
-	wp_register_script( 'rc-register', trailingslashit( plugins_url() ) . 'restrict-content/includes/js/rc-register.js', array( 'jquery' ), '20170828' );
+	wp_register_style( 'rc-forms', trailingslashit( plugins_url() ) . 'restrict-content/includes/assets/css/rc-forms.css', array(), '20170828' );
+	wp_register_script( 'rc-register', trailingslashit( plugins_url() ) . 'restrict-content/includes/assets/js/rc-register.js', array( 'jquery' ), '20170828' );
 
 	if ( ! is_singular() ) {
 		return;
@@ -42,3 +42,16 @@ function rc_register_plugin_styles() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'rc_register_plugin_styles' );
+
+
+/**
+ * Load admin styles
+ */
+function rc_admin_styles( $hook_suffix ) {
+
+	// Only load admin CSS on Restrict Content Settings page
+	if ( 'settings_page_restrict-content-settings' == $hook_suffix ) {
+		wp_enqueue_style( 'rc-settings', trailingslashit( plugins_url() ) . 'restrict-content/includes/assets/css/rc-settings.css', array(), RC_PLUGIN_VERSION );
+	}
+}
+add_action( 'admin_enqueue_scripts', 'rc_admin_styles' );

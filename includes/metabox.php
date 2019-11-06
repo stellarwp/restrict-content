@@ -87,7 +87,8 @@ function rcShowMetaBox() {
 
 	global $post;
 
-	$metabox = rc_get_metabox();
+	$metabox             = rc_get_metabox();
+	$maybe_display_promo = rc_maybe_display_promotion();
 
 	// Use nonce for verification
 	echo '<input type="hidden" name="rcMetaNonce" value="' . esc_attr( wp_create_nonce( basename( __FILE__ ) ) ) . '" />';
@@ -123,13 +124,24 @@ function rcShowMetaBox() {
 	echo '</table>';
 
 	echo '<hr>';
-	echo '<h4>' . __( 'Unlock more restriction options with Restrict Content Pro', 'restrict-content' ) . '</h4>';
-	echo '<p>' .
-		sprintf(
-			__( 'Need more flexibility with restrictions? Restrict Content Pro enables you to restrict content based on subscription levels, user levels, custom roles, and more! <a href="%s" target="_blank" rel="noopener noreferrer">Learn more...</a>', 'restrict-content' ),
-			'https://restrictcontentpro.com/?utm_campaign=restrict-content&utm_medium=admin&utm_source=integration&utm_content=' . $post->post_type
-		) .
-	'</p>';
+
+	if ( true === $maybe_display_promo ) {
+		echo '<h3><span style="color: #2a76d2;">' . __( 'BLACK FRIDAY & CYBER MONDAY SALE! SAVE 25%', 'restrict-content' ) . '</span></h3>';
+		echo '<p>' .
+			sprintf(
+				__( 'Save on all Restrict Content Pro purchases <strong>this week</strong>, including renewals and upgrades! Use coupon code <code>BCFM2019</code> at checkout. <a href="%s" target="_blank" rel="noopener noreferrer">Upgrade now</a>!', 'restrict-content' ),
+				'https://restrictcontentpro.com/pricing/?utm_campaign=restrict-content&utm_medium=admin&utm_source=integration&utm_content=' . $post->post_type
+			) .
+			'</p>';
+	} else {
+		echo '<h4>' . __( 'Unlock more restriction options with Restrict Content Pro', 'restrict-content' ) . '</h4>';
+		echo '<p>' .
+			sprintf(
+				__( 'Need more flexibility with restrictions? Restrict Content Pro enables you to restrict content based on subscription levels, user levels, custom roles, and more! <a href="%s" target="_blank" rel="noopener noreferrer">Learn more...</a>', 'restrict-content' ),
+				'https://restrictcontentpro.com/?utm_campaign=restrict-content&utm_medium=admin&utm_source=integration&utm_content=' . $post->post_type
+			) .
+			'</p>';
+	}
 
 }
 
