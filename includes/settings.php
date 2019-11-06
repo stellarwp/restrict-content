@@ -19,7 +19,7 @@ function rc_settings_page() {
 	// Find out if we're displaying a sidebar. If so, add a class.
 	$maybe_display_promo = rc_maybe_display_promotion();
 	$wrapper_class       = ( true === $maybe_display_promo )
-		? ' has-sidebar'
+		? ' rc-has-sidebar'
 		: '';
 
 	?>
@@ -179,21 +179,21 @@ function rc_display_sidebar() {
 		<div class="rc-settings-sidebar-content">
 
 			<div class="rc-sidebar-header-section">
-				<img class="bcfm-header" src="<?php echo esc_url( RC_PLUGIN_URL . '/includes/assets/images/bfcm-header.svg' ); ?>">
+				<img class="rc-bcfm-header" src="<?php echo esc_url( RC_PLUGIN_URL . '/includes/assets/images/bfcm-header.svg' ); ?>">
 			</div>
 
 			<div class="rc-sidebar-description-section">
-				<p class="sidebar-description"><?php _e( 'Save on all Restrict Content Pro purchases <strong>this week</strong>, including renewals and upgrades!', 'restrict-content' ); ?></p>
+				<p class="rc-sidebar-description"><?php _e( 'Save on all Restrict Content Pro purchases <strong>this week</strong>, including renewals and upgrades!', 'restrict-content' ); ?></p>
 			</div>
 
 			<div class="rc-sidebar-coupon-section">
-				<label for="coupon-code"><?php _e( 'Use <strong>COUPON CODE</strong> at checkout:', 'restrict-content' ); ?></label>
-				<input id="coupon-code" type="text" value="BFCM2019" readonly>
-				<p class="coupon-note"><?php _e( 'The sale ends the 6th of December at midnight (UTC-6). Use the same coupon code to save on <a href="https://sandhillsdev.com/projects/" target="_blank">our other WordPress plugins</a>.', 'restrict-content' ); ?></p>
+				<label for="rc-coupon-code"><?php _e( 'Use <strong>COUPON CODE</strong> at checkout:', 'restrict-content' ); ?></label>
+				<input id="rc-coupon-code" type="text" value="BFCM2019" readonly>
+				<p class="rc-coupon-note"><?php _e( 'The sale ends the 6th of December at midnight (UTC-6). Use the same coupon code to save on <a href="https://sandhillsdev.com/projects/" target="_blank">our other WordPress plugins</a>.', 'restrict-content' ); ?></p>
 			</div>
 
 			<div class="rc-sidebar-footer-section">
-				<a class="cta-button" href="https://restrictcontentpro.com/pricing/"><?php _e( 'Upgrade Now!', 'restrict-content' ); ?></a>
+				<a class="rc-cta-button" href="https://restrictcontentpro.com/pricing/"><?php _e( 'Upgrade Now!', 'restrict-content' ); ?></a>
 			</div>
 
 		</div>
