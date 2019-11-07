@@ -193,7 +193,7 @@ function rc_display_sidebar() {
 			</div>
 
 			<div class="rc-sidebar-footer-section">
-				<a class="rc-cta-button" href="https://restrictcontentpro.com/pricing/"><?php _e( 'Upgrade Now!', 'restrict-content' ); ?></a>
+				<a class="rc-cta-button" href="https://restrictcontentpro.com/pricing/" target="_blank"><?php _e( 'Upgrade Now!', 'restrict-content' ); ?></a>
 			</div>
 
 		</div>
