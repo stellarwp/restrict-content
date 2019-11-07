@@ -183,13 +183,13 @@ function rc_display_sidebar() {
 			</div>
 
 			<div class="rc-sidebar-description-section">
-				<p class="rc-sidebar-description"><?php _e( 'Save on all Restrict Content Pro purchases <strong>this week</strong>, including renewals and upgrades!', 'restrict-content' ); ?></p>
+				<p class="rc-sidebar-description"><?php _e( 'Save 25% on all Restrict Content Pro purchases <strong>this week</strong>, including renewals and upgrades!', 'restrict-content' ); ?></p>
 			</div>
 
 			<div class="rc-sidebar-coupon-section">
-				<label for="rc-coupon-code"><?php _e( 'Use <strong>COUPON CODE</strong> at checkout:', 'restrict-content' ); ?></label>
+				<label for="rc-coupon-code"><?php _e( 'Use code at checkout:', 'restrict-content' ); ?></label>
 				<input id="rc-coupon-code" type="text" value="BFCM2019" readonly>
-				<p class="rc-coupon-note"><?php _e( 'The sale ends the 6th of December at midnight (UTC-6). Use the same coupon code to save on <a href="https://sandhillsdev.com/projects/" target="_blank">our other WordPress plugins</a>.', 'restrict-content' ); ?></p>
+				<p class="rc-coupon-note"><?php _e( 'Sale ends 23:59 PM December 6th CST. Save 25% on <a href="https://sandhillsdev.com/projects/" target="_blank">our other plugins</a>.', 'restrict-content' ); ?></p>
 			</div>
 
 			<div class="rc-sidebar-footer-section">

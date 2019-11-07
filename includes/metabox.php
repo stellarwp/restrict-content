@@ -129,7 +129,7 @@ function rcShowMetaBox() {
 		echo '<h3><span style="color: #2a76d2;">' . __( 'BLACK FRIDAY & CYBER MONDAY SALE! SAVE 25%', 'restrict-content' ) . '</span></h3>';
 		echo '<p>' .
 			sprintf(
-				__( 'Save on all Restrict Content Pro purchases <strong>this week</strong>, including renewals and upgrades! Use coupon code <code>BCFM2019</code> at checkout. <a href="%s" target="_blank" rel="noopener noreferrer">Upgrade now</a>!', 'restrict-content' ),
+				__( 'Save 25&#37; on all Restrict Content Pro purchases <strong>this week</strong>, including renewals and upgrades! Use code <code>BCFM2019</code> at checkout. <a href="%s" target="_blank" rel="noopener noreferrer">Upgrade now</a>!', 'restrict-content' ),
 				'https://restrictcontentpro.com/pricing/?utm_campaign=restrict-content&utm_medium=admin&utm_source=integration&utm_content=' . $post->post_type
 			) .
 			'</p>';
