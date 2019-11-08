@@ -172,6 +172,8 @@ function rc_pro_features() {
  * Display a sidebar element
  */
 function rc_display_sidebar() {
+	$coupon_code = 'BFCM2019';
+	$utm_params  = '?utm_source=rc-settings&utm_medium=wp-admin&utm_campaign=bfcm2019&utm_content=sidebar-promo';
 	?>
 
 	<div class="rc-settings-sidebar">
@@ -188,12 +190,12 @@ function rc_display_sidebar() {
 
 			<div class="rc-sidebar-coupon-section">
 				<label for="rc-coupon-code"><?php _e( 'Use code at checkout:', 'restrict-content' ); ?></label>
-				<input id="rc-coupon-code" type="text" value="BFCM2019" readonly>
+				<input id="rc-coupon-code" type="text" value="<?php echo $coupon_code; ?>" readonly>
 				<p class="rc-coupon-note"><?php _e( 'Sale ends 23:59 PM December 6th CST. Save 25% on <a href="https://sandhillsdev.com/projects/" target="_blank">our other plugins</a>.', 'restrict-content' ); ?></p>
 			</div>
 
 			<div class="rc-sidebar-footer-section">
-				<a class="rc-cta-button" href="https://restrictcontentpro.com/pricing/" target="_blank"><?php _e( 'Upgrade Now!', 'restrict-content' ); ?></a>
+				<a class="rc-cta-button" href="https://restrictcontentpro.com/pricing/<?php echo $utm_params; ?>" target="_blank"><?php _e( 'Upgrade Now!', 'restrict-content' ); ?></a>
 			</div>
 
 		</div>

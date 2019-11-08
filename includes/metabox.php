@@ -130,7 +130,7 @@ function rcShowMetaBox() {
 		echo '<p>' .
 			sprintf(
 				__( 'Save 25&#37; on all Restrict Content Pro purchases <strong>this week</strong>, including renewals and upgrades! Use code <code>BCFM2019</code> at checkout. <a href="%s" target="_blank" rel="noopener noreferrer">Upgrade now</a>!', 'restrict-content' ),
-				'https://restrictcontentpro.com/pricing/?utm_campaign=restrict-content&utm_medium=admin&utm_source=integration&utm_content=' . $post->post_type
+				'https://restrictcontentpro.com/pricing/?utm_source=rc-post-type-metabox&utm_medium=wp-admin&utm_campaign=bfcm2019&utm_content=rc-' . $post->post_type . '-metabox'
 			) .
 			'</p>';
 	} else {
@@ -138,7 +138,7 @@ function rcShowMetaBox() {
 		echo '<p>' .
 			sprintf(
 				__( 'Need more flexibility with restrictions? Restrict Content Pro enables you to restrict content based on subscription levels, user levels, custom roles, and more! <a href="%s" target="_blank" rel="noopener noreferrer">Learn more...</a>', 'restrict-content' ),
-				'https://restrictcontentpro.com/?utm_campaign=restrict-content&utm_medium=admin&utm_source=integration&utm_content=' . $post->post_type
+				'https://restrictcontentpro.com/?utm_source=integration&utm_medium=admin&utm_campaign=restrict-content&utm_content=' . $post->post_type
 			) .
 			'</p>';
 	}
