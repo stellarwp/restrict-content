@@ -174,7 +174,7 @@ function rc_pro_features() {
 function rc_display_sidebar() {
 	$coupon_code = 'BFCM2019';
 	$args        = array(
-		'utm_source'   => 'rc-settings',
+		'utm_source'   => 'settings',
 		'utm_medium'   => 'wp-admin',
 		'utm_campaign' => 'bfcm2019',
 		'utm_content'  => 'sidebar-promo',

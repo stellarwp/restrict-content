@@ -127,10 +127,10 @@ function rcShowMetaBox() {
 
 	if ( true === $maybe_display_promo ) {
 		$utm_args_bfcm = array(
-			'utm_source'   => 'rc-post-type-metabox',
+			'utm_source'   => 'post-type-metabox',
 			'utm_medium'   => 'wp-admin',
 			'utm_campaign' => 'bfcm2019',
-			'utm_content'  => 'rc-' . $post->post_type . '-metabox',
+			'utm_content'  => $post->post_type . '-metabox',
 		);
 		$url_bfcm       = add_query_arg( $utm_args_bfcm, 'https://restrictcontentpro.com/pricing/' );
 
