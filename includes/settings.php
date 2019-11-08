@@ -173,7 +173,13 @@ function rc_pro_features() {
  */
 function rc_display_sidebar() {
 	$coupon_code = 'BFCM2019';
-	$utm_params  = '?utm_source=rc-settings&utm_medium=wp-admin&utm_campaign=bfcm2019&utm_content=sidebar-promo';
+	$args        = array(
+		'utm_source'   => 'rc-settings',
+		'utm_medium'   => 'wp-admin',
+		'utm_campaign' => 'bfcm2019',
+		'utm_content'  => 'sidebar-promo',
+	);
+	$url         = add_query_arg( $args, 'https://restrictcontentpro.com/pricing/' );
 	?>
 
 	<div class="rc-settings-sidebar">
@@ -195,7 +201,7 @@ function rc_display_sidebar() {
 			</div>
 
 			<div class="rc-sidebar-footer-section">
-				<a class="rc-cta-button" href="https://restrictcontentpro.com/pricing/<?php echo $utm_params; ?>" target="_blank"><?php _e( 'Upgrade Now!', 'restrict-content' ); ?></a>
+				<a class="rc-cta-button" href="<?php echo esc_url( $url ); ?>" target="_blank"><?php _e( 'Upgrade Now!', 'restrict-content' ); ?></a>
 			</div>
 
 		</div>

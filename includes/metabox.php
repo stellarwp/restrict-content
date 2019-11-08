@@ -126,19 +126,35 @@ function rcShowMetaBox() {
 	echo '<hr>';
 
 	if ( true === $maybe_display_promo ) {
+		$utm_args_bfcm = array(
+			'utm_source'   => 'rc-post-type-metabox',
+			'utm_medium'   => 'wp-admin',
+			'utm_campaign' => 'bfcm2019',
+			'utm_content'  => 'rc-' . $post->post_type . '-metabox',
+		);
+		$url_bfcm       = add_query_arg( $utm_args_bfcm, 'https://restrictcontentpro.com/pricing/' );
+
 		echo '<h3><span style="color: #2a76d2;">' . __( 'BLACK FRIDAY & CYBER MONDAY SALE! SAVE 25%', 'restrict-content' ) . '</span></h3>';
 		echo '<p>' .
 			sprintf(
 				__( 'Save 25&#37; on all Restrict Content Pro purchases <strong>this week</strong>, including renewals and upgrades! Use code <code>BCFM2019</code> at checkout. <a href="%s" target="_blank" rel="noopener noreferrer">Upgrade now</a>!', 'restrict-content' ),
-				'https://restrictcontentpro.com/pricing/?utm_source=rc-post-type-metabox&utm_medium=wp-admin&utm_campaign=bfcm2019&utm_content=rc-' . $post->post_type . '-metabox'
+				esc_url( $url_bfcm )
 			) .
 			'</p>';
 	} else {
+		$utm_args = array(
+			'utm_source'   => 'integration',
+			'utm_medium'   => 'admin',
+			'utm_campaign' => 'restrict-content',
+			'utm_content'  => $post->post_type,
+		);
+		$url      = add_query_arg( $utm_args, 'https://restrictcontentpro.com/' );
+
 		echo '<h4>' . __( 'Unlock more restriction options with Restrict Content Pro', 'restrict-content' ) . '</h4>';
 		echo '<p>' .
 			sprintf(
 				__( 'Need more flexibility with restrictions? Restrict Content Pro enables you to restrict content based on subscription levels, user levels, custom roles, and more! <a href="%s" target="_blank" rel="noopener noreferrer">Learn more...</a>', 'restrict-content' ),
-				'https://restrictcontentpro.com/?utm_source=integration&utm_medium=admin&utm_campaign=restrict-content&utm_content=' . $post->post_type
+				esc_url( $url )
 			) .
 			'</p>';
 	}
