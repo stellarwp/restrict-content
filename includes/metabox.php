@@ -130,7 +130,7 @@ function rcShowMetaBox() {
 			'utm_source'   => 'post-type-metabox',
 			'utm_medium'   => 'wp-admin',
 			'utm_campaign' => 'bfcm2019',
-			'utm_content'  => $post->post_type . '-metabox',
+			'utm_content'  => urlencode( $post->post_type . '-metabox' ),
 		);
 		$url_bfcm       = add_query_arg( $utm_args_bfcm, 'https://restrictcontentpro.com/pricing/' );
 
@@ -146,7 +146,7 @@ function rcShowMetaBox() {
 			'utm_source'   => 'integration',
 			'utm_medium'   => 'admin',
 			'utm_campaign' => 'restrict-content',
-			'utm_content'  => $post->post_type,
+			'utm_content'  => urlencode( $post->post_type ),
 		);
 		$url      = add_query_arg( $utm_args, 'https://restrictcontentpro.com/' );
 

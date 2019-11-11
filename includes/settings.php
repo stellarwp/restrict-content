@@ -196,7 +196,7 @@ function rc_display_sidebar() {
 
 			<div class="rc-sidebar-coupon-section">
 				<label for="rc-coupon-code"><?php _e( 'Use code at checkout:', 'restrict-content' ); ?></label>
-				<input id="rc-coupon-code" type="text" value="<?php echo $coupon_code; ?>" readonly>
+				<input id="rc-coupon-code" type="text" value="<?php echo esc_attr( $coupon_code ); ?>" readonly>
 				<p class="rc-coupon-note"><?php _e( 'Sale ends 23:59 PM December 6th CST. Save 25% on <a href="https://sandhillsdev.com/projects/" target="_blank">our other plugins</a>.', 'restrict-content' ); ?></p>
 			</div>
 
