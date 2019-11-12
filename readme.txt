@@ -5,7 +5,7 @@ Contributors: mordauk, mindctrl, nosegraze
 Tags: Restrict content, member, members, membership, memberships, member only, registration form, login form, restricted access, limit access, read only, access control
 Requires at least: 3.9
 Tested up to: 5.3
-Stable tag: 2.2.3
+Stable tag: 2.2.4
 
 Run your own membership website using the Restrict Content membership plugin for WordPress.
 
@@ -80,6 +80,12 @@ Go to the demo page to see examples:
 http://pippinsplugins.com/restricted-content-plugin-free/
 
 == Changelog ==
+
+= 2.2.4 =
+* Note: Tested with WordPress 5.3.
+* Improvement: Display `wp_signon()` errors while processing login.
+* Fix: Typo in setting description.
+* Tweak: Adjusted plugin author name and URL.
 
 = 2.2.3 =
 * Fix: Registration now works properly if you have JavaScript disabled in your browser.
