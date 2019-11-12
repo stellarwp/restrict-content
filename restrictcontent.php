@@ -22,8 +22,12 @@ if ( ! defined( 'RC_PLUGIN_VERSION' ) ) {
 	define( 'RC_PLUGIN_VERSION', '2.2.3' );
 }
 
-if( ! defined('RC_PLUGIN_DIR' ) ) {
-	define('RC_PLUGIN_DIR', dirname(__FILE__));
+if ( ! defined( 'RC_PLUGIN_DIR' ) ) {
+	define( 'RC_PLUGIN_DIR', dirname(__FILE__) );
+}
+
+if ( ! defined( 'RC_PLUGIN_URL' ) ) {
+	define( 'RC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 }
 
 /**
