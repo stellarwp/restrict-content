@@ -16,21 +16,15 @@
 function rc_settings_page() {
 	global $rc_options;
 
-	// Find out if we're displaying a sidebar. If so, add a class.
-	$maybe_display_promo = rc_maybe_display_promotion();
-	$wrapper_class       = ( true === $maybe_display_promo )
-		? ' rc-has-sidebar'
-		: '';
-
 	?>
 	<div class="wrap">
 		<div id="upb-wrap" class="upb-help">
 
-			<h2><?php _e( 'Restrict Content Settings', 'restrict-content' ); ?></h2>
+			<h2><?php _e( 'Restrict Content Settings', 'LION' ); ?></h2>
 
-			<div class="rc-settings-wrap<?php echo esc_attr( $wrapper_class ); ?>">
+			<div class="rcp-settings-wrap">
 
-				<div class="rc-settings-content">
+				<div class="rcp-settings-content">
 
 					<?php
 					if ( ! isset( $_REQUEST['updated'] ) ) {
@@ -39,7 +33,7 @@ function rc_settings_page() {
 					if ( false !== $_REQUEST['updated'] ) {
 						?>
 						<div class="updated fade">
-							<p><strong><?php _e( 'Options saved', 'restrict-content' ); ?> )</strong></p>
+							<p><strong><?php _e( 'Options saved', 'LION' ); ?> )</strong></p>
 						</div>
 						<?php
 					}
@@ -51,79 +45,67 @@ function rc_settings_page() {
 
 						<table class="form-table">
 							<tr valign="top">
-								<th colspan="2"><strong><?php _e( 'Short Code Messages', 'restrict-content' ); ?></strong></th>
+								<th colspan="2"><strong><?php _e( 'Short Code Messages', 'LION' ); ?></strong></th>
 							</tr>
 							<tr valign="top">
-								<th><?php _e( 'Restricted Message', 'restrict-content' ); ?></th>
+								<th><?php _e( 'Restricted Message', 'LION' ); ?></th>
 								<td>
 									<input id="rc_settings[shortcode_message]" class="large-text" name="rc_settings[shortcode_message]" type="text" value="<?php echo isset( $rc_options['shortcode_message'] ) ? esc_attr( $rc_options['shortcode_message'] ) : ''; ?>"/><br/>
-									<label class="description" for="rc_settings[shortcode_message]"><?php _e( 'When using the [restrict ... ] .... [/restrict] Short Code, this is the message displayed when a user does not have the appropriate permissions.', 'restrict-content' ); ?></label><br/>
-									<small style="color: #666;"><?php _e( 'The <strong>{userlevel}</strong> tag will be automatically replaced with the permission level needed.', 'restrict-content' ); ?></small>
+									<label class="description" for="rc_settings[shortcode_message]"><?php _e( 'When using the [restrict ... ] .... [/restrict] Short Code, this is the message displayed when a user does not have the appropriate permissions.', 'LION' ); ?></label><br/>
+									<small style="color: #666;"><?php _e( 'The <strong>{userlevel}</strong> tag will be automatically replaced with the permission level needed.', 'LION' ); ?></small>
 								</td>
 							</tr>
 							<tr>
 								<th colspan="2">
-									<strong><?php _e( 'User Level Restriction Messages', 'restrict-content' ); ?></strong></th>
+									<strong><?php _e( 'User Level Restriction Messages', 'LION' ); ?></strong></th>
 							</tr>
 							<tr valign="top">
-								<th><?php _e( 'Administrators', 'restrict-content' ); ?></th>
+								<th><?php _e( 'Administrators', 'LION' ); ?></th>
 								<td>
 									<input id="rc_settings[administrator_message]" class="large-text" name="rc_settings[administrator_message]" type="text" value="<?php echo isset( $rc_options['administrator_message'] ) ? esc_attr( $rc_options['administrator_message'] ) : ''; ?>"/><br/>
-									<label class="description" for="rc_settings[administrator_message]"><?php _e( 'Message displayed when a user does not have permission to view Administrator restricted content', 'restrict-content' ); ?></label><br/>
+									<label class="description" for="rc_settings[administrator_message]"><?php _e( 'Message displayed when a user does not have permission to view Administrator restricted content', 'LION' ); ?></label><br/>
 								</td>
 							</tr>
 							<tr valign="top">
-								<th><?php _e( 'Editors', 'restrict-content' ); ?></th>
+								<th><?php _e( 'Editors', 'LION' ); ?></th>
 								<td>
 									<input id="rc_settings[editor_message]" class="large-text" name="rc_settings[editor_message]" type="text" value="<?php echo isset( $rc_options['editor_message'] ) ? esc_attr( $rc_options['editor_message'] ) : ''; ?>"/><br/>
-									<label class="description" for="rc_settings[editor_message]"><?php _e( 'Message displayed when a user does not have permission to view Editor restricted content', 'restrict-content' ); ?></label><br/>
+									<label class="description" for="rc_settings[editor_message]"><?php _e( 'Message displayed when a user does not have permission to view Editor restricted content', 'LION' ); ?></label><br/>
 								</td>
 							</tr>
 							<tr valign="top">
-								<th><?php _e( 'Authors', 'restrict-content' ); ?></th>
+								<th><?php _e( 'Authors', 'LION' ); ?></th>
 								<td>
 									<input id="rc_settings[author_message]" class="large-text" name="rc_settings[author_message]" type="text" value="<?php echo isset( $rc_options['author_message'] ) ? esc_attr( $rc_options['author_message'] ) : ''; ?>"/><br/>
-									<label class="description" for="rc_settings[author_message]"><?php _e( 'Message displayed when a user does not have permission to view Author restricted content', 'restrict-content' ); ?></label><br/>
+									<label class="description" for="rc_settings[author_message]"><?php _e( 'Message displayed when a user does not have permission to view Author restricted content', 'LION' ); ?></label><br/>
 								</td>
 							</tr>
 							<tr valign="top">
-								<th><?php _e( 'Contributors', 'restrict-content' ); ?></th>
+								<th><?php _e( 'Contributors', 'LION' ); ?></th>
 								<td>
 									<input id="rc_settings[contributor_message]" class="large-text" name="rc_settings[contributor_message]" type="text" value="<?php echo isset( $rc_options['contributor_message'] ) ? esc_attr( $rc_options['contributor_message'] ) : ''; ?>"/><br/>
-									<label class="description" for="rc_settings[contributor_message]"><?php _e( 'Message displayed when a user does not have permission to view Contributor restricted content', 'restrict-content' ); ?></label><br/>
+									<label class="description" for="rc_settings[contributor_message]"><?php _e( 'Message displayed when a user does not have permission to view Contributor restricted content', 'LION' ); ?></label><br/>
 								</td>
 							</tr>
 							<tr valign="top">
-								<th><?php _e( 'Subscribers', 'restrict-content' ); ?></th>
+								<th><?php _e( 'Subscribers', 'LION' ); ?></th>
 								<td>
 									<input id="rc_settings[subscriber_message]" class="large-text" name="rc_settings[subscriber_message]" type="text" value="<?php echo isset( $rc_options['subscriber_message'] ) ? esc_attr( $rc_options['subscriber_message'] ) : ''; ?>"/><br/>
-									<label class="description" for="rc_settings[subscriber_message]"><?php _e( 'Message displayed when a user does not have permission to view Subscriber restricted content', 'restrict-content' ); ?></label><br/>
+									<label class="description" for="rc_settings[subscriber_message]"><?php _e( 'Message displayed when a user does not have permission to view Subscriber restricted content', 'LION' ); ?></label><br/>
 								</td>
 							</tr>
 						</table>
 
-						<?php
-						// Only show the RCP features if no sidebar is displaying
-						if ( false === $maybe_display_promo ) {
-							rc_pro_features();
-						}
-						?>
-
 						<!-- save the options -->
 						<p class="submit">
-							<input type="submit" class="button-primary" value="<?php _e( 'Save Options', 'restrict-content' ); ?>"/>
+							<input type="submit" class="button-primary" value="<?php _e( 'Save Options', 'rLION' ); ?>"/>
 						</p>
 
 					</form>
 
-				</div>
+					<?php rc_pro_features(); ?>
 
-				<?php
-				// Display a sidebar element when necessary
-				if ( true === $maybe_display_promo ) {
-					rc_display_sidebar();
-				}
-				?>
+				</div>
 
 			</div>
 
@@ -140,79 +122,17 @@ function rc_settings_page() {
 function rc_pro_features() {
 	?>
 
-	<div class="rc-pro-features">
-
-		<hr>
-		<h4><?php _e( 'Need more control?' ); ?></h4>
-		<p><?php _e( "Take your membership site to the next level with Restrict Content Pro. With RCP, you can:", 'restrict-content' ); ?></p>
-		<p>
-		<ul class="rc-settings-list" style="list-style-type: disc; list-style-position: inside">
-			<li><?php _e( 'Charge for access and add a recurring revenue stream to your business. PayPal, Stripe, 2Checkout, Authorize.net, Braintree, and Manual Payments are all supported.', 'restrict-content' ); ?></li>
-			<li><?php _e( 'Send and receive emails when members sign up, renew, cancel, and expire.', 'restrict-content' ); ?></li>
-			<li><?php _e( 'Generate invoices for subscription payments.', 'restrict-content' ); ?></li>
-			<li><?php _e( 'Prevent account sharing.', 'restrict-content' ); ?></li>
-			<li><?php _e( 'Subscribe members to your Mailchimp, AWeber, ConvertKit, ActiveCampaign, Campaign Monitor, GetResponse, or MailPoet mailing lists.', 'restrict-content' ); ?></li>
-			<li><?php _e( 'Drip content on a schedule.', 'restrict-content' ); ?></li>
-			<li><?php _e( 'Offer group accounts to businesses and other organizations.', 'restrict-content' ); ?></li>
-			<li><?php _e( 'Sell websites using WordPress multisite.', 'restrict-content' ); ?></li>
-			<li><?php _e( '... and a lot more!', 'restrict-content' ); ?></li>
-		</ul>
-		<?php printf(
-			__( '<a href="%s" target="_blank" rel="noopener noreferrer">Find out more...</a>', 'restrict-content' ),
-			'https://restrictcontentpro.com/?utm_campaign=restrict-content&utm_medium=admin&utm_source=settings&utm_content=main'
-		); ?>
-		</p>
-
-	</div>
-
-	<?php
-}
-
-/**
- * Display a sidebar element
- */
-function rc_display_sidebar() {
-	$coupon_code = 'BFCM2019';
-	$args        = array(
-		'utm_source'   => 'settings',
-		'utm_medium'   => 'wp-admin',
-		'utm_campaign' => 'bfcm2019',
-		'utm_content'  => 'sidebar-promo',
-	);
-	$url         = add_query_arg( $args, 'https://restrictcontentpro.com/pricing/' );
-	?>
-
-	<div class="rc-settings-sidebar">
-
-		<div class="rc-settings-sidebar-content">
-
-			<div class="rc-sidebar-header-section">
-				<img class="rc-bcfm-header" src="<?php echo esc_url( RC_PLUGIN_URL . '/includes/assets/images/bfcm-header.svg' ); ?>">
-			</div>
-
-			<div class="rc-sidebar-description-section">
-				<p class="rc-sidebar-description"><?php _e( 'Save 25% on all Restrict Content Pro purchases <strong>this week</strong>, including renewals and upgrades!', 'restrict-content' ); ?></p>
-			</div>
-
-			<div class="rc-sidebar-coupon-section">
-				<label for="rc-coupon-code"><?php _e( 'Use code at checkout:', 'restrict-content' ); ?></label>
-				<input id="rc-coupon-code" type="text" value="<?php echo esc_attr( $coupon_code ); ?>" readonly>
-				<p class="rc-coupon-note"><?php _e( 'Sale ends 23:59 PM December 6th CST. Save 25% on <a href="https://sandhillsdev.com/projects/" target="_blank">our other plugins</a>.', 'restrict-content' ); ?></p>
-			</div>
-
-			<div class="rc-sidebar-footer-section">
-				<a class="rc-cta-button" href="<?php echo esc_url( $url ); ?>" target="_blank"><?php _e( 'Upgrade Now!', 'restrict-content' ); ?></a>
-			</div>
-
-		</div>
-
-		<div class="rc-sidebar-logo-section">
-			<div class="rc-logo-wrap">
-				<img class="rc-logo" src="<?php echo esc_url( RC_PLUGIN_URL . '/includes/assets/images/restrict-content-pro-logo-light.svg' ); ?>">
-			</div>
-		</div>
-
-	</div>
+    <div class="rcp-pro-banner">
+        <div class="rcp-pro-logo">
+            <img src="<?php echo esc_url( RC_PLUGIN_URL . 'includes/assets/images/restrict-content-pro-logo.svg'); ?>" >
+        </div>
+        <div class="rcp-unlock-text">
+            <h2><?php _e( 'Grow Your Sales with Premium Features and Add-ons in Restrict Content PRO', 'LION' ); ?></h2>
+        </div>
+        <div class="rcp-pro-button">
+            <a href="https://restrictcontentpro.com/demo/"><?php _e( 'Try Before You Buy', 'LION' ); ?></a>
+        </div>
+    </div>
 
 	<?php
 }
@@ -229,12 +149,140 @@ function rc_register_settings() {
 add_action( 'admin_init', 'rc_register_settings' );
 
 /**
- * Add link to settings page in menu
+ * Register plugin settings
  *
  * @return void
  */
 function rc_settings_menu() {
-
-	add_submenu_page( 'options-general.php', __( 'Restrict Content Settings', 'restrict-content' ), __( 'Restrict Content', 'restrict-content' ), 'manage_options', 'restrict-content-settings', 'rc_settings_page' );
+	add_menu_page( __( 'Restrict Content Settings', 'LION' ), __( 'Restrict', 'LION'), 'manage_options', 'restrict-content-settings', 'rc_settings_page' );
+	$rc_settings_page = add_submenu_page( 'restrict-content-settings', __( 'Settings', 'LION' ), __( 'Settings', 'LION' ), 'manage_options', 'restrict-content-settings', 'rc_settings_page' );
+	$rc_why_go_pro_page = add_submenu_page( 'restrict-content-settings', __( 'Why Go Pro', 'LION' ), __( 'Why go Pro', 'LION' ), 'manage_options', 'rcp-why-go-pro', 'rc_why_go_pro_page' );
 }
-add_action( 'admin_menu', 'rc_settings_menu' );
+add_action( 'admin_menu', 'rc_settings_menu');
+
+/**
+ * Render Why Go Pro Page
+ *
+ * @return void
+ */
+function rc_why_go_pro_page() {
+    ?>
+    <div class="wrap">
+        <div class="rcp-why-go-pro-wrap">
+            <img class="restrict-content-logo" src="<?php echo esc_url( RC_PLUGIN_URL . '/includes/assets/images/restrict_content_logo.svg' ); ?>" >
+            <div class="rcp-go-pro-color-container">
+                <div class="rcp-why-go-pro-inner-wrapper">
+                    <div class="rcp-top-header">
+                        <h1>
+                            <?php _e( 'Why Go Pro?', 'LION' ); ?></h1>
+                        <img src="<?php echo esc_url( RC_PLUGIN_URL . 'includes/assets/images/flying_rex.png' ); ?>" >
+                    </div>
+                    <h2><?php _e( 'Grow Your Sales with Premium Features and Add-ons in Restrict Content PRO', 'LION' ); ?></h2>
+                    <div class="rcp-pro-features-container">
+                        <!-- MEMBERSHIP LEVELS FEATURE -->
+                        <a href="https://restrictcontentpro.com/tour/features/subscription-levels/">
+                            <div class="rcp-membership-levels feature">
+                                <img src="<?php echo esc_url( RC_PLUGIN_URL . 'includes/assets/images/memb-levels.svg' ); ?>" >
+                                <div class="feature-text">
+                                    <h3><?php _e( 'Membership Levels', 'LION' ); ?></h3>
+                                    <p><?php _e( 'Offer multiple membership levels with unique prices and restrictions.', 'LION' ); ?></p>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- COLLECT PAYMENTS FEATURE -->
+                        <a href="https://restrictcontentpro.com/tour/payment-gateways/">
+                            <div class="rcp-collect-payments feature">
+                                <img src="<?php echo esc_url( RC_PLUGIN_URL . 'includes/assets/images/collect-payments.svg' ); ?>" >
+                                <div class="feature-text">
+                                    <h3><?php _e( 'Collect Payments', 'LION' ); ?></h3>
+                                    <p><?php _e( "Collect recurring payments is easy with Restrict Content Pro's simple payment gateway integrations.", 'LION' ); ?></p>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- CUSTOMER DASHBOARD FEATURE -->
+                        <a href="https://restrictcontentpro.com/tour/features/">
+                            <div class="rcp-customer-dashboard feature">
+                                <img src="<?php echo esc_url( RC_PLUGIN_URL . 'includes/assets/images/customer-dash.svg' ); ?>" >
+                                <div class="feature-text">
+                                    <h3><?php _e( 'Customer Dashboard', 'LION' ); ?></h3>
+                                    <p><?php _e( 'Let your members easily view and manage their account details.', 'LION' ); ?></p>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- MARKETING INTEGRATION FEATURE -->
+                        <a href="https://restrictcontentpro.com/add-ons/pro/">
+                            <div class="rcp-marketing-integration feature">
+                                <img src="<?php echo esc_url( RC_PLUGIN_URL . 'includes/assets/images/mkt-integration.svg' ); ?>" >
+                                <div class="feature-text">
+                                    <h3><?php _e( 'Marketing Integration', 'LION' ); ?></h3>
+                                    <p><?php _e( 'Subscribe members to your Mailchimp, AWeber, ConvertKit, etc., mailing lists.', 'LION' ); ?></p>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- GROUP ACCOUNTS FEATURE -->
+                        <a href="https://restrictcontentpro.com/downloads/group-accounts/">
+                            <div class="rcp-group-accounts feature">
+                                <img src="<?php echo esc_url( RC_PLUGIN_URL . 'includes/assets/images/group-acct.svg' ); ?>" >
+                                <div class="feature-text">
+                                    <h3><?php _e( 'Group Accounts', 'LION' ); ?></h3>
+                                    <p><?php _e( 'Sell enterprise or group memberships with multiple sub accounts.', 'LION' ); ?></p>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- DRIP CONTENT FEATURE -->
+                        <a href="https://restrictcontentpro.com/downloads/drip-content/">
+                            <div class="rcp-drip-content feature">
+                                <img src="<?php echo esc_url( RC_PLUGIN_URL . 'includes/assets/images/drip-content.svg' ); ?>" >
+                                <div class="feature-text">
+                                    <h3><?php _e( 'Drip Content', 'LION' ); ?></h3>
+                                    <p><?php _e( 'Time-release content to new members based on their start date.', 'LION' ); ?></p>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- OFFER DISCOUNTS FEATURE -->
+                        <a href="https://restrictcontentpro.com/tour/features/discount-codes/">
+                            <div class="rcp-offer-discounts feature">
+                                <img src="<?php echo esc_url( RC_PLUGIN_URL . 'includes/assets/images/offer-discounts.svg' ); ?>" >
+                                <div class="feature-text">
+                                    <h3><?php _e( 'Offer Discounts', 'LION' ); ?></h3>
+                                    <p><?php _e( 'Attract new customers with special promotional codes that give them a discount on the purchase of a membership.', 'LION' ); ?></p>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- RESTRICT PAST CONTENT FEATURE -->
+                        <a href="https://restrictcontentpro.com/downloads/restrict-past-content/">
+                            <div class="rcp-restrict-past-content feature">
+                                <img src="<?php echo esc_url( RC_PLUGIN_URL . 'includes/assets/images/restrict-content.svg' ); ?>" >
+                                <div class="feature-text">
+                                    <h3><?php _e( 'Restrict Past Content', 'LION' ); ?></h3>
+                                    <p><?php _e( "Restrict content published before a member's join date.", 'LION' ); ?></p>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- PREMIUM SUPPORT FEATURE -->
+                        <div class="rcp-premium-support feature">
+                            <img src="<?php echo esc_url( RC_PLUGIN_URL . 'includes/assets/images/premium-support.svg' ); ?>" >
+                            <div class="feature-text">
+                                <h3><?php _e( 'Premium Support', 'LION' ); ?></h3>
+                                <p><?php _e( 'Get help from our team of membership experts.', 'LION' ); ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rcp-why-go-pro-buttons-container">
+                        <a class="try-before-you-buy" href="https://restrictcontentpro.com/demo/">
+                            <?php _e( 'Try Before You Buy', 'LION' ); ?>
+                        </a>
+                        <a class="rcp-unlock-pro-features-add-ons" href="https://restrictcontentpro.com/pricing/">
+                            <?php _e( 'Unlock Pro Features & Add-Ons', 'LION' ); ?>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+function rc_screen_options() {
+
+}

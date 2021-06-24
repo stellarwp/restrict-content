@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Restrict Content
- * Plugin URL: http://pippinsplugins.com/restricted-content-plugin-free/
+ * Plugin URL: https://restrictcontentpro.com/
  * Description: Restrict Content to registered users only. This is a simple plugin that will allow you to easily restrict complete posts / pages to logged in users only.
- * Version: 2.2.4
- * Author: Sandhills Development, LLC
- * Author URI: https://sandhillsdev.com
+ * Version: 2.2.6
+ * Author: iThemes
+ * Author URI: https://ithemes.com
  * Contributors: mordauk
  * Tags: Restrict content, member only, registered, logged in, restricted access, restrict access, limiit access, read-only, read only
  */
@@ -19,7 +19,7 @@
 $rc_options = get_option( 'rc_settings' );
 
 if ( ! defined( 'RC_PLUGIN_VERSION' ) ) {
-	define( 'RC_PLUGIN_VERSION', '2.2.4' );
+	define( 'RC_PLUGIN_VERSION', '2.2.6' );
 }
 
 if ( ! defined( 'RC_PLUGIN_DIR' ) ) {
@@ -74,3 +74,7 @@ function rc_deactivate_plugin() {
 	}
 }
 add_action( 'admin_init', 'rc_deactivate_plugin' );
+
+if ( is_admin() && file_exists( RC_PLUGIN_DIR . '/lib/icon-fonts/load.php' ) ) {
+	require( RC_PLUGIN_DIR . "/lib/icon-fonts/load.php" );
+}

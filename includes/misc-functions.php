@@ -76,7 +76,7 @@ function rc_get_error_messages_html( $error_id = '' ) {
 
 	if( $errors ) {
 
-		$html .= '<div class="rc-message error">';
+		$html .= '<div class="rcp-message error">';
 
 		foreach( $errors as $code ) {
 
@@ -84,7 +84,7 @@ function rc_get_error_messages_html( $error_id = '' ) {
 
 				$message = rc_errors()->get_error_message( $code );
 
-				$html .= '<p class="rc-error ' . esc_attr( $code ) . '"><span>' . $message . '</span></p>';
+				$html .= '<p class="rcp-error ' . esc_attr( $code ) . '"><span>' . $message . '</span></p>';
 
 			}
 
@@ -117,23 +117,3 @@ function rc_filter_get_post_meta( $value, $object_id, $key ) {
 	return get_post_meta( $object_id, 'rcp_user_level', true );
 }
 add_filter( 'get_post_metadata', 'rc_filter_get_post_meta', 10, 3 );
-
-/**
- * Check to see if we should be displaying a promotion
- *
- * @since 2.2.4
- */
-function rc_maybe_display_promotion() {
-
-	// Set the date/time range based on UTC
-	$start = strtotime( '2019-11-29 06:00:00' );
-	$end   = strtotime( '2019-12-07 05:59:59' );
-	$now   = time();
-
-	// Only display sidebar if the page is loaded within the date range
-	if ( ( $now > $start ) && ( $now < $end ) ) {
-		return true;
-	}
-
-	return false;
-}

@@ -1,14 +1,14 @@
 /* Content */
-.rc-has-sidebar .rc-pro-features {
+.rcp-has-sidebar .rcp-pro-features {
 	display: none;
 }
 
 /* Sidebar */
-.rc-settings-sidebar {
+.rcp-settings-sidebar {
 	padding-top: 27px;
 }
 
-.rc-settings-sidebar-content {
+.rcp-settings-sidebar-content {
 	background-color: #fff;
 	text-align: center;
 	border: 1px solid #ddd;
@@ -16,14 +16,14 @@
 	max-width: 380px;
 }
 
-.rc-settings-sidebar-content p {
+.rcp-settings-sidebar-content p {
 	font-size: 14px;
 	line-height: 1.5;
 	margin-top: 0;
 }
 
 /* Sidebar header section */
-.rc-sidebar-header-section {
+.rcp-sidebar-header-section {
 	background-color: #2a76d2;
 	line-height: 1;
 	padding: 26px 20px 24px;
@@ -31,34 +31,34 @@
 }
 
 /* Sidebar description section */
-.rc-sidebar-description-section {
+.rcp-sidebar-description-section {
 	background-color: #fafafa;
 	padding: 16px 20px;
 	border-bottom: 1px solid #ddd;
 }
 
-.rc-sidebar-description-section .rc-sidebar-description {
+.rcp-sidebar-description-section .rcp-sidebar-description {
 	margin: 0;
 }
 
 /* Sidebar coupon section */
-.rc-sidebar-coupon-section {
+.rcp-sidebar-coupon-section {
 	font-size: 14px;
 	padding: 16px 20px;
 }
 
-.rc-sidebar-coupon-section label {
+.rcp-sidebar-coupon-section label {
 	display: block;
 	line-height: 1.4;
 	margin-bottom: 6px;
 }
 
-.rc-sidebar-coupon-section label strong {
+.rcp-sidebar-coupon-section label strong {
 	color: #253b51;
 	font-weight: 700;
 }
 
-.rc-sidebar-coupon-section input {
+.rcp-sidebar-coupon-section input {
 	background: #ebf4f9;
 	font-size: 22px;
 	font-weight: 600;
@@ -71,34 +71,34 @@
 	width: 100%;
 }
 
-.rc-sidebar-coupon-section input:focus {
+.rcp-sidebar-coupon-section input:focus {
 	border: 2px dashed #2a76d2;
 	box-shadow: none;
 }
 
-.rc-settings-sidebar-content .rc-coupon-note {
+.rcp-settings-sidebar-content .rcp-coupon-note {
 	color: #6c7883;
 	font-size: 13px;
 	font-style: italic;
 	margin: 0;
 }
 
-.rc-settings-sidebar-content .rc-coupon-note a {
+.rcp-settings-sidebar-content .rcp-coupon-note a {
 	color: #253b51;
 }
 
-.rc-settings-sidebar-content .rc-coupon-note a:hover {
+.rcp-settings-sidebar-content .rcp-coupon-note a:hover {
 	text-decoration: none;
 }
 
 /* Sidebar footer section */
-.rc-sidebar-footer-section {
+.rcp-sidebar-footer-section {
 	background-color: #fafafa;
 	padding: 16px 20px;
 	border-top: 1px solid #ddd;
 }
 
-.rc-sidebar-footer-section .rc-cta-button {
+.rcp-sidebar-footer-section .rcp-cta-button {
 	display: block;
 	background-color: #b685c9;
 	color: #fff;
@@ -115,31 +115,31 @@
 	transition: background-color .2s;
 }
 
-.rc-sidebar-footer-section .rc-cta-button:hover {
+.rcp-sidebar-footer-section .rcp-cta-button:hover {
 	background-color: #a577b7;
 }
 
 /* Sidebar after */
-.rc-sidebar-logo-section .rc-logo-wrap {
+.rcp-sidebar-logo-section .rcp-logo-wrap {
 	padding-top: 1em;
 	text-align: right;
 	margin-right: 20px;
 	max-width: 380px;
 }
 
-.rc-sidebar-logo-section .rc-logo {
+.rcp-sidebar-logo-section .rcp-logo {
 	max-width: 160px;
 }
 
 /* Sidebar responsive behavior */
 @media all and ( min-width: 1000px ) {
 
-	.rc-has-sidebar .rc-settings-content {
+	.rcp-has-sidebar .rcp-settings-content {
 		float: left;
 		width: 62%;
 	}
 
-	.rc-has-sidebar .rc-settings-sidebar {
+	.rcp-has-sidebar .rcp-settings-sidebar {
 		float: right;
 		width: 35%;
 	}
@@ -147,11 +147,321 @@
 
 @media all and ( min-width: 1240px ) {
 
-	.rc-has-sidebar .rc-settings-content {
+	.rcp-has-sidebar .rcp-settings-content {
 		width: 69%;
 	}
 
-	.rc-has-sidebar .rc-settings-sidebar {
+	.rcp-has-sidebar .rcp-settings-sidebar {
 		width: 28%;
+	}
+}
+
+.rcp-why-go-pro-wrap {
+
+}
+img.restrict-content-logo {
+    margin: 20px 0;
+}
+.rcp-why-go-pro-wrap .rcp-go-pro-color-container {
+	background: #2A76D2 0% 0% no-repeat padding-box;
+	border-radius: 34px;
+	padding: 1rem;
+}
+
+.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper {
+	background: transparent radial-gradient(closest-side at 50% 50%, #6EA5E5 0%, #2A76D2 67%, #2A76D2 100%) 0% 0% no-repeat padding-box;
+	border-radius: 34px;
+}
+
+.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-top-header {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-content: stretch;
+	justify-content: center;
+}
+
+.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-top-header img {
+	margin-left: 40px;
+}
+
+.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-top-header h1 {
+	font-style: normal;
+	font-variant: normal;
+	font-weight: bold;
+	font-size: 42px;
+	line-height: 63px;
+	color: #fff;
+}
+
+.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper a {
+	text-decoration: none;
+}
+
+.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper h2 {
+	text-align: center;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	font-size: 18px;
+	line-height: 27px;
+	color: #FFFFFF;
+	margin-bottom: 60px;
+}
+
+.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-pro-features-container {
+	display: grid;
+	grid-template-columns: repeat( auto-fill, minmax(311px, 1fr) );
+}
+
+.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-pro-features-container .feature {
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-template-rows: 140px;
+	gap: 10px 10px;
+}
+
+.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-pro-features-container .feature img {
+	background: #CFE0F4 0% 0% no-repeat padding-box;
+	border: 1px solid #CFE0F4;
+	border-radius: 7px;
+	width: 42px;
+	height: 42px;
+	padding: 10px;
+}
+
+.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-pro-features-container .feature h3 {
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	font-size: 18px;
+	color: #FFFFFF;
+	margin: 0px;
+}
+
+.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-pro-features-container .feature p {
+	text-align: left;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 19px;
+	color: #FFFFFF;
+    margin: 5px 20px 10px 0px;
+}
+
+.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-why-go-pro-buttons-container {
+	text-align: center;
+}
+
+.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-why-go-pro-buttons-container .try-before-you-buy {
+	border: 4px solid #B685C9;
+	border-radius: 7px;
+	text-align: center;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 800;
+	font-size: 18px;
+	line-height: 27px;
+	color: #FFFFFF;
+	text-transform: capitalize;
+	background-color: transparent;
+	display: block;
+	padding: 1rem 0rem;
+}
+
+.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-why-go-pro-buttons-container .try-before-you-buy:hover {
+	cursor: pointer;
+	text-decoration: none;
+	color: #fff;
+	background: #a569bc;
+	border: 4px solid #a569bc;
+}
+
+.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-why-go-pro-buttons-container .rcp-unlock-pro-features-add-ons {
+	background: transparent linear-gradient(94deg, #B685C9 0%, #743195 100%) 0% 0% no-repeat padding-box;
+    
+	border-radius: 7px;
+	text-align: center;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 800;
+	font-size: 18px;
+	line-height: 27px;
+	color: #FFFFFF;
+	text-transform: capitalize;
+	border: none;
+	margin-top: 10px;
+	display: block;
+	padding: 1rem 0rem;
+}
+
+.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-why-go-pro-buttons-container .rcp-unlock-pro-features-add-ons:hover {
+	cursor: pointer;
+	text-decoration: none;
+	color: #fff;
+	background: #a569bc;
+}
+@media all and ( max-width: 782px ) {
+	.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-top-header {
+	    flex-direction: column-reverse;
+	}
+	.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-top-header img {
+		margin-left: 0px;
+	}
+	
+}
+@media all and ( min-width: 1080px ) {
+
+	.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-why-go-pro-buttons-container .rcp-why-go-pro-buttons-container {
+		margin: 0px auto;
+		display: flex;
+	}
+
+	.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-why-go-pro-buttons-container .try-before-you-buy {
+		width: 45%;
+		display: inline-block;
+		padding: .8rem;
+		height: auto;
+	}
+
+	.rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-why-go-pro-buttons-container .rcp-unlock-pro-features-add-ons {
+		width: 45%;
+		display: inline-block;
+		margin-top: 0px;
+		margin-left: 10px;
+		padding: 1rem;
+		height: auto;
+	}
+	
+}
+
+@media all and ( min-width: 1440px ) {
+	.rcp-why-go-pro-wrap .rcp-go-pro-color-container {
+		padding: 4rem;
+		max-width: 83%;
+	}
+
+	.rcp-pro-banner {
+		grid-template-columns: repeat( auto-fill, minmax(350px, 1fr) ) !important;
+	}
+}
+
+@media all and ( min-width: 1700px ) {
+	.rcp-why-go-pro-wrap .rcp-go-pro-color-container {
+		padding: 4rem;
+		max-width: 71%;
+	}
+}
+
+@media all and ( min-width: 1920px ) {
+	.rcp-why-go-pro-wrap .rcp-go-pro-color-container {
+		max-width: 1200px;
+		margin: 0px auto;
+	}
+}
+
+/* Upgrade Banner */
+.rcp-pro-banner {
+	background: #2A76D2;
+	border-radius: 7px;
+	display: grid;
+	grid-template-rows: auto;
+	gap: 20px 20px;
+	max-width: 1368px;
+}
+
+.rcp-pro-banner .b {
+	fill: white;
+}
+
+.rcp-pro-banner .a {
+	fill: white;
+}
+
+.rcp-pro-banner .rcp-pro-logo {
+	text-align: center;
+	margin-top: 10px;
+	width: 95%;
+	overflow: auto;
+	margin: 0px auto;
+	padding: 10px 0px 0px 0px;
+}
+
+.rcp-pro-banner .rcp-pro-logo svg {
+	margin-top: 16px;
+	margin-left: 20px;
+}
+
+.rcp-pro-banner .rcp-unlock-text {
+	width: 90%;
+	margin: 0px auto;
+}
+
+.rcp-pro-banner .rcp-unlock-text h2 {
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	font-size: 18px;
+	line-height: 27px;
+	color: #FFFFFF;
+	text-align: center;
+}
+
+.rcp-pro-banner .rcp-pro-button {
+	width: 90%;
+	margin: 0px auto;
+	padding: 0px 0px 10px 0px;
+}
+
+.rcp-pro-banner .rcp-pro-button a {
+	background: transparent linear-gradient(94deg, #B685C9 0%, #743195 100%) 0% 0% no-repeat padding-box;
+	border-radius: 7px;
+	text-align: center;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 800;
+	font-size: 18px;
+	line-height: 27px;
+	color: #FFFFFF;
+	text-transform: capitalize;
+	border: none;
+	margin-top: 10px;
+	display: block;
+	padding: 1rem 0rem;
+	text-decoration: none;
+}
+
+.rcp-pro-banner .rcp-pro-button a:hover {
+	cursor: pointer;
+	text-decoration: none;
+	color: #fff;
+	background: #a569bc;
+	border: 1px solid #a569bc;
+}
+
+@media all and ( min-width: 1200px ) {
+	.rcp-pro-banner {
+		grid-template-columns: repeat( auto-fill, minmax(300px, 1fr) );
+		margin: 0px auto;
+		background: transparent linear-gradient(95deg, #2A76D2 0%, #CFE0F4 100%) 0% 0% no-repeat padding-box;
+	}
+
+	.rcp-pro-banner .rcp-pro-logo {
+		width: auto;
+	}
+
+	.rcp-pro-banner .rcp-unlock-text {
+		width: auto;
+	}
+
+	.rcp-pro-banner .rcp-pro-button {
+		width: 100%;
+		padding: 0px;
+	}
+
+	.rcp-pro-banner .rcp-pro-button a {
+		margin: 15px;
 	}
 }

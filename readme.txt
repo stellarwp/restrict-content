@@ -1,11 +1,11 @@
 === WordPress Membership Plugin - Restrict Content ===
-Author URI: 		https://sandhillsdev.com
-Author: 			Sandhills Development, LLC
-Contributors: 		mordauk, mindctrl, nosegraze
+Author URI:             https://ithemes.com
+Author:                 iThemes
+Contributors:           jthillithemes, layotte, ithemes
 Tags: 				restrict pages, restrict posts, restrict access, registration form, access control
 Requires at least: 	3.9
-Tested up to: 		5.3
-Stable tag: 		2.2.4
+Tested up to: 		5.7.2
+Stable tag: 		2.2.6
 
 Running a membership site on WordPress doesn't have to be difficult. With Restrict Content you can limit access to exclusive content in minutes.
 
@@ -355,6 +355,16 @@ Go to the demo page to see examples:
 http://pippinsplugins.com/restricted-content-plugin-free/
 
 == Changelog ==
+
+= 2.2.6 =
+* Note: Tested with WordPress 5.7.2
+* Improvement: Moving Restrict Content Settings from Generic Settings Menu to Admin Menu as individual menu item.
+* Improvement: Adding additional styling to metabox settings.
+* Tweak: Adding Why Go Pro Page
+
+= 2.2.5 =
+* Note: Tested with WordPress 5.7
+* Updating Tested Up To Version
 
 = 2.2.4 =
 * Note: Tested with WordPress 5.3.

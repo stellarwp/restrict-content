@@ -88,14 +88,20 @@ function rcShowMetaBox() {
 	global $post;
 
 	$metabox             = rc_get_metabox();
-	$maybe_display_promo = rc_maybe_display_promotion();
 
 	// Use nonce for verification
 	echo '<input type="hidden" name="rcMetaNonce" value="' . esc_attr( wp_create_nonce( basename( __FILE__ ) ) ) . '" />';
 
 	echo '<table class="form-table">';
 
-	echo '<tr><td colspan="3">' . __( 'Use these options to restrict this entire entry, or the [restrict ...] ... [/restrict] short code to restrict partial content.', 'restrict-content' ) . '</td></tr>';
+
+	echo '<tr><td colspan="3">';
+	printf(
+		/* translators: %s: shortcode tag */
+		__( 'Use these options to restrict this entire entry, or the %1$s shortcode to restrict partial content.', 'LION' ),
+		'<code>[restrict ...] ... [/restrict]</code>'
+	);
+	echo '</td></tr>';
 
 	foreach ( $metabox['fields'] as $field ) {
 
@@ -125,39 +131,28 @@ function rcShowMetaBox() {
 
 	echo '<hr>';
 
-	if ( true === $maybe_display_promo ) {
-		$utm_args_bfcm = array(
-			'utm_source'   => 'post-type-metabox',
-			'utm_medium'   => 'wp-admin',
-			'utm_campaign' => 'bfcm2019',
-			'utm_content'  => urlencode( $post->post_type . '-metabox' ),
-		);
-		$url_bfcm       = add_query_arg( $utm_args_bfcm, 'https://restrictcontentpro.com/pricing/' );
+	$utm_args = array(
+		'utm_source'   => 'integration',
+		'utm_medium'   => 'admin',
+		'utm_campaign' => 'restrict-content',
+		'utm_content'  => urlencode( $post->post_type ),
+	);
+	$url      = add_query_arg( $utm_args, 'https://restrictcontentpro.com/' );
 
-		echo '<h3><span style="color: #2a76d2;">' . __( 'BLACK FRIDAY & CYBER MONDAY SALE! SAVE 25%', 'restrict-content' ) . '</span></h3>';
-		echo '<p>' .
-			sprintf(
-				__( 'Save 25&#37; on all Restrict Content Pro purchases <strong>this week</strong>, including renewals and upgrades! Use code <code>BCFM2019</code> at checkout. <a href="%s" target="_blank" rel="noopener noreferrer">Upgrade now</a>!', 'restrict-content' ),
-				esc_url( $url_bfcm )
-			) .
-			'</p>';
-	} else {
-		$utm_args = array(
-			'utm_source'   => 'integration',
-			'utm_medium'   => 'admin',
-			'utm_campaign' => 'restrict-content',
-			'utm_content'  => urlencode( $post->post_type ),
-		);
-		$url      = add_query_arg( $utm_args, 'https://restrictcontentpro.com/' );
-
-		echo '<h4>' . __( 'Unlock more restriction options with Restrict Content Pro', 'restrict-content' ) . '</h4>';
-		echo '<p>' .
-			sprintf(
-				__( 'Need more flexibility with restrictions? Restrict Content Pro enables you to restrict content based on subscription levels, user levels, custom roles, and more! <a href="%s" target="_blank" rel="noopener noreferrer">Learn more...</a>', 'restrict-content' ),
-				esc_url( $url )
-			) .
-			'</p>';
-	}
+	echo '<div class="rcp-go-pro-wrapper-metabox"><h4>';
+	printf(
+		/* translators: %s: href restrict content pro */
+		__( 'Unlock more restriction options with %1$s', 'LION' ),
+		'<a href="https://restrictcontentpro.com/pricing" target="_blank">Restrict Content Pro</a>'
+	);
+	echo '</h4>';
+	echo '<p>' .
+		sprintf(
+			__( 'Need more flexibility with restrictions? Restrict Content Pro enables you to restrict content based on subscription levels, user levels, custom roles, and more! <a href="%s" target="_blank" rel="noopener noreferrer">Learn more...</a>', 'restrict-content' ),
+			esc_url( $url )
+		) .
+		'</p>';
+	echo '</div>';
 
 }
 

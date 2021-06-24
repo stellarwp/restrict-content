@@ -8,7 +8,7 @@ jQuery(document).ready(function($) {
 
 		event.preventDefault();
 
-		$('.rc-message.error').remove();
+		$('.rcp-message.error').remove();
 
 		$(event.target).val(rc_register_options.strings.please_wait);
 

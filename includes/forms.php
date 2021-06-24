@@ -51,8 +51,8 @@ function rc_login_form_fields( array $args = array() ) {
 			rc_show_error_messages( 'login' );
 
 			if ( isset( $_GET['password-reset'] ) && $_GET['password-reset'] == 'true' ) : ?>
-				<div class="rc-message">
-					<p class="rc-success"><?php _e( 'Password changed successfully. Please log in with your new password.', 'restrict-content' ); ?></p>
+				<div class="rcp-message">
+					<p class="rcp-success"><?php _e( 'Password changed successfully. Please log in with your new password.', 'restrict-content' ); ?></p>
 				</div>
 			<?php endif; ?>
 
@@ -83,7 +83,7 @@ function rc_login_form_fields( array $args = array() ) {
 					<p>
 						<input type="hidden" name="rc_action" value="login"/>
 						<input type="hidden" name="rc_redirect" value="<?php echo esc_url( $args['redirect'] ); ?>"/>
-						<input type="hidden" name="rc_login_nonce" value="<?php echo wp_create_nonce( 'rc-login-nonce' ); ?>"/>
+						<input type="hidden" name="rc_login_nonce" value="<?php echo wp_create_nonce( 'rcp-login-nonce' ); ?>"/>
 						<input id="rc_login_submit" type="submit" value="<?php esc_attr_e( 'Login', 'restrict-content' ); ?>"/>
 					</p>
 
@@ -112,7 +112,7 @@ function rc_process_login_form() {
 		return;
 	}
 
-	if ( ! isset( $_POST['rc_login_nonce'] ) || ! wp_verify_nonce( $_POST['rc_login_nonce'], 'rc-login-nonce' ) ) {
+	if ( ! isset( $_POST['rc_login_nonce'] ) || ! wp_verify_nonce( $_POST['rc_login_nonce'], 'rcp-login-nonce' ) ) {
 		return;
 	}
 
@@ -204,7 +204,7 @@ function rc_lost_password_form() {
 				<p>
 					<input type="hidden" name="rc_action" value="lostpassword"/>
 					<input type="hidden" name="rc_redirect" value="<?php echo esc_url( rc_get_current_url() ); ?>"/>
-					<input type="hidden" name="rc_lostpassword_nonce" value="<?php echo wp_create_nonce( 'rc-lostpassword-nonce' ); ?>"/>
+					<input type="hidden" name="rc_lostpassword_nonce" value="<?php echo wp_create_nonce( 'rcp-lostpassword-nonce' ); ?>"/>
 					<input id="rc_lostpassword_submit" type="submit" value="<?php esc_attr_e( 'Request Password Reset', 'restrict-content' ); ?>"/>
 				</p>
 			</fieldset>
@@ -232,7 +232,7 @@ function rc_process_lost_password_form() {
 		return;
 	}
 
-	if ( ! isset( $_POST['rc_lostpassword_nonce'] ) || ! wp_verify_nonce( $_POST['rc_lostpassword_nonce'], 'rc-lostpassword-nonce' ) ) {
+	if ( ! isset( $_POST['rc_lostpassword_nonce'] ) || ! wp_verify_nonce( $_POST['rc_lostpassword_nonce'], 'rcp-lostpassword-nonce' ) ) {
 		return;
 	}
 
@@ -339,8 +339,8 @@ function rc_lost_password_check_email_message() {
 
 	if ( ! is_user_logged_in() ) : ?>
 
-		<div class="rc-message">
-			<p class="rc-info">
+		<div class="rcp-message">
+			<p class="rcp-info">
 				<?php esc_html_e( 'Check your e-mail for the confirmation link.', 'restrict-content' ); ?>
 			</p>
 		</div>
@@ -389,7 +389,7 @@ function rc_change_password_form( $args = array() ) {
 				<input type="hidden" name="rc_password_reset_key" value="<?php echo esc_attr( $key ); ?>"/>
 				<input type="hidden" name="rc_password_reset_login" value="<?php echo esc_attr( $login ); ?>"/>
 				<input type="hidden" name="rc_redirect" value="<?php echo esc_url( $args['redirect'] ); ?>"/>
-				<input type="hidden" name="rc_password_nonce" value="<?php echo wp_create_nonce('rc-password-nonce' ); ?>"/>
+				<input type="hidden" name="rc_password_nonce" value="<?php echo wp_create_nonce('rcp-password-nonce' ); ?>"/>
 				<input id="rc_password_submit" type="submit" value="<?php esc_attr_e( 'Change Password', 'restrict-content' ); ?>"/>
 			</p>
 		</fieldset>
@@ -407,7 +407,7 @@ function rc_process_change_password_form() {
 		return;
 	}
 
-	if ( ! isset( $_POST['rc_password_nonce'] ) || ! wp_verify_nonce( $_POST['rc_password_nonce'], 'rc-password-nonce' ) ) {
+	if ( ! isset( $_POST['rc_password_nonce'] ) || ! wp_verify_nonce( $_POST['rc_password_nonce'], 'rcp-password-nonce' ) ) {
 		return;
 	}
 
@@ -524,7 +524,7 @@ function rc_register_form_fields( array $args = array() ) {
 			</fieldset>
 
 			<p id="rc_submit_wrap">
-				<input type="hidden" name="rc_register_nonce" id="rc_register_nonce" value="<?php echo wp_create_nonce( 'rc-register-nonce' ); ?>"/>
+				<input type="hidden" name="rc_register_nonce" id="rc_register_nonce" value="<?php echo wp_create_nonce( 'rcp-register-nonce' ); ?>"/>
 				<input type="hidden" name="rc_redirect" id="rc_redirect" value="<?php echo esc_url( $args['redirect'] ); ?>"/>
 				<input type="submit" name="rc_submit_registration" id="rc_submit_registration" value="<?php esc_attr_e( 'Register', 'restrict-content' ); ?>"/>
 			</p>
@@ -541,7 +541,7 @@ function rc_register_form_fields( array $args = array() ) {
  */
 function rc_process_registration_form() {
 
-	if ( ! isset( $_POST['rc_register_nonce'] ) || ! wp_verify_nonce( $_POST['rc_register_nonce'], 'rc-register-nonce' ) ) {
+	if ( ! isset( $_POST['rc_register_nonce'] ) || ! wp_verify_nonce( $_POST['rc_register_nonce'], 'rcp-register-nonce' ) ) {
 		return;
 	}
 

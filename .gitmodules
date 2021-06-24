@@ -1,0 +1,3 @@
+[submodule "lib/icon-fonts"]
+	path = lib/icon-fonts
+	url = git@github.com:ithemes/icon-fonts.git
