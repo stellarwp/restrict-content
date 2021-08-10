@@ -50,10 +50,21 @@ add_action( 'wp_enqueue_scripts', 'rc_register_plugin_styles' );
 function rc_admin_styles( $hook_suffix ) {
 
 	// Only load admin CSS on Restrict Content Settings page
-	if ( 'toplevel_page_restrict-content-settings' == $hook_suffix || 'restrict_page_rcp-why-go-pro' == $hook_suffix ) {
+	if (
+		'toplevel_page_restrict-content-settings' == $hook_suffix ||
+		'restrict_page_rcp-why-go-pro' == $hook_suffix
+	) {
 		wp_enqueue_style( 'rcp-settings', trailingslashit( plugins_url() ) . 'restrict-content/includes/assets/css/rc-settings.css', array(), RC_PLUGIN_VERSION );
 	}
 
+	if ( 'admin_page_restrict-content-welcome' == $hook_suffix || 'restrict_page_rcp-need-help' == $hook_suffix ) {
+		wp_enqueue_style( 'rcp-settings', trailingslashit( plugins_url() ) . 'restrict-content/includes/assets/css/rc-settings.css', array(), RC_PLUGIN_VERSION );
+		wp_enqueue_style( 'rcp-wp-overrides', trailingslashit( plugins_url() ) . 'restrict-content/includes/assets/css/rc-wp-overrides.css', array(), RC_PLUGIN_VERSION );
+		wp_enqueue_script( 'rcp-admin-settings', trailingslashit( plugins_url() ) . 'restrict-content/includes/assets/js/rc-admin.js', array(), RC_PLUGIN_VERSION );
+	}
+
 	wp_enqueue_style('rcp-metabox', trailingslashit( plugins_url() ) . 'restrict-content/includes/assets/css/rc-metabox.css', array(), RC_PLUGIN_VERSION );
+
+
 }
 add_action( 'admin_enqueue_scripts', 'rc_admin_styles' );

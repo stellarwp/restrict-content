@@ -3,7 +3,7 @@
  * Plugin Name: Restrict Content
  * Plugin URL: https://restrictcontentpro.com/
  * Description: Restrict Content to registered users only. This is a simple plugin that will allow you to easily restrict complete posts / pages to logged in users only.
- * Version: 2.2.6
+ * Version: 2.2.8
  * Author: iThemes
  * Author URI: https://ithemes.com
  * Contributors: mordauk
@@ -18,8 +18,32 @@
 // load the plugin options
 $rc_options = get_option( 'rc_settings' );
 
+if ( $rc_options['shortcode_message'] === '' ) {
+	$rc_options['shortcode_message'] = 'You do not have access to this post.';
+}
+
+if ( $rc_options['administrator_message'] === '' ) {
+	$rc_options['administrator_message'] = 'This content is for Administrator Users.';
+}
+
+if ( $rc_options['editor_message'] === '' ) {
+	$rc_options['editor_message'] = 'This content is for Editor Users';
+}
+
+if ( $rc_options['author_message'] === '' ) {
+	$rc_options['author_message'] = 'This content is for Author Users';
+}
+
+if ( $rc_options['contributor_message'] === '' ) {
+	$rc_options['contributor_message'] = 'This content is for Author Users';
+}
+
+if ( $rc_options['subscriber_message'] === '' ) {
+	$rc_options['subscriber_message'] = 'This content is for Subscriber Users';
+}
+
 if ( ! defined( 'RC_PLUGIN_VERSION' ) ) {
-	define( 'RC_PLUGIN_VERSION', '2.2.6' );
+	define( 'RC_PLUGIN_VERSION', '2.2.8' );
 }
 
 if ( ! defined( 'RC_PLUGIN_DIR' ) ) {
@@ -77,4 +101,20 @@ add_action( 'admin_init', 'rc_deactivate_plugin' );
 
 if ( is_admin() && file_exists( RC_PLUGIN_DIR . '/lib/icon-fonts/load.php' ) ) {
 	require( RC_PLUGIN_DIR . "/lib/icon-fonts/load.php" );
+}
+
+register_activation_hook( __FILE__, function() {
+	if ( current_user_can( 'manage_options' ) ) {
+		add_option( 'Restrict_Content_Plugin_Activated', 'restrict-content' );
+	}
+} );
+
+add_action( 'admin_init', 'restrict_content_plugin_activation' );
+
+function restrict_content_plugin_activation() {
+	if ( is_admin() && get_option( 'Restrict_Content_Plugin_Activated' ) === 'restrict-content' ) {
+		delete_option('Restrict_Content_Plugin_Activated' );
+		wp_safe_redirect( admin_url( 'admin.php?page=restrict-content-welcome' ) );
+		die();
+	}
 }

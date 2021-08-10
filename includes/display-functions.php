@@ -82,6 +82,7 @@ function rcMetaDisplaySubscriber( $content ) {
 	global $post;
 
 	$rcp_user_level = get_post_meta( $post->ID, 'rcp_user_level', true );
+	$rc_options['subscriber_message'] = '';
 
 	if ( $rcp_user_level == 'Administrator' || $rcp_user_level == 'Editor' || $rcp_user_level == 'Author' || $rcp_user_level == 'Contributor' ) {
 		return do_shortcode( $rc_options['subscriber_message'] );
@@ -104,7 +105,12 @@ function rcMetaDisplayNone( $content ) {
 
 	$rcp_user_level = get_post_meta( $post->ID, 'rcp_user_level', true );
 
-	if ( ! current_user_can( 'read' ) && ( $rcp_user_level == 'Administrator' || $rcp_user_level == 'Editor' || $rcp_user_level == 'Author' || $rcp_user_level == 'Contributor' || $rcp_user_level == 'Subscriber' ) ) {
+	if ( ! current_user_can( 'read' ) &&
+	     ( $rcp_user_level == 'Administrator' ||
+	       $rcp_user_level == 'Editor' ||
+	       $rcp_user_level == 'Author' ||
+	       $rcp_user_level == 'Contributor' ||
+	       $rcp_user_level == 'Subscriber' ) ) {
 		$userLevelMessage = strtolower( $rcp_user_level );
 
 		return do_shortcode( $rc_options[ $userLevelMessage . '_message' ] );
