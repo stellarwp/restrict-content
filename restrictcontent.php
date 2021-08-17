@@ -3,7 +3,7 @@
  * Plugin Name: Restrict Content
  * Plugin URL: https://restrictcontentpro.com/
  * Description: Restrict Content to registered users only. This is a simple plugin that will allow you to easily restrict complete posts / pages to logged in users only.
- * Version: 2.2.8
+ * Version: 2.2.9
  * Author: iThemes
  * Author URI: https://ithemes.com
  * Contributors: mordauk
@@ -43,7 +43,7 @@ if ( $rc_options['subscriber_message'] === '' ) {
 }
 
 if ( ! defined( 'RC_PLUGIN_VERSION' ) ) {
-	define( 'RC_PLUGIN_VERSION', '2.2.8' );
+	define( 'RC_PLUGIN_VERSION', '2.2.9' );
 }
 
 if ( ! defined( 'RC_PLUGIN_DIR' ) ) {

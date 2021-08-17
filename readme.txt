@@ -5,7 +5,7 @@ Contributors:           jthillithemes, layotte, ithemes
 Tags: 				restrict pages, restrict posts, restrict access, registration form, access control
 Requires at least: 	3.9
 Tested up to: 		5.8
-Stable tag: 		2.2.8
+Stable tag: 		2.2.9
 
 Running a membership site on WordPress doesn't have to be difficult. With Restrict Content you can limit access to exclusive content in minutes.
 
@@ -355,6 +355,9 @@ Go to the demo page to see examples:
 http://pippinsplugins.com/restricted-content-plugin-free/
 
 == Changelog ==
+
+= 2.2.9 =
+* Note: Version Bump
 
 = 2.2.8 =
 * Note: Tested with WordPress 5.8
