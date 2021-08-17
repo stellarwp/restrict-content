@@ -409,8 +409,17 @@ function rc_welcome_page() {
     <?php
 }
 
+add_action( 'in_admin_header', function() {
+    if ( ! empty( $_GET['page'] ) && $_GET['page'] === 'rcp-why-go-pro' ) {
+	    remove_all_actions( 'all_admin_notices' );
+	    remove_all_actions( 'network_admin_notices' );
+	    remove_all_actions( 'admin_notices' );
+    }
+});
+
 function rc_need_help_page() {
 	$rc_welcome_try_free_meta_nonce = wp_create_nonce( 'rc_welcome_try_free_meta_nonce' );
+
     ?>
     <div class="restrict-content-welcome-header">
         <img class="restrict-content-logo" src="<?php echo esc_url( RC_PLUGIN_URL . '/includes/assets/images/restrict_content_logo.svg' ); ?>" >
@@ -543,6 +552,39 @@ function rc_screen_options() {
 
 }
 
+function restrict_content_admin_try_free_success() {
+	if ( ! empty( $_GET['message'] ) && ! empty( $_GET['page'] ) && $_GET['page'] === 'rcp-need-help') {
+		if ( $_GET['message'] === 'success' ) {
+			?>
+            <div class="notice notice-success is-dismissible">
+                <p><?php _e( 'Email Sent Successfully.', 'LION' ); ?></p>
+            </div>
+			<?php
+		} else if ( $_GET['message'] === 'failed' ) {
+			?>
+            <div class="notice notice-error is-dismissible">
+                <p><?php _e( 'Unable to send email.', 'LION' ); ?></p>
+            </div>
+			<?php
+		}
+	} else if ( ! empty( $_GET['message'] ) && ! empty( $_GET['page'] ) && $_GET['page'] === 'restrict-content-welcome' ) {
+		if ( $_GET['message'] === 'success' ) {
+			?>
+            <div class="notice notice-success is-dismissible">
+                <p><?php _e( 'Email Sent Successfully.', 'LION' ); ?></p>
+            </div>
+			<?php
+		} else if ( $_GET['message'] === 'failed' ) {
+			?>
+            <div class="notice notice-error is-dismissible">
+                <p><?php _e( 'Unable to send email.', 'LION' ); ?></p>
+            </div>
+			<?php
+		}
+	}
+}
+add_action( 'admin_notices', 'restrict_content_admin_try_free_success' );
+
 function restrict_content_admin_try_free () {
 
 	if( isset( $_POST['rc_welcome_try_free_meta_nonce'] ) && wp_verify_nonce( $_POST['rc_welcome_try_free_meta_nonce'], 'rc_welcome_try_free_meta_nonce') ) {
@@ -558,12 +600,13 @@ function restrict_content_admin_try_free () {
 		);
 
         $response = wp_remote_request( 'https://api.ithemes.com/email/send', $fields );
+
         if ( ! is_wp_error( $response ) && $_POST['source_page'] === 'welcome_page' ) {
-	        wp_redirect( admin_url( 'admin.php?page=restrict-content-welcome') );
+	        wp_redirect( add_query_arg( 'message', 'success', admin_url( 'admin.php?page=restrict-content-welcome' ) ) );
         } else if ( ! is_wp_error( $response ) && $_POST['source_page'] === 'help_page' ) {
-	        wp_redirect( admin_url( 'admin.php?page=rcp-need-help') );
+	        wp_redirect( add_query_arg( 'message', 'success', admin_url( 'admin.php?page=rcp-need-help' ) ) );
         } else {
-	        wp_redirect( admin_url( 'admin.php?page=rcp-need-help') );
+	        wp_redirect( add_query_arg( 'message', 'failed', admin_url( 'admin.php?page=rcp-need-help' ) ) );
         }
     }
 }
