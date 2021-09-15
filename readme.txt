@@ -356,7 +356,7 @@ http://pippinsplugins.com/restricted-content-plugin-free/
 
 == Changelog ==
 
-= 2.2.9 =
+= 2.2.10 =
 * Fix: Options Comparison broken for new Installs
 
 = 2.2.9 =
