@@ -3,10 +3,9 @@
  * Plugin Name: Restrict Content
  * Plugin URL: https://restrictcontentpro.com/
  * Description: Restrict Content to registered users only. This is a simple plugin that will allow you to easily restrict complete posts / pages to logged in users only.
- * Version: 2.2.9
+ * Version: 2.2.10
  * Author: iThemes
  * Author URI: https://ithemes.com
- * Contributors: mordauk
  * Tags: Restrict content, member only, registered, logged in, restricted access, restrict access, limiit access, read-only, read only
  */
 
@@ -18,32 +17,34 @@
 // load the plugin options
 $rc_options = get_option( 'rc_settings' );
 
-if ( $rc_options['shortcode_message'] === '' ) {
-	$rc_options['shortcode_message'] = 'You do not have access to this post.';
-}
+if ( $rc_options !== FALSE ) {
+	if ( $rc_options['shortcode_message'] === '' ||  $rc_options['shortcode_message'] === FALSE ) {
+		$rc_options['shortcode_message'] = 'You do not have access to this post.';
+	}
 
-if ( $rc_options['administrator_message'] === '' ) {
-	$rc_options['administrator_message'] = 'This content is for Administrator Users.';
-}
+	if ( $rc_options['administrator_message'] === '' ||  $rc_options['administrator_message'] === FALSE ) {
+		$rc_options['administrator_message'] = 'This content is for Administrator Users.';
+	}
 
-if ( $rc_options['editor_message'] === '' ) {
-	$rc_options['editor_message'] = 'This content is for Editor Users';
-}
+	if ( $rc_options['editor_message'] === ''  ||  $rc_options['editor_message'] === FALSE ) {
+		$rc_options['editor_message'] = 'This content is for Editor Users';
+	}
 
-if ( $rc_options['author_message'] === '' ) {
-	$rc_options['author_message'] = 'This content is for Author Users';
-}
+	if ( $rc_options['author_message'] === ''  ||  $rc_options['author_message'] === FALSE ) {
+		$rc_options['author_message'] = 'This content is for Author Users';
+	}
 
-if ( $rc_options['contributor_message'] === '' ) {
-	$rc_options['contributor_message'] = 'This content is for Author Users';
-}
+	if ( $rc_options['contributor_message'] === ''  ||  $rc_options['contributor_message'] === FALSE ) {
+		$rc_options['contributor_message'] = 'This content is for Author Users';
+	}
 
-if ( $rc_options['subscriber_message'] === '' ) {
-	$rc_options['subscriber_message'] = 'This content is for Subscriber Users';
+	if ( $rc_options['subscriber_message'] === ''  ||  $rc_options['subscriber_message'] === FALSE ) {
+		$rc_options['subscriber_message'] = 'This content is for Subscriber Users';
+	}
 }
 
 if ( ! defined( 'RC_PLUGIN_VERSION' ) ) {
-	define( 'RC_PLUGIN_VERSION', '2.2.9' );
+	define( 'RC_PLUGIN_VERSION', '2.2.10' );
 }
 
 if ( ! defined( 'RC_PLUGIN_DIR' ) ) {
