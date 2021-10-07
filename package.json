@@ -1,0 +1,93 @@
+{
+  "name": "restrict-content",
+  "version": "3.0",
+  "description": "Set up a complete membership system for your WordPress site and deliver premium content to your members. Unlimited membership packages, membership management, discount codes, registration / login forms, and more.",
+  "homepage": "https://restrictcontentpro.com/",
+  "author": "iThemes <support@restrictcontentpro.com> (https://ithemes.com/)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com:restrictcontentpro/restrict-content-pro.git"
+  },
+  "bugs": {
+    "url": "https://restrictcontentpro.com/support/"
+  },
+  "license": "GPLv2+",
+  "private": true,
+  "directories": {
+    "tests": "tests",
+    "js": "",
+    "sass": "",
+    "css": "",
+    "build": "core/build",
+    "languages": "./languages"
+  },
+  "pot": {
+    "type": "wp-plugin",
+    "textdomain": "rcp",
+    "src": "restrict-content-pro.php",
+    "header": {
+      "bugs": "https://restrictcontentpro.com/support/",
+      "team": "Restrict Content Pro <support@restrictcontentpro.com>",
+      "last_translator": "Restrict Content Pro <support@restrictcontentpro.com>"
+    }
+  },
+  "dependencies": {
+    "@wordpress/block-editor": "^5.2.8",
+    "@wordpress/blocks": "^7.0.4",
+    "@wordpress/components": "^13.0.0",
+    "@wordpress/compose": "^3.25.0",
+    "@wordpress/data": "^4.27.0",
+    "@wordpress/edit-post": "^3.26.10",
+    "@wordpress/editor": "^9.25.10",
+    "@wordpress/element": "^2.19.1",
+    "@wordpress/i18n": "^3.18.0",
+    "@wordpress/plugins": "^2.24.7",
+    "@wordpress/scripts": "^13.0.3",
+    "@wordpress/url": "^2.22.0",
+    "classnames": "^2.3.1",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.0",
+    "@babel/core": "^7.10.5",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-export-default-from": "^7.10.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/plugin-transform-react-jsx": "^7.10.0",
+    "@babel/preset-env": "^7.13.9",
+    "@babel/runtime-corejs2": "^7.10.5",
+    "babel-plugin-lodash": "^3.3.4",
+    "eslint-plugin-jest": "^24.3.5",
+    "grunt": "~0.4.5",
+    "grunt-checktextdomain": "~1.0.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-compress": "~0.8.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-exec": "~0.4.5",
+    "grunt-newer": "^1.1.0",
+    "grunt-phpcs": "^0.4.0",
+    "grunt-potomo": "~3.2.0",
+    "grunt-text-replace": "^0.4.0",
+    "grunt-wp-i18n": "~0.5.1",
+    "grunt-wp-readme-to-markdown": "^0.9.0",
+    "load-grunt-config": "0.16.0",
+    "load-grunt-tasks": "~0.3.0"
+  },
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "wp-scripts core/build",
+    "check-engines": "wp-scripts check-engines",
+    "check-licenses": "wp-scripts check-licenses",
+    "format:js": "wp-scripts format-js",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "lint:md:docs": "wp-scripts lint-md-docs",
+    "lint:md:js": "wp-scripts lint-md-js",
+    "lint:pkg-json": "wp-scripts lint-pkg-json",
+    "packages-update": "wp-scripts packages-update",
+    "start": "wp-scripts start",
+    "test:e2e": "wp-scripts test-e2e",
+    "test:unit": "wp-scripts test-unit-js"
+  }
+}

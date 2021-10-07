@@ -1,0 +1,27 @@
+{
+  "apiVersion": 2,
+  "name": "restrict-content-pro/content-upgrade-redirect",
+  "title": "Content Upgrade Redirect",
+  "category": "restrict-content-pro",
+  "icon": "paperclip",
+  "description": "Link to a page containing a Registration Form, then redirect the registration form to the specified Redirect URL.",
+  "textdomain": "rcp",
+  "keywords": [ "restrict", "rcp", "content-upgrade-redirect" ],
+  "attributes": {
+    "redirectUrl": {
+      "type": "string"
+    },
+    "registrationUrl": {
+      "type": "string"
+    },
+    "loginUrl": {
+      "type": "string"
+    }
+  },
+  "editorScript": "file:../../../build/content-upgrade-redirect.js",
+  "editorStyle":  "file:../../../build/content-upgrade-redirect.css",
+  "style":        "file:../../../build/style-content-upgrade-redirect.css",
+  "supports": {
+    "html": false
+  }
+}
