@@ -45,7 +45,8 @@
     "@wordpress/scripts": "^13.0.3",
     "@wordpress/url": "^2.22.0",
     "classnames": "^2.3.1",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "tmp": "^0.2.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.0",
