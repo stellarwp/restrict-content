@@ -33,16 +33,11 @@ function run( command, args, options ) {
             stdio: "inherit"
         } );
     }
-
     run( 'rsync', ['-a', '--delete', `${tempDir}/core/`, './core'], { stdio: "inherit" } );
-
     rmdirSync( tempDir, { recursive: true } );
-    rmdirSync( './dist/', { recursive: true } );
 
     run( 'npm', ['ci'], { stdio: "inherit" } );
     run( 'npm', ['run', 'build'], { stdio: "inherit" } );
-
-    run( './bin/composer-prod.sh', [], { stdio: "inherit" } );
 
     console.log( 'Update completed' );
 })().catch( ( e ) => {
