@@ -13,8 +13,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-//echo 'what what what';
-
 /**
  * Class RCP_Requirements_Check
  *
@@ -73,7 +71,6 @@ final class RCP_Requirements_Check {
 	 * @since 3.0
 	 */
 	public function __construct() {
-        echo 'construct';
 		// Setup file & base
 		$this->file = __FILE__;
 		$this->base = plugin_basename( $this->file );
@@ -93,7 +90,6 @@ final class RCP_Requirements_Check {
 	 * @since 3.0
 	 */
 	private function quit() {
-        echo 'quit';
 		add_action( 'admin_head',                        array( $this, 'admin_head'        ) );
 		add_filter( "plugin_action_links_{$this->base}", array( $this, 'plugin_row_links'  ) );
 		add_action( "after_plugin_row_{$this->base}",    array( $this, 'plugin_row_notice' ) );
@@ -107,8 +103,6 @@ final class RCP_Requirements_Check {
 	 * @since 3.0
 	 */
 	private function load() {
-
-        echo 'line 108';
         // If we find the rc_settings option then they were definitely using the old version
         if ( get_option( 'rc_settings' ) && ! get_option( 'restrict_content_pro_use_legacy_restrict_content' ) ) {
             add_option( 'restrict_content_pro_use_legacy_restrict_content', true);
@@ -116,7 +110,6 @@ final class RCP_Requirements_Check {
 
         // If restrict_content_pro_use_legacy_restrict_content then load old Restrict Content
         if ( get_option( 'restrict_content_pro_use_legacy_restrict_content' ) ) {
-            echo 'line 115';
             require_once dirname( $this->file ) . '/restrict-content/restrictcontent.php';
         } else {
             // Maybe include the bundled bootstrapper
@@ -143,7 +136,6 @@ final class RCP_Requirements_Check {
 	 * @since 3.0
 	 */
 	public function install() {
-        echo 'install';
 		// Bootstrap to include all of the necessary files
 		$this->bootstrap();
 
@@ -162,7 +154,6 @@ final class RCP_Requirements_Check {
 	 * @since 3.0
 	 */
 	public function bootstrap() {
-        echo 'bootstrap';
 		Restrict_Content_Pro::instance( $this->file );
 	}
 
