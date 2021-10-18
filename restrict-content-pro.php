@@ -495,7 +495,7 @@ function rc_process_legacy_switch() {
 
     if ( option_exists( 'restrict_content_pro_use_legacy_restrict_content' ) ) {
         if ( get_option( 'restrict_content_pro_use_legacy_restrict_content' ) == true ) {
-            $redirectUrl = admin_url( 'admin.php?page=restrict-content-settings' );
+            $redirectUrl = admin_url( 'admin.php?page=rcp-members' );
             update_option( 'restrict_content_pro_use_legacy_restrict_content', false );
             wp_send_json_success( array(
                 'success'  => true,
@@ -503,10 +503,8 @@ function rc_process_legacy_switch() {
                     'redirect' => $redirectUrl
                 ),
             ) );
-
-            wp_safe_redirect( $redirectUrl );
         } else {
-            $redirectUrl = admin_url( 'admin.php?page=rcp-members' );
+            $redirectUrl = admin_url( 'admin.php?page=restrict-content-settings' );
             update_option( 'restrict_content_pro_use_legacy_restrict_content', true );
             wp_send_json_success( array(
                 'success'  => true,
@@ -514,11 +512,9 @@ function rc_process_legacy_switch() {
                     'redirect' => $redirectUrl
                 )
             ) );
-
-            wp_safe_redirect( $redirectUrl );
         }
     } else {
-        $redirectUrl = admin_url( 'admin.php?page=rcp-members' );
+        $redirectUrl = admin_url( 'admin.php?page=restrict-content-settings' );
         update_option( 'restrict_content_pro_use_legacy_restrict_content', true );
         wp_send_json_success( array(
             'success'  => true,
@@ -526,8 +522,6 @@ function rc_process_legacy_switch() {
                 'redirect' => $redirectUrl
             )
         ) );
-
-        wp_safe_redirect( $redirectUrl );
     }
 }
 add_action( 'wp_ajax_rc_process_legacy_switch', 'rc_process_legacy_switch' );
@@ -545,7 +539,7 @@ function restrict_content_add_legacy_button_to_pro() {
                 type="button"
                 id="restrict_content_legacy_switch"
                 class="button-primary"
-                value="<?php _e( 'Switch back to the old version of Restrict Content?', 'LION' ); ?>"
+                value="<?php _e( 'Downgrade to Legacy Restrict Content?', 'LION' ); ?>"
         />
     </td>
     <?php
