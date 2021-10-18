@@ -826,6 +826,25 @@ jQuery(document).ready(function($) {
 	$( "#rcp-code" ).on( 'focusout', function() {
 		$(this).val($(this).val().replace(/[^a-z0-9]/gi, ''));
 	});
+
+	$('#restrict_content_legacy_switch').on('click', function () {
+		$.ajax({
+			data: {
+				action: 'rc_process_legacy_switch',
+				rc_process_legacy_nonce: $( '#rcp_settings_nonce').val()
+			},
+			type: "post",
+			url: ajaxurl,
+			success: function( response ) {
+				if ( response.success ) {
+					window.location.assign( response.data.redirect );
+				}
+			},
+				error: function( response ) {
+				console.dir( response );
+			}
+		})
+	});
 });
 
 let RCP_Settings = {

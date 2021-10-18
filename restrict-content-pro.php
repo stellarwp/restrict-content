@@ -104,12 +104,12 @@ final class RCP_Requirements_Check {
 	 */
 	private function load() {
         // If we find the rc_settings option then they were definitely using the old version
-        if ( get_option( 'rc_settings' ) && ! get_option( 'restrict_content_pro_use_legacy_restrict_content' ) ) {
-            add_option( 'restrict_content_pro_use_legacy_restrict_content', true);
+        $use_legacy_version = false;
+        if ( option_exists( 'restrict_content_pro_use_legacy_restrict_content' ) ) {
+            $use_legacy_version = get_option( 'restrict_content_pro_use_legacy_restrict_content' );
         }
-
         // If restrict_content_pro_use_legacy_restrict_content then load old Restrict Content
-        if ( get_option( 'restrict_content_pro_use_legacy_restrict_content' ) ) {
+        if ( $use_legacy_version ) {
             require_once dirname( $this->file ) . '/restrict-content/restrictcontent.php';
         } else {
             // Maybe include the bundled bootstrapper
@@ -473,3 +473,81 @@ final class RCP_Requirements_Check {
 
 // Invoke the checker
 new RCP_Requirements_Check();
+
+function option_exists($name, $site_wide=false){
+    global $wpdb; return $wpdb->query("SELECT * FROM ". ($site_wide ? $wpdb->base_prefix : $wpdb->prefix). "options WHERE option_name ='$name' LIMIT 1");
+}
+
+/**
+ * Processes the registration form and creates the user's account.
+ *
+ * @since 3.0
+ */
+function rc_process_legacy_switch() {
+
+    if ( ! isset( $_POST['rc_process_legacy_nonce'] ) || ! wp_verify_nonce( $_POST['rc_process_legacy_nonce'], 'rc_process_legacy_nonce' ) ) {
+        wp_send_json_error( array(
+            'success' => false,
+            'errors' => 'invalid nonce',
+        ) );
+        return;
+    }
+
+    if ( option_exists( 'restrict_content_pro_use_legacy_restrict_content' ) ) {
+        if ( get_option( 'restrict_content_pro_use_legacy_restrict_content' ) == true ) {
+            $redirectUrl = admin_url( 'admin.php?page=restrict-content-settings' );
+            update_option( 'restrict_content_pro_use_legacy_restrict_content', false );
+            wp_send_json_success( array(
+                'success'  => true,
+                'data'     => array(
+                    'redirect' => $redirectUrl
+                ),
+            ) );
+
+            wp_safe_redirect( $redirectUrl );
+        } else {
+            $redirectUrl = admin_url( 'admin.php?page=rcp-members' );
+            update_option( 'restrict_content_pro_use_legacy_restrict_content', true );
+            wp_send_json_success( array(
+                'success'  => true,
+                'data'     => array(
+                    'redirect' => $redirectUrl
+                )
+            ) );
+
+            wp_safe_redirect( $redirectUrl );
+        }
+    } else {
+        $redirectUrl = admin_url( 'admin.php?page=rcp-members' );
+        update_option( 'restrict_content_pro_use_legacy_restrict_content', true );
+        wp_send_json_success( array(
+            'success'  => true,
+            'data'     => array(
+                'redirect' => $redirectUrl
+            )
+        ) );
+
+        wp_safe_redirect( $redirectUrl );
+    }
+}
+add_action( 'wp_ajax_rc_process_legacy_switch', 'rc_process_legacy_switch' );
+
+function restrict_content_add_legacy_button_to_pro() {
+    ?>
+    <td>
+        <input
+                type="hidden"
+                name="rcp_settings_nonce"
+                id="rcp_settings_nonce"
+                value="<?php echo wp_create_nonce( 'rc_process_legacy_nonce' ); ?>"
+        />
+        <input
+                type="button"
+                id="restrict_content_legacy_switch"
+                class="button-primary"
+                value="<?php _e( 'Switch back to the old version of Restrict Content?', 'LION' ); ?>"
+        />
+    </td>
+    <?php
+}
+add_action( 'rcp_misc_settings', 'restrict_content_add_legacy_button_to_pro' );

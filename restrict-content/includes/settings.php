@@ -106,13 +106,29 @@ function rc_settings_page() {
                                     <label><a href="admin.php?page=restrict-content-welcome"><?php _e( 'View the Restrict Content Welcome page again for some helpful tips and links!', 'LION' ) ?></label>
                                 </td>
                             </tr>
+                            <tr>
+                                <th><?php _e( 'Switch Restrict Content Version', 'LION' ); ?></th>
+                                <td>
+                                    <input
+                                            type="hidden"
+                                            name="rcp_settings_nonce"
+                                            id="rcp_settings_nonce"
+                                            value="<?php echo wp_create_nonce( 'rc_process_legacy_nonce' ); ?>"
+                                    />
+                                    <input
+                                            type="button"
+                                            id="restrict_content_legacy_switch"
+                                            class="button-primary"
+                                            value="<?php _e( 'Use the new version of Restrict Content?', 'LION' ); ?>"
+                                    />
+                                </td>
+                            </tr>
 						</table>
 
 						<!-- save the options -->
 						<p class="submit">
 							<input type="submit" class="button-primary" value="<?php _e( 'Save Options', 'LION' ); ?>"/>
 						</p>
-
 					</form>
 
 					<?php rc_pro_features(); ?>
