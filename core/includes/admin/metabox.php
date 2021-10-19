@@ -76,7 +76,7 @@ function rcp_render_meta_box() {
 
 	do_action( 'rcp_metabox_fields_before' );
 
-	include RCP_PLUGIN_DIR . 'includes/admin/metabox-view.php';
+	include RCP_PLUGIN_DIR . 'core/includes/admin/metabox-view.php';
 
 	do_action( 'rcp_metabox_fields_after' );
 

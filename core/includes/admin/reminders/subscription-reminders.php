@@ -29,7 +29,7 @@ function rcp_hide_reminder_page() {
  */
 function rcp_subscription_reminder_page() {
 
-	include RCP_PLUGIN_DIR . 'includes/admin/reminders/subscription-reminder-view.php';
+	include RCP_PLUGIN_DIR . 'core/includes/admin/reminders/subscription-reminder-view.php';
 
 }
 

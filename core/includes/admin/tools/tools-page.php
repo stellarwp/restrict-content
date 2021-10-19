@@ -87,7 +87,7 @@ function rcp_get_tools_tabs() {
  */
 function rcp_tools_display_system_info() {
 
-	include RCP_PLUGIN_DIR . '/core/includes/admin/tools/system-info.php';
+	include RCP_PLUGIN_DIR . 'core/includes/admin/tools/system-info.php';
 	?>
 	<form action="<?php echo esc_url( admin_url( 'admin.php?page=rcp-tools' ) ); ?>" method="post" dir="ltr">
 		<textarea readonly="readonly" onclick="this.focus(); this.select()" id="rcp-system-info-textarea" name="rcp-sysinfo" title="To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac)."><?php echo rcp_tools_system_info_report(); ?></textarea>

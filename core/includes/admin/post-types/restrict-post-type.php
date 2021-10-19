@@ -32,7 +32,7 @@ function rcp_restrict_post_type_page() {
 					<?php
 					do_action( 'rcp_restrict_post_type_fields_before' );
 
-					include RCP_PLUGIN_DIR . 'includes/admin/post-types/restrict-post-type-view.php';
+					include RCP_PLUGIN_DIR . 'core/includes/admin/post-types/restrict-post-type-view.php';
 
 					do_action( 'rcp_restrict_post_type_fields_after' );
 					?>
