@@ -553,10 +553,11 @@ add_action( 'rcp_misc_settings', 'restrict_content_add_legacy_button_to_pro' );
  * @return void
  */
 function register_menus() {
-    global $restrict_content_pro_why_go_pro, $restrict_content_pro_help_page;
+    global $restrict_content_pro_why_go_pro, $restrict_content_pro_help_page, $restrict_content_pro_welcome_page;
 
-    $restrict_content_pro_why_go_pro = add_submenu_page( 'rcp-members', __( 'Why Go Pro', 'LION' ), __( 'Why go Pro', 'LION' ), 'manage_options', 'rcp-why-go-pro', 'rc_why_go_pro_page' );
-    $restrict_content_pro_help_page  = add_submenu_page( 'rcp-members', __( 'Help', 'LION' ), __( 'Help', 'LION' ), 'manage_options', 'rcp-need-help', 'rc_need_help_page' );
+    $restrict_content_pro_why_go_pro    = add_submenu_page( 'rcp-members', __( 'Why Go Pro', 'LION' ), __( 'Why go Pro', 'LION' ), 'manage_options', 'rcp-why-go-pro', 'rc_why_go_pro_page' );
+    $restrict_content_pro_help_page     = add_submenu_page( 'rcp-members', __( 'Help', 'LION' ), __( 'Help', 'LION' ), 'manage_options', 'rcp-need-help', 'rc_need_help_page' );
+    $restrict_content_pro_welcome_page  = add_submenu_page( null, __( 'Welcome', 'LION'), __( 'Welcome', 'LION' ), 'manage_options', 'restrict-content-welcome', 'rc_welcome_page' );
 }
 add_action( 'admin_menu', 'register_menus', 100 );
 
@@ -842,4 +843,132 @@ function rc_need_help_page() {
         </div>
     </div>
     <?php
+}
+
+function rc_welcome_page() {
+    $current_user = wp_get_current_user();
+
+    $rc_welcome_try_free_meta_nonce = wp_create_nonce( 'rc_welcome_try_free_meta_nonce' );
+    ?>
+    <div class="restrict-content-welcome-header">
+        <img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/restrict_content_logo.svg' ); ?>" >
+    </div>
+    <div class="restrict-content-welcome-top-container">
+        <div class="restrict-content-welcome-left-container">
+            <h1 class="restrict-content-welcome-user">
+                <?php
+                printf( __( 'Welcome %s!', 'LION' ),
+                    $current_user->first_name ?: $current_user->display_name
+                );
+                ?>
+            </h1>
+            <div class="restrict-content-inner-container">
+                <div class="restrict-content-welcome-body-container">
+                    <div class="restrict-content-welcome-body restrict-content-container-section">
+                        <h2 class="restrict-content-thanks-header"><?php _e( 'Thanks For Installing Restrict Content!', 'LION' ); ?></h2>
+                        <p class="restrict-content-thanks-message"><?php _e( 'Restrict Content is a simple WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.', 'LION' ); ?></p>
+                        <p class="restrict-content-thanks-message"><?php _e( 'Restrict access to your website based on user role so that your posts, pages, media, and custom post types become viewable by logged-in members only.', 'LION' ); ?></p>
+                    </div>
+                    <div class="restrict-content-welcome-standing-rex">
+                        <img src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/restrict-content-pro-rex-standing.png' ); ?>" >
+                    </div>
+                </div>
+                <div class="restrict-content-welcome-body-container">
+                    <div class="restrict-content-how-to-body restrict-content-container-section">
+                        <h2><?php _e( 'How To Use Restrict Content', 'LION' ); ?></h2>
+                        <p class="restrict-content-how-to-message"><?php _e( "To restrict an entire post or page, simply select the user level you'd like to restrict the post or page to from the drop down menu added just below the post/page editor.", 'LION' ); ?></p>
+                        <p class="restrict-content-how-to-message"><?php _e( 'Accepted user-level values are:', 'LION' ); ?></p>
+                        <p>
+                            * <?php _e( 'admin', 'LION' ); ?><br>
+                            * <?php _e( 'editor', 'LION' ); ?><br>
+                            * <?php _e( 'author', 'LION' ); ?><br>
+                            * <?php _e( 'subscriber', 'LION' ); ?><br>
+                            * <?php _e( 'contributor', 'LION' ); ?>
+                        </p>
+                        <p class="restrict-content-how-to-message"><?php _e( "To restrict just a section of content within a post or page or to display registration forms, you can use shortcodes:", 'LION' ); ?></p>
+                        <ul>
+                            <li><?php _e( 'Limit access to content with a shortcode. <span class="restrict-content-example-text">Example: [restrict] This content is limited to logged in users. [/restrict]</span>', 'LION' ); ?></li>
+                            <li><?php _e( 'Limit access to content based on user role. <span class="restrict-content-example-text">Example [restrict userlevel="editor"] Only editors and higher can see this contents.[/restrict]</span>', 'LION' ); ?></li>
+                            <li><?php _e( 'Limit access to content if user is not logged in. <span class="restrict-content-example-text">Example: [not_logged_in] This content is only shown to non-logged-in users.[/not_logged_in]</span>', 'LION' ); ?></li>
+                            <li><?php _e( 'Display a registration form for new accounts on any page of you website with <span class="restrict-content-example-text">[register_form].</span>', 'LION' ); ?></li>
+                            <li><?php _e( 'Display a login form for existing users on any page of your website with <span class="restrict-content-example-text">[login_form]</span>.', 'LION' ); ?></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="restrict-content-welcome-body-container">
+                    <div class="restrict-content-helpful-resources restrict-content-container-section">
+                        <h2><?php _e( 'Helpful Resources', 'LION' ); ?></h2>
+                        <div class="restrict-content-resource-container">
+                            <h3><?php _e( 'Getting Started with Restrict Content', 'LION' ); ?></h3>
+                            <p><?php _e( 'Learn how to start restricting content on your website.', 'LION' ); ?></p>
+                        </div>
+                        <div class="restrict-content-resource-container">
+                            <h3><?php _e( 'Help Center', 'LION' ); ?></h3>
+                            <p>
+                                <?php
+                                printf(
+                                    __( 'Our <a href="%s">Help Center</a> will help you become a Restrict Content & Restrict Content Pro expert.', 'LION' ),
+                                    'https://help.ithemes.com'
+                                );
+                                ?>
+                            </p>
+                        </div>
+                        <div class="restrict-content-resource-container">
+                            <h3><?php _e( 'Need More Control Over Your Content & Memberships?', 'LION' ); ?></h3>
+                            <p><?php _e( 'Check out Restrict Content Pro and our suite of add-ons for building awesome membership websites.', 'LION' ); ?> <br><a href="https://restrictcontentpro.com/add-ons/">https://restrictcontentpro.com/add-ons/</a></p>
+                        </div>
+                        <div class="restrict-content-resource-container">
+                            <h3><?php _e( 'Introduction to Restrict Content Pro', 'LION' ); ?></h3>
+                            <p><?php _e( 'Get a full overview of Restrict Content Pro and dive into several of its key features.', 'LION' ) ?><br><a href="https://training.ithemes.com/webinar/introduction-to-restrict-content-pro/">https://training.ithemes.com/webinar/introduction-to-restrict-content-pro/</a></p>
+                        </div>
+                        <div class="restrict-content-resource-container">
+                            <h3><?php _e( 'Try Restrict Content Pro for Free', 'LION' ); ?></h3>
+                            <p><?php _e( 'Give Restrict Content Pro a spin, along with the full suite of add-ons, before buying a subscription.', 'LION' ); ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="restrict-content-welcome-right-container">
+            <div class="restrict-content-welcome-advertisement">
+                <div class="logo">
+                    <img class="restrict-content-welcome-advertisement-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/restrict-content-pro-logo-vertical-blue-black.svg' ); ?>" >
+                </div>
+                <div class="restrict-content-welcome-try-for-free">
+                    <p><?php _e( 'Try For Free!', 'LION' ); ?></p>
+                </div>
+                <div class="restrict-content-welcome-advertisement-content">
+                    <p><?php _e( 'Lock away your exclusive content. Give access to valued members.', 'LION' ); ?></p>
+                    <p class="rcp-highlight"><?php _e( 'A Full-Featured Powerful Membership Solution for WordPress.', 'LION' ); ?></p>
+                    <p><?php _e( 'Give Restrict Content Pro a spin, along with the full suite of add-ons. Enter your email and we’ll automatically send you a link to a personal WordPress demo site, no strings attached!', 'LION' ); ?></p>
+                </div>
+                <div class="restrict-content-welcome-advertisement-form">
+                    <form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" id="restrict_content_try_free">
+                        <input type="hidden" name="action" value="restrict_content_try_free">
+                        <input type="hidden" name="rc_welcome_try_free_meta_nonce" value="<?php echo $rc_welcome_try_free_meta_nonce; ?>" >
+                        <input type="hidden" name="source_page" value="welcome_page">
+                        <input type="email" name="try_email_address" id="try_email_address" placeholder="Email Address">
+                        <input type="submit" class="restrict-content-welcome-button" value="<?php _e( 'Try Now, Free!', 'LION' ); ?>">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+register_activation_hook( __FILE__, function() {
+    if ( current_user_can( 'manage_options' ) ) {
+        add_option( 'Restrict_Content_Plugin_Activated', 'restrict-content' );
+    }
+} );
+
+add_action( 'admin_init', 'restrict_content_plugin_activation' );
+
+function restrict_content_plugin_activation() {
+    if ( is_admin() && get_option( 'Restrict_Content_Plugin_Activated' ) === 'restrict-content' ) {
+        delete_option('Restrict_Content_Plugin_Activated' );
+        wp_safe_redirect( admin_url( 'admin.php?page=restrict-content-welcome' ) );
+        die();
+    }
 }
