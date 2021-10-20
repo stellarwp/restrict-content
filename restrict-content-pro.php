@@ -564,7 +564,7 @@ add_action( 'admin_menu', 'register_menus', 100 );
 /**
  * Load admin styles
  */
-function rc_admin_styles( $hook_suffix ) {
+function rc_admin_styles_primary( $hook_suffix ) {
 
     // Only load admin CSS on Restrict Content Settings page
     if (
@@ -593,7 +593,7 @@ function rc_admin_styles( $hook_suffix ) {
 
 
 }
-add_action( 'admin_enqueue_scripts', 'rc_admin_styles' );
+add_action( 'admin_enqueue_scripts', 'rc_admin_styles_primary' );
 
 
 function rc_why_go_pro_page() {
