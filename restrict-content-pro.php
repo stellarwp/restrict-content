@@ -963,9 +963,9 @@ register_activation_hook( __FILE__, function() {
     }
 } );
 
-add_action( 'admin_init', 'restrict_content_plugin_activation' );
+add_action( 'admin_init', 'restrict_content_plugin_activation_redirect' );
 
-function restrict_content_plugin_activation() {
+function restrict_content_plugin_activation_redirect() {
     if ( is_admin() && get_option( 'Restrict_Content_Plugin_Activated' ) === 'restrict-content' ) {
         delete_option('Restrict_Content_Plugin_Activated' );
         wp_safe_redirect( admin_url( 'admin.php?page=restrict-content-welcome' ) );
