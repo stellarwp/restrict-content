@@ -555,9 +555,9 @@ add_action( 'rcp_misc_settings', 'restrict_content_add_legacy_button_to_pro' );
 function register_menus() {
     global $restrict_content_pro_why_go_pro, $restrict_content_pro_help_page, $restrict_content_pro_welcome_page;
 
-    $restrict_content_pro_why_go_pro    = add_submenu_page( 'rcp-members', __( 'Why Go Pro', 'LION' ), __( 'Why go Pro', 'LION' ), 'manage_options', 'rcp-why-go-pro', 'rc_why_go_pro_page' );
-    $restrict_content_pro_help_page     = add_submenu_page( 'rcp-members', __( 'Help', 'LION' ), __( 'Help', 'LION' ), 'manage_options', 'rcp-need-help', 'rc_need_help_page' );
-    $restrict_content_pro_welcome_page  = add_submenu_page( null, __( 'Welcome', 'LION'), __( 'Welcome', 'LION' ), 'manage_options', 'restrict-content-welcome', 'rc_welcome_page' );
+    $restrict_content_pro_why_go_pro    = add_submenu_page( 'rcp-members', __( 'Why Go Pro', 'LION' ), __( 'Why go Pro', 'LION' ), 'manage_options', 'rcp-why-go-pro', 'rc_why_go_pro_page_redesign' );
+    $restrict_content_pro_help_page     = add_submenu_page( 'rcp-members', __( 'Help', 'LION' ), __( 'Help', 'LION' ), 'manage_options', 'rcp-need-help', 'rc_need_help_page_redesign' );
+    $restrict_content_pro_welcome_page  = add_submenu_page( null, __( 'Welcome', 'LION'), __( 'Welcome', 'LION' ), 'manage_options', 'restrict-content-welcome', 'rc_welcome_page_redesign' );
 }
 add_action( 'admin_menu', 'register_menus', 100 );
 
@@ -596,7 +596,7 @@ function rc_admin_styles_primary( $hook_suffix ) {
 add_action( 'admin_enqueue_scripts', 'rc_admin_styles_primary' );
 
 
-function rc_why_go_pro_page() {
+function rc_why_go_pro_page_redesign() {
     ?>
     <div class="wrap">
         <div class="rcp-why-go-pro-wrap">
@@ -714,7 +714,7 @@ function rc_why_go_pro_page() {
     <?php
 }
 
-function rc_need_help_page() {
+function rc_need_help_page_redesign() {
     $rc_welcome_try_free_meta_nonce = wp_create_nonce( 'rc_welcome_try_free_meta_nonce' );
 
     ?>
@@ -845,7 +845,7 @@ function rc_need_help_page() {
     <?php
 }
 
-function rc_welcome_page() {
+function rc_welcome_page_redesign() {
     $current_user = wp_get_current_user();
 
     $rc_welcome_try_free_meta_nonce = wp_create_nonce( 'rc_welcome_try_free_meta_nonce' );
