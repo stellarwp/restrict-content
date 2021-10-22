@@ -340,7 +340,7 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 			require( RCP_PLUGIN_DIR . 'core/includes/install.php' );
 			require_once( RCP_PLUGIN_DIR . 'core/includes/class-rcp-capabilities.php' );
 			if ( defined( 'WP_CLI' ) && WP_CLI ) {
-				require_once( RCP_PLUGIN_DIR . 'cpre/includes/class-rcp-cli.php' );
+				require_once( RCP_PLUGIN_DIR . 'core/includes/class-rcp-cli.php' );
 				require_once( RCP_PLUGIN_DIR . 'core/includes/membership-levels/membership-level-commands.php' );
 			}
 			require_once( RCP_PLUGIN_DIR . 'core/includes/class-rcp-emails.php' );

@@ -19,8 +19,8 @@
 */
 function rcp_load_gateway_files() {
 	foreach( rcp_get_payment_gateways() as $key => $gateway ) {
-		if( file_exists( RCP_PLUGIN_DIR . 'includes/gateways/' . $key . '/functions.php' ) ) {
-			require_once RCP_PLUGIN_DIR . 'includes/gateways/' . $key . '/functions.php';
+		if( file_exists( RCP_PLUGIN_DIR . 'pro/includes/gateways/' . $key . '/functions.php' ) ) {
+			require_once RCP_PLUGIN_DIR . 'pro/includes/gateways/' . $key . '/functions.php';
 		}
 	}
 }
