@@ -611,45 +611,14 @@ function rcp_settings_page() {
 								<p class="description"><?php _e( 'Optional - the URL to your privacy policy page. If set, the privacy policy label will link to this URL.', 'rcp' ); ?></p>
 							<td>
 						</tr>
-						<tr valign="top" class="rcp-settings-recaptcha-group">
-							<th>
-								<label for="rcp_settings[enable_recaptcha]"><?php _e( 'Enable reCAPTCHA', 'rcp' ); ?></label>
-							</th>
-							<td>
-								<input type="checkbox" value="1" name="rcp_settings[enable_recaptcha]" id="rcp_settings[enable_recaptcha]" <?php checked( ! empty( $rcp_options['enable_recaptcha'] ) ); ?>/>
-								<span class="description"><?php _e( 'Check this to enable reCAPTCHA on the registration form.', 'rcp' ); ?></span>
-							</td>
-						</tr>
-						<tr valign="top" class="rcp-settings-recaptcha-group">
-							<th>
-								<label for="rcp_settings[recaptcha_version]"><?php _e( 'reCAPTCHA Version', 'rcp' ); ?></label>
-							</th>
-							<td>
-								<select id="rcp_settings[recaptcha_version]" name="rcp_settings[recaptcha_version]">
-									<option value="2" <?php selected( '2', rcp_get_recaptcha_version() ); ?>><?php _e( 'reCAPTCHA v2', 'rcp' ); ?></option>
-									<option value="3" <?php selected( '3', rcp_get_recaptcha_version() ); ?>><?php _e( 'reCAPTCHA v3', 'rcp' ); ?></option>
-								</select>
-								<span class="description"><?php _e( 'Select the reCAPTCHA version that corresponds to your site key.', 'rcp' ); ?></span>
-							</td>
-						</tr>
-						<tr valign="top" class="rcp-settings-recaptcha-group">
-							<th>
-								<label for="rcp_settings[recaptcha_public_key]"><?php _e( 'reCAPTCHA Site Key', 'rcp' ); ?></label>
-							</th>
-							<td>
-								<input type="text" id="rcp_settings[recaptcha_public_key]" style="width: 300px;" name="rcp_settings[recaptcha_public_key]" value="<?php if( isset( $rcp_options['recaptcha_public_key'] ) ) echo $rcp_options['recaptcha_public_key']; ?>" />
-								<p class="description"><?php _e( 'This your own personal reCAPTCHA Site key. Go to', 'rcp' ); ?> <a href="https://www.google.com/recaptcha/"><?php _e( 'your account', 'rcp' ); ?></a>, <?php _e( 'then click on your domain (or add a new one) to find your site key.', 'rcp' ); ?></p>
-							<td>
-						</tr>
-						<tr valign="top" class="rcp-settings-recaptcha-group">
-							<th>
-								<label for="rcp_settings[recaptcha_private_key]"><?php _e( 'reCAPTCHA Secret Key', 'rcp' ); ?></label>
-							</th>
-							<td>
-								<input type="text" id="rcp_settings[recaptcha_private_key]" style="width: 300px;" name="rcp_settings[recaptcha_private_key]" value="<?php if( isset( $rcp_options['recaptcha_private_key'] ) ) echo $rcp_options['recaptcha_private_key']; ?>" />
-								<p class="description"><?php _e( 'This your own personal reCAPTCHA Secret key. Go to', 'rcp' ); ?> <a href="https://www.google.com/recaptcha/"><?php _e( 'your account', 'rcp' ); ?></a>, <?php _e( 'then click on your domain (or add a new one) to find your secret key.', 'rcp' ); ?></p>
-							</td>
-						</tr>
+
+						<?
+						/**
+						* Action to add the maximum number of simultaneous connections per member
+						*/
+						do_action( 'restrict_content_pro_add_recaptcha_fields', $rcp_options );
+						?>
+
 						<tr valign="top">
 							<th>
 								<label for="rcp_settings[debug_mode]"><?php _e( 'Enable Debug Mode', 'rcp' ); ?></label>
@@ -657,15 +626,6 @@ function rcp_settings_page() {
 							<td>
 								<input type="checkbox" value="1" name="rcp_settings[debug_mode]" id="rcp_settings[debug_mode]" <?php checked( true, ! empty( $rcp_options['debug_mode'] ) ); ?>/>
 								<span class="description"><?php printf( __( 'Turn on error logging to help identify issues. Logs are kept in <a href="%s">Restrict > Tools</a>.', 'rcp' ), esc_url( admin_url( 'admin.php?page=rcp-tools' ) ) ); ?></span>
-							</td>
-						</tr>
-						<tr valign="top">
-							<th>
-								<label for="rcp_settings[show_beta_updates]"><?php _e( 'Opt into beta versions?', 'rcp' ); ?></label>
-							</th>
-							<td>
-								<input type="checkbox" value="1" name="rcp_settings[show_beta_updates]" id="rcp_settings[show_beta_updates]" <?php checked( true, ! empty( $rcp_options['show_beta_updates'] ) ); ?>/>
-								<span class="description"><?php _e( 'Check this box if you would like to receive update notifications for beta releases. When beta versions are available, an update notification will be shown in your Plugins page.', 'rcp' ); ?></span>
 							</td>
 						</tr>
 						<tr valign="top">

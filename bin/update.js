@@ -36,9 +36,6 @@ function run( command, args, options ) {
     run( 'rsync', ['-a', '--delete', `${tempDir}/core/`, './core'], { stdio: "inherit" } );
     rmdirSync( tempDir, { recursive: true } );
 
-    run( 'npm', ['ci'], { stdio: "inherit" } );
-    run( 'npm', ['run', 'build'], { stdio: "inherit" } );
-
     console.log( 'Update completed' );
 })().catch( ( e ) => {
     console.error( e );
