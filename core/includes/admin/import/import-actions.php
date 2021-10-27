@@ -297,7 +297,7 @@ function rcp_include_batch_import_files( $callback ) {
 	}
 
 	// Include the main file.
-	require_once RCP_PLUGIN_DIR . 'includes/batch/csv-imports/class-batch-csv-import-base.php';
+	require_once RCP_PLUGIN_DIR . 'core/includes/batch/csv-imports/class-batch-csv-import-base.php';
 
 	// Include the file specifically for this importer.
 	if ( file_exists( $importer['callback_file'] ) ) {

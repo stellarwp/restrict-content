@@ -30,7 +30,7 @@ function rcp_get_csv_exporters() {
 			// Batch processor callback class name.
 			'callback'      => '\\RCP\\Batch\\CSV_Exports\\Memberships',
 			// Path to the above class file.
-			'callback_file' => RCP_PLUGIN_DIR . 'includes/batch/csv-exports/class-export-memberships.php',
+			'callback_file' => RCP_PLUGIN_DIR . 'core/includes/batch/csv-exports/class-export-memberships.php',
 		),
 		/**
 		 * Payments
@@ -40,7 +40,7 @@ function rcp_get_csv_exporters() {
 			'key'           => 'payments',
 			'description'   => __( 'Download payment data as a CSV file. Use this file for your own record keeping or tracking.', 'rcp' ),
 			'callback'      => '\\RCP\\Batch\\CSV_Exports\\Payments',
-			'callback_file' => RCP_PLUGIN_DIR . 'includes/batch/csv-exports/class-export-payments.php',
+			'callback_file' => RCP_PLUGIN_DIR . 'core/includes/batch/csv-exports/class-export-payments.php',
 		)
 	);
 

@@ -56,7 +56,7 @@ function rcp_process_membership_toggle_auto_renew_off() {
 		), $redirect );
 	} elseif( is_wp_error( $success ) ) {
 		$redirect = add_query_arg( array(
-			'rcp-messge'             => 'auto-renew-disable-failure',
+			'rcp-message'             => 'auto-renew-disable-failure',
 			'rcp-auto-renew-message' => rawurlencode( $success->get_error_message() )
 		), $redirect );
 	}
@@ -110,7 +110,7 @@ function rcp_process_membership_toggle_auto_renew_on() {
 		), $redirect );
 	} elseif( is_wp_error( $success ) ) {
 		$redirect = add_query_arg( array(
-			'rcp-messge'             => 'auto-renew-enable-failure',
+			'rcp-message'             => 'auto-renew-enable-failure',
 			'rcp-auto-renew-message' => rawurlencode( $success->get_error_message() )
 		), $redirect );
 	}

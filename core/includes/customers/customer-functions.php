@@ -526,8 +526,7 @@ function rcp_get_customer_gateway_id( $customer_id, $gateways ) {
 		$gateway_customer_id = $result;
 	}
 
-	return $gateway_customer_id;
-
+	return apply_filters( 'rcp_get_customer_gateway_id', $gateway_customer_id, $customer_id, $gateways );
 }
 
 /**

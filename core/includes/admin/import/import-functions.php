@@ -34,7 +34,7 @@ function rcp_get_csv_importers() {
 			// Batch processor callback class name.
 			'callback'      => 'RCP_Batch_Callback_Import_Memberships',
 			// Path to the above class file.
-			'callback_file' => RCP_PLUGIN_DIR . 'includes/batch/csv-imports/class-import-memberships.php',
+			'callback_file' => RCP_PLUGIN_DIR . 'core/includes/batch/csv-imports/class-import-memberships.php',
 			/*
 			 * Array of supported columns. The key is what you're looking for in the batch
 			 * processor callback. The value is the expected name of the column header. The
@@ -66,7 +66,7 @@ function rcp_get_csv_importers() {
 			'key'           => 'payments',
 			'description'   => sprintf( __( 'Use this tool to import user payments into Restrict Content Pro. See <a href="%s">this article</a> for further instructions and a sample CSV file.', 'rcp' ), 'https://docs.restrictcontentpro.com/article/2265-importing-payments' ),
 			'callback'      => 'RCP_Batch_Callback_Import_Payments',
-			'callback_file' => RCP_PLUGIN_DIR . 'includes/batch/csv-imports/class-import-payments.php',
+			'callback_file' => RCP_PLUGIN_DIR . 'core/includes/batch/csv-imports/class-import-payments.php',
 			'columns'       => array(
 				'status'           => __( 'Status', 'rcp' ),
 				'subscription'     => __( 'Membership Level Name', 'rcp' ),

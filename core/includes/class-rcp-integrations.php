@@ -53,8 +53,8 @@ class RCP_Integrations {
 
 		foreach( $this->get_integrations() as $filename => $integration ) {
 
-			if( file_exists( RCP_PLUGIN_DIR . 'includes/integrations/class-rcp-' . $filename . '.php' ) ) {
-				require_once RCP_PLUGIN_DIR . 'includes/integrations/class-rcp-' . $filename . '.php';
+			if( file_exists( RCP_PLUGIN_DIR . 'core/includes/integrations/class-rcp-' . $filename . '.php' ) ) {
+				require_once RCP_PLUGIN_DIR . 'core/includes/integrations/class-rcp-' . $filename . '.php';
 			}
 
 		}

@@ -106,7 +106,7 @@ function include_batch_export_files( $callback ) {
 	}
 
 	// Include the main file.
-	require_once RCP_PLUGIN_DIR . 'includes/batch/csv-exports/class-batch-csv-export-base.php';
+	require_once RCP_PLUGIN_DIR . 'core/includes/batch/csv-exports/class-batch-csv-export-base.php';
 
 	// Include the file specifically for this importer.
 	if ( file_exists( $exporter['callback_file'] ) ) {

@@ -20,7 +20,7 @@
  * @return      string
  */
 function rcp_get_templates_dir() {
-	return RCP_PLUGIN_DIR . 'templates';
+	return RCP_PLUGIN_DIR . 'core/templates';
 }
 
 /**
@@ -31,7 +31,7 @@ function rcp_get_templates_dir() {
  * @return      string
  */
 function rcp_get_templates_url() {
-	return RCP_PLUGIN_URL . 'templates';
+	return RCP_PLUGIN_URL . 'core/templates';
 }
 
 /**
