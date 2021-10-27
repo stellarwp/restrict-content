@@ -14,11 +14,11 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Class RCP_Requirements_Check
+ * Class RC_Requirements_Check
  *
  * @since 3.0
  */
-final class RCP_Requirements_Check {
+final class RC_Requirements_Check {
 
 	/**
 	 * Plugin file
@@ -472,14 +472,14 @@ final class RCP_Requirements_Check {
 }
 
 // Invoke the checker
-new RCP_Requirements_Check();
+new RC_Requirements_Check();
 
 function option_exists($name, $site_wide=false){
     global $wpdb; return $wpdb->query("SELECT * FROM ". ($site_wide ? $wpdb->base_prefix : $wpdb->prefix). "options WHERE option_name ='$name' LIMIT 1");
 }
 
 /**
- * Processes the registration form and creates the user's account.
+ * Process the switch between Legacy Restrict Content and Restrict Content 3.0
  *
  * @since 3.0
  */
@@ -590,8 +590,6 @@ function rc_admin_styles_primary( $hook_suffix ) {
     }
 
     wp_enqueue_style('rcp-metabox', trailingslashit( plugins_url() ) . 'restrict-content/restrict-content/includes/assets/css/rc-metabox.css', array(), RCP_PLUGIN_VERSION );
-
-
 }
 add_action( 'admin_enqueue_scripts', 'rc_admin_styles_primary' );
 
@@ -942,8 +940,6 @@ register_activation_hook( __FILE__, function() {
     }
 } );
 
-add_action( 'admin_init', 'restrict_content_plugin_activation_redirect' );
-
 function restrict_content_plugin_activation_redirect() {
     if ( is_admin() && get_option( 'Restrict_Content_Plugin_Activated' ) === 'restrict-content' ) {
         delete_option('Restrict_Content_Plugin_Activated' );
@@ -951,3 +947,4 @@ function restrict_content_plugin_activation_redirect() {
         die();
     }
 }
+add_action( 'admin_init', 'restrict_content_plugin_activation_redirect' );
