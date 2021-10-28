@@ -450,7 +450,6 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 			require_once( RCP_PLUGIN_DIR . 'core/includes/user-page-columns.php' );
 			require_once( RCP_PLUGIN_DIR . 'core/includes/export-functions.php' );
 			require_once( RCP_PLUGIN_DIR . 'core/includes/deactivation.php' );
-			require_once( RCP_PLUGIN_DIR . 'RCP_Plugin_Updater.php' );
 			require_once( RCP_PLUGIN_DIR . 'core/includes/admin/deprecated-admin-functions.php' );
 
 			// batch processing

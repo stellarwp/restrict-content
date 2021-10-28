@@ -2566,9 +2566,11 @@ class RCP_Membership {
 
 				$can_cancel = true;
 
-			} elseif ( rcp_is_paypal_membership( $this ) && rcp_has_paypal_api_access() ) {
+			} elseif ( 'paypal' == $this->get_gateway() ) {
 
-				$can_cancel = true;
+				if ( rcp_is_paypal_membership( $this ) && rcp_has_paypal_api_access() ) {
+					$can_cancel = true;
+				}
 
 			} elseif ( 'twocheckout' == $this->get_gateway() && defined( 'TWOCHECKOUT_ADMIN_USER' ) && defined( 'TWOCHECKOUT_ADMIN_PASSWORD' ) ) {
 

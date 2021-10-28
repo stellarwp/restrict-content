@@ -1467,7 +1467,7 @@ function rcp_compare_wp_version( $version ) {
 /**
  * Load plugin text domain for translations.
  *
- * @deprecated 3.0 Moved to RC_Requirements_Check::load_textdomain()
+ * @deprecated 3.0 Moved to RCP_Requirements_Check::load_textdomain()
  * @see RCP_Requirements_Check::load_textdomain()
  *
  * @return void
