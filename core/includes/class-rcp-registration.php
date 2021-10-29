@@ -409,16 +409,17 @@ class RCP_Registration {
 	 * @return bool
 	 */
 	public function add_discount( $code, $recurring = true ) {
-		if ( ! class_exists( 'RCP_DISCOUNTS' ) ) {
-			return false;
+		if ( class_exists( 'RCP_DISCOUNT' ) ) {
+
+			if ( ! rcp_validate_discount( $code, $this->subscription ) ) {
+				return false;
+			}
+
+			$this->discounts[ $code ] = $recurring;
+			return true;
 		}
 
-		if ( ! rcp_validate_discount( $code, $this->subscription ) ) {
-			return false;
-		}
-
-		$this->discounts[ $code ] = $recurring;
-		return true;
+		return false;
 	}
 
 	/**
@@ -428,15 +429,16 @@ class RCP_Registration {
 	 * @return array|bool
 	 */
 	public function get_discounts() {
-		if ( ! class_exists( 'RCP_DISCOUNTS' ) ) {
-			return false;
+		if ( class_exists( 'RCP_DISCOUNT' ) ) {
+
+			if (empty($this->discounts)) {
+				return false;
+			}
+
+			return $this->discounts;
 		}
 
-		if ( empty( $this->discounts ) ) {
-			return false;
-		}
-
-		return $this->discounts;
+		return false;
 	}
 
 	/**
