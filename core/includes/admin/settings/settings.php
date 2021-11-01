@@ -522,15 +522,16 @@ function rcp_settings_page() {
 								<p class="description"><?php _e( 'Whether or not to show excerpts to members without access to the content.', 'rcp' ); ?></p>
 							</td>
 						</tr>
-						<tr valign="top">
-							<th>
-								<label for="rcp_settings[discount_fees]"><?php _e( 'Discount Signup Fees', 'rcp' ); ?></label>
-							</th>
-							<td>
-								<input type="checkbox" value="1" name="rcp_settings[discount_fees]" id="rcp_settings[discount_fees]"<?php checked( ! empty( $rcp_options['discount_fees'] ) ); ?>/>
-								<span class="description"><?php _e( 'If enabled, discount codes will apply to signup fees. If not enabled, only the base price gets discounted and signup fees do not.', 'rcp' ); ?></span>
-							</td>
-						</tr>
+
+						<?php
+
+						/**
+						 * Action to add Discount Signup Fees
+						 */
+						do_action('restrict_content_pro_discount_signup_fees_admin');
+
+						?>
+
 						<?php
 
 						/**
