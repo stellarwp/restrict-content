@@ -57,7 +57,18 @@ class RCP_Payment_Gateways {
 						'label'        => __( 'Manual Payment', 'rcp' ),
 						'admin_label'  => __( 'Manual Payment', 'rcp' ),
 						'class'        => 'RCP_Payment_Gateway_Manual'
-				)
+				),
+				'stripe' => array(
+						'label' => __('Credit / Debit Card', 'rcp'),
+						'admin_label' => __('Stripe', 'rcp'),
+						'class' => 'RCP_Payment_Gateway_Stripe',
+						'test_card' => array(
+								'number' => '4242424242424242',
+								'cvc' => '123',
+								'zip' => '45814',
+								'link' => 'https://stripe.com/docs/testing#cards'
+						)
+				),
 		);
 
 		return apply_filters( 'rcp_payment_gateways', $gateways );

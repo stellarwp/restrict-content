@@ -302,6 +302,45 @@ function rcp_settings_page() {
 								<p class="description"><?php _e( 'Show the currency sign before or after the price?', 'rcp' ); ?></p>
 							</td>
 						</tr>
+						<?
+						$gateways = rcp_get_payment_gateways();
+						if ( count( $gateways ) > 1 )  {
+						?>
+						<tr valign="top">
+							<th>
+								<h3><?php _e( 'Gateways', 'rcp' ); ?></h3>
+							</th>
+							<td>
+								<?php _e( 'Check each of the payment gateways you would like to enable. Configure the selected gateways below.', 'rcp' ); ?>
+							</td>
+						</tr>
+						<tr valign="top">
+							<th><span><?php _e( 'Enabled Gateways', 'rcp' ); ?></span></th>
+							<td>
+								<?php
+								$gateways = rcp_get_payment_gateways();
+
+								foreach( $gateways as $key => $gateway ) :
+
+									$label = $gateway;
+
+									if( is_array( $gateway ) ) {
+										$label = $gateway['admin_label'];
+									}
+
+									if ( $key == 'twocheckout' && checked( true, isset( $rcp_options[ 'gateways' ][ $key ] ), false ) == '') {
+
+									} else {
+										echo '<input name="rcp_settings[gateways][' . $key . ']" id="rcp_settings[gateways][' . $key . ']" type="checkbox" value="1" ' . checked( true, isset( $rcp_options['gateways'][ $key ] ), false) . '/>&nbsp;';
+										echo '<label for="rcp_settings[gateways][' . $key . ']">' . $label . '</label><br/>';
+									}
+
+								endforeach;
+								?>
+							</td>
+						</tr>
+						<?php } ?>
+
 						<?php do_action( 'restrict_content_pro_output_payment_gateway_inputs', $rcp_options ); ?>
 
 					</table>
