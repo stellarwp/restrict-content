@@ -54,7 +54,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 		}
 
 		if( ! class_exists( 'Stripe\Stripe' ) ) {
-			require_once RCP_PLUGIN_DIR . 'pro/includes/libraries/stripe/init.php';
+			require_once RCP_PLUGIN_DIR . 'core/includes/libraries/stripe/init.php';
 		}
 
 		\Stripe\Stripe::setApiKey( $this->secret_key );
@@ -1350,7 +1350,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 		// Does not set `rcp-register` as a dependency because those are printed in `wp_footer`
 		wp_enqueue_script(
 			'rcp-stripe-register',
-			RCP_PLUGIN_URL . 'pro/includes/gateways/stripe/js/register' . $suffix . '.js',
+			RCP_PLUGIN_URL . 'core/includes/gateways/stripe/js/register' . $suffix . '.js',
 			array(
 				'jquery',
 				'rcp-stripe'

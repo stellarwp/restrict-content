@@ -114,7 +114,7 @@ function rcp_stripe_update_card_form_js() {
 	}
 
 	if( ! class_exists( 'Stripe\Stripe' ) ) {
-		require_once RCP_PLUGIN_DIR . 'pro/includes/libraries/stripe/init.php';
+		require_once RCP_PLUGIN_DIR . 'core/includes/libraries/stripe/init.php';
 	}
 
 	\Stripe\Stripe::setApiKey( $secret_key );
@@ -134,7 +134,7 @@ function rcp_stripe_update_card_form_js() {
 	// Custom profile form handling.
 	wp_enqueue_script(
 		'rcp-stripe-profile',
-		RCP_PLUGIN_URL . 'pro/includes/gateways/stripe/js/profile' . $suffix . '.js',
+		RCP_PLUGIN_URL . 'core/includes/gateways/stripe/js/profile' . $suffix . '.js',
 		array(
 			'jquery',
 			'rcp-stripe'
@@ -209,7 +209,7 @@ function rcp_stripe_update_membership_billing_card( $membership ) {
 	}
 
 	if( ! class_exists( 'Stripe\Stripe' ) ) {
-		require_once RCP_PLUGIN_DIR . 'pro/includes/libraries/stripe/init.php';
+		require_once RCP_PLUGIN_DIR . 'core/includes/libraries/stripe/init.php';
 	}
 
 	\Stripe\Stripe::setApiKey( $secret_key );
@@ -413,7 +413,7 @@ function rcp_stripe_get_membership_card_details( $card_details, $membership_id, 
 	global $rcp_options;
 
 	if ( ! class_exists( 'Stripe\Stripe' ) ) {
-		require_once RCP_PLUGIN_DIR . 'pro/includes/libraries/stripe/init.php';
+		require_once RCP_PLUGIN_DIR . 'core/includes/libraries/stripe/init.php';
 	}
 
 	if ( rcp_is_sandbox() ) {
@@ -561,7 +561,7 @@ function rcp_stripe_get_user_saved_payment_methods( $user_id = 0 ) {
 		global $rcp_options;
 
 		if ( ! class_exists( 'Stripe\Stripe' ) ) {
-			require_once RCP_PLUGIN_DIR . 'pro/includes/libraries/stripe/init.php';
+			require_once RCP_PLUGIN_DIR . 'core/includes/libraries/stripe/init.php';
 		}
 
 		if ( rcp_is_sandbox() ) {
@@ -656,7 +656,7 @@ function rcp_stripe_cancel_membership( $payment_profile_id ) {
 	global $rcp_options;
 
 	if ( ! class_exists( 'Stripe\Stripe' ) ) {
-		require_once RCP_PLUGIN_DIR . 'pro/includes/libraries/stripe/init.php';
+		require_once RCP_PLUGIN_DIR . 'core/includes/libraries/stripe/init.php';
 	}
 
 	if ( rcp_is_sandbox() ) {
@@ -748,7 +748,7 @@ function rcp_stripe_enqueue_scripts( $localize = array() ) {
 
 	wp_enqueue_script(
 		'rcp-stripe',
-		RCP_PLUGIN_URL . 'pro/includes/gateways/stripe/js/stripe' . $suffix . '.js',
+		RCP_PLUGIN_URL . 'core/includes/gateways/stripe/js/stripe' . $suffix . '.js',
 		array(
 			'stripe-js-v3'
 		),
@@ -850,7 +850,7 @@ function rcp_stripe_create_setup_intent_for_saved_card() {
 	global $rcp_options;
 
 	if ( ! class_exists( 'Stripe\Stripe' ) ) {
-		require_once RCP_PLUGIN_DIR . 'pro/includes/libraries/stripe/init.php';
+		require_once RCP_PLUGIN_DIR . 'core/includes/libraries/stripe/init.php';
 	}
 
 	if ( rcp_is_sandbox() ) {
@@ -1050,7 +1050,7 @@ function rcp_stripe_delete_saved_payment_method() {
 	global $rcp_options;
 
 	if ( ! class_exists( 'Stripe\Stripe' ) ) {
-		require_once RCP_PLUGIN_DIR . 'pro/includes/libraries/stripe/init.php';
+		require_once RCP_PLUGIN_DIR . 'core/includes/libraries/stripe/init.php';
 	}
 
 	if ( rcp_is_sandbox() ) {
