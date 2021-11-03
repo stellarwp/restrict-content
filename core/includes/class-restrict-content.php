@@ -396,7 +396,6 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 			// Stripe
 			require_once( RCP_PLUGIN_DIR . 'core/includes/gateways/class-rcp-payment-gateway-stripe.php' );
 			require_once( RCP_PLUGIN_DIR . 'core/includes/gateways/stripe/functions.php' );
-			require_once( RCP_PLUGIN_DIR . 'core/includes/gateways/class-rcp-payment-gateway-stripe-checkout.php' );
 
 			// @todo load this only when needed
 			require_once RCP_PLUGIN_DIR . 'core/includes/batch/v3/class-migrate-memberships.php';
