@@ -1866,7 +1866,7 @@ function rcp_stripe_create_discount( $args ) {
 	global $rcp_options;
 
 	if( ! class_exists( 'Stripe\Stripe' ) ) {
-		require_once RCP_PLUGIN_DIR . 'pro/includes/libraries/stripe/init.php';
+		require_once RCP_PLUGIN_DIR . 'core/includes/libraries/stripe/init.php';
 	}
 
 	if ( rcp_is_sandbox() ) {
@@ -2042,7 +2042,7 @@ function rcp_stripe_update_discount( $discount_id, $args ) {
 	global $rcp_options;
 
 	if( ! class_exists( 'Stripe\Stripe' ) ) {
-		require_once RCP_PLUGIN_DIR . 'pro/includes/libraries/stripe/init.php';
+		require_once RCP_PLUGIN_DIR . 'core/includes/libraries/stripe/init.php';
 	}
 
 	if ( ! empty( $_REQUEST['deactivate_discount'] ) || ! empty( $_REQUEST['activate_discount'] ) ) {
@@ -2218,7 +2218,7 @@ function rcp_stripe_does_coupon_exists( $code ) {
 	global $rcp_options;
 
 	if( ! class_exists( 'Stripe\Stripe' ) ) {
-		require_once RCP_PLUGIN_DIR . 'pro/includes/libraries/stripe/init.php';
+		require_once RCP_PLUGIN_DIR . 'core/includes/libraries/stripe/init.php';
 	}
 
 	if ( rcp_is_sandbox() ) {
@@ -2264,7 +2264,7 @@ function rcp_stripe_get_card_details( $cards, $member_id, $member ) {
 	}
 
 	if( ! class_exists( 'Stripe\Stripe' ) ) {
-		require_once RCP_PLUGIN_DIR . 'pro/includes/libraries/stripe/init.php';
+		require_once RCP_PLUGIN_DIR . 'core/includes/libraries/stripe/init.php';
 	}
 
 	if ( rcp_is_sandbox() ) {
