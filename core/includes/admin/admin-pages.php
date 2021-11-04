@@ -26,7 +26,8 @@ function rcp_settings_menu() {
 	$rcp_payments_page      = add_submenu_page( 'rcp-members', __( 'Payments', 'rcp' ), __( 'Payments', 'rcp' ), 'rcp_view_payments', 'rcp-payments', 'rcp_payments_page', 5 );
 	$rcp_settings_page      = add_submenu_page( 'rcp-members', __( 'Restrict Content Pro Settings', 'rcp' ), __( 'Settings', 'rcp' ),'rcp_manage_settings', 'rcp-settings', 'rcp_settings_page', 7 );
 	$rcp_tools_page         = add_submenu_page( 'rcp-members', __( 'Tools', 'rcp' ), __( 'Tools', 'rcp' ), 'rcp_manage_settings', 'rcp-tools', 'rcp_tools_page',  8 );
-	$rcp_help_page          = add_submenu_page( 'rcp-members', __( 'Help', 'rcp' ), __( 'Help', 'rcp' ), 'rcp_view_help', 'rcp-help', '__return_null', 9 );
+	// Removing Legacy Help Page from Restrict Content Pro and Restrict Content
+//	$rcp_help_page          = add_submenu_page( 'rcp-members', __( 'Help', 'rcp' ), __( 'Help', 'rcp' ), 'rcp_view_help', 'rcp-help', '__return_null', 9 );
 //	$rcp_add_ons_page       = add_submenu_page( 'rcp-members', __( 'Add-ons', 'rcp' ), __( 'Add-ons', 'rcp' ), 'rcp_view_members', 'rcp-add-ons', 'rcp_add_ons_admin', 10 );
 	$rcp_reminders_page     = add_submenu_page( 'rcp-members', __( 'Subscription Reminder', 'rcp' ), __( 'Subscription Reminder', 'rcp' ), 'rcp_manage_settings', 'rcp-reminder', 'rcp_subscription_reminder_page', 11 );
 
