@@ -661,10 +661,6 @@ function rcp_settings_page() {
 
 							?>
 
-							<tr valign="top">
-								<th colspan="2"><h3><?php _e( 'Expiration Reminders', 'rcp' ); ?></h3></th>
-							</tr>
-
 							<?php
 
 							/**
@@ -675,10 +671,6 @@ function rcp_settings_page() {
 							do_action( 'rcp_emails_tab_after_membership_expiration_reminders' );
 
 							?>
-
-							<tr valign="top">
-								<th colspan="2"><h3><?php _e( 'Renewal Reminders', 'rcp' ); ?></h3></th>
-							</tr>
 
 							<?php
 
@@ -784,12 +776,6 @@ function rcp_settings_page() {
 							do_action( 'rcp_emails_tab_after_renewal_payment_failed_email_admin' );
 
 							 ?>
-
-							<tr valign="top">
-								<th colspan=2>
-									<h3><?php _e( 'New User Notifications', 'rcp' ); ?></h3>
-								</th>
-							</tr>
 
 							<?php
 
