@@ -448,7 +448,368 @@ function rcp_settings_page() {
 
 				</div><!--end #payments-->
 
-				<?php do_action( 'restrict_content_pro_add_admin_setting_email_inputs', $rcp_options ); ?>
+				<div class="tab_content" id="emails">
+					<div id="rcp_email_options">
+
+						<table class="form-table">
+
+							<?php
+
+							/**
+							 * rcp_emails_tab_start
+							 *
+							 * Used to add html or additional functionality at the start of the Restrict Content Pro Settings > Emails tab
+							 */
+							do_action( 'rcp_emails_tab_start' );
+
+							?>
+
+							<tr>
+								<th colspan=2><h3><?php _e( 'Paid Membership Activation Email', 'rcp' ); ?></h3></th>
+							</tr>
+							<tr>
+								<th>
+									<label for="rcp_settings[disable_active_email]"><?php _e( 'Disable for Member', 'rcp' ); ?></label>
+								</th>
+								<td>
+									<input type="checkbox" value="1" name="rcp_settings[disable_active_email]" id="rcp_settings[disable_active_email]" class="rcp-disable-email" <?php checked( true, isset( $rcp_options['disable_active_email'] ) ); ?>/>
+									<span><?php _e( 'Check this to disable the email sent out to the member when their membership becomes active.', 'rcp' ); ?></span>
+								</td>
+							</tr>
+
+							<?php
+
+							/**
+							 * rcp_emails_tab_after_paid_membership_activation_email_member
+							 *
+							 * Used to add html or additional functionality after paid membership activation email member enable checkbox
+							 */
+							do_action( 'rcp_emails_tab_after_paid_membership_activation_email_member' );
+
+							?>
+
+							<tr>
+								<th>
+									<label for="rcp_settings[disable_active_email_admin]"><?php _e( 'Disable for Admin', 'rcp' ); ?></label>
+								</th>
+								<td>
+									<input type="checkbox" value="1" name="rcp_settings[disable_active_email_admin]" id="rcp_settings[disable_active_email_admin]" class="rcp-disable-email" <?php checked( true, isset( $rcp_options['disable_active_email_admin'] ) ); ?>/>
+									<span><?php _e( 'Check this to disable the email sent out to the administrator when a new member becomes active.', 'rcp' ); ?></span>
+								</td>
+							</tr>
+
+							<?php
+
+							/**
+							 * rcp_emails_tab_after_paid_membership_activation_email_admin
+							 *
+							 * Used to add html or additional functionality after paid membership activation email admin enable checkbox
+							 */
+							do_action( 'rcp_emails_tab_after_paid_membership_activation_email_admin' );
+
+							?>
+
+							<tr valign="top">
+								<th colspan=2>
+									<h3><?php _e( 'Free Membership Activation Email', 'rcp' ); ?></h3>
+								</th>
+							</tr>
+							<tr>
+								<th>
+									<label for="rcp_settings[disable_free_email]"><?php _e( 'Disable for Member', 'rcp' ); ?></label>
+								</th>
+								<td>
+									<input type="checkbox" value="1" name="rcp_settings[disable_free_email]" id="rcp_settings[disable_free_email]" class="rcp-disable-email" <?php checked( true, isset( $rcp_options['disable_free_email'] ) ); ?>/>
+									<span><?php _e( 'Check this to disable the email sent to a member when they register for a free membership.', 'rcp' ); ?></span>
+								</td>
+							</tr>
+
+							<?php
+
+							/**
+							 * rcp_emails_tab_after_free_membership_activation_email_member
+							 *
+							 * Used to add html or additional functionality after free membership activation email member enable checkbox
+							 */
+							do_action( 'rcp_emails_tab_after_free_membership_activation_email_member' );
+
+							?>
+
+							<tr>
+								<th>
+									<label for="rcp_settings[disable_free_email_admin]"><?php _e( 'Disable for Admin', 'rcp' ); ?></label>
+								</th>
+								<td>
+									<input type="checkbox" value="1" name="rcp_settings[disable_free_email_admin]" id="rcp_settings[disable_free_email_admin]" class="rcp-disable-email" <?php checked( true, isset( $rcp_options['disable_free_email_admin'] ) ); ?>/>
+									<span><?php _e( 'Check this to disable the email sent to the administrator when a member registers for a free membership.', 'rcp' ); ?></span>
+								</td>
+							</tr>
+
+							<?php
+
+							/**
+							 * rcp_emails_tab_after_free_membership_activation_email_admin
+							 *
+							 * Used to add html or additional functionality after free membership activation email admin enable checkbox
+							 */
+							do_action( 'rcp_emails_tab_after_free_membership_activation_email_admin' );
+
+							?>
+
+							<?php
+
+							/**
+							 * rcp_emails_tab_before_trial_membership_activation_email
+							 *
+							 * Used to add html or additional functionality before trial membership activation email
+							 */
+							do_action( 'rcp_emails_tab_before_trial_membership_activation_email' );
+
+							?>
+
+							<tr valign="top">
+								<th colspan=2>
+									<h3><?php _e( 'Cancelled Membership Email', 'rcp' ); ?></h3>
+								</th>
+							</tr>
+							<tr>
+								<th>
+									<label for="rcp_settings[disable_cancelled_email]"><?php _e( 'Disable for Member', 'rcp' ); ?></label>
+								</th>
+								<td>
+									<input type="checkbox" value="1" name="rcp_settings[disable_cancelled_email]" id="rcp_settings[disable_cancelled_email]" class="rcp-disable-email" <?php checked( true, isset( $rcp_options['disable_cancelled_email'] ) ); ?>/>
+									<span><?php _e( 'Check this to disable the email sent to a member when their membership is cancelled.', 'rcp' ); ?></span>
+								</td>
+							</tr>
+
+							<?php
+
+							/**
+							 * rcp_emails_tab_after_cancelled_membership_email_member
+							 *
+							 * Used to add html or additional functionality after cancelled membership email member enable checkbox
+							 */
+							do_action( 'rcp_emails_tab_after_cancelled_membership_email_member' );
+
+							?>
+
+							<tr>
+								<th>
+									<label for="rcp_settings[disable_cancelled_email_admin]"><?php _e( 'Disable for Admin', 'rcp' ); ?></label>
+								</th>
+								<td>
+									<input type="checkbox" value="1" name="rcp_settings[disable_cancelled_email_admin]" id="rcp_settings[disable_cancelled_email_admin]" class="rcp-disable-email" <?php checked( true, isset( $rcp_options['disable_cancelled_email_admin'] ) ); ?>/>
+									<span><?php _e( 'Check this to disable the email sent to the administrator when a member\'s membership is cancelled.', 'rcp' ); ?></span>
+								</td>
+							</tr>
+
+							<?php
+
+							/**
+							 * rcp_emails_tab_after_cancelled_membership_email_admin
+							 *
+							 * Used to add html or additional functionality after cancelled membership email admin enable checkbox
+							 */
+							do_action( 'rcp_emails_tab_after_cancelled_membership_email_admin' );
+
+							?>
+
+							<tr valign="top">
+								<th colspan=2>
+									<h3><?php _e( 'Expired Membership Email', 'rcp' ); ?></h3>
+								</th>
+							</tr>
+							<tr>
+								<th>
+									<label for="rcp_settings[disable_expired_email]"><?php _e( 'Disable for Member', 'rcp' ); ?></label>
+								</th>
+								<td>
+									<input type="checkbox" value="1" name="rcp_settings[disable_expired_email]" id="rcp_settings[disable_expired_email]" class="rcp-disable-email" <?php checked( true, isset( $rcp_options['disable_expired_email'] ) ); ?>/>
+									<span><?php _e( 'Check this to disable the email sent out to a member when their membership expires.', 'rcp' ); ?></span>
+								</td>
+							</tr>
+
+							<?php
+
+							/**
+							 * rcp_emails_tab_after_expired_membership_email_member
+							 *
+							 * Used to add html or additional functionality after expired membership enable checkbox
+							 */
+							do_action( 'rcp_emails_tab_after_expired_membership_email_member' );
+
+							?>
+
+							<tr>
+								<th>
+									<label for="rcp_settings[disable_expired_email_admin]"><?php _e( 'Disable for Admin', 'rcp' ); ?></label>
+								</th>
+								<td>
+									<input type="checkbox" value="1" name="rcp_settings[disable_expired_email_admin]" id="rcp_settings[disable_expired_email_admin]" class="rcp-disable-email" <?php checked( true, isset( $rcp_options['disable_expired_email_admin'] ) ); ?>/>
+									<span><?php _e( 'Check this to disable the email sent to the administrator when a member\'s membership expires.', 'rcp' ); ?></span>
+								</td>
+							</tr>
+
+							<?php
+
+							/**
+							 * rcp_emails_tab_after_expired_membership_email_admin
+							 *
+							 * Used to add html or additional functionality after expired membership admin enable checkbox
+							 */
+							do_action( 'rcp_emails_tab_after_expired_membership_email_admin' );
+
+							?>
+
+							<tr valign="top">
+								<th colspan="2"><h3><?php _e( 'Expiration Reminders', 'rcp' ); ?></h3></th>
+							</tr>
+
+							<?php
+
+							/**
+							 * rcp_emails_tab_after_membership_expiration_reminders
+							 *
+							 * Used to add html or additional functionality after membership expiration reminders
+							 */
+							do_action( 'rcp_emails_tab_after_membership_expiration_reminders' );
+
+							?>
+
+							<tr valign="top">
+								<th colspan="2"><h3><?php _e( 'Renewal Reminders', 'rcp' ); ?></h3></th>
+							</tr>
+
+							<?php
+
+							/**
+							 * rcp_emails_tab_after_membership_renewal_reminders
+							 *
+							 * Used to add html or additional functionality after membership renewal reminders
+							 */
+							do_action( 'rcp_emails_tab_after_membership_renewal_reminders' );
+
+							?>
+
+							<tr valign="top">
+								<th colspan=2><h3><?php _e( 'Payment Received Email', 'rcp' ); ?></h3></th>
+							</tr>
+							<tr>
+								<th>
+									<label for="rcp_settings[disable_payment_received_email]"><?php _e( 'Disable for Member', 'rcp' ); ?></label>
+								</th>
+								<td>
+									<input type="checkbox" value="1" name="rcp_settings[disable_payment_received_email]" id="rcp_settings[disable_payment_received_email]" class="rcp-disable-email" <?php checked( true, isset( $rcp_options['disable_payment_received_email'] ) ); ?>/>
+									<span><?php _e( 'Check this to disable the email sent out when a payment is received.', 'rcp' ); ?></span>
+								</td>
+							</tr>
+
+							<?php
+
+							/**
+							 * rcp_emails_tab_after_payment_received_email_member
+							 *
+							 * Used to add html or additional functionality after payment received member enable checkbox
+							 */
+							do_action( 'rcp_emails_tab_after_payment_received_email_member' );
+
+							?>
+
+							<tr>
+								<th>
+									<label for="rcp_settings[disable_payment_received_email_admin]"><?php _e( 'Disable for Admin', 'rcp' ); ?></label>
+								</th>
+								<td>
+									<input type="checkbox" value="1" name="rcp_settings[disable_payment_received_email_admin]" id="rcp_settings[disable_payment_received_email_admin]" class="rcp-disable-email" <?php checked( true, isset( $rcp_options['disable_payment_received_email_admin'] ) ); ?>/>
+									<span><?php _e( 'Check this to disable the email sent out to the administrator when a payment is received.', 'rcp' ); ?></span>
+								</td>
+							</tr>
+
+							<?php
+
+							/**
+							 * rcp_emails_tab_after_payment_received_email_admin
+							 *
+							 * Used to add html or additional functionality after payment received admin enable checkbox
+							 */
+							do_action( 'rcp_emails_tab_after_payment_received_email_admin' );
+
+							?>
+
+							<tr valign="top">
+								<th colspan=2><h3><?php _e( 'Renewal Payment Failed Email', 'rcp' ); ?></h3></th>
+							</tr>
+							<tr>
+								<th>
+									<label for="rcp_settings[disable_renewal_payment_failed_email]"><?php _e( 'Disable for Member', 'rcp' ); ?></label>
+								</th>
+								<td>
+									<input type="checkbox" value="1" name="rcp_settings[disable_renewal_payment_failed_email]" id="rcp_settings[disable_renewal_payment_failed_email]" class="rcp-disable-email" <?php checked( true, isset( $rcp_options['disable_renewal_payment_failed_email'] ) ); ?>/>
+									<span><?php _e( 'Check this to disable the email sent out when a renewal payment fails.', 'rcp' ); ?></span>
+								</td>
+							</tr>
+
+							<?php
+
+							/**
+							 * rcp_emails_tab_after_renewal_payment_failed_member
+							 *
+							 * Used to add html or additional functionality after renewal payment failed member enable checkbox
+							 *
+							 * @since 3.6
+							 */
+							do_action( 'rcp_emails_tab_after_renewal_payment_failed_member');
+
+							?>
+
+							<tr>
+								<th>
+									<label for="rcp_settings[disable_renewal_payment_failed_email_admin]"><?php _e( 'Disable for Admin', 'rcp' ); ?></label>
+								</th>
+								<td>
+									<input type="checkbox" value="1" name="rcp_settings[disable_renewal_payment_failed_email_admin]" id="rcp_settings[disable_renewal_payment_failed_email_admin]" class="rcp-disable-email" <?php checked( true, isset( $rcp_options['disable_renewal_payment_failed_email_admin'] ) ); ?>/>
+									<span><?php _e( 'Check this to disable the email sent to the administrator when a renewal payment fails.', 'rcp' ); ?></span>
+								</td>
+							</tr>
+
+							<?php
+
+							/**
+							 * rcp_emails_tab_after_renewal_payment_failed_email_admin
+							 *
+							 * Used to add html or additional functionality after renewal payment failed admin enable checkbox
+							 *
+							 * @since 3.6
+							 */
+							do_action( 'rcp_emails_tab_after_renewal_payment_failed_email_admin' );
+
+							 ?>
+
+							<tr valign="top">
+								<th colspan=2>
+									<h3><?php _e( 'New User Notifications', 'rcp' ); ?></h3>
+								</th>
+							</tr>
+
+							<?php
+
+							/**
+							 * rcp_emails_tab_after_new_user_notifications
+							 *
+							 * Used to add fields or other html after New User Notifications
+							 *
+							 * @since 3.6
+							 */
+							do_action( 'rcp_emails_tab_after_new_user_notifications' );
+
+							?>
+
+						</table>
+						<?php do_action( 'rcp_email_settings', $rcp_options ); ?>
+
+					</div><!--end #rcp_email_options-->
+					<div class="clear"></div>
+				</div><!--end #emails-->
 
 				<div class="tab_content" id="invoices">
 					<table class="form-table">
