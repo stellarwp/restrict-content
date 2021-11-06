@@ -58,7 +58,7 @@ function rcp_settings_page() {
 		<h2 class="nav-tab-wrapper">
 			<a href="#general" id="general-tab" class="nav-tab"><?php _e( 'General', 'rcp' ); ?></a>
 			<a href="#payments" id="payments-tab" class="nav-tab"><?php _e( 'Payments', 'rcp' ); ?></a>
-			<?php do_action( 'restrict_content_pro_add_admin_settings_email_tab' ); ?>
+			<a href="#emails" id="emails-tab" class="nav-tab"><?php _e( 'Emails', 'rcp' ); ?></a>
 			<a href="#invoices" id="invoices-tab" class="nav-tab"><?php _e( 'Invoices', 'rcp' ); ?></a>
 			<a href="#misc" id="misc-tab" class="nav-tab"><?php _e( 'Misc', 'rcp' ); ?></a>
 		</h2>
