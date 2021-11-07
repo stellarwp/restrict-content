@@ -209,12 +209,37 @@ function rcp_send_membership_email( $membership_id_or_object, $status = '' ) {
 		 */
 		case 'expired' :
 
-			$subject = apply_filters( 'restrict_content_pro_set_expired_email_subject', $rcp_options, $subject, $user_id, $status, $membership );
-			$message = apply_filters( 'restrict_content_pro_set_expired_email_message', $rcp_options, $message, $user_id, $status, $membership );
-			$admin_subject = apply_filters( 'restrict_content_pro_set_expired_admin_subject', $rcp_options, $admin_subject, $site_name, $user_id, $status, $membership );
-			$admin_message = apply_filters( 'restrict_content_pro_set_expired_admin_message', $rcp_options, $admin_message, $user_info, $user_id, $status, $membership );
+			if( ! isset( $rcp_options['disable_expired_email'] ) ) {
 
+				$message = isset( $rcp_options['expired_email'] ) ? $rcp_options['expired_email'] : '';
+				$message = apply_filters( 'rcp_subscription_expired_email', $message, $user_id, $status, $membership );
+
+				$subject = isset( $rcp_options['expired_subject'] ) ? $rcp_options['expired_subject'] : '';
+				$subject = apply_filters( 'rcp_subscription_expired_subject', $subject, $user_id, $status, $membership );
+
+				add_user_meta( $user_id, '_rcp_expired_email_sent', 'yes' );
+
+			}
+
+			if( ! isset( $rcp_options['disable_expired_email_admin'] ) ) {
+				$admin_message = isset( $rcp_options['expired_email_admin'] ) ? $rcp_options['expired_email_admin'] : '';
+				$admin_subject = isset( $rcp_options['expired_subject_admin'] ) ? $rcp_options['expired_subject_admin'] : '';
+
+				if ( empty( $admin_message ) ) {
+					$admin_message = __( 'Hello', 'rcp' ) . "\n\n" . $user_info->display_name . "'s " . __( 'membership has expired', 'rcp' ) . "\n\n";
+					$admin_message = apply_filters( 'rcp_before_admin_email_expired_thanks', $admin_message, $user_id );
+					$admin_message .= __( 'Thank you', 'rcp' );
+				}
+
+				if ( empty( $admin_subject ) ) {
+					$admin_subject = sprintf( __( 'Expired membership on %s', 'rcp' ), $site_name );
+				}
+
+				$admin_subject = apply_filters( 'rcp_email_admin_membership_expired_subject', $admin_subject, $user_id, $status, $membership );
+				$admin_message = apply_filters( 'rcp_email_admin_membership_expired_message', $admin_message, $user_id, $status, $membership );
+			}
 			break;
+
 	}
 
 	if( ! empty( $message ) ) {
