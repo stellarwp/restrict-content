@@ -934,6 +934,52 @@ function rc_welcome_page_redesign() {
     <?php
 }
 
+/**
+ * This function is used to add the application fee amount to Stripe purchases
+ *
+ * @param array $intent_args
+ * @param RCP_Payment_Gateway_Stripe $rcp_stripe
+ *
+ * @since 3.0
+ *
+ * @return array
+ */
+function restrict_content_add_application_fee(array $intent_args, RCP_Payment_Gateway_Stripe $rcp_stripe ): array
+{
+    $intent_args['application_fee_amount'] = restrict_content_stripe_get_application_fee_amount( $intent_args['amount'] );
+
+    return $intent_args;
+}
+add_filter( 'rcp_stripe_create_payment_intent_args', 'restrict_content_add_application_fee', 10, 2 );
+
+/**
+ * This function is used to calculate application fee amount.
+ *
+ * @param int $amount Donation amount.
+ *
+ * @since 2.5.0
+ *
+ * @return int
+ */
+function restrict_content_stripe_get_application_fee_amount( $amount ): int
+{
+    return round( $amount * restrict_content_stripe_get_application_fee_percentage() / 100, 0 );
+}
+
+/**
+ * This function is used to get application fee percentage.
+ *
+ * Note: This function is for internal purpose only.
+ *
+ * @since 2.5.0
+ *
+ * @return int
+ */
+function restrict_content_stripe_get_application_fee_percentage(): int
+{
+    return 2;
+}
+
 register_activation_hook( __FILE__, function() {
     if ( current_user_can( 'manage_options' ) ) {
         add_option( 'Restrict_Content_Plugin_Activated', 'restrict-content' );
