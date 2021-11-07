@@ -336,6 +336,10 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 			require_once( RCP_PLUGIN_DIR . 'core/includes/member-forms.php' );
 			require_once( RCP_PLUGIN_DIR . 'core/includes/member-functions.php' );
 
+			// Discounts
+			require_once( RCP_PLUGIN_DIR . 'core/includes/discounts/class-rcp-discount.php');
+			require_once( RCP_PLUGIN_DIR . 'core/includes/discounts/discount-functions.php');
+
 			// @todo can this be improved?
 			require( RCP_PLUGIN_DIR . 'core/includes/install.php' );
 			require_once( RCP_PLUGIN_DIR . 'core/includes/class-rcp-capabilities.php' );

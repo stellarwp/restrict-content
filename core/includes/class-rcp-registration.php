@@ -409,17 +409,12 @@ class RCP_Registration {
 	 * @return bool
 	 */
 	public function add_discount( $code, $recurring = true ) {
-		if ( class_exists( 'RCP_DISCOUNT' ) ) {
-
-			if ( ! rcp_validate_discount( $code, $this->subscription ) ) {
-				return false;
-			}
-
-			$this->discounts[ $code ] = $recurring;
-			return true;
+		if ( ! rcp_validate_discount( $code, $this->subscription ) ) {
+			return false;
 		}
 
-		return false;
+		$this->discounts[ $code ] = $recurring;
+		return true;
 	}
 
 	/**
@@ -429,16 +424,11 @@ class RCP_Registration {
 	 * @return array|bool
 	 */
 	public function get_discounts() {
-		if ( class_exists( 'RCP_DISCOUNT' ) ) {
-
-			if (empty($this->discounts)) {
+		if (empty($this->discounts)) {
 				return false;
-			}
-
-			return $this->discounts;
 		}
 
-		return false;
+		return $this->discounts;
 	}
 
 	/**
@@ -598,10 +588,6 @@ class RCP_Registration {
 
 		global $rcp_options;
 
-		if ( ! class_exists( 'RCP_DISCOUNT' ) ) {
-			return;
-		}
-
 		if ( ! $registration_discounts = $this->get_discounts() ) {
 			return 0;
 		}
@@ -659,10 +645,6 @@ class RCP_Registration {
 
 		global $rcp_options;
 
-		if ( ! class_exists( 'RCP_DISCOUNT' ) ) {
-			$discounts = false;
-		}
-
 		if ( $this->is_trial() ) {
 			return 0;
 		}
@@ -718,10 +700,6 @@ class RCP_Registration {
 		global $rcp_options;
 
 		$total = ( $this->membership_level instanceof Membership_Level && ! $this->membership_level->is_lifetime() ) ? $this->membership_level->get_price() : 0;
-
-		if ( ! class_exists( 'RCP_DISCOUNT' ) ) {
-			$discounts = false;
-		}
 
 		if ( $discounts && empty( $rcp_options['discount_fees'] ) ) {
 			$total -= $this->get_total_discounts( $total, true );
