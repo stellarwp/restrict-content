@@ -994,3 +994,29 @@ function restrict_content_plugin_activation_redirect() {
     }
 }
 add_action( 'admin_init', 'restrict_content_plugin_activation_redirect' );
+
+/**
+ * Add the email gathering modal to the restrict content settings payment page
+ *
+ * @since 3.0
+ */
+function restrict_content_add_email_gather_modal() {
+    ?>
+    <div class="restrict_content_modal_container" id="restrict_content_payments_modal" style="display: none">
+        <p>This is my hidden content! It will appear in ThickBox when the link is clicked.</p>
+    </div>
+    <?php
+}
+add_action( 'rcp_payments_settings', 'restrict_content_add_email_gather_modal' );
+
+/**
+ * Add the payments tab as either thickbox link or typical link
+ */
+function rcp_add_the_payments_tab_to_admin() {
+    if ( get_option( 'restrict_content_shown_stripe_marketing') ==  true ) :
+        return '<a href="#payments" id="payments-tab" class="nav-tab"><?php _e( "Payments", "rcp" ); ?></a>';
+    else :
+        return '<a href="#TB_inline?&width=600&height=550&inlineId=restrict_content_payments_modal" id="payments-tab" class="nav-tab"><?php _e( "Payments", "rcp" ); ?></a>';
+    endif;
+}
+add_action( 'rcp_after_general_tab_admin', 'rcp_add_the_payments_tab_to_admin' );

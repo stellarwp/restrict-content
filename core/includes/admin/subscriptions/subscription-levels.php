@@ -135,7 +135,7 @@ function rcp_member_levels_page() {
 								/**
 							 	* Action to add the free trial input fields
 							 	*/
-								do_action( 'restrict_content_pro_add_free_trials_input_new' );
+								do_action( 'restrict_content_pro_new_subscription_after_set_trial_duration' );
 
 							?>
 							<tr class="form-field">

@@ -232,7 +232,7 @@ Your subscription for %subscription_name% will renew on %expiration%.';
 	 */
 	public function send_reminders() {
 
-		do_action( 'restrict_content_pro_send_reminder_emails', $this );
+		do_action( 'restrict_content_pro_after_send_reminder_emails', $this );
 
 	}
 

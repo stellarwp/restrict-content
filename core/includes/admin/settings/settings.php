@@ -57,7 +57,7 @@ function rcp_settings_page() {
 
 		<h2 class="nav-tab-wrapper">
 			<a href="#general" id="general-tab" class="nav-tab"><?php _e( 'General', 'rcp' ); ?></a>
-			<a href="#payments" id="payments-tab" class="nav-tab"><?php _e( 'Payments', 'rcp' ); ?></a>
+			<?php echo( apply_filters( 'rcp_after_general_tab_admin', '<a href="#payments" id="payments-tab" class="nav-tab"><?php _e( "Payments", "rcp" ); ?></a>' ) ); ?>
 			<a href="#emails" id="emails-tab" class="nav-tab"><?php _e( 'Emails', 'rcp' ); ?></a>
 			<a href="#invoices" id="invoices-tab" class="nav-tab"><?php _e( 'Invoices', 'rcp' ); ?></a>
 			<a href="#misc" id="misc-tab" class="nav-tab"><?php _e( 'Misc', 'rcp' ); ?></a>
@@ -452,7 +452,7 @@ function rcp_settings_page() {
 							<?php endif; ?>
 						</table>
 
-						<?php do_action( 'restrict_content_pro_output_payment_gateway_inputs', $rcp_options ); ?>
+						<?php do_action( 'restrict_content_pro_after_stripe_payment_configuration_admin', $rcp_options ); ?>
 
 					</table>
 					<?php do_action( 'rcp_payments_settings', $rcp_options ); ?>
@@ -1025,7 +1025,7 @@ function rcp_settings_page() {
 						/**
 						 * Action to add Discount Signup Fees
 						 */
-						do_action('restrict_content_pro_discount_signup_fees_admin');
+						do_action('restrict_content_pro_after_content_excerpts_admin');
 
 						?>
 
@@ -1034,7 +1034,7 @@ function rcp_settings_page() {
 						/**
 						 * Action to add the maximum number of simultaneous connections per member
 						 */
-						do_action('restrict_content_pro_max_connections_per_member_admin');
+						do_action('restrict_content_pro_after_after_discount_signup_fees_admin');
 
 						?>
 						<tr valign="top">
@@ -1114,7 +1114,7 @@ function rcp_settings_page() {
 						/**
 						* Action to add the maximum number of simultaneous connections per member
 						*/
-						do_action( 'restrict_content_pro_add_recaptcha_fields', $rcp_options );
+						do_action( 'restrict_content_pro_after_privacy_policy_link', $rcp_options );
 						?>
 
 						<tr valign="top">

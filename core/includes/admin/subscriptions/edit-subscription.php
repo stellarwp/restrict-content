@@ -76,7 +76,7 @@ if ( ! $level instanceof Membership_Level ) {
 				/**
 				 * Action to add the free trial input fields
 				 */
-				do_action( 'restrict_content_pro_add_free_trials_input_edit', $level );
+				do_action( 'restrict_content_pro_edit_subscription_after_set_trial_duration', $level );
 			?>
 			<tr class="form-field">
 				<th scope="row" valign="top">
