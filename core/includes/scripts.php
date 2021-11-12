@@ -79,7 +79,8 @@ function rcp_admin_scripts( $hook ) {
 				'choose_logo'         => __( 'Choose a Logo', 'rcp' ),
 				'can_cancel_member'   => ( $hook == $rcp_members_page && isset( $_GET['edit_member'] ) && rcp_can_member_cancel( absint( $_GET['edit_member'] ) ) ),
 				'cancel_subscription' => __( 'Cancel subscription at gateway', 'rcp' ),
-				'currencies'          => json_encode( rcp_get_currencies() )
+				'currencies'          => json_encode( rcp_get_currencies() ),
+				'downgrade_redirect'  => admin_url() . '?page=restrict-content-settings',
 			)
 		);
 	}

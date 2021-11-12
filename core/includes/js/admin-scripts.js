@@ -838,7 +838,7 @@ jQuery(document).ready(function($) {
 			success: function( response ) {
 				console.dir(response);
 				if ( response.success ) {
-					window.location.assign( '/wp-admin/admin.php?page=restrict-content-settings' );
+					window.location.assign( rcp_vars.downgrade_redirect );
 				}
 			},
 			error: function( response ) {

@@ -57,7 +57,7 @@ function rcp_settings_page() {
 
 		<h2 class="nav-tab-wrapper">
 			<a href="#general" id="general-tab" class="nav-tab"><?php _e( 'General', 'rcp' ); ?></a>
-			<?php echo( apply_filters( 'rcp_after_general_tab_admin', '<a href="#payments" id="payments-tab" class="nav-tab"><?php _e( "Payments", "rcp" ); ?></a>' ) ); ?>
+			<a href="#payments" id="payments-tab" class="nav-tab"><?php _e( "Payments", "rcp" ) ?></a>
 			<a href="#emails" id="emails-tab" class="nav-tab"><?php _e( 'Emails', 'rcp' ); ?></a>
 			<a href="#invoices" id="invoices-tab" class="nav-tab"><?php _e( 'Invoices', 'rcp' ); ?></a>
 			<a href="#misc" id="misc-tab" class="nav-tab"><?php _e( 'Misc', 'rcp' ); ?></a>
@@ -337,120 +337,6 @@ function rcp_settings_page() {
 								</td>
 							</tr>
 						<?php endif; ?>
-
-						<table class="form-table">
-							<tr valign="top">
-								<th>
-									<label for="rcp_settings[sandbox]"><?php _e( 'Sandbox Mode', 'rcp' ); ?></label>
-								</th>
-								<td>
-									<input type="checkbox" value="1" name="rcp_settings[sandbox]" id="rcp_settings[sandbox]" <?php checked( rcp_is_sandbox() ); echo ( defined( 'RCP_GATEWAY_SANDBOX_MODE' ) && RCP_GATEWAY_SANDBOX_MODE ) ? ' disabled="disabled"' : ''; ?>/>
-									<span class="description"><?php _e( 'Use Restrict Content Pro in Sandbox mode. This allows you to test the plugin with test accounts from your payment processor.', 'rcp' ); echo ( defined( 'RCP_GATEWAY_SANDBOX_MODE' ) && RCP_GATEWAY_SANDBOX_MODE ) ? ' ' . __( 'Note: Sandbox mode is enabled via the RCP_GATEWAY_SANDBOX_MODE constant.', 'rcp' ) : ''; ?></span>
-									<div id="rcp-sandbox-toggle-notice" style="visibility: hidden;"><p><?php _e( 'You just toggled the sandbox option. Save the settings using the Save Options button below, then connect your Stripe account for the selected mode.', 'rcp' ); ?></p></div>
-								</td>
-							</tr>
-							<?php if( ! function_exists( 'rcp_register_stripe_gateway' ) ) : ?>
-								<tr valign="top">
-									<th>
-										<h3><?php _e('Stripe Settings', 'rcp'); ?></h3>
-									</th>
-									<td>
-										<?php
-										$stripe_connect_url = add_query_arg( array(
-												'live_mode'         => urlencode( (int) ! rcp_is_sandbox() ),
-												'state'             => urlencode( str_pad( wp_rand( wp_rand(), PHP_INT_MAX ), 100, wp_rand(), STR_PAD_BOTH ) ),
-												'customer_site_url' => urlencode( admin_url( 'admin.php?page=rcp-settings' ) ),
-										), 'https://restrictcontentpro.com/?rcp_gateway_connect_init=stripe_connect' );
-
-										$stripe_connect_account_id = get_option( 'rcp_stripe_connect_account_id' );
-
-										if( empty( $stripe_connect_account_id ) || ( ( empty( $rcp_options['stripe_test_publishable'] ) && rcp_is_sandbox() ) || ( empty( $rcp_options['stripe_live_publishable'] ) && ! rcp_is_sandbox() ) ) ): ?>
-											<a href="<?php echo esc_url_raw( $stripe_connect_url ); ?>" class="rcp-stripe-connect"><span><?php _e( 'Connect with Stripe', 'rcp' ); ?></span></a>
-										<?php else: ?>
-											<p>
-												<?php
-												$test_text = _x( 'test', 'current value for sandbox mode', 'rcp' );
-												$live_text = _x( 'live', 'current value for sandbox mode', 'rcp' );
-												if( rcp_is_sandbox() ) {
-													$current_mode = $test_text;
-													$opposite_mode = $live_text;
-												} else {
-													$current_mode = $live_text;
-													$opposite_mode = $test_text;
-												}
-												printf( __( 'Your Stripe account is connected in %s mode. To connect it in %s mode, toggle the Sandbox Mode setting above and save the settings to continue.', 'rcp' ), '<strong>' . $current_mode . '</strong>', '<strong>' . $opposite_mode . '</strong>' ); ?>
-											</p>
-											<p>
-												<?php printf( __( '<a href="%s">Click here</a> to reconnect Stripe in %s mode.', 'rcp' ), esc_url_raw( $stripe_connect_url ), $current_mode ); ?>
-											</p>
-										<?php endif; ?>
-									</td>
-								</tr>
-								<tr class="rcp-settings-gateway-stripe-key-row">
-									<th>
-										<label for="rcp_settings[stripe_test_publishable]"><?php _e( 'Test Publishable Key', 'rcp' ); ?></label>
-									</th>
-									<td>
-										<input type="text" class="regular-text" id="rcp_settings[stripe_test_publishable]" style="width: 300px;" name="rcp_settings[stripe_test_publishable]" value="<?php if(isset($rcp_options['stripe_test_publishable'])) { echo $rcp_options['stripe_test_publishable']; } ?>" placeholder="pk_test_xxxxxxxx"/>
-										<p class="description"><?php _e('Enter your test publishable key.', 'rcp'); ?></p>
-									</td>
-								</tr>
-								<tr class="rcp-settings-gateway-stripe-key-row">
-									<th>
-										<label for="rcp_settings[stripe_test_secret]"><?php _e( 'Test Secret Key', 'rcp' ); ?></label>
-									</th>
-									<td>
-										<input type="text" class="regular-text" id="rcp_settings[stripe_test_secret]" style="width: 300px;" name="rcp_settings[stripe_test_secret]" value="<?php if(isset($rcp_options['stripe_test_secret'])) { echo $rcp_options['stripe_test_secret']; } ?>" placeholder="sk_test_xxxxxxxx"/>
-										<p class="description"><?php _e('Enter your test secret key. Your API keys can be obtained from your <a href="https://dashboard.stripe.com/account/apikeys" target="_blank">Stripe account settings</a>.', 'rcp'); ?></p>
-									</td>
-								</tr>
-								<tr class="rcp-settings-gateway-stripe-key-row">
-									<th>
-										<label for="rcp_settings[stripe_live_publishable]"><?php _e( 'Live Publishable Key', 'rcp' ); ?></label>
-									</th>
-									<td>
-										<input type="text" class="regular-text" id="rcp_settings[stripe_live_publishable]" style="width: 300px;" name="rcp_settings[stripe_live_publishable]" value="<?php if(isset($rcp_options['stripe_live_publishable'])) { echo $rcp_options['stripe_live_publishable']; } ?>" placeholder="pk_live_xxxxxxxx"/>
-										<p class="description"><?php _e('Enter your live publishable key.', 'rcp'); ?></p>
-									</td>
-								</tr>
-								<tr class="rcp-settings-gateway-stripe-key-row">
-									<th>
-										<label for="rcp_settings[stripe_live_secret]"><?php _e( 'Live Secret Key', 'rcp' ); ?></label>
-									</th>
-									<td>
-										<input type="text" class="regular-text" id="rcp_settings[stripe_live_secret]" style="width: 300px;" name="rcp_settings[stripe_live_secret]" value="<?php if(isset($rcp_options['stripe_live_secret'])) { echo $rcp_options['stripe_live_secret']; } ?>" placeholder="sk_live_xxxxxxxx"/>
-										<p class="description"><?php _e('Enter your live secret key.', 'rcp'); ?></p>
-									</td>
-								</tr>
-								<tr valign="top">
-									<th>
-										<label for="rcp_settings[disable_sitewide_scripts]"><?php _e( 'Disable Global Stripe.js', 'rcp' ); ?></label>
-									</th>
-									<td>
-										<input type="checkbox" value="1" name="rcp_settings[disable_sitewide_scripts]" id="rcp_settings[disable_sitewide_scripts]" <?php checked( ! empty( $rcp_options['disable_sitewide_scripts'] ) ); ?>/>
-										<span class="description"><?php printf( __( 'If left unchecked, the Stripe.js file will be loaded on every page of your website to allow them to <a href="%s" target="_blank">better detect anomalous behavior that may be indicative of fraud</a>. This is what Stripe recommends. If you check this option on, then Stripe.js will only be loaded when required for payment processing.', 'rcp' ), 'https://stripe.com/docs/stripe-js/v2#including-stripejs' ); ?></span>
-									</td>
-								</tr>
-								<tr>
-									<th class="rcp_stripe_help_box" colspan=2>
-										<div class="rcp_stripe_help_box_inner_container">
-											<div class="rcp_stripe_help_box_content">
-												<p><?php printf( __( 'Have questions about connecting with Stripe? <a href="%s" target="_blank" rel="noopener noreferrer">See the documentation</a>.', 'rcp' ), 'https://docs.restrictcontentpro.com/article/2033-how-does-stripe-connect-affect-me' ); ?></p>
-												<p><strong><?php _e('Note', 'rcp'); ?></strong>: <?php _e('in order for membership payments made through Stripe to be tracked, you must enter the following URL to your <a href="https://dashboard.stripe.com/account/webhooks" target="_blank">Stripe Webhooks</a> under Account Settings:', 'rcp'); ?></p>
-												<p style="text-decoration: underline; color: #646FDE;"><?php echo esc_url( add_query_arg( 'listener', 'stripe', home_url() . '/' ) ); ?></p>
-											</div>
-
-											<div class="rcp_stripe_help_box_button">
-												<a href="https://help.ithemes.com/hc/en-us/articles/360050099313-Stripe">
-													<p class="need_help">Need Help?</p>
-													<p>Click Here</p>
-												</a>
-											</div>
-										</div>
-									</th>
-								</tr>
-							<?php endif; ?>
-						</table>
 
 						<?php do_action( 'restrict_content_pro_after_stripe_payment_configuration_admin', $rcp_options ); ?>
 
