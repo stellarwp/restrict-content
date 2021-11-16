@@ -1087,7 +1087,7 @@ add_action( 'wp_ajax_restrict_content_add_to_stripe_mailing_list', 'restrict_con
  * @since 2.2.1
  */
 function rc_deactivate_plugin() {
-    if ( defined( 'RCP_PLUGIN_VERSION' ) ) {
+    if ( is_plugin_active('restrict-content-pro/restrict-content-pro.php') ) {
         deactivate_plugins( plugin_basename( __FILE__ ) );
     }
 }
