@@ -1314,6 +1314,39 @@ table.rcp_payment_details td {
 	padding: 20px;
 }
 
+.rcp_stripe_help_box_inner_container .rcp_stripe_help_box_content button {
+	display: block;
+	margin: .5em 0;
+	background: #B685C9 0% 0% no-repeat padding-box;
+	border-radius: 4px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 1.1rem;
+	line-height: 19px;
+	letter-spacing: 0px;
+	color: #FFFFFF;
+	padding: 10px 25px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-decoration: none;
+	border: none;
+}
+
+.rcp_stripe_help_box_inner_container .rcp_stripe_help_box_content input {
+	display: block;
+	margin: .5em 0;
+}
+
+#rc_accept_privacy_policy {
+	display: inline-block;
+}
+
+.rcp_stripe_help_box_inner_container .rcp_stripe_help_box_content .small a {
+	color: #000;
+	font-weight: normal;
+	text-decoration: none;
+}
+
 .rcp_stripe_help_box_inner_container .rcp_stripe_help_box_button {
 	background: #646FDE;
 	min-height: 100%;

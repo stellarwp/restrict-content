@@ -338,7 +338,7 @@ function rcp_settings_page() {
 							</tr>
 						<?php endif; ?>
 
-						<table class="form-table">
+						<table class="form-table stripe-form-table">
 							<tr valign="top">
 								<th>
 									<label for="rcp_settings[sandbox]"><?php _e( 'Sandbox Mode', 'rcp' ); ?></label>

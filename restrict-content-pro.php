@@ -1001,3 +1001,76 @@ function restrict_content_add_stripe_fee_notice() {
     <?php
 }
 add_action( 'rcp_after_stripe_help_box_admin', 'restrict_content_add_stripe_fee_notice' );
+
+function restrict_content_add_stripe_marketing_email_capture() {
+    if ( get_option( 'restrict_content_shown_stripe_marketing' ) == false ) :
+        $rc_stripe_marketing_nonce = wp_create_nonce( 'restrict_content_shown_stripe_marketing' );
+    ?>
+    <tr>
+        <th id="rcp_stripe_marketing_container" class="rcp_stripe_help_box" colspan=2 style="display: none;">
+            <div id="rcp_stripe_marketing_container_inner_container" class="rcp_stripe_help_box_inner_container">
+                <div class="rcp_stripe_help_box_content">
+                    <h2><?php _e( 'Subscribe and Setup', 'LION' ); ?></h2>
+                    <p><?php _e( 'Subscribe to get tips on using Restrict Content to grow your business and learn about new features.', 'LION' ); ?></p>
+                    <input id="stripe_mailing_list" name="stripe_mailing_list_email" type="email" placeholder="Email Address">
+                    <input type="checkbox" value="1" name="rc_accept_privacy_policy" id="rc_accept_privacy_policy" class="rc_accept_privacy_policy" <?php checked( true, isset( $rcp_options['disable_active_email'] ) ); ?>/>
+                    <span><?php _e( 'Accept Privacy Policy', 'rcp' ); ?></span>
+                    <input type="hidden" name="restrict_content_shown_stripe_marketing" id="restrict_content_shown_stripe_marketing" value="<?php echo $rc_stripe_marketing_nonce; ?>" >
+                    <input type="hidden" name="action" value="restrict_content_add_to_stripe_mailing_list">
+                    <button id="restrict-content-stripe-marketing-submit" class="restrict-content-welcome-button">
+                        <?php _e( 'Subscribe and Setup', 'LION' ); ?>
+                    </button>
+                    <p class="small"><a href="#payments" id="skip_stripe_marketing_setup"><?php _e( 'Skip, setup payment gateway', 'LION' ); ?></a></p>
+                </div>
+            </div>
+        </th>
+    </tr>
+    <?php
+    endif;
+    // Set option so that the marketing is not shown again after this point.
+    // update_option( 'restrict_content_shown_stripe_marketing', TRUE );
+}
+add_action( 'rcp_payments_settings', 'restrict_content_add_stripe_marketing_email_capture' );
+
+/**
+ * Load admin styles
+ */
+function restrict_content_add_stripe_marketing_logic( $hook_suffix ) {
+    if ( 'restrict_page_rcp-settings' == $hook_suffix && get_option( 'restrict_content_shown_stripe_marketing' ) == false ) {
+        wp_enqueue_script(
+                'restrict-content-stripe-marketing',
+                trailingslashit( plugins_url() ) . 'restrict-content/core/includes/js/restrict-content-stripe-marketing.js',
+                array(),
+                RCP_PLUGIN_VERSION
+        );
+        wp_localize_script(
+            'restrict-content-stripe-marketing',
+            'rcp_admin_stripe_marketing',
+            array(
+                'ajax_url' => admin_url( 'admin-ajax.php' ),
+            )
+        );
+    }
+}
+add_action( 'admin_enqueue_scripts', 'restrict_content_add_stripe_marketing_logic' );
+
+function restrict_content_add_to_stripe_mailing_list() {
+    echo 'restrict_content_add_to_stripe_mailing_list called';
+    if( isset( $_POST['restrict_content_shown_stripe_marketing'] ) && wp_verify_nonce( $_POST['restrict_content_shown_stripe_marketing'], 'restrict_content_shown_stripe_marketing') ) {
+
+        $body = array(
+            'list_id' => 'ebb8b55cda',
+            'tags'    => ['RC-Stripe-Activation'],
+            'email'   => $_POST['stripe_mailing_list_email']
+        );
+
+        $fields = array(
+            'method' => 'POST',
+            'body'   => json_encode( $body )
+        );
+
+        return wp_remote_request( 'https://api.ithemes.com/newsletter/subscribe', $fields );
+    }
+}
+
+add_action( 'admin_post_restrict_content_add_to_stripe_mailing_list', 'restrict_content_add_to_stripe_mailing_list' );
