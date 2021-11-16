@@ -566,30 +566,32 @@ add_action( 'admin_menu', 'register_menus', 100 );
  */
 function rc_admin_styles_primary( $hook_suffix ) {
 
-    // Only load admin CSS on Restrict Content Settings page
-    if (
-        'toplevel_page_restrict-content-settings' == $hook_suffix ||
-        'restrict_page_rcp-why-go-pro' == $hook_suffix
-    ) {
-        wp_enqueue_style( 'rcp-settings', trailingslashit( plugins_url() ) . 'restrict-content/restrict-content/includes/assets/css/rc-settings.css', array(), RCP_PLUGIN_VERSION );
-        wp_enqueue_script( 'rcp-admin-settings-functionality', trailingslashit( plugins_url() ) . 'restrict-content/restrict-content/includes/assets/js/rc-settings.js', array(), RCP_PLUGIN_VERSION );
-        wp_localize_script(
-            'rcp-admin-settings-functionality',
-            'rcp_admin_settings_options',
-            array(
-                'ajax_url' => admin_url( 'admin-ajax.php' ),
-                'rc_process_legacy_nonce' => wp_create_nonce( 'rcp-settings-nonce' )
-            )
-        );
-    }
+    if ( get_option( 'restrict_content_pro_use_legacy_restrict_content' ) == false ) {
+        // Only load admin CSS on Restrict Content Settings page
+        if (
+            'toplevel_page_restrict-content-settings' == $hook_suffix ||
+            'restrict_page_rcp-why-go-pro' == $hook_suffix
+        ) {
+            wp_enqueue_style('rcp-settings', trailingslashit(plugins_url()) . 'restrict-content/restrict-content/includes/assets/css/rc-settings.css', array(), RCP_PLUGIN_VERSION);
+            wp_enqueue_script('rcp-admin-settings-functionality', trailingslashit(plugins_url()) . 'restrict-content/restrict-content/includes/assets/js/rc-settings.js', array(), RCP_PLUGIN_VERSION);
+            wp_localize_script(
+                'rcp-admin-settings-functionality',
+                'rcp_admin_settings_options',
+                array(
+                    'ajax_url' => admin_url('admin-ajax.php'),
+                    'rc_process_legacy_nonce' => wp_create_nonce('rcp-settings-nonce')
+                )
+            );
+        }
 
-    if ( 'admin_page_restrict-content-welcome' == $hook_suffix || 'restrict_page_rcp-need-help' == $hook_suffix ) {
-        wp_enqueue_style( 'rcp-settings', trailingslashit( plugins_url() ) . 'restrict-content/restrict-content/includes/assets/css/rc-settings.css', array(), RCP_PLUGIN_VERSION );
-        wp_enqueue_style( 'rcp-wp-overrides', trailingslashit( plugins_url() ) . 'restrict-content/restrict-content/includes/assets/css/rc-wp-overrides.css', array(), RCP_PLUGIN_VERSION );
-        wp_enqueue_script( 'rcp-admin-settings', trailingslashit( plugins_url() ) . 'restrict-content/restrict-content/includes/assets/js/rc-admin.js', array(), RCP_PLUGIN_VERSION );
-    }
+        if ('admin_page_restrict-content-welcome' == $hook_suffix || 'restrict_page_rcp-need-help' == $hook_suffix) {
+            wp_enqueue_style('rcp-settings', trailingslashit(plugins_url()) . 'restrict-content/restrict-content/includes/assets/css/rc-settings.css', array(), RCP_PLUGIN_VERSION);
+            wp_enqueue_style('rcp-wp-overrides', trailingslashit(plugins_url()) . 'restrict-content/restrict-content/includes/assets/css/rc-wp-overrides.css', array(), RCP_PLUGIN_VERSION);
+            wp_enqueue_script('rcp-admin-settings', trailingslashit(plugins_url()) . 'restrict-content/restrict-content/includes/assets/js/rc-admin.js', array(), RCP_PLUGIN_VERSION);
+        }
 
-    wp_enqueue_style('rcp-metabox', trailingslashit( plugins_url() ) . 'restrict-content/restrict-content/includes/assets/css/rc-metabox.css', array(), RCP_PLUGIN_VERSION );
+        wp_enqueue_style('rcp-metabox', trailingslashit(plugins_url()) . 'restrict-content/restrict-content/includes/assets/css/rc-metabox.css', array(), RCP_PLUGIN_VERSION);
+    }
 }
 add_action( 'admin_enqueue_scripts', 'rc_admin_styles_primary' );
 
@@ -1054,23 +1056,39 @@ function restrict_content_add_stripe_marketing_logic( $hook_suffix ) {
 }
 add_action( 'admin_enqueue_scripts', 'restrict_content_add_stripe_marketing_logic' );
 
-function restrict_content_add_to_stripe_mailing_list() {
-    echo 'restrict_content_add_to_stripe_mailing_list called';
-    if( isset( $_POST['restrict_content_shown_stripe_marketing'] ) && wp_verify_nonce( $_POST['restrict_content_shown_stripe_marketing'], 'restrict_content_shown_stripe_marketing') ) {
+function restrict_content_submit_data_to_stripe_mailing_list() {
+    if( isset( $_POST['restrict_content_shown_stripe_marketing'] ) && wp_verify_nonce( $_POST['restrict_content_shown_stripe_marketing'], 'restrict_content_shown_stripe_marketing' ) ) {
 
         $body = array(
+            'account' => 'rcp',
             'list_id' => 'ebb8b55cda',
             'tags'    => ['RC-Stripe-Activation'],
             'email'   => $_POST['stripe_mailing_list_email']
         );
 
         $fields = array(
-            'method' => 'POST',
             'body'   => json_encode( $body )
         );
 
-        return wp_remote_request( 'https://api.ithemes.com/newsletter/subscribe', $fields );
+        $response = wp_remote_post( 'https://api-dev.ithemes.com/newsletter/subscribe', $fields );
+
+        if ( ! is_wp_error( $response ) ) {
+            return $response;
+        } else {
+            rcp_log( json_encode( $response ), true );
+        }
     }
 }
+add_action( 'wp_ajax_restrict_content_add_to_stripe_mailing_list', 'restrict_content_submit_data_to_stripe_mailing_list' );
 
-add_action( 'admin_post_restrict_content_add_to_stripe_mailing_list', 'restrict_content_add_to_stripe_mailing_list' );
+/**
+ * Deactivates the plugin if Restrict Content Pro is activated.
+ *
+ * @since 2.2.1
+ */
+function rc_deactivate_plugin() {
+    if ( defined( 'RCP_PLUGIN_VERSION' ) ) {
+        deactivate_plugins( plugin_basename( __FILE__ ) );
+    }
+}
+add_action( 'admin_init', 'rc_deactivate_plugin' );

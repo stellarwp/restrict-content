@@ -78,17 +78,6 @@ include(RC_PLUGIN_DIR . '/includes/display-functions.php');
 include(RC_PLUGIN_DIR . '/includes/feed-functions.php');
 include(RC_PLUGIN_DIR . '/includes/user-checks.php');
 
-/**
- * Deactivates the plugin if Restrict Content Pro is activated.
- *
- * @since 2.2.1
- */
-function rc_deactivate_plugin() {
-	if ( defined( 'RCP_PLUGIN_VERSION' ) ) {
-		deactivate_plugins( plugin_basename( __FILE__ ) );
-	}
-}
-add_action( 'admin_init', 'rc_deactivate_plugin' );
 
 if ( is_admin() && file_exists( RC_PLUGIN_DIR . '/lib/icon-fonts/load.php' ) ) {
 	require( RC_PLUGIN_DIR . "/lib/icon-fonts/load.php" );
