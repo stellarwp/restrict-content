@@ -2,7 +2,6 @@
 
 jQuery(document).ready(function($) {
 	$( '.stripe-form-table' ).css( 'display', 'none' );
-	$( '.submit .button-primary').css( 'display', 'none' );
 	$( '.rcp_stripe_marketing_container' ).css( 'display', 'table' );
 
 	$( '#restrict-content-stripe-marketing-submit' ).on( 'click', function( event ) {
@@ -16,8 +15,7 @@ jQuery(document).ready(function($) {
 			type: 'POST',
 			url: rcp_admin_stripe_marketing.ajax_url,
 			success: function( response ) {
-				$( '#rcp_stripe_marketing_container_inner_container').css( 'display', 'none');
-				$( '.submit .button-primary').css( 'display', 'block' );
+				$( '#rcp_stripe_marketing_container_inner_container').css( 'display', 'none');Z
 				$( '.stripe-form-table' ).css( 'display', 'block' );
 			},
 			error: function( response ) {
@@ -28,7 +26,6 @@ jQuery(document).ready(function($) {
 
 	$( '#skip_stripe_marketing_setup' ).on( 'click', function() {
 		$( '#rcp_stripe_marketing_container_inner_container').css( 'display', 'none');
-		$( '.submit .button-primary').css( 'display', 'block' );
 		$( '.stripe-form-table' ).css( 'display', 'block' );
 	});
 });
