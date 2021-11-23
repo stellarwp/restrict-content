@@ -13,6 +13,8 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
+$rc_options = get_option( 'rc_settings' );
+
 /**
  * Class RC_Requirements_Check
  *

@@ -5,7 +5,7 @@
 *******************************************/
 
 // load the plugin options
-$rc_options = get_option( 'rc_settings' );
+global $rc_options;
 
 if ( $rc_options !== FALSE ) {
 	if ( $rc_options['shortcode_message'] === '' ||  $rc_options['shortcode_message'] === FALSE ) {
