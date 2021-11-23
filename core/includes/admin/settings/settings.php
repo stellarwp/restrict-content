@@ -454,7 +454,7 @@ function rcp_settings_page() {
 							<?php endif; ?>
 						</table>
 
-						<?php do_action( 'restrict_content_pro_after_stripe_payment_configuration_admin', $rcp_options ); ?>
+						<?php do_action( 'rcp_after_stripe_payment_configuration_admin', $rcp_options ); ?>
 
 					</table>
 					<?php do_action( 'rcp_payments_settings', $rcp_options ); ?>
@@ -469,11 +469,9 @@ function rcp_settings_page() {
 							<?php
 
 							/**
-							 * rcp_emails_tab_start
-							 *
 							 * Used to add html or additional functionality at the start of the Restrict Content Pro Settings > Emails tab
 							 */
-							do_action( 'rcp_emails_tab_start' );
+							do_action( 'rcp_emails_settings_tab_start', $rcp_options );
 
 							?>
 
@@ -1027,7 +1025,7 @@ function rcp_settings_page() {
 						/**
 						 * Action to add Discount Signup Fees
 						 */
-						do_action('restrict_content_pro_after_content_excerpts_admin');
+						do_action('rcp_after_content_excerpts_admin');
 
 						?>
 
@@ -1036,7 +1034,7 @@ function rcp_settings_page() {
 						/**
 						 * Action to add the maximum number of simultaneous connections per member
 						 */
-						do_action('restrict_content_pro_after_after_discount_signup_fees_admin');
+						do_action('rcp_after_after_discount_signup_fees_admin');
 
 						?>
 						<tr valign="top">
@@ -1116,7 +1114,7 @@ function rcp_settings_page() {
 						/**
 						* Action to add the maximum number of simultaneous connections per member
 						*/
-						do_action( 'restrict_content_pro_after_privacy_policy_link', $rcp_options );
+						do_action( 'rcp_settings_after_privacy_policy_link', $rcp_options );
 						?>
 
 						<tr valign="top">

@@ -1012,15 +1012,14 @@ function restrict_content_add_stripe_marketing_email_capture() {
         <th id="rcp_stripe_marketing_container" class="rcp_stripe_help_box" colspan=2 style="display: none;">
             <div id="rcp_stripe_marketing_container_inner_container" class="rcp_stripe_help_box_inner_container">
                 <div class="rcp_stripe_help_box_content">
-                    <h2><?php _e( 'Subscribe and Setup', 'LION' ); ?></h2>
-                    <p><?php _e( 'Subscribe to get tips on using Restrict Content to grow your business and learn about new features.', 'LION' ); ?></p>
-                    <input id="stripe_mailing_list" name="stripe_mailing_list_email" type="email" placeholder="Email Address">
+                    <h2><?php _e( 'Activate the Stripe Payment Gateway', 'LION' ); ?></h2>
+                    <p><?php _e( 'Enter your email to setup the Stripe payment gateway and get tips about using Restrict Content', 'LION' ); ?></p>
+                    <input id="stripe_mailing_list" name="stripe_mailing_list_email" type="email" placeholder="<?php _e( 'Email Address' ); ?>">
                     <input type="checkbox" value="1" name="rc_accept_privacy_policy" id="rc_accept_privacy_policy" class="rc_accept_privacy_policy" <?php checked( true, isset( $rcp_options['disable_active_email'] ) ); ?>/>
                     <span><?php _e( 'Accept Privacy Policy', 'rcp' ); ?></span>
                     <input type="hidden" name="restrict_content_shown_stripe_marketing" id="restrict_content_shown_stripe_marketing" value="<?php echo $rc_stripe_marketing_nonce; ?>" >
-                    <input type="hidden" name="action" value="restrict_content_add_to_stripe_mailing_list">
                     <button id="restrict-content-stripe-marketing-submit" class="restrict-content-welcome-button">
-                        <?php _e( 'Subscribe and Setup', 'LION' ); ?>
+                        <?php _e( 'Setup Stripe and Subscribe', 'LION' ); ?>
                     </button>
                     <p class="small"><a href="#payments" id="skip_stripe_marketing_setup"><?php _e( 'Skip, setup payment gateway', 'LION' ); ?></a></p>
                 </div>
@@ -1079,7 +1078,7 @@ function restrict_content_submit_data_to_stripe_mailing_list() {
         }
     }
 }
-add_action( 'wp_ajax_restrict_content_add_to_stripe_mailing_list', 'restrict_content_submit_data_to_stripe_mailing_list' );
+add_action( 'wp_ajax_rcp_add_to_stripe_mailing_list', 'restrict_content_submit_data_to_stripe_mailing_list' );
 
 /**
  * Deactivates the plugin if Restrict Content Pro is activated.

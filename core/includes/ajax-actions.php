@@ -160,12 +160,10 @@ function rcp_validate_registration_state( $args = array() ) {
 
 	/** Discount */
 	if( ! empty( $return['discount_code'] ) ) {
-		if ( class_exists( 'RCP_DISCOUNT' ) ) {
-			if( rcp_validate_discount( $return['discount_code'], $return['level_id'] ) ) {
-				$code_details              = rcp_get_discount_details_by_code( $return['discount_code'] );
-				$return['discount_valid']  = true;
-				$return['discount_amount'] = rcp_discount_sign_filter( $code_details->get_amount(), $code_details->get_unit() );
-			}
+		if( rcp_validate_discount( $return['discount_code'], $return['level_id'] ) ) {
+			$code_details              = rcp_get_discount_details_by_code( $return['discount_code'] );
+			$return['discount_valid']  = true;
+			$return['discount_amount'] = rcp_discount_sign_filter( $code_details->get_amount(), $code_details->get_unit() );
 		}
 	}
 

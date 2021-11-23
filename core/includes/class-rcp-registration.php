@@ -424,7 +424,7 @@ class RCP_Registration {
 	 * @return array|bool
 	 */
 	public function get_discounts() {
-		if (empty($this->discounts)) {
+		if ( empty( $this->discounts ) ) {
 				return false;
 		}
 

@@ -836,13 +836,12 @@ jQuery(document).ready(function($) {
 			type: "post",
 			url: ajaxurl,
 			success: function( response ) {
-				console.dir(response);
 				if ( response.success ) {
 					window.location.assign( rcp_vars.downgrade_redirect );
 				}
 			},
 			error: function( response ) {
-				console.dir( response );
+				console.error( response );
 			}
 		});
 	});

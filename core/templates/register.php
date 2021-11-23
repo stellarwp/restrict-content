@@ -107,7 +107,7 @@ rcp_show_error_messages( 'register' ); ?>
 	<?php endif; ?>
 	</fieldset>
 
-	<?php if( class_exists( 'RCP_Discount' ) &&  rcp_has_discounts() ) : ?>
+	<?php if( rcp_has_discounts() ) : ?>
 	<fieldset class="rcp_discounts_fieldset">
 		<p id="rcp_discount_code_wrap">
 			<label for="rcp_discount_code">

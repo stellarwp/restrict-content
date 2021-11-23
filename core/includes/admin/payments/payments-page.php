@@ -29,9 +29,9 @@ function rcp_payments_page() {
 
 		<?php
 		if( isset( $_GET['view'] ) && 'new-payment' == $_GET['view'] ) :
-			include('new-payment.php');
+			include( 'new-payment.php' );
 		elseif( isset( $_GET['view'] ) && 'edit-payment' == $_GET['view'] ) :
-			include('edit-payment.php');
+			include( 'edit-payment.php' );
 		else : ?>
 		<h1>
 			<?php _e( 'Payments', 'rcp' ); ?>

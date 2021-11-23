@@ -14,15 +14,15 @@
  * @uses rcp_get_payment_gateways()
  *
  * @access private
- * @since  2.1 3.6
+ * @since  2.1
  * @return void
 */
 function rcp_load_gateway_files() {
 	foreach( rcp_get_payment_gateways() as $key => $gateway ) {
-		if ( $key === 'stripe' ) {
-			require_once RCP_PLUGIN_DIR . 'core/includes/gateways/' . $key . '/functions.php';
-		} else if( file_exists( RCP_PLUGIN_DIR . 'pro/includes/gateways/' . $key . '/functions.php' ) ) {
+		if( file_exists( RCP_PLUGIN_DIR . 'pro/includes/gateways/' . $key . '/functions.php' ) ) {
 			require_once RCP_PLUGIN_DIR . 'pro/includes/gateways/' . $key . '/functions.php';
+		} else if( file_exists( RCP_PLUGIN_DIR . 'core/includes/gateways/' . $key . '/functions.php' ) ) {
+			require_once RCP_PLUGIN_DIR . 'core/includes/gateways/' . $key . '/functions.php';
 		}
 	}
 }
