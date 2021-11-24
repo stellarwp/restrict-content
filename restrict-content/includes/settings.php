@@ -118,10 +118,14 @@ function rc_settings_page() {
                                     <input
                                             type="button"
                                             id="restrict_content_legacy_switch"
-                                            class="button-primary"
+                                            class="button-primary btn-success"
                                             value="<?php _e( 'Use the new version of Restrict Content?', 'LION' ); ?>"
                                     />
                                 </td>
+                            </tr>
+                            <tr>
+                                <th><?php _e( 'Why Upgrade?', 'LION' ); ?></th>
+                                <td><?php _e( 'Restrict Content 3 includes a robust new suite of features, including creating memberships and collectings payments. After upgrading, your content will remain restricted, and the associated restricted content messages will update to the new default restriction message. Learn More', 'LION' ); ?></td>
                             </tr>
 						</table>
 
@@ -155,10 +159,10 @@ function rc_pro_features() {
             <img src="<?php echo esc_url( RC_PLUGIN_URL . 'includes/assets/images/restrict-content-pro-logo.svg'); ?>" >
         </div>
         <div class="rcp-unlock-text">
-            <h2><?php _e( 'Grow Your Sales with Premium Features and Add-ons in Restrict Content PRO', 'LION' ); ?></h2>
+            <h2><?php _e( 'Upgrade to Restrict Content Version 3, get access to several new features.', 'LION' ); ?></h2>
         </div>
         <div class="rcp-pro-button">
-            <a href="https://restrictcontentpro.com/pricing/"><?php _e( 'Unlock Premium Features & Add-Ons', 'LION' ); ?></a>
+            <a><?php _e( 'Unlock Stripe and Membership Levels', 'LION' ); ?></a>
         </div>
     </div>
 

@@ -892,6 +892,16 @@ img.restrict-content-logo {
 	margin: 0px;
 }
 
+#restrict_content_legacy_switch {
+	background-color: #28a745 !important;
+	border-color: #28a745 !important;
+}
+
+#restrict_content_legacy_switch:hover {
+	background-color: #218838 !important;
+	border-color: #1e7e34 !important;
+}
+
 @media all and ( max-width: 768px ) {
 	.restrict-content-welcome-top-container {
 		display: block;

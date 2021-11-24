@@ -1,11 +1,15 @@
 "use strict";
 
 jQuery(document).ready(function($) {
-   $( '#restrict_content_legacy_switch' ).on( 'click', function() {
+   $( '.rcp-pro-button' ).on( 'click', function() {
+       processLegacySwitch();
+   });
+
+   function processLegacySwitch() {
        $.ajax({
            data: {
                action: 'rc_process_legacy_switch',
-                   rc_process_legacy_nonce: $( '#rcp_settings_nonce').val(),
+               rc_process_legacy_nonce: $( '#rcp_settings_nonce').val(),
            },
            type: "post",
            url: rcp_admin_settings_options.ajax_url,
@@ -19,5 +23,5 @@ jQuery(document).ready(function($) {
                console.dir( response );
            }
        });
-   });
+   }
 });
