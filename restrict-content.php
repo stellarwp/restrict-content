@@ -38,6 +38,14 @@ final class RC_Requirements_Check {
 	 */
 	private $base = '';
 
+    /**
+     * Plugin version number
+     *
+     * @since 3.0
+     * @var float
+     */
+    private $version = 3.0;
+
 	/**
 	 * Requirements array
 	 *Yeah
@@ -106,10 +114,14 @@ final class RC_Requirements_Check {
 	 */
 	private function load() {
         // If we find the rc_settings option then they were definitely using the old version
-        $use_legacy_version = false;
-        if ( option_exists( 'restrict_content_pro_use_legacy_restrict_content' ) ) {
-            $use_legacy_version = get_option( 'restrict_content_pro_use_legacy_restrict_content' );
+        if ( option_exists( 'rc_settings' ) ) {
+            update_option( 'restrict_content_pro_use_legacy_restrict_content', true );
+            $use_legacy_version = true;
+        } else {
+            update_option( 'restrict_content_pro_use_legacy_restrict_content', false );
+            $use_legacy_version = false;
         }
+
         // If restrict_content_pro_use_legacy_restrict_content then load old Restrict Content
         if ( $use_legacy_version ) {
             require_once dirname( $this->file ) . '/restrict-content/restrictcontent.php';
@@ -530,20 +542,29 @@ add_action( 'wp_ajax_rc_process_legacy_switch', 'rc_process_legacy_switch' );
 
 function restrict_content_add_legacy_button_to_pro() {
     ?>
-    <td>
-        <input
-                type="hidden"
-                name="rcp_settings_nonce"
-                id="rcp_settings_nonce"
-                value="<?php echo wp_create_nonce( 'rc_process_legacy_nonce' ); ?>"
-        />
-        <input
-                type="button"
-                id="restrict_content_legacy_switch"
-                class="button-primary"
-                value="<?php _e( 'Downgrade to Legacy Restrict Content?', 'LION' ); ?>"
-        />
-    </td>
+    <table>
+        <tr>
+            <td>
+                <input
+                        type="hidden"
+                        name="rcp_settings_nonce"
+                        id="rcp_settings_nonce"
+                        value="<?php echo wp_create_nonce( 'rc_process_legacy_nonce' ); ?>"
+                />
+                <input
+                        type="button"
+                        id="restrict_content_legacy_switch"
+                        class="button-secondary danger"
+                        value="<?php _e( 'Downgrade to Legacy Restrict Content?', 'LION' ); ?>"
+                />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php _e( 'After downgrading, you will lose access to most of the features in Restrict Content 3, including membership levels and collecting payments. Additionally, content restrictions made in Restrict Content 3 will be lost after downgrading. Learn More', 'LION' ); ?>
+            </td>
+        </tr>
+    </table>
     <?php
 }
 add_action( 'rcp_misc_settings', 'restrict_content_add_legacy_button_to_pro' );
@@ -1093,3 +1114,21 @@ function rc_deactivate_plugin() {
     }
 }
 add_action( 'admin_init', 'rc_deactivate_plugin' );
+
+function restrict_content_3_update_notification() {
+    if ( ! get_option( 'dismissed-restrict-content-update' ) ) {
+        ?>
+        <div class="notice restrict-content-upgrade-notice notice-info is-dismissible">
+            <p>
+                <?php
+                printf(
+                        __( 'Restrict Content 3.0 is here and is chock full of new features! <a target="_blank" href="%s">See What\'s New</a>', 'LION'),
+                        'https://restrictcontentpro.com'
+                );
+                ?>
+            </p>
+        </div>
+        <?php
+    }
+}
+add_action( 'admin_notices', 'restrict_content_3_update_notification');

@@ -5,6 +5,10 @@ jQuery(document).ready(function($) {
        processLegacySwitch();
    });
 
+    $( '#restrict_content_legacy_switch' ).on( 'click', function() {
+        processLegacySwitch();
+    });
+
    function processLegacySwitch() {
        $.ajax({
            data: {
