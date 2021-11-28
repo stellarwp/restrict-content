@@ -320,6 +320,8 @@ function rcp_ajax_dismissed_notice_handler() {
 	if( wp_verify_nonce( $_POST['rcp_nonce'], 'rcp_dismissed_nonce' ) && current_user_can( 'manage_options' ) ) {
 		if ( $_POST['name'] === 'rcp-plugin-migration-notice' ) {
 			update_option( 'dismissed-' . $_POST['name'], true );
+		} else if ( $_POST['name'] === 'restrict-content-upgrade-notice' ) {
+			update_option( 'dismissed-' . $_POST['name'], true );
 		}
 	}
 }

@@ -1303,14 +1303,12 @@ table.rcp_payment_details td {
 
 .rcp_stripe_help_box_inner_container {
 	background: #fff;
-	background-image: url( "../css/images/stripe_setup_background.svg" );
+	background-image: url( "../images/stripe_setup_background.svg" );
 	border: 1px solid #646FDE;
-	border-radius: 8px;
+	border-radius: 4px;
 	font-weight: bold !important;
 	display: grid;
 	grid-template-columns: 2fr 0.45fr;
-	max-width: 810px;
-	background-repeat: no-repeat;
 }
 
 .rcp_stripe_help_box_inner_container .rcp_stripe_help_box_content {
@@ -1333,11 +1331,6 @@ table.rcp_payment_details td {
 	white-space: nowrap;
 	text-decoration: none;
 	border: none;
-}
-
-.rcp_stripe_help_box_inner_container .rcp_stripe_help_box_content button:hover {
-	cursor: pointer;
-
 }
 
 .rcp_stripe_help_box_inner_container .rcp_stripe_help_box_content input {
