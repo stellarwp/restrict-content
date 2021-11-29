@@ -1,0 +1,31 @@
+body.restrict_page_rcp-need-help {
+	background-color: #E5EAEE;
+}
+
+body.admin_page_restrict-content-welcome {
+	background-color: #E5EAEE;
+}
+
+#wpcontent {
+	padding-left: 0;
+}
+
+.auto-fold #wpcontent {
+	padding-left: 0;
+}
+
+.wp-responsive-open #wpbody {
+	right: calc(-16em + 20px);
+}
+
+#wpbody-content {
+	padding-bottom: 0;
+}
+
+#wpfooter {
+	display: none;
+}
+
+#adminmenuback {
+	z-index: 5;
+}
