@@ -107,6 +107,14 @@ function rcp_admin_scripts( $hook ) {
 				'rcp_dismissed_nonce' => wp_create_nonce( 'rcp_dismissed_nonce' ),
 		) );
 	}
+
+	// RCP Admin Notices Script Inclusion and Localization - Notice Dismissal
+	if ( ! get_option( 'dismissed-restrict-content-upgrade-notice', false ) ) {
+		wp_enqueue_script( 'restrict-content-pro-admin-notices', RCP_PLUGIN_URL . 'core/includes/js/restrict-content-pro-admin-notices.js', array( 'jquery' ), RCP_PLUGIN_VERSION );
+		wp_localize_script( 'restrict-content-pro-admin-notices', 'rcp_admin_notices_vars', array(
+				'rcp_dismissed_nonce' => wp_create_nonce( 'rcp_dismissed_nonce' ),
+		) );
+	}
 }
 add_action( 'admin_enqueue_scripts', 'rcp_admin_scripts' );
 

@@ -1117,7 +1117,7 @@ function rc_deactivate_plugin() {
 add_action( 'admin_init', 'rc_deactivate_plugin' );
 
 function restrict_content_3_update_notification() {
-    if ( ! get_option( 'dismissed-restrict-content-upgrade-notice' ) ) {
+    if ( ! get_option( 'dismissed-restrict-content-upgrade-notice', false ) ) {
         ?>
         <div class="notice restrict-content-upgrade-notice notice-info is-dismissible">
             <p>
