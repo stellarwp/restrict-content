@@ -1042,10 +1042,12 @@ function restrict_content_add_stripe_marketing_email_capture() {
                     <input type="checkbox" value="1" name="rc_accept_privacy_policy" id="rc_accept_privacy_policy" class="rc_accept_privacy_policy" <?php checked( true, isset( $rcp_options['disable_active_email'] ) ); ?>/>
                     <span><?php _e( 'Accept Privacy Policy', 'rcp' ); ?></span>
                     <input type="hidden" name="restrict_content_shown_stripe_marketing" id="restrict_content_shown_stripe_marketing" value="<?php echo $rc_stripe_marketing_nonce; ?>" >
-                    <button id="restrict-content-stripe-marketing-submit" class="restrict-content-welcome-button">
-                        <?php _e( 'Setup Stripe and Subscribe', 'LION' ); ?>
-                    </button>
-                    <p class="small"><a href="#payments" id="skip_stripe_marketing_setup"><?php _e( 'Skip, setup payment gateway', 'LION' ); ?></a></p>
+                    <div class="stripe_submit_container">
+                        <button id="restrict-content-stripe-marketing-submit" class="restrict-content-welcome-button">
+                            <?php _e( 'Setup Stripe and Subscribe', 'LION' ); ?>
+                        </button>
+                        <p class="small"><a href="#payments" id="skip_stripe_marketing_setup"><?php _e( 'Skip, setup payment gateway', 'LION' ); ?></a></p>
+                    </div>
                 </div>
             </div>
         </th>
