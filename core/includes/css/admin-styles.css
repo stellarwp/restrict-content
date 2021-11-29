@@ -1307,6 +1307,7 @@ table.rcp_payment_details td {
 	font-weight: bold !important;
 	display: grid;
 	grid-template-columns: 2fr 0.45fr;
+	max-width: 810px;
 }
 
 .rcp_stripe_help_box_inner_container #stripe_mailing_list {
@@ -1322,10 +1323,17 @@ table.rcp_payment_details td {
 	padding: 20px;
 }
 
+.rcp_stripe_help_box_inner_container .rcp_stripe_help_box_content p {
+	color: #76878D;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 19px;
+}
+
 .rcp_stripe_help_box_inner_container .rcp_stripe_help_box_content button {
 	display: block;
 	margin: .5em 0;
-	background: #B685C9 0% 0% no-repeat padding-box;
+	background: #AF86C7 0% 0% no-repeat padding-box;
 	border-radius: 8px;
 	text-align: center;
 	font-weight: normal;
@@ -1334,10 +1342,13 @@ table.rcp_payment_details td {
 	letter-spacing: 0px;
 	color: #FFFFFF;
 	padding: 10px 16px;
-	overflow: hidden;
 	white-space: nowrap;
 	text-decoration: none;
 	border: none;
+}
+
+.rcp_stripe_help_box_inner_container .rcp_stripe_help_box_content button:hover {
+	background: #9762B6 0% 0% no-repeat padding-box;
 }
 
 .rcp_stripe_help_box_inner_container .rcp_stripe_help_box_content input {
@@ -1347,8 +1358,9 @@ table.rcp_payment_details td {
 
 .rcp_stripe_help_box_inner_container .rcp_stripe_help_box_content .stripe_submit_container {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1.5fr 1fr;
 	column-gap: 1em;
+	align-items: center;
 }
 
 #rc_accept_privacy_policy {
@@ -1356,7 +1368,7 @@ table.rcp_payment_details td {
 }
 
 .rcp_stripe_help_box_inner_container .rcp_stripe_help_box_content .small a {
-	color: #000;
+	color: #0083E3;
 	font-weight: normal;
 	text-decoration: none;
 }
