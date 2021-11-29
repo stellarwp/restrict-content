@@ -19,7 +19,7 @@ jQuery(document).ready(function($) {
 		});
 	});
 
-	$( document ).on( 'click', 'restrict-content-upgrade-notice .notice-dismiss', function() {
+	$( document ).on( 'click', '.restrict-content-upgrade-notice .notice-dismiss', function() {
 		$.ajax({
 			url: ajaxurl,
 			method: 'POST',

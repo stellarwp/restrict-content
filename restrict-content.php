@@ -114,8 +114,9 @@ final class RC_Requirements_Check {
 	 */
 	private function load() {
         // If we find the rc_settings option then they were definitely using the old version
-        if ( option_exists( 'rc_settings' ) ) {
+        if ( option_exists( 'rc_settings' ) && ! option_exists( 'restrict_content_use_legacy_initial_setting' ) ) {
             update_option( 'restrict_content_pro_use_legacy_restrict_content', true );
+            update_option( 'restrict_content_use_legacy_initial_setting', true );
             $use_legacy_version = true;
         } else {
             update_option( 'restrict_content_pro_use_legacy_restrict_content', false );
@@ -1116,7 +1117,7 @@ function rc_deactivate_plugin() {
 add_action( 'admin_init', 'rc_deactivate_plugin' );
 
 function restrict_content_3_update_notification() {
-    if ( ! get_option( 'dismissed-restrict-content-update' ) ) {
+    if ( ! get_option( 'dismissed-restrict-content-upgrade-notice' ) ) {
         ?>
         <div class="notice restrict-content-upgrade-notice notice-info is-dismissible">
             <p>
