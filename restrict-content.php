@@ -138,7 +138,7 @@ final class RC_Requirements_Check {
      * @since 3.0
      */
     private function load_legacy_restrict_content() {
-        require_once dirname( $this->file ) . '/restrict-content/restrictcontent.php';
+        require_once dirname( $this->file ) . '/legacy/restrictcontent.php';
     }
 
     private function load_restrict_content_3() {
