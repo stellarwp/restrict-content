@@ -532,7 +532,7 @@ function rcp_get_customer_gateway_id( $customer_id, $gateways ) {
 	 *
 	 * @param false|string $gateway_customer_id
 	 * @param int $customer_id
-	 * @param array|string $gateways
+	 * @param array $gateways
 	 */
 	return apply_filters( 'rcp_get_customer_gateway_id', $gateway_customer_id, $customer_id, $gateways );
 }
