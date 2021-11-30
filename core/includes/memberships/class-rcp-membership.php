@@ -2799,7 +2799,18 @@ class RCP_Membership {
 
 		$notes .= date_i18n( 'F j, Y H:i:s', current_time( 'timestamp' ) ) . ' - ' . $note;
 
-		return $this->update( array( 'notes' => $notes ) );
+		$this->update( array( 'notes' => $notes ) );
+
+		/**
+		 * Triggers after the new note is added
+		 *
+		 * @param string 		 $note 			New note that was just added.
+		 * @param int 			 $membership_id ID of the membership
+		 * @param RCP_Membership $this 			RCP_Membership Object
+		 */
+		do_action( 'rcp_membership_add_note', $note, $this->get_id(), $this );
+
+		return true;
 
 	}
 
