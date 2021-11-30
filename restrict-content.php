@@ -114,36 +114,50 @@ final class RC_Requirements_Check {
 	 */
 	private function load() {
         // If we find the rc_settings option then they were definitely using the old version
-        if ( option_exists( 'rc_settings' ) && ! option_exists( 'restrict_content_use_legacy_initial_setting' ) ) {
-            update_option( 'restrict_content_pro_use_legacy_restrict_content', true );
-            update_option( 'restrict_content_use_legacy_initial_setting', true );
-            $use_legacy_version = true;
-        } else {
-            update_option( 'restrict_content_pro_use_legacy_restrict_content', false );
-            $use_legacy_version = false;
-        }
-
-        // If restrict_content_pro_use_legacy_restrict_content then load old Restrict Content
-        if ( $use_legacy_version ) {
-            require_once dirname( $this->file ) . '/restrict-content/restrictcontent.php';
-        } else {
-            // Maybe include the bundled bootstrapper
-            if ( ! class_exists( 'Restrict_Content_Pro' ) ) {
-                require_once dirname( $this->file ) . '/core/includes/class-restrict-content.php';
+        if ( ! option_exists( 'restrict_content_chosen_version' ) ) {
+            if ( option_exists( 'rc_settings' ) && ! option_exists( 'restrict_content_use_legacy_initial_setting' ) ) {
+                update_option( 'restrict_content_pro_use_legacy_restrict_content', true );
+                update_option( 'restrict_content_use_legacy_initial_setting', true );
+                $this->load_legacy_restrict_content();
+            } else {
+                update_option( 'restrict_content_pro_use_legacy_restrict_content', false );
+                $this->load_restrict_content_3();
             }
-
-            // Maybe hook-in the bootstrapper
-            if ( class_exists( 'Restrict_Content_Pro' ) ) {
-
-                // Bootstrap to plugins_loaded before priority 10 to make sure
-                // add-ons are loaded after us.
-                add_action( 'plugins_loaded', array( $this, 'bootstrap' ), 4 );
-
-                // Register the activation hook
-                register_activation_hook( $this->file, array( $this, 'install' ) );
+        } else {
+            if ( get_option( 'restrict_content_chosen_version') === 'legacy' ) {
+                $this->load_legacy_restrict_content();
+            } elseif ( get_option( 'restrict_content_chosen_version' ) === '3.0' ) {
+                $this->load_restrict_content_3();
             }
         }
 	}
+
+    /**
+     * Load version of Restrict pre 3.0
+     *
+     * @since 3.0
+     */
+    private function load_legacy_restrict_content() {
+        require_once dirname( $this->file ) . '/restrict-content/restrictcontent.php';
+    }
+
+    private function load_restrict_content_3() {
+        // Maybe include the bundled bootstrapper
+        if ( ! class_exists( 'Restrict_Content_Pro' ) ) {
+            require_once dirname( $this->file ) . '/core/includes/class-restrict-content.php';
+        }
+
+        // Maybe hook-in the bootstrapper
+        if ( class_exists( 'Restrict_Content_Pro' ) ) {
+
+            // Bootstrap to plugins_loaded before priority 10 to make sure
+            // add-ons are loaded after us.
+            add_action( 'plugins_loaded', array( $this, 'bootstrap' ), 4 );
+
+            // Register the activation hook
+            register_activation_hook( $this->file, array( $this, 'install' ) );
+        }
+    }
 
 	/**
 	 * Install, usually on an activation hook.
@@ -508,10 +522,10 @@ function rc_process_legacy_switch() {
         return;
     }
 
-    if ( option_exists( 'restrict_content_pro_use_legacy_restrict_content' ) ) {
-        if ( get_option( 'restrict_content_pro_use_legacy_restrict_content' ) == true ) {
-            $redirectUrl = admin_url( 'admin.php?page=rcp-members' );
-            update_option( 'restrict_content_pro_use_legacy_restrict_content', false );
+    if ( option_exists( 'restrict_content_chosen_version' ) ) {
+        if ( get_option( 'restrict_content_chosen_version' ) == 'legacy' ) {
+            $redirectUrl = admin_url( 'admin.php?page=restrict-content-settings' );
+            update_option( 'restrict_content_chosen_version', '3.0' );
             wp_send_json_success( array(
                 'success'  => true,
                 'data'     => array(
@@ -519,8 +533,8 @@ function rc_process_legacy_switch() {
                 ),
             ) );
         } else {
-            $redirectUrl = admin_url( 'admin.php?page=restrict-content-settings' );
-            update_option( 'restrict_content_pro_use_legacy_restrict_content', true );
+            $redirectUrl = admin_url( 'admin.php?page=rcp-members' );
+            update_option( 'restrict_content_chosen_version', 'legacy' );
             wp_send_json_success( array(
                 'success'  => true,
                 'data'     => array(
@@ -530,7 +544,7 @@ function rc_process_legacy_switch() {
         }
     } else {
         $redirectUrl = admin_url( 'admin.php?page=restrict-content-settings' );
-        update_option( 'restrict_content_pro_use_legacy_restrict_content', true );
+        update_option( 'restrict_content_chosen_version', 'legacy' );
         wp_send_json_success( array(
             'success'  => true,
             'data'     => array(
@@ -586,7 +600,7 @@ add_action( 'admin_menu', 'register_menus', 100 );
  */
 function rc_admin_styles_primary( $hook_suffix ) {
 
-    if ( get_option( 'restrict_content_pro_use_legacy_restrict_content' ) == false ) {
+    if ( get_option( 'restrict_content_chosen_version' ) == '3.0' ) {
         // Only load admin CSS on Restrict Content Settings page
         if (
             'toplevel_page_restrict-content-settings' == $hook_suffix ||

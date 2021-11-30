@@ -2248,6 +2248,18 @@ img.restrict-content-logo {
 	border-color: #1e7e34 !important;
 }
 
+#restrict_content_legacy_switch.button-secondary.danger {
+	color: #d63638;
+	border: 1px solid #d63638;
+	border-color: #d63638 !important;
+	background-color: #f6f7f7 !important;
+}
+
+#restrict_content_legacy_switch.button-secondary.danger:hover {
+	background-color: #d63638 !important;
+	color: #fff !important;
+}
+
 @media all and ( max-width: 768px ) {
 	.restrict-content-welcome-top-container {
 		display: block;
