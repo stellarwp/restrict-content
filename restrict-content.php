@@ -585,17 +585,6 @@ function restrict_content_add_legacy_button_to_pro() {
 add_action( 'rcp_misc_settings', 'restrict_content_add_legacy_button_to_pro' );
 
 /**
- * Register admin menus
- *
- * @since 3.0
- * @return void
- */
-function register_menus() {
-
-}
-add_action( 'admin_menu', 'register_menus', 100 );
-
-/**
  * Load admin styles
  */
 function rc_admin_styles_primary( $hook_suffix ) {
@@ -606,8 +595,8 @@ function rc_admin_styles_primary( $hook_suffix ) {
             'toplevel_page_restrict-content-settings' == $hook_suffix ||
             'restrict_page_rcp-why-go-pro' == $hook_suffix
         ) {
-            wp_enqueue_style('rcp-settings', trailingslashit(plugins_url()) . 'restrict-content/restrict-content/includes/assets/css/rc-settings.css', array(), RCP_PLUGIN_VERSION);
-            wp_enqueue_script('rcp-admin-settings-functionality', trailingslashit(plugins_url()) . 'restrict-content/restrict-content/includes/assets/js/rc-settings.js', array(), RCP_PLUGIN_VERSION);
+            wp_enqueue_style('rcp-settings', trailingslashit(plugins_url()) . 'restrict-content/legacy/includes/assets/css/rc-settings.css', array(), RCP_PLUGIN_VERSION);
+            wp_enqueue_script('rcp-admin-settings-functionality', trailingslashit(plugins_url()) . 'restrict-content/legacy/includes/assets/js/rc-settings.js', array(), RCP_PLUGIN_VERSION);
             wp_localize_script(
                 'rcp-admin-settings-functionality',
                 'rcp_admin_settings_options',
@@ -619,12 +608,12 @@ function rc_admin_styles_primary( $hook_suffix ) {
         }
 
         if ('admin_page_restrict-content-welcome' == $hook_suffix || 'restrict_page_rcp-need-help' == $hook_suffix) {
-            wp_enqueue_style('rcp-settings', trailingslashit(plugins_url()) . 'restrict-content/restrict-content/includes/assets/css/rc-settings.css', array(), RCP_PLUGIN_VERSION);
-            wp_enqueue_style('rcp-wp-overrides', trailingslashit(plugins_url()) . 'restrict-content/restrict-content/includes/assets/css/rc-wp-overrides.css', array(), RCP_PLUGIN_VERSION);
-            wp_enqueue_script('rcp-admin-settings', trailingslashit(plugins_url()) . 'restrict-content/restrict-content/includes/assets/js/rc-admin.js', array(), RCP_PLUGIN_VERSION);
+            wp_enqueue_style('rcp-settings', trailingslashit(plugins_url()) . 'restrict-content/legacy/includes/assets/css/rc-settings.css', array(), RCP_PLUGIN_VERSION);
+            wp_enqueue_style('rcp-wp-overrides', trailingslashit(plugins_url()) . 'restrict-content/legacy/includes/assets/css/rc-wp-overrides.css', array(), RCP_PLUGIN_VERSION);
+            wp_enqueue_script('rcp-admin-settings', trailingslashit(plugins_url()) . 'restrict-content/legacy/includes/assets/js/rc-admin.js', array(), RCP_PLUGIN_VERSION);
         }
 
-        wp_enqueue_style('rcp-metabox', trailingslashit(plugins_url()) . 'restrict-content/restrict-content/includes/assets/css/rc-metabox.css', array(), RCP_PLUGIN_VERSION);
+        wp_enqueue_style('rcp-metabox', trailingslashit(plugins_url()) . 'restrict-content/legacy/includes/assets/css/rc-metabox.css', array(), RCP_PLUGIN_VERSION);
     }
 }
 add_action( 'admin_enqueue_scripts', 'rc_admin_styles_primary' );
