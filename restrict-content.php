@@ -113,20 +113,30 @@ final class RC_Requirements_Check {
 	 * @since 3.0
 	 */
 	private function load() {
-        // If we find the rc_settings option then they were definitely using the old version
-        if ( ! option_exists( 'restrict_content_chosen_version' ) ) {
-            if ( option_exists( 'rc_settings' ) && ! option_exists( 'restrict_content_use_legacy_initial_setting' ) ) {
-                update_option( 'restrict_content_pro_use_legacy_restrict_content', true );
-                update_option( 'restrict_content_use_legacy_initial_setting', true );
-                $this->load_legacy_restrict_content();
-            } else {
-                update_option( 'restrict_content_pro_use_legacy_restrict_content', false );
+
+        // If the user has expressly chosen a version then load that version.
+        if ( option_exists( 'restrict_content_chosen_version' ) ) {
+            $user_selected_version = get_option( 'restrict_content_chosen_version');
+
+            // If 3.0 load 3.0
+            if ( $user_selected_version === '3.0' ) {
                 $this->load_restrict_content_3();
             }
-        } else {
-            if ( get_option( 'restrict_content_chosen_version') === 'legacy' ) {
+            // Else load legacy
+            else {
                 $this->load_legacy_restrict_content();
-            } elseif ( get_option( 'restrict_content_chosen_version' ) === '3.0' ) {
+            }
+        }
+        // Else choose a version to load.
+        else {
+            // Does the rc_settings option exist? Load legacy if true else load 3.0
+            if ( option_exists( 'rc_settings' ) ) {
+                // Set chosen version
+                update_option( 'restrict_content_chosen_version', 'legacy' );
+                $this->load_legacy_restrict_content();
+            } else {
+                // Set chosen version
+                update_option( 'restrict_content_chosen_version', '3.0' );
                 $this->load_restrict_content_3();
             }
         }
