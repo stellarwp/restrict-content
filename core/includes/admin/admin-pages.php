@@ -156,20 +156,20 @@ function rc_why_go_pro_page_redesign() {
 	?>
 	<div class="wrap">
 		<div class="rcp-why-go-pro-wrap">
-			<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/restrict_content_logo.svg' ); ?>" >
+			<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/restrict_content_logo.svg' ); ?>" >
 			<div class="rcp-go-pro-color-container">
 				<div class="rcp-why-go-pro-inner-wrapper">
 					<div class="rcp-top-header">
 						<h1>
 							<?php _e( 'Why Go Pro?', 'LION' ); ?></h1>
-						<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/flying_rex.png' ); ?>" >
+						<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/flying_rex.png' ); ?>" >
 					</div>
 					<h2><?php _e( 'Grow Your Sales with Premium Features and Add-ons in Restrict Content PRO', 'LION' ); ?></h2>
 					<div class="rcp-pro-features-container">
 						<!-- LIMIT NUMBER OF CONNECTIONS FEATURE -->
 						<a href="https://restrictcontentpro.com/pricing/">
 							<div class="rcp-limit-number-of-connections feature">
-								<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/memb-levels.svg' ); ?>" >
+								<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/memb-levels.svg' ); ?>" >
 								<div class="feature-text">
 									<h3><?php _e( 'Limit Number of Connections', 'LION' ); ?></h3>
 									<p><?php _e( 'Prevent password sharing by limiting the number of simultaneous connections for each member.', 'LION' ); ?></p>
@@ -179,7 +179,7 @@ function rc_why_go_pro_page_redesign() {
 						<!-- REMOVE STRIPE FEE FEATURE -->
 						<a href="https://restrictcontentpro.com/tour/payment-gateways/">
 							<div class="rcp-remove-stripe-fee feature">
-								<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/collect-payments.svg' ); ?>" >
+								<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/collect-payments.svg' ); ?>" >
 								<div class="feature-text">
 									<h3><?php _e( 'Remove Stripe Fee', 'LION' ); ?></h3>
 									<p><?php _e( "Remove the 2% fee for processing Stripe payments by upgrading to Restrict Content Pro.", 'LION' ); ?></p>
@@ -189,7 +189,7 @@ function rc_why_go_pro_page_redesign() {
 						<!-- PRO EMAILS FEATURE -->
 						<a href="https://restrictcontentpro.com/tour/features/member-emails/">
 							<div class="rcp-pro-emails feature">
-								<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/customer-dash.svg' ); ?>" >
+								<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/customer-dash.svg' ); ?>" >
 								<div class="feature-text">
 									<h3><?php _e( 'Pro Emails', 'LION' ); ?></h3>
 									<p><?php _e( 'Unlock email personalization and automatically member expiration & renewal email reminders.', 'LION' ); ?></p>
@@ -199,7 +199,7 @@ function rc_why_go_pro_page_redesign() {
 						<!-- MARKETING INTEGRATION FEATURE -->
 						<a href="https://restrictcontentpro.com/add-ons/pro/">
 							<div class="rcp-marketing-integration feature">
-								<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/mkt-integration.svg' ); ?>" >
+								<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/mkt-integration.svg' ); ?>" >
 								<div class="feature-text">
 									<h3><?php _e( 'Marketing Integration', 'LION' ); ?></h3>
 									<p><?php _e( 'Subscribe members to your Mailchimp, AWeber, ConvertKit, etc., mailing lists.', 'LION' ); ?></p>
@@ -209,7 +209,7 @@ function rc_why_go_pro_page_redesign() {
 						<!-- GROUP ACCOUNTS FEATURE -->
 						<a href="https://restrictcontentpro.com/downloads/group-accounts/">
 							<div class="rcp-group-accounts feature">
-								<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/group-acct.svg' ); ?>" >
+								<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/group-acct.svg' ); ?>" >
 								<div class="feature-text">
 									<h3><?php _e( 'Group Accounts', 'LION' ); ?></h3>
 									<p><?php _e( 'Sell enterprise or group memberships with multiple sub accounts.', 'LION' ); ?></p>
@@ -219,7 +219,7 @@ function rc_why_go_pro_page_redesign() {
 						<!-- DRIP CONTENT FEATURE -->
 						<a href="https://restrictcontentpro.com/downloads/drip-content/">
 							<div class="rcp-drip-content feature">
-								<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/drip-content.svg' ); ?>" >
+								<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/drip-content.svg' ); ?>" >
 								<div class="feature-text">
 									<h3><?php _e( 'Drip Content', 'LION' ); ?></h3>
 									<p><?php _e( 'Time-release content to new members based on their start date.', 'LION' ); ?></p>
@@ -229,7 +229,7 @@ function rc_why_go_pro_page_redesign() {
 						<!-- OFFER DISCOUNTS FEATURE -->
 						<a href="https://restrictcontentpro.com/tour/features/discount-codes/">
 							<div class="rcp-offer-discounts feature">
-								<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/offer-discounts.svg' ); ?>" >
+								<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/offer-discounts.svg' ); ?>" >
 								<div class="feature-text">
 									<h3><?php _e( 'Offer Discounts', 'LION' ); ?></h3>
 									<p><?php _e( 'Attract new customers with special promotional codes that give them a discount on the purchase of a membership.', 'LION' ); ?></p>
@@ -239,7 +239,7 @@ function rc_why_go_pro_page_redesign() {
 						<!-- RESTRICT PAST CONTENT FEATURE -->
 						<a href="https://restrictcontentpro.com/downloads/restrict-past-content/">
 							<div class="rcp-restrict-past-content feature">
-								<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/restrict-content.svg' ); ?>" >
+								<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/restrict-content.svg' ); ?>" >
 								<div class="feature-text">
 									<h3><?php _e( 'Restrict Past Content', 'LION' ); ?></h3>
 									<p><?php _e( "Restrict content published before a member's join date.", 'LION' ); ?></p>
@@ -248,7 +248,7 @@ function rc_why_go_pro_page_redesign() {
 						</a>
 						<!-- PREMIUM SUPPORT FEATURE -->
 						<div class="rcp-premium-support feature">
-							<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/premium-support.svg' ); ?>" >
+							<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/premium-support.svg' ); ?>" >
 							<div class="feature-text">
 								<h3><?php _e( 'Premium Support', 'LION' ); ?></h3>
 								<p><?php _e( 'Get help from our team of membership experts.', 'LION' ); ?></p>
@@ -275,7 +275,7 @@ function rc_need_help_page_redesign() {
 
 	?>
 	<div class="restrict-content-welcome-header">
-		<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/restrict_content_logo.svg' ); ?>" >
+		<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/restrict_content_logo.svg' ); ?>" >
 	</div>
 	<div class="restrict-content-welcome-top-container">
 		<div class="restrict-content-welcome-left-container">
@@ -298,7 +298,7 @@ function rc_need_help_page_redesign() {
 							<h3><?php _e( 'Help Center', 'LION' ); ?></h3>
 							<p><?php _e( 'Our Help Center is filled with articles to help you learn more about using Restrict Content and Restrict Content Pro.', 'LION' ); ?></p>
 						</div>
-						<img class="restrict-content-help-section-arrow hidden" style="display: none;" src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/purple-arrow-right.svg' ); ?>" >
+						<img class="restrict-content-help-section-arrow hidden" style="display: none;" src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/purple-arrow-right.svg' ); ?>" >
 					</div>
 				</a>
 				<a class="restrict-content-section-link" href="https://help.ithemes.com/hc/en-us/articles/115003073433-Checking-for-a-Conflict">
@@ -310,7 +310,7 @@ function rc_need_help_page_redesign() {
 							<h3><?php _e( 'Troubleshooting', 'LION' ); ?></h3>
 							<p><?php _e( 'If you run into any errors or things aren’t working as expected, the first step in troubleshooting is to check for a plugin or theme conflict.', 'LION' ); ?></p>
 						</div>
-						<img class="restrict-content-help-section-arrow hidden" style="display: none;" src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/purple-arrow-right.svg' ); ?>" >
+						<img class="restrict-content-help-section-arrow hidden" style="display: none;" src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/purple-arrow-right.svg' ); ?>" >
 					</div>
 				</a>
 				<a class="restrict-content-section-link" href="https://wordpress.org/support/plugin/restrict-content/">
@@ -322,7 +322,7 @@ function rc_need_help_page_redesign() {
 							<h3><?php _e( 'Support Forum', 'LION' ); ?></h3>
 							<p><?php _e( 'If you are still having trouble after checking for a conflict, feel free to start a new thread on the Restrict Content support forum.', 'LION' ); ?></p>
 						</div>
-						<img class="restrict-content-help-section-arrow hidden" style="display:none;" src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/purple-arrow-right.svg' ); ?>" >
+						<img class="restrict-content-help-section-arrow hidden" style="display:none;" src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/purple-arrow-right.svg' ); ?>" >
 					</div>
 				</a>
 				<div class="restrict-content-premium-support">
@@ -337,14 +337,14 @@ function rc_need_help_page_redesign() {
 							?>
 						</p>
 					</div>
-					<img class="restrict-content-premium-support-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/flying_rex.png' ); ?>" >
+					<img class="restrict-content-premium-support-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/flying_rex.png' ); ?>" >
 				</div>
 			</div>
 		</div>
 		<div class="restrict-content-welcome-right-container">
 			<div class="restrict-content-welcome-advertisement">
 				<div class="logo">
-					<img class="restrict-content-welcome-advertisement-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/restrict-content-pro-logo-vertical-blue-black.svg' ); ?>" >
+					<img class="restrict-content-welcome-advertisement-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/restrict-content-pro-logo-vertical-blue-black.svg' ); ?>" >
 				</div>
 				<div class="restrict-content-welcome-try-for-free">
 					<p><?php _e( 'Try For Free!', 'LION' ); ?></p>
@@ -382,15 +382,15 @@ function rc_need_help_page_redesign() {
 					</div>
 					<div class="tabpanel" tabindex="0" role="tabpanel" id="1sitetab" aria-labelledby="1site">
 						<h4><?php _e( '$80', 'LION' ); ?></h4>
-						<p><?php _e( 'restrict-content/includes updates & support for one year.', 'LION' ); ?></p>
+						<p><?php _e( 'Includes updates & support for one year.', 'LION' ); ?></p>
 					</div>
 					<div class="tabpanel" tabindex="0" role="tabpanel" id="10sitetab" aria-labelledby="10site" hidden="">
 						<h4><?php _e( '$100', 'LION' ); ?></h4>
-						<p><?php _e( 'restrict-content/includes updates & support for one year.', 'LION' ); ?></p>
+						<p><?php _e( 'Includes updates & support for one year.', 'LION' ); ?></p>
 					</div>
 					<div class="tabpanel" tabindex="0" role="tabpanel" id="unlimitedtab" aria-labelledby="unlimited" hidden="">
 						<h4><?php _e( '$200', 'LION' ); ?></h4>
-						<p><?php _e( 'restrict-content/includes updates & support for one year.', 'LION' ); ?></p>
+						<p><?php _e( 'Includes updates & support for one year.', 'LION' ); ?></p>
 					</div>
 				</div>
 				<a href="https://restrictcontentpro.com/pricing/" class="go-pro-now"><?php _e( 'Go Pro Now', 'LION' ); ?></a>
@@ -412,7 +412,7 @@ function rc_welcome_page_redesign() {
 	$rc_welcome_try_free_meta_nonce = wp_create_nonce( 'rc_welcome_try_free_meta_nonce' );
 	?>
 	<div class="restrict-content-welcome-header">
-		<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/restrict_content_logo.svg' ); ?>" >
+		<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/restrict_content_logo.svg' ); ?>" >
 	</div>
 	<div class="restrict-content-welcome-top-container">
 		<div class="restrict-content-welcome-left-container">
@@ -431,7 +431,7 @@ function rc_welcome_page_redesign() {
 						<p class="restrict-content-thanks-message"><?php _e( 'Start your membership site and create multiple Membership Levels and collect payments with Stripe.', 'LION' ); ?></p>
 					</div>
 					<div class="restrict-content-welcome-standing-rex">
-						<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/restrict-content-pro-rex-standing.png' ); ?>" >
+						<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/restrict-content-pro-rex-standing.png' ); ?>" >
 					</div>
 				</div>
 				<div class="restrict-content-welcome-body-container">
@@ -472,7 +472,7 @@ function rc_welcome_page_redesign() {
 		<div class="restrict-content-welcome-right-container">
 			<div class="restrict-content-welcome-advertisement">
 				<div class="logo">
-					<img class="restrict-content-welcome-advertisement-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'restrict-content/includes/assets/images/restrict-content-pro-logo-vertical-blue-black.svg' ); ?>" >
+					<img class="restrict-content-welcome-advertisement-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/restrict-content-pro-logo-vertical-blue-black.svg' ); ?>" >
 				</div>
 				<div class="restrict-content-welcome-try-for-free">
 					<p><?php _e( 'Try For Free!', 'LION' ); ?></p>
