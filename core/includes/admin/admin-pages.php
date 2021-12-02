@@ -177,7 +177,7 @@ function rc_why_go_pro_page_redesign() {
 							</div>
 						</a>
 						<!-- REMOVE STRIPE FEE FEATURE -->
-						<a href="https://restrictcontentpro.com/tour/payment-gateways/">
+						<a href="https://restrictcontentpro.com/pricing/">
 							<div class="rcp-remove-stripe-fee feature">
 								<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'legacy/includes/assets/images/collect-payments.svg' ); ?>" >
 								<div class="feature-text">
@@ -284,7 +284,7 @@ function rc_need_help_page_redesign() {
 				<?php
 				printf(
 					__('Are you new to Restrict Content? Check out the Getting Started with <a href="%s">Restrict Content guide.</a>', 'LION' ),
-					'https://help.ithemes.com/hc/en-us/articles/4402387794587-Getting-Started-with-Restrict-Content'
+					'https://help.ithemes.com/hc/en-us/sections/360008799334-Getting-Started'
 				);
 				?>
 			</p>
@@ -459,11 +459,23 @@ function rc_welcome_page_redesign() {
 						</div>
 						<div class="restrict-content-resource-container">
 							<h3><?php _e( 'Need More Control Over Your Content & Memberships?', 'LION' ); ?></h3>
-							<p><?php _e( 'Check out Restrict Content Pro and our suite of add-ons for building awesome membership websites.', 'LION' ); ?> <br><a href="https://restrictcontentpro.com/add-ons/">https://restrictcontentpro.com/add-ons/</a></p>
+							<p>
+                                <?php 
+                                _printf(
+                                     __( 'Check out Restrict Content Pro and our <a href="%s">suite of add-ons</a> for building awesome membership websites.', 'LION' );
+                                     'https://restrictcontentpro.com/add-ons/'
+                                ?>     
+                            </p>
 						</div>
 						<div class="restrict-content-resource-container">
 							<h3><?php _e( 'Introduction to Restrict Content Pro', 'LION' ); ?></h3>
-							<p><?php _e( 'Get a full overview of Restrict Content Pro and dive into several of its key features.', 'LION' ) ?><br><a href="https://training.ithemes.com/webinar/introduction-to-restrict-content-pro/">https://training.ithemes.com/webinar/introduction-to-restrict-content-pro/</a></p>
+                            <p>
+                                <?php 
+                                _printf(
+                                     __( 'Get a<a href="%s">full overview of Restrict Content Pro</a> and dive into several of its key features.', 'LION' );
+                                     'https://training.ithemes.com/webinar/introduction-to-restrict-content-pro/'
+                                ?>     
+                            </p>
 						</div>
 					</div>
 				</div>
