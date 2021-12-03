@@ -461,9 +461,10 @@ function rc_welcome_page_redesign() {
 							<h3><?php _e( 'Need More Control Over Your Content & Memberships?', 'LION' ); ?></h3>
 							<p>
                                 <?php 
-                                _printf(
-                                     __( 'Check out Restrict Content Pro and our <a href="%s">suite of add-ons</a> for building awesome membership websites.', 'LION' );
+                                printf(
+                                     __( 'Check out Restrict Content Pro and our <a href="%s">suite of add-ons</a> for building awesome membership websites.', 'LION' ),
                                      'https://restrictcontentpro.com/add-ons/'
+                                );
                                 ?>     
                             </p>
 						</div>
@@ -471,10 +472,11 @@ function rc_welcome_page_redesign() {
 							<h3><?php _e( 'Introduction to Restrict Content Pro', 'LION' ); ?></h3>
                             <p>
                                 <?php 
-                                _printf(
-                                     __( 'Get a<a href="%s">full overview of Restrict Content Pro</a> and dive into several of its key features.', 'LION' );
+                                printf(
+                                     __( 'Get a<a href="%s">full overview of Restrict Content Pro</a> and dive into several of its key features.', 'LION' ),
                                      'https://training.ithemes.com/webinar/introduction-to-restrict-content-pro/'
-                                ?>     
+                                );
+                                ?>
                             </p>
 						</div>
 					</div>

@@ -1,9 +1,9 @@
 jQuery(document).ready(function($) {
 
 	// Tooltips
-	$('.rcp-help-tip').tooltip({
+	$( '.rcp-help-tip' ).tooltip({
 		content: function() {
-			return $(this).prop('title');
+			return $( this ).prop( 'title' );
 		},
 		position: {
 			my: 'center top',
@@ -231,10 +231,10 @@ jQuery(document).ready(function($) {
 			$(this).attr('id', 'recordsArray_' + id);
 			$(this).addClass('rcp-subscription rcp_row');
 		} );
-		$(".rcp-subscriptions tbody").sortable({
+		$( ".rcp-subscriptions tbody" ).sortable({
 			handle: '.rcp-drag-handle', items: 'tr', opacity: 0.6, cursor: 'move', axis: 'y', update: function() {
-				var order = $(this).sortable("serialize") + '&action=update-subscription-order';
-				$.post(ajaxurl, order, function(response) {
+				var order = $( this ).sortable( "serialize" ) + '&action=update-subscription-order';
+				$.post( ajaxurl, order, function( response ) {
 					// response here
 				});
 			}
