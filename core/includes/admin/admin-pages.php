@@ -473,7 +473,7 @@ function rc_welcome_page_redesign() {
                             <p>
                                 <?php 
                                 printf(
-                                     __( 'Get a<a href="%s">full overview of Restrict Content Pro</a> and dive into several of its key features.', 'LION' ),
+                                     __( 'Get a <a href="%s">full overview of Restrict Content Pro</a> and dive into several of its key features.', 'LION' ),
                                      'https://training.ithemes.com/webinar/introduction-to-restrict-content-pro/'
                                 );
                                 ?>
