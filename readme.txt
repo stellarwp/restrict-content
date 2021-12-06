@@ -1,76 +1,130 @@
 === WordPress Membership Plugin - Restrict Content ===
-Author URI:             https://ithemes.com
-Author:                 iThemes
-Contributors:           jthillithemes, layotte, ithemes
-Tags: 				restrict pages, restrict posts, restrict access, registration form, access control
-Requires at least: 	3.9
-Tested up to: 		5.8
-Stable tag: 		3.0
+Author URI: https://ithemes.com
+Author: iThemes
+Contributors: jthillithemes, layotte, ithemes
+Tags: restrict pages, restrict posts, restrict access, membership, registration form, access control
+Requires at least: 3.9
+Tested up to: 5.8
+Stable tag: 2.2.10
 
-Running a membership site on WordPress doesn't have to be difficult. With Restrict Content you can limit access to exclusive content in minutes.
+Restrict Content is a powerful WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.
 
 == Description ==
+Restrict Content is a powerful WordPress membership plugin that allows you to monetize content access. As a content restriction plugin, Restrict Content gives you full control over who can and cannot view content on your WordPress site. As a design tool, Restrict Content helps you create pages that dynamically display content based on user role or membership level.
 
-It should be _easy_ to create a membership site! That’s why we created **Restrict Content**, a simple membership plugin that enables you to restrict access based on user role so that your posts or pages become viewable by logged-in members only. This gives you full control over who can and who cannot view content on your WordPress site.
+Restrict Content can power a full-fledged membership or subscription website with multiple membership levels, or just hide a page or post. Restrict Content makes it simple to limit access to posts, pages, media, custom post types, and even API requests. This gives you full control over who can and who cannot view content on your WordPress site.
 
-With over 10,000 active installs, Restrict Content is one of the most popular membership plugins for WordPress. Restrict Content makes it simple to limit access to posts, pages, media, custom post types, and even API requests.
+https://vimeo.com/650723404
 
-With Restrict Content to create your membership site, you’ll be able to:
+Restrict Content is completely customizable with features built for developers and extensible with a library of [Pro add-ons](https://restrictcontentpro.com/add-ons/pro/).
 
-- Protect sensitive content
-- Control user access
-- Collect emails
-- Allow new users to self register
-- Clearly separate public content from private content
-- Restrict access to entire pages or specific sections
-- Let users register and login from the frontend of your site
+= 💪 As Powerful as a WordPress Membership Plugin ... or as Simple as a Content Restriction Plugin =
 
-And if all that is not enough, there’s also a pro version which you can easily upgrade to which enables even more membership features.
+Use Restrict Content as a <strong>WordPress membership plugin</strong> to:
 
-> An excellent plugin. I didn’t think that it would work out of the box as well as it did – very little configuration required. It just works – brilliantly.
-> @8mediacentral
+- <strong>Create unlimited membership levels or subscription packages.</strong> Easily create free, trial, and premium memberships or subscriptions. Each plan can be used to set a user’s access to specific content on your site.
+- <strong>Sell memberships and collect payments on your WordPress site.</strong> You can even collect payments with Stripe in the free version!
+- <strong>Control content access for your members.</strong> Decide who can access specific pages, posts, archives, and even WordPress blocks based on a member’s plan, status, and more.
+- <strong>Manage your members or subscribers.</strong> Restrict Content lets you easily keep track of your memberships through an intuitive admin interface. Quickly view active, expired, cancelled, and pending memberships. Memberships can be added manually, modified in bulk, and easily searched for when you need to locate a specific record. Each membership can also be manually modified at any time.
+- <strong>Allow members to manage their account with self-service account management. </strong> Members can easily view their account status, renewal or expiration date, and options to upgrade or cancel their account. They can also access a complete history of payments made to their account, including PDF invoices for each payment. Finally, members are able update their account name, email, and password through an included profile editor.
+- <strong>Offer prorated memberships.</strong> Customers can also upgrade and downgrade between membership levels at any time. These upgrades and downgrades are prorated based on how much the customer has already paid and how much time is left in their current membership.
+- <strong> Auto-renew membership payments.</strong> Select whether membership payments should always auto renew or let the customer decide.
 
-= Restrict Content features =
+Use Restrict Content as a <strong>WordPress content restriction plugin</strong> to:
+
+- <strong>Restrict access to your WordPress site based user role.</strong> Limit access to full content via a simple interface on the post, page, and custom post type editing screens.
+- <strong>Control user access to content<strong> based on WordPress user role, access level(s), or membership level(s).
+- <strong>Protect sensitive content. Use
+- <strong>Clearly separate public content from private content
+- <strong>Restrict access to entire pages or specific sections
+- <strong>Let users register and login from the frontend of your site</strong>
+
+> “Most plugins that restrict content are heavy and need 3rd party commerce solutions like WooCommerce to work. Restrict Content Pro has EVERYTHING built-in: memberships, payment gateways and plenty of add-ons – a true, one-stop solution for membership websites!”
+> David Attard, CollectiveRay
+
+= ✨ Features =
+
+Our feature-rich plugin comes with everything you need to restrict content and sell memberships from your WordPress site.
+
+- 👥 <strong>Membership Levels</strong> - Set access level, duration (in days, months, years), number of renewals, price, signup fee, status, assign WordPress user role. Set any price (including free) or optionally set a sign up fee. Set the frequency and period, and specify a user role that will be assigned to members when they register.
+- 🖥 <strong>Auto-Created Member Pages</strong> - Pages generated by the plugin include: Registration, Success, Account, Edit Profile, Update Billing Card
+- 🔁 <strong>Auto Renewals</strong> - Select to let customer choose whether to auto renew, always auto renew, or never auto renew.
+💳 <strong>Payment Gateways</strong> - Stripe and Manual Payments, PayPal (Pro), Authorize.net (Pro), Braintree (Pro), Custom (Pro).
+- ↕️ <strong>Upgrade/Downgrade Membership</strong> - Allow members to change their subscription level at any time.
+- ✉️ <strong>Member Emails</strong> - Paid membership activation email, free membership activation email, cancelled membership email, expired membership email, payment received email, renewal payment failed email.
+- 📄 <strong>Payment Invoices</strong> - The payment invoice has a clean design and is printable. Customize with your logo, company name, address, email, header text, notes, and footer text
+- 🪄 <strong>Prorated memberships</strong> - Allow members to pay the price difference when they upgrade.
+
+= 🙌 Even More Features =
+
+✔️ Redirect Default Login URL - Force the default login URL to a custom URL.
+✔️ Content Excerpts - Choose whether or not to show content excerpts to members without access to the content.
+✔️ Import/Export Data - Whether you prefer to maintain your own records of your memberships database, you wish to run your own analysis, or you simply need to import membership records into another service or application such as MailChimp or Excel, Restrict Content allows you to export all membership records to a CSV at anytime.
+✔️ Restricted Content Message - Customize the message shown to users who do not have permission to view the content.
+✔️ Restrict access to [WooCommerce](https://woocommerce.com/) products.
+
+= 🏋️‍♀️ More Power with Pro Features =
+
+- 🏷 <strong>Discount code support</strong> - Discount codes allow you to provide your customers with special promotional codes that give them a discount on the purchase of a membership. Restrict Content Pro supports various kinds of discount codes and site administrators can easily create any number of discounts from the admin interface. Discount codes can be set up to provide a percentage discount or a flat rate discount. Each discount code is created with a name, description, unique code, maximum uses, and optional expiration dates.
+- 📈 <strong>Detailed reporting</strong> - Restrict Content Pro provides a complete reports section where you can view the earnings of your membership website. You can view total earnings for any given period or drill down to specific membership levels.
+- 🕵️‍♀️ <strong>Free trials</strong> - Allow prospective members to try a membership before they buy. Send emails to free trial users when their free trial is about to end.
+- ✉️ <strong>Member Email Customization</strong> - Add a personal touch to all of your member emails with Restrict Content Pro.
+- 🔒 <strong>Google reCAPTCHA</strong> - Protect your member login form from bots with Google reCAPTCHA.
+- 🚀 <strong> 34 Powerful Add-ons</strong> - All Restrict Content Pro plans come with all Restrict Content Pro add-ons to add more integrations and functionality to your site.
+
+**[Upgrade to Restrict Content Pro now](https://restrictcontentpro.com/pricing/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=upgrade&utm_term=description)**
+
+
+= 🛠 Developer Features =
+
+Restrict Content Pro has been built with developers in mind. That means it is flexible, easy to extend, and chalked full of action hooks and filters, making it easy to modify and tweak to your specific needs. With clean and simple display options, Restrict Content Pro is designed to integrate perfectly with every theme without any custom CSS being necessary.
+
+Extensive and easy to modify template files are included with Restrict Content Pro. If you have built a theme, for clients or general distribution, you can easily customize the display of registration forms, profile editor, account pages, and more through custom template files added directly to your theme’s folder.
+
+Because of the huge number of action hooks and filters, Restrict Content Pro can be easily integrated with other plugins to help provide a more seamless experience for customers. This also makes it possible to build add-on plugins for Restrict Content Pro that extend its functionality.
+
+✔️ Theme Integration - Designed to work with any theme.
+✔️ Action Hooks & filters galore - Restrict Content contains a bunch of action hooks and filters, allowing you to easily customize the plugin to your specific needs. Check out our extensive developer docs for actions, filters, classes, constants, and functions.
+✔️ Easy to Modify Template files - Making changes to Restrict Content Pro template files is a cinch. Make a copy of any plugin template file and drop it in your theme to override the plugin’s file with your own custom markup.
+✔️ So Many Integrations - Restrict Content plays nice with a bunch of plugins and third-party services, including e-commerce systems like WooCommerce, lots of Pro payment gateways, email newsletter services, and much more!
+✔️ REST API - Restrict Content Pro includes a complete REST API, allowing you to extend the plugin and its functionality beyond WordPress and into your web application. The possibilities for what you can do are nearly limitless!
+✔️ WP-CLI Integration - Restrict Content Pro integrates with WP-CLI. Several commands are supported in order to speed up your workflow with batch processing jobs, creating memberships, and viewing customer information.
+✔️ Debug mode for developers - Turn on error logging to help identify issues. Logs are kept in Restrict > Tools.
+
+= 💳 Stripe payment processing support =
+
+It’s no secret that we believe [Stripe](https://stripe.com/) is the best payment processor. Stripe currently supports 14 languages, over 35 countries and 135+ currencies. [Check support for your country](https://stripe.com/global).
+
+Hands down, Stripe has the simplest setup process and highest reliability we know of – and support for Stripe is included in Restrict Content. Stripe has a per-transaction charge which varies by country. See [Stripe’s pricing page](https://stripe.com/pricing) for more information. However, if you prefer a different payment gateway or your country does not support Stripe, we’ve got you covered...
+
+Besides Stripe, we have several payment gateways available to Restrict Content Pro. Visit the following links to get more details for the payment gateway of your choice.
+
+- [PayPal](https://restrictcontentpro.com/tour/payment-gateways/paypal/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=paypal&utm_term=description)
+- [Authorize.Net](https://restrictcontentpro.com/tour/payment-gateways/authorize-net/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=authorize-net&utm_term=description)
+- [Braintree](https://restrictcontentpro.com/tour/payment-gateways/braintree/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=braintree&utm_term=description)
+- [Build your own (extensive API available)](https://restrictcontentpro.com/tour/payment-gateways/add-your-own/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=add-your-own&utm_term=description)
+= 🧰 Shortcodes =
 
 - Limit access to content with a shortcode. Example: `[restrict]This content is limited to logged in users.[/restrict]`
 - Limit access to content based on user role. Example: `[restrict userlevel="editor"]Only editors and higher can see this content.[/restrict]`
-- Limit access to full content via a simple interface on the post, page, and custom post type editing screens.
 - Display a registration form for new accounts on any page of your website with `[register_form]`.
 - Display a login form for existing users on any page of your website with `[login_form]`.
-- Specify the message shown to users who don't meet the role requirement.
-- Optionally hide content in RSS feeds.
 
-> I have been using this plugin on multiple websites for restricting visitors from accessing membership-like pages. It has worked exactly as it is described to. It was very simple to set up and get working. I highly recommend this plugin if you are looking for something to restrict content.
-> Frank Corso, frankcorso.me
+= 🛒 WooCommerce integration =
 
-= Restrict Content Pro features =
+Restrict Content allows you to easily control who can view and/or purchase products in [WooCommerce](https://woocommerce.com/), the most popular eCommerce plugin for WordPress.
 
-If you’re looking for _more_ – like the ability to accept payments – here are just a few of the features included in Restrict Content Pro:
+= 💬 Get reliable help =
 
-- Self-service account management
-- Unlimited membership levels
-- Payment processing support for [Stripe](https://stripe.com/), PayPal, Authorize.net, and other payment gateways
-- Email marketing support for Mailchimp, AWeber, ConvertKit, and other providers
-- [AffiliateWP](https://affiliatewp.com/?utm_medium=readme&utm_source=wporg&utm_campaign=rc-lite-plugin&utm_content=integration&utm_term=description) integration
-- Restrict access to [WooCommerce](https://woocommerce.com/) products
-- Discount code support
-- Complete member management
-- Email members membership updates
-- CSV data export capabilities
-- Detailed reporting
-- Developer-friendly for building custom integrations
-- Large ecosystem of official and 3rd party add-ons
+Restrict Content is backed by top-notch technical support from our full-time support team. We also have extensive [documentation site](https://help.ithemes.com/hc/en-us/categories/360004039733-Restrict-Content-Pro?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=docs&utm_term=description) available. If you’re looking for faster support via email, we encourage you to purchase a [Restrict Content Pro license](https://restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=purchase&utm_term=description).
 
-> “When it comes to a fast and clean membership site, nothing is faster for end users than RCP. When it comes to extensible code that a developer will love, nothing is better than Pippin’s code.”
-> Chris Lema, chrislema.com
+We check in on the [The Restrict Content forum here on WordPress.org](https://wordpress.org/support/plugin/restrict-content) about once a week to help users with basic troubleshooting and identifying bugs. If you’re looking for premium, personalized support, consider upgrading to Restrict Content Pro.
 
-By upgrading to Restrict Content Pro you also get access to one-on-one help from our knowledgeable support team and our [extensive documentation site](https://docs.restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=docs&utm_term=description).
+== 📃 Documentation ==
 
-That’s why so many small businesses and successful membership sites use Restrict Content Pro to manage memberships on their WordPress sites. Check out some examples in our [customer showcase](https://restrictcontentpro.com/tour/showcase/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=showcase&utm_term=description).
+All of our documentation can be found in the [iThemes Help Docks](https://help.ithemes.com/hc/en-us/categories/360004039733-Restrict-Content-Pro).
 
-Want to see what Restrict Content Pro looks like for customers? Check out our [live demo](https://pippinsplugins.com/demo-rcp/?utm_medium=readme&utm_source=wporg&utm_campaign=rc-lite-plugin&utm_content=description&utm_term=demo) and our collection of [screenshots](https://restrictcontentpro.com/tour/screenshots/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=screenshots&utm_term=description).
-
-= Who is Restrict Content Pro for? =
+= 🤔 Who is Restrict Content Pro for? =
 
 No matter what kind of membership site or plans you offer, Restrict Content Pro can be adapted to suit your business needs – and set up in [many different ways](https://restrictcontentpro.com/tour/use-cases/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=use-cases&utm_term=description), based on how you want to allow members to access your site’s content.
 
@@ -89,109 +143,7 @@ Here are a few examples:
 > “RCP is always at the top of my list when helping clients choose a membership platform. In addition to being a great plugin ​today​, the pace of improvement is impressive. RCP gets better and better all the time.”
 > Travis Northcutt, Member Up
 
-**[Upgrade to Restrict Content Pro now](https://restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=upgrade&utm_term=description)**
-
-Read more details about the features Restrict Content Pro has to offer:
-
-= Complete membership management =
-
-Restrict Content Pro lets you easily keep track of your memberships through an intuitive admin interface. Quickly view active, expired, cancelled, and pending memberships.
-
-Memberships can be added manually, modified in bulk, and easily searched for when you need to locate a specific record. Each membership can also be manually modified at any time.
-
-= Unlimited membership levels =
-
-Restrict Content Pro allows site administrators to create any number of membership levels that customers can register for. Membership level options are displayed on the registration page and customers can select the one they wish to purchase.
-
-For each membership level, you can:
-
-- Set any price (including free)
-- Optionally set a sign up fee
-- Optionally set a trial period
-- Set the frequency and period
-- Specify a user role that will be assigned to members when they register
-
-Customers can also upgrade and downgrade between membership levels at any time. These upgrades and downgrades are prorated based on how much the customer has already paid and how much time is left in their current membership.
-
-= Stripe payment processing support =
-
-It’s no secret that we believe [Stripe](https://stripe.com/) is the best payment processor. Stripe currently supports 14 languages, over 35 countries and 135+ currencies. [Check support for your country](https://stripe.com/global).
-
-Hands down, Stripe has the simplest setup process and highest reliability we know of – and support for Stripe is included in Restrict Content Pro. Stripe has a per-transaction charge which varies by country. See [Stripe’s pricing page](https://stripe.com/pricing) for more information.
-
-However, if you prefer a different payment gateway or your country does not support Stripe, we’ve got you covered...
-
-= Other payment gateway integrations =
-
-Besides Stripe, we have several payment gateways available to Restrict Content Pro site owners. Visit the following links to get more details for the payment gateway of your choice.
-
-- [PayPal](https://restrictcontentpro.com/tour/payment-gateways/paypal/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=paypal&utm_term=description)
-- [Authorize.Net](https://restrictcontentpro.com/tour/payment-gateways/authorize-net/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=authorize-net&utm_term=description)
-- [Braintree](https://restrictcontentpro.com/tour/payment-gateways/braintree/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=braintree&utm_term=description)
-- [2Checkout](https://restrictcontentpro.com/tour/payment-gateways/2checkout/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=2checkout&utm_term=description)
-- [Build your own (extensive API available)](https://restrictcontentpro.com/tour/payment-gateways/add-your-own/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=add-your-own&utm_term=description)
-
-= WooCommerce integration =
-
-Restrict Content Pro allows you to easily control who can view and/or purchase products in [WooCommerce](https://woocommerce.com/), the most popular eCommerce plugin for WordPress.
-
-= Self-service account management =
-
-Restrict Content Pro includes a complete customer dashboard that allows members to manage their account.
-
-Members can easily view their account status, renewal or expiration date, and options to upgrade or cancel their account. They can also access a complete history of payments made to their account including invoices for each payment.
-
-Finally, members are able update their account name, email, and password through an included profile editor.
-
-= Prorated upgrades and downgrades =
-
-Your membership site can have any number of membership levels and customers can upgrade and downgrade between those membership levels whenever they wish. If a customer chooses to upgrade or downgrade, their new purchase will be prorated based on what they have already paid and how much time is left in their current membership.
-
-= Export data to CSV =
-
-We firmly believe and stand behind the philosophy of owning your own data. For this reason, all data stored in Restrict Content Pro can be easily exported to a CSV file.
-
-Whether you prefer to maintain your own records of your memberships database, you wish to run your own analysis, or you simply need to import membership records into another service or application, such as MailChimp or Excel, Restrict Content Pro allows you to export all membership records to a CSV at anytime.
-
-Transaction history can also be easily exported to a CSV file, letting you then import the payment data into Excel, QuickBooks, or any other accounting software that can process a CSV file.
-
-= Offer discount codes to customers =
-
-Discount codes allow you to provide your customers with special promotional codes that give them a discount on the purchase of a membership.
-
-Restrict Content Pro supports various kinds of discount codes and site administrators can easily create any number of discounts from the admin interface. Discount codes can be set up to provide a percentage discount or a flat rate discount. Each discount code is created with a name, description, unique code, maximum uses, and optional expiration dates.
-
-= Email members membership updates =
-
-Keeping your customers informed about their membership is highly important for membership websites. Restrict Content Pro includes a number of automatic emails that can be configured to be delivered when a customer’s membership is updated.
-
-These emails are configured by the site administrator and can be sent during the following events:
-
-- New paid membership is activated
-- New free membership is activated
-- New trial membership is activated
-- Membership is cancelled
-- Membership has expired
-- Membership is expiring soon
-- Membership is renewing soon
-- Renewal payment is received
-- Renewal payment failed
-
-Each of the emails can be configured independently.
-
-= Detailed reporting =
-
-Restrict Content Pro provides a complete reports section where you can view the earnings of your membership website. You can view total earnings for any given period or drill down to specific membership levels.
-
-Additional reports include account registrations over time and complete transaction tracking of all membership payments.
-
-= Member approval workflow =
-
-Many membership sites want to strictly control which members get access to premium content. Restrict Content Pro offers a direct integration with [WP Approve User](https://wordpress.org/plugins/wp-approve-user/), giving site administrators the ability to moderate member registration.
-
-After a member’s account is registered, administrators will be given an option to Approve the account. Only once the account is approved can members access premium content. If a member’s account needs to be disabled, an Un-approve option is available.
-
-= Email marketing service provider add-ons =
+= 💌 Email marketing service provider add-ons =
 
 With a Professional or higher license, you can connect Restrict Content Pro to any of the following email marketing service providers. This allows you to add members to your mailing lists for different membership levels as well as synchronize account details.
 
@@ -200,9 +152,7 @@ With a Professional or higher license, you can connect Restrict Content Pro to a
 - [ConvertKit](https://restrictcontentpro.com/downloads/convertkit/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=convertkit&utm_term=description)
 - [ActiveCampaign](https://restrictcontentpro.com/downloads/activecampaign/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=activecampaign&utm_term=description)
 
-= Other pro add-ons =
-
-A Professional or higher license also grants you access to our Pro add-ons, which include:
+= 🔌 Other add-ons in Restrict Content Pro =
 
 - [Group Accounts](https://restrictcontentpro.com/downloads/group-accounts/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=group-accounts&utm_term=description) - Sell multi-member group memberships.
 - [Drip Content](https://restrictcontentpro.com/downloads/drip-content/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=drip-content&utm_term=description) - Release content to members on a schedule.
@@ -214,93 +164,43 @@ A Professional or higher license also grants you access to our Pro add-ons, whic
 - [Restrict Past Content](https://restrictcontentpro.com/downloads/restrict-past-content/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=past-content&utm_term=description) - Restrict content published prior to a member's join date.
 - [Hard-set Expiration Dates](https://restrictcontentpro.com/downloads/hard-set-expiration-dates/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=expiration&utm_term=description) - Allows for a specific expiration date to be assigned to membership levels.
 - [Help Scout](https://restrictcontentpro.com/downloads/help-scout/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=help-scout&utm_term=description) - Display customer's membership information from Restrict Content Pro inside of Help Scout when viewing tickets.
-- [REST API](https://restrictcontentpro.com/downloads/rest-api/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=rest-api&utm_term=description) - A complete RESTful API for developers and external applications to interact with membership data in Restrict Content Pro.
 - [Math Verification](https://restrictcontentpro.com/downloads/math-verification/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=math&utm_term=description) - Add a math verification field to registration forms.
 - [IP Restriction](https://restrictcontentpro.com/downloads/ip-restriction/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=ip&utm_term=description) - Allow specific IP addresses to bypass content restrictions and ban other IP addresses from signing up for a membership plan.
-
-= Even more add-ons =
-
-Some more of our [free and paid add-ons](https://restrictcontentpro.com/add-ons/official/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=official&utm_term=description) available to all Restrict Content Pro license owners:
-
-- [AffiliateWP](https://restrictcontentpro.com/downloads/affiliatewp/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=affiliatewp&utm_term=description) - Easily add a full-featured affiliate marketing solution to your WordPress site. We love it, but we are biased. It’s created by us!
-- [WP Job Manager](https://restrictcontentpro.com/downloads/wp-job-manager/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=job-boards&utm_term=description) - Limit job submissions to paid membership.
-- [EDD Member Downloads](https://restrictcontentpro.com/downloads/edd-member-downloads/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=edd-member-downloads&utm_term=description) - Offer membership plans that grant access to a specified number of free unique downloads (within [Easy Digital Downloads](https://easydigitaldownloads.com/?utm_medium=readme&utm_source=wporg&utm_campaign=rc-lite-plugin&utm_content=edd&utm_term=description)) each billing period.
-- [EDD Member Discounts](https://restrictcontentpro.com/downloads/edd-member-discounts/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=edd-member-discounts&utm_term=description) - Create automated discounts that give your paid members a special discount on all Easy Digital Downloads purchases.
-- [EDD FES Vendor Limits](https://restrictcontentpro.com/downloads/edd-fes-vendor-limits/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=edd-fes&utm_term=description) - Charge vendors to publish products with Frontend Submissions for Easy Digital Downloads and control the number of products they can publish.
-- [EDD Wallet](https://restrictcontentpro.com/downloads/edd-wallet/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=edd-wallet&utm_term=description) - Deposit funds into a member's Easy Digital Downloads wallet account when they subscribe to your memberships.
-- [Limited Quantity Available](https://restrictcontentpro.com/downloads/limited-quantity-available/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=limited-quantity&utm_term=description) - Limit the number of times membership levels may be purchased.
-- [Download Monitor](https://restrictcontentpro.com/downloads/download-monitor/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=download-monitor&utm_term=description) - Restrict access to your Download Monitor downloads to active members.
-- [MailPoet](https://restrictcontentpro.com/downloads/wysija-add-on/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=mailpoet&utm_term=description) - Allow members to subscribe to email lists in MailPoet during registration.
-- [bbPress](https://restrictcontentpro.com/downloads/bbpress/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=bbpress&utm_term=description) - Add support for limiting bbPress forums and topics to paid members and / or members with specific access rights.
-- [CSV User Import](https://restrictcontentpro.com/downloads/import-members/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=import&utm_term=description) - Import and / or update member accounts from a CSV file.
 - [Enforce Strong Passwords](https://restrictcontentpro.com/downloads/enforce-strong-passwords/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=strong-passwords&utm_term=description) - Enforce strong passwords during registration.
 
-Besides our official and pro add-ons, there are also add-ons available for Restrict Content Pro created by other [3rd party developers](https://restrictcontentpro.com/add-ons/3rd-party/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=3rd-party&utm_term=description).
+= 👋 Meet the team =
 
-= Developer-friendly =
+Restrict Content is built by [iThemes](https://iThemes.com/team/?utm_medium=readme&utm_source=wporg&utm_campaign=rc-lite-plugin&utm_content=ithemes&utm_term=description). We also make popular WordPress plugins like [iThemes Security Pro](https://ithemes.com/security?utm_medium=readme&utm_source=wporg&utm_campaign=rc-lite-plugin&utm_content=popular&utm_term=description) and [BackupBuddy](https://ithemes.com/security?utm_medium=readme&utm_source=wporg&utm_campaign=rc-lite-plugin&utm_content=popular&utm_term=description) used by hundreds of thousands of people just like you.
 
-Restrict Content Pro has been built with developers in mind. That means it is flexible, easy to extend, and chalked full of action hooks and filters, making it easy to modify and tweak to your specific needs.
-
-With clean and simple display options, Restrict Content Pro is designed to integrate perfectly with every theme without any custom CSS being necessary.
-
-Extensive and easy to modify template files are included with Restrict Content Pro. If you have built a theme, for clients or general distribution, you can easily customize the display of registration forms, profile editor, account pages, and more through custom template files added directly to your theme’s folder.
-
-Because of the huge number of action hooks and filters, Restrict Content Pro can be easily integrated with other plugins to help provide a more seamless experience for customers. This also makes it possible to build add-on plugins for Restrict Content Pro that extend its functionality. See our [developer docs](https://docs.restrictcontentpro.com/collection/1493-developer-docs?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=dev-docs&utm_term=description) and [code snippet library](https://github.com/restrictcontentpro/library) for more.
-
-**[Upgrade to Restrict Content Pro now](https://restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=upgrade&utm_term=description)**
-
-= Get reliable help =
-
-Restrict Content is backed by top-notch technical support from our globally distributed full-time support team. We also have an extensive [documentation site](https://docs.restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=docs&utm_term=description) available. If you’re looking for faster support via email, we encourage you to purchase a [Restrict Content Pro license](https://restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=purchase&utm_term=description).
-
-= Meet the team =
-
-Restrict Content is built by [Sandhills Development](https://sandhillsdev.com/?utm_medium=readme&utm_source=wporg&utm_campaign=rc-lite-plugin&utm_content=sandhills&utm_term=description). We make [popular WordPress plugins](https://sandhillsdev.com/projects/?utm_medium=readme&utm_source=wporg&utm_campaign=rc-lite-plugin&utm_content=popular&utm_term=description) used by hundreds of thousands of people just like you. [Get to know us here](https://sandhillsdev.com/about/?utm_medium=readme&utm_source=wporg&utm_campaign=rc-lite-plugin&utm_content=about&utm_term=description)!
-
-= From our blog =
+= ✏️ From our blog =
 
 Check out some of our popular posts for actionable advice for running membership sites.
 
+- [The top 8 benefits of running a membership site](https://restrictcontentpro.com/top-8-benefits-to-running-a-membership-site/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=8-benefits&utm_term=description)
 - [Which membership model is best for your business?](https://restrictcontentpro.com/which-membership-model-is-best-for-your-business/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=which-model&utm_term=description)
 - [How to start a membership site on a budget](https://restrictcontentpro.com/how-to-start-a-membership-site-on-a-budget/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=start-on-budget&utm_term=description)
-- [The top 8 benefits of running a membership site](https://restrictcontentpro.com/top-8-benefits-to-running-a-membership-site/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=8-benefits&utm_term=description)
-- [3 ways to grant members access to protected downloads](https://restrictcontentpro.com/grant-members-access-protected-downloads/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=protected-downloads&utm_term=description)
 - [Should you be offering tiered memberships?](https://restrictcontentpro.com/should-you-be-offering-tiered-memberships/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=tiered-memberships&utm_term=description)
 
 **[Subscribe to our newsletter](https://restrictcontentpro.com/subscribe/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=subscribe&utm_term=description)** to get posts like these in your inbox as soon as they’re published.
 
-= Contribute to Restrict Content =
-
-Development for this plugin happens in a public GitHub repository to better facilitate contributions from an active community of users, developers and designers. If you have a suggestion, bug report, patch, or pull request, please feel free to [contribute here](https://github.com/restrictcontentpro/restrict-content) or to our [code snippet library](https://github.com/restrictcontentpro/library).
-
-= Looking for something else? =
-
-If Restrict Content doesn’t quite fit your needs, take a look at some of our other projects.
-
-- [Easy Digital Downloads](https://easydigitaldownloads.com/?utm_medium=readme&utm_source=wporg&utm_campaign=rc-lite-plugin&utm_content=something-else&utm_term=description) – Sell digital products with WordPress
-- [AffiliateWP](https://affiliatewp.com/?utm_medium=readme&utm_source=wporg&utm_campaign=rc-lite-plugin&utm_content=something-else&utm_term=description) – A full-featured affiliate marketing solution
-- [Sugar Calendar](https://sugarcalendar.com?utm_medium=readme&utm_source=wporg&utm_campaign=rc-lite-plugin&utm_content=something-else&utm_term=description) – WordPress event management made simple
-- [WP Simple Pay](https://wpsimplepay.com?utm_medium=readme&utm_source=wporg&utm_campaign=rc-lite-plugin&utm_content=something-else&utm_term=description) – A lightweight Stripe payments plugin
-
 == Installation ==
 
-1. Upload restrict-content to wp-content/plugins
-2. Click "Activate" in the WordPress plugins menu
-3. Go to Settings > Restrict Content and customize the Message settings
-4. Follow instructions below to restrict content
+1. Visit the plugins page within your dashboard and select ‘Add New’
+2. Search for "Restrict Content"
+3. Activate Restrict Content from your Plugins page
+4. You're done!
 
-To restrict an entire post or page, simply select the user level you’d like to restrict the post or page to from the drop down menu added just below the post/page editor.
+== Install Restrict Content Manually =-
 
-To restrict just a section of content within a post or page, you may use shortcodes like this:
+1. From the dashboard of your site, navigate to Plugins --> Add New.
+2. Select the Upload option and hit "Choose File."
+3. When the popup appears select the restrict-content-x.x.zip file from your desktop. (The 'x.x' will change depending on the current version number).
+4. Follow the on-screen instructions and wait as the upload completes.
+5. When it's finished, activate the plugin via the prompt. A message will show confirming activation was successful.
 
-[restrict userlevel="editor"] . . . your restricted content goes here . . . [/restrict]
+That's it! Just configure your settings as you see fit, and you're on your way to restricting content. Need help getting things started? Check out our [getting started guide](https://help.ithemes.com/hc/en-us/articles/4402387794587-Getting-Started-with-Restrict-Content) for help with settings and features.
 
-Accepted userlevel values are:
- * admin
- * editor
- * author
- * subscriber
- * contributor
+To restrict an entire post or page, simply select the user level or membership level you’d like to restrict the post or page to from the drop down menu added just below the post/page editor.
 
 There is also a short code for showing content only to users that are not logged in.
 
@@ -308,13 +208,13 @@ There is also a short code for showing content only to users that are not logged
 
 == Frequently Asked Questions ==
 
-= Can I just restrict part of a post / page? =
+= Can I just restrict part of a post/page? =
 
 Yes. You can choose exactly which content to protect with the [restrict] shortcode. You can set the `userlevel` attribute to specify which role is required to view the content. For example, to restrict to editors you would use: `[restrict userlevel=”editor”]Your protected content here.[/restrict]`
 
 = Can I charge customers when they register an account? =
 
-Not with this plugin, but we do offer a [Pro version](https://restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=faq) that does include full support for charging for memberships and integrating with Stripe, PayPal, Authorize.net, and more.
+Yes! With the Restrict Content plugin, you can offer paid membership levels with manual payments or Stripe. For even more payment gateways, check out [Restrict Content Pro](https://restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=faq).
 
 = Does the plugin protect images and other media files? =
 
@@ -326,19 +226,19 @@ Yes. There’s a checkbox for this within each post/page. If enabled, that conte
 
 = Can I integrate newsletter signups with the registration form? =
 
-Not with this plugin, but the [Pro version](https://restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=faq) has integrations for many popular email marketing providers, including Mailchimp, ConvertKit, ActiveCampaign, and more.
+Not with this plugin, but [Restrict Content Pro](https://restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=faq) has integrations for many popular email marketing providers, including Mailchimp, ConvertKit, ActiveCampaign, and more.
 
 = Do restrictions work in REST API requests? =
 
 Yes. All restrictions apply in REST API requests - exactly the same as if viewing your site normally.
 
-= Does Restrict Content work with the Gutenberg editor? =
+= Does Restrict Content work with the Gutenberg editor / the WordPress block editor? =
 
 Yes. Full page restriction settings as well as the `[restrict]`, `[register_form]`, and `[login_form]` shortcodes all work with Gutenberg.
 
 = Does this plugin support restricting access by custom user roles? =
 
-Not with this plugin, but the [Pro version](https://restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=faq) provides the ability to limit access based on custom roles.
+Yes! Restrict Content provides the ability to limit access based on custom roles.
 
 = Will the plugin work with third party page builders? =
 
@@ -352,11 +252,12 @@ Yes. Restrict Content includes shortcodes for a registration form, a login form,
 
 Go to the demo page to see examples:
 
-http://pippinsplugins.com/restricted-content-plugin-free/
+https://restrictcontentpro.com/tour/screenshots/
 
 == Changelog ==
 
 = 3.0 =
+
 
 = 2.2.10 =
 * Fix: Options Comparison broken for new Installs

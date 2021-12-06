@@ -156,13 +156,13 @@ function rc_pro_features() {
 
     <div class="rcp-pro-banner">
         <div class="rcp-pro-logo">
-            <img src="<?php echo esc_url( RC_PLUGIN_URL . 'includes/assets/images/restrict-content-pro-logo.svg'); ?>" >
+            <img src="<?php echo esc_url( RC_PLUGIN_URL . '/includes/assets/images/restrict_content_logo_white.svg' ); ?>" >
         </div>
         <div class="rcp-unlock-text">
-            <h2><?php _e( 'Upgrade to Restrict Content Version 3, get access to several new features.', 'LION' ); ?></h2>
+            <h2><?php _e( 'Get powerful new membership capabilities and content access features', 'LION' ); ?></h2>
         </div>
         <div class="rcp-pro-button">
-            <a><?php _e( 'Unlock Stripe and Membership Levels', 'LION' ); ?></a>
+            <a><?php _e( 'Update now to 3.0 (Free!)', 'LION' ); ?></a>
         </div>
     </div>
 
