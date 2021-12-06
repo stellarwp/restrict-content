@@ -793,7 +793,7 @@ function restrict_content_3_update_notification() {
             <p>
                 <?php
                 printf(
-                        __( 'Restrict Content 3.0 is here and is chock full of new features! <a target="_blank" href="%s">See What\'s New</a>', 'LION'),
+                        __( 'Restrict Content 3.0 is here with powerful new features for memberships and content access. <a target="_blank" href="%s">See What\'s New →</a>', 'LION'),
                         'https://restrictcontentpro.com/index.php?p=170437'
                 );
                 ?>
