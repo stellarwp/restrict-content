@@ -115,7 +115,7 @@ final class RC_Requirements_Check {
 	private function load() {
 
         // If the user has expressly chosen a version then load that version.
-        if ( option_exists( 'restrict_content_chosen_version' ) ) {
+        if ( rc_option_exists( 'restrict_content_chosen_version' ) ) {
             $user_selected_version = get_option( 'restrict_content_chosen_version');
 
             // If 3.0 load 3.0
@@ -130,7 +130,7 @@ final class RC_Requirements_Check {
         // Else choose a version to load.
         else {
             // Does the rc_settings option exist? Load legacy if true else load 3.0
-            if ( option_exists( 'rc_settings' ) ) {
+            if ( rc_option_exists( 'rc_settings' ) ) {
                 // Set chosen version
                 update_option( 'restrict_content_chosen_version', 'legacy' );
                 $this->load_legacy_restrict_content();
@@ -513,8 +513,12 @@ final class RC_Requirements_Check {
 // Invoke the checker
 new RC_Requirements_Check();
 
-function option_exists($name, $site_wide=false){
-    global $wpdb; return $wpdb->query("SELECT * FROM ". ($site_wide ? $wpdb->base_prefix : $wpdb->prefix). "options WHERE option_name ='$name' LIMIT 1");
+function rc_option_exists( $name ) {
+    global $wpdb;
+
+    $table = $wpdb->options;
+
+    return $wpdb->query( $wpdb->prepare( "SELECT * FROM {$table} WHERE option_name = %s LIMIT 1" , $name ) );
 }
 
 /**
@@ -532,7 +536,7 @@ function rc_process_legacy_switch() {
         return;
     }
 
-    if ( option_exists( 'restrict_content_chosen_version' ) ) {
+    if ( rc_option_exists( 'restrict_content_chosen_version' ) ) {
         if ( get_option( 'restrict_content_chosen_version' ) == 'legacy' ) {
             $redirectUrl = admin_url( 'admin.php?page=restrict-content-settings' );
             update_option( 'restrict_content_chosen_version', '3.0' );
@@ -691,7 +695,7 @@ add_action( 'admin_init', 'restrict_content_plugin_activation_redirect' );
 
 function restrict_content_add_stripe_fee_notice() {
     ?>
-    <p>Note: The Restrict Content Stripe payment gateway integration includes an additional 2% processing fee. You can remove the processing fee by upgrading to Restrict Content Pro.</p>
+    <p><?php _e( "Note: The Restrict Content Stripe payment gateway integration includes an additional 2% processing fee. You can remove the processing fee by upgrading to Restrict Content Pro.", "LION" ) ?></p>
     <?php
 }
 add_action( 'rcp_after_stripe_help_box_admin', 'restrict_content_add_stripe_fee_notice' );
