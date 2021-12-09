@@ -125,7 +125,12 @@ function rc_settings_page() {
                             </tr>
                             <tr>
                                 <th><?php _e( 'Why Upgrade?', 'LION' ); ?></th>
-                                <td><?php _e( 'Restrict Content 3 includes a robust new suite of features, including creating memberships and collectings payments. After upgrading, your content will remain restricted, and the associated restricted content messages will update to the new default restriction message. Learn More', 'LION' ); ?></td>
+                                <td><?php
+                                    printf(
+                                        __( 'Restrict Content 3 includes a robust new suite of features, including creating memberships and collectings payments. After upgrading, your content will remain restricted, and the associated restricted content messages will update to the new default restriction message. <a href="%s">Learn More</a>', 'LION' ),
+                                        'https://help.ithemes.com/hc/en-us/articles/4411587693211'
+                                    )
+                                ?></td>
                             </tr>
 						</table>
 
