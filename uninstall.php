@@ -21,7 +21,7 @@
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) exit;
 
 // Load RCP file.
-include_once 'restrict-content.php';
+include_once 'restrictcontent.php';
 
 global $wpdb;
 $rcp_options = get_option( 'rcp_settings' );
@@ -30,7 +30,7 @@ if( isset( $rcp_options['remove_data_on_uninstall'] ) ) {
 
 	if ( class_exists( 'Restrict_Content_Pro' ) ) {
 		// This is kind of stupid but it ensures that the capabilities file (class used below) gets loaded.
-		Restrict_Content_Pro::instance( dirname( __FILE__ ) . '/restrict-content-pro.php' );
+		Restrict_Content_Pro::instance( dirname( __FILE__ ) . '/restrictcontent.php' );
 	}
 
 	// Delete all post meta.

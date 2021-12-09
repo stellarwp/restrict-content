@@ -770,6 +770,7 @@ function restrict_content_submit_data_to_stripe_mailing_list() {
         $response = wp_remote_post( 'https://api-dev.ithemes.com/newsletter/subscribe', $fields );
 
         if ( ! is_wp_error( $response ) ) {
+            update_option( 'restrict_content_shown_stripe_marketing', true );
             return $response;
         } else {
             rcp_log( json_encode( $response ), true );
