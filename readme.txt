@@ -256,6 +256,13 @@ https://restrictcontentpro.com/tour/screenshots/
 
 == Changelog ==
 
+= 3.0.2 =
+* Fix: Set option for Stripe updates displayed to admin
+* Fix: Renaming base plugin filename.
+
+= 3.0.1 =
+* Note: Readme version bump
+
 = 3.0 =
 * New: Create and Sell Memberships
 * New: Collect payments with Stripe
