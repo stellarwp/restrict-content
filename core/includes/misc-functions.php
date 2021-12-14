@@ -804,7 +804,7 @@ function rcp_get_post_restrictions( $post_id ) {
 		$restrictions['access_level'] = $access_level;
 	}
 
-	if ( ! empty( $user_level ) && 'all' != strtolower( $user_level[0] ) ) {
+	if ( ! empty( $user_level ) && 'all' != strtolower( $user_level[0] ) && 'None' != strtolower( $user_level[0] ) ) {
 		$restrictions['user_level'] = $user_level;
 	}
 
@@ -846,7 +846,7 @@ function rcp_has_post_restrictions( $post_id ) {
 		if ( ! empty( $rcp_user_level ) && ! is_array( $rcp_user_level ) ) {
 			$rcp_user_level = array( $rcp_user_level );
 		}
-		if ( ! empty( $rcp_user_level ) && 'all' !== strtolower( $rcp_user_level[0] ) ) {
+		if ( ! empty( $rcp_user_level ) && 'all' !== strtolower( $rcp_user_level[0] ) && 'None' !== strtolower( $rcp_user_level[0] ) ) {
 			$restricted = true;
 		}
 	}
