@@ -61,7 +61,8 @@ function rc_admin_styles( $hook_suffix ) {
             'rcp_admin_settings_options',
             array(
                 'ajax_url' => admin_url( 'admin-ajax.php' ),
-                'rc_process_legacy_nonce' => wp_create_nonce( 'rcp-settings-nonce' )
+                'rc_process_legacy_nonce' => wp_create_nonce( 'rcp-settings-nonce' ),
+	            'upgrade_redirect' => admin_url() . 'admin.php?page=rcp-settings',
             )
         );
 	}

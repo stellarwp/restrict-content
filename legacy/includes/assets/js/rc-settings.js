@@ -20,7 +20,7 @@ jQuery(document).ready(function($) {
            success: function( response ) {
                console.dir(response);
                if ( response.success ) {
-                   window.location.assign( '/wp-admin/admin.php?page=rcp-settings' );
+                   window.location.assign( rcp_admin_settings_options.upgrade_redirect );
                }
            },
            error: function( response ) {
