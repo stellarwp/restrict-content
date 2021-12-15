@@ -3,7 +3,7 @@
  * Plugin Name: Restrict Content
  * Plugin URI: https://restrictcontentpro.com
  * Description: Set up a complete membership system for your WordPress site and deliver premium content to your members. Unlimited membership packages, membership management, discount codes, registration / login forms, and more.
- * Version: 3.0.2
+ * Version: 3.0.3
  * Author: iThemes
  * Author URI: https://ithemes.com/
  * Text Domain: rcp
@@ -149,23 +149,16 @@ final class RC_Requirements_Check {
      * @since 3.0
 	 */
     private function restrict_content_check_posts_for_meta(): bool {
-        $args = array(
-                'post_type' => 'post'
-        );
+	    global $wpdb;
 
-        $post_query = new WP_Query( $args );
+	    $postmeta_table = $wpdb->postmeta;
 
-        if ( $post_query->have_posts() ) {
-            foreach ( $post_query->posts as $post ) {
-                if ( get_post_meta( $post->ID, 'rcp_user_level', true ) ) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
+	    $postMetaQuery = $wpdb->get_results( "SELECT * FROM {$postmeta_table} WHERE meta_key = 'rcp_user_level' LIMIT 1" );
+        if ( count( $postMetaQuery ) > 0 ) {
+            return true;
+        } else {
+            return false;
         }
-
-        return false;
     }
 
 	/**
@@ -175,26 +168,22 @@ final class RC_Requirements_Check {
      * @since 3.0
 	 */
     private function restrict_content_check_posts_for_shortcode(): bool {
-        $args = array(
-                'post_type' => 'post'
-        );
+        global $wpdb;
 
-        $post_query = new WP_Query( $args );
+        $post_table = $wpdb->posts;
 
-        if ( $post_query->have_posts() ) {
-            foreach ( $post_query->posts as $post ) {
-                if ( has_shortcode( $post->post_content, 'restrict' ) ||
-                     has_shortcode( $post->post_content, 'not_logged_in' ) ||
-                     has_shortcode( $post->post_content, 'login_form' ) ||
-                     has_shortcode( $post->post_content, 'register_form' ) ) {
-	                return true;
-                } else {
-                    return false;
-                }
-            }
+        $postsQuery = $wpdb->get_results( "SELECT * FROM {$post_table} WHERE 
+                          post_content CONTAINS '[restrict]' OR 
+                          post_content CONTAINS '[not_logged_in]' OR
+                          post_content CONTAINS '[login_form]' OR
+                          post_content CONTAINS '[register_form]' OR
+                          LIMIT 1");
+
+        if ( count( $postsQuery ) > 0 ) {
+            return true;
+        } else {
+            return false;
         }
-
-        return false;
     }
 
 	/**
