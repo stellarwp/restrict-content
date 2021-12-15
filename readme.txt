@@ -190,7 +190,7 @@ Check out some of our popular posts for actionable advice for running membership
 3. Activate Restrict Content from your Plugins page
 4. You're done!
 
-== Install Restrict Content Manually =-
+== Install Restrict Content Manually ==
 
 1. From the dashboard of your site, navigate to Plugins --> Add New.
 2. Select the Upload option and hit "Choose File."
@@ -259,6 +259,7 @@ https://restrictcontentpro.com/tour/screenshots/
 = 3.0.3 =
 * Fix: Fixing upgrade logic
 * Fix: Fixing Restrictions
+* Fix: Multisite downgrade link
 
 = 3.0.2 =
 * Fix: Set option for Stripe updates displayed to admin
