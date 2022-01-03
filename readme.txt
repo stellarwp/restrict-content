@@ -34,7 +34,7 @@ Use Restrict Content as a <strong>WordPress content restriction plugin</strong> 
 
 - <strong>Restrict access to your WordPress site based user role.</strong> Limit access to full content via a simple interface on the post, page, and custom post type editing screens.
 - <strong>Control user access to content<strong> based on WordPress user role, access level(s), or membership level(s).
-- <strong>Protect sensitive content. Use
+- <strong>Protect sensitive content.
 - <strong>Clearly separate public content from private content
 - <strong>Restrict access to entire pages or specific sections
 - <strong>Let users register and login from the frontend of your site</strong>
@@ -77,7 +77,7 @@ Our feature-rich plugin comes with everything you need to restrict content and s
 
 = 🛠 Developer Features =
 
-Restrict Content Pro has been built with developers in mind. That means it is flexible, easy to extend, and chalked full of action hooks and filters, making it easy to modify and tweak to your specific needs. With clean and simple display options, Restrict Content Pro is designed to integrate perfectly with every theme without any custom CSS being necessary.
+Restrict Content Pro has been built with developers in mind. That means it is flexible, easy to extend, and chocked full of action hooks and filters, making it easy to modify and tweak to your specific needs. With clean and simple display options, Restrict Content Pro is designed to integrate perfectly with every theme without any custom CSS being necessary.
 
 Extensive and easy to modify template files are included with Restrict Content Pro. If you have built a theme, for clients or general distribution, you can easily customize the display of registration forms, profile editor, account pages, and more through custom template files added directly to your theme’s folder.
 
@@ -122,7 +122,7 @@ We check in on the [The Restrict Content forum here on WordPress.org](https://wo
 
 == 📃 Documentation ==
 
-All of our documentation can be found in the [iThemes Help Docks](https://help.ithemes.com/hc/en-us/categories/360004039733-Restrict-Content-Pro).
+All of our documentation can be found in the [iThemes Help Docs](https://help.ithemes.com/hc/en-us/categories/360004039733-Restrict-Content-Pro).
 
 = 🤔 Who is Restrict Content Pro for? =
 
