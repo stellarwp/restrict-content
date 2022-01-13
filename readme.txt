@@ -5,7 +5,7 @@ Contributors: jthillithemes, layotte, ithemes
 Tags: restrict pages, restrict posts, restrict access, membership, registration form, access control
 Requires at least: 3.9
 Tested up to: 5.8.2
-Stable tag: 3.0.3
+Stable tag: 3.0.4
 
 Restrict Content is a powerful WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.
 
@@ -255,6 +255,9 @@ Go to the demo page to see examples:
 https://restrictcontentpro.com/tour/screenshots/
 
 == Changelog ==
+
+= 3.0.4 =
+* Fix: Broken help page form
 
 = 3.0.3 =
 * Fix: Fixing upgrade logic

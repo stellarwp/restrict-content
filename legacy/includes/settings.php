@@ -443,8 +443,6 @@ add_action( 'in_admin_header', function() {
 });
 
 function rc_need_help_page() {
-	$rc_welcome_try_free_meta_nonce = wp_create_nonce( 'rc_welcome_try_free_meta_nonce' );
-
     ?>
     <div class="restrict-content-welcome-header">
         <img class="restrict-content-logo" src="<?php echo esc_url( RC_PLUGIN_URL . '/includes/assets/images/restrict_content_logo.svg' ); ?>" >
@@ -529,7 +527,7 @@ function rc_need_help_page() {
                 <div class="restrict-content-welcome-advertisement-form">
                     <form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" id="restrict_content_try_free">
                         <input type="hidden" name="action" value="restrict_content_try_free">
-                        <input type="hidden" name="rc_welcome_try_free_meta_nonce" value="<?php echo $rc_welcome_try_free_meta_nonce; ?>" >
+                        <input type="hidden" name="rc_welcome_try_free_meta_nonce" value="<?php echo wp_create_nonce( 'rc_welcome_try_free_meta_nonce' ); ?>" >
                         <input type="hidden" name="source_page" value="help_page">
                         <input type="email" name="try_email_address" id="try_email_address" placeholder="Email Address">
                         <input type="submit" class="restrict-content-welcome-button" value="<?php _e( 'Try Now, Free!', 'LION' ); ?>">
@@ -553,20 +551,20 @@ function rc_need_help_page() {
                         </button>
                     </div>
                     <div class="tabpanel" tabindex="0" role="tabpanel" id="1sitetab" aria-labelledby="1site">
-                        <h4><?php _e( '$80', 'LION' ); ?></h4>
+                        <h4><?php _e( '$99', 'LION' ); ?></h4>
                         <p><?php _e( 'Includes updates & support for one year.', 'LION' ); ?></p>
                     </div>
                     <div class="tabpanel" tabindex="0" role="tabpanel" id="10sitetab" aria-labelledby="10site" hidden="">
-                        <h4><?php _e( '$100', 'LION' ); ?></h4>
+                        <h4><?php _e( '$149', 'LION' ); ?></h4>
                         <p><?php _e( 'Includes updates & support for one year.', 'LION' ); ?></p>
                     </div>
                     <div class="tabpanel" tabindex="0" role="tabpanel" id="unlimitedtab" aria-labelledby="unlimited" hidden="">
-                        <h4><?php _e( '$200', 'LION' ); ?></h4>
+                        <h4><?php _e( '$249', 'LION' ); ?></h4>
                         <p><?php _e( 'Includes updates & support for one year.', 'LION' ); ?></p>
                     </div>
                 </div>
                 <a href="https://restrictcontentpro.com/pricing/" class="go-pro-now"><?php _e( 'Go Pro Now', 'LION' ); ?></a>
-                <p class="whats-included"><a href="https://restrictcontentpro.com/add-ons/"><?php _e( "What's included with Pro?", 'LION' ); ?></a></p>
+                <p class="whats-included"><a href="https://restrictcontentpro.com/why-go-pro/"><?php _e( "What's included with Pro?", 'LION' ); ?></a></p>
             </div>
         </div>
     </div>

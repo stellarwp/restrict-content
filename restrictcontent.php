@@ -3,7 +3,7 @@
  * Plugin Name: Restrict Content
  * Plugin URI: https://restrictcontentpro.com
  * Description: Set up a complete membership system for your WordPress site and deliver premium content to your members. Unlimited membership packages, membership management, discount codes, registration / login forms, and more.
- * Version: 3.0.3
+ * Version: 3.0.4
  * Author: iThemes
  * Author URI: https://ithemes.com/
  * Text Domain: rcp
@@ -143,48 +143,48 @@ final class RC_Requirements_Check {
 	}
 
 	/**
-     * Check the posts for Restrict Content's rcp_user_level setting
-     *
+	 * Check the posts for Restrict Content's rcp_user_level setting
+	 *
 	 * @return bool
-     * @since 3.0
+	 * @since 3.0
 	 */
-    private function restrict_content_check_posts_for_meta(): bool {
-	    global $wpdb;
+	private function restrict_content_check_posts_for_meta(): bool {
+		global $wpdb;
 
-	    $postmeta_table = $wpdb->postmeta;
+		$postmeta_table = $wpdb->postmeta;
 
-	    $postMetaQuery = $wpdb->get_results( "SELECT * FROM {$postmeta_table} WHERE meta_key = 'rcp_user_level' LIMIT 1" );
-        if ( count( $postMetaQuery ) > 0 ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+		$postMetaQuery = $wpdb->get_results( "SELECT * FROM {$postmeta_table} WHERE meta_key = 'rcp_user_level' LIMIT 1" );
+		if ( count( $postMetaQuery ) > 0 ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	/**
-     * Check the posts for Restrict Content shortcodes
-     *
+	 * Check the posts for Restrict Content shortcodes
+	 *
 	 * @return bool
-     * @since 3.0
+	 * @since 3.0
 	 */
-    private function restrict_content_check_posts_for_shortcode(): bool {
-        global $wpdb;
+	private function restrict_content_check_posts_for_shortcode(): bool {
+		global $wpdb;
 
-        $post_table = $wpdb->posts;
+		$post_table = $wpdb->posts;
 
-        $postsQuery = $wpdb->get_results( "SELECT * FROM {$post_table} WHERE 
+		$postsQuery = $wpdb->get_results( "SELECT * FROM {$post_table} WHERE 
                           post_content CONTAINS '[restrict]' OR 
                           post_content CONTAINS '[not_logged_in]' OR
                           post_content CONTAINS '[login_form]' OR
                           post_content CONTAINS '[register_form]' OR
-                          LIMIT 1");
+                          LIMIT 1" );
 
-        if ( count( $postsQuery ) > 0 ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+		if ( count( $postsQuery ) > 0 ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	/**
 	 * Load version of Restrict pre 3.0
@@ -572,27 +572,39 @@ new RC_Requirements_Check();
  */
 function rc_process_legacy_switch() {
 
-	if ( ! isset( $_POST['rc_process_legacy_nonce'] ) || ! wp_verify_nonce( $_POST['rc_process_legacy_nonce'], 'rc_process_legacy_nonce' ) ) {
-		wp_send_json_error( array(
-			'success' => false,
-			'errors'  => 'invalid nonce',
-		) );
+	if ( current_user_can( 'manage_options' ) ) {
 
-		return;
-	}
-
-	if ( get_option( 'restrict_content_chosen_version' ) ) {
-		if ( get_option( 'restrict_content_chosen_version' ) == 'legacy' ) {
-			$redirectUrl = admin_url( 'admin.php?page=restrict-content-settings' );
-			update_option( 'restrict_content_chosen_version', '3.0' );
-			wp_send_json_success( array(
-				'success' => true,
-				'data'    => array(
-					'redirect' => $redirectUrl
-				),
+		if ( ! isset( $_POST['rc_process_legacy_nonce'] ) || ! wp_verify_nonce( $_POST['rc_process_legacy_nonce'], 'rc_process_legacy_nonce' ) ) {
+			wp_send_json_error( array(
+				'success' => false,
+				'errors'  => 'invalid nonce',
 			) );
+
+			return;
+		}
+
+		if ( get_option( 'restrict_content_chosen_version' ) ) {
+			if ( get_option( 'restrict_content_chosen_version' ) == 'legacy' ) {
+				$redirectUrl = admin_url( 'admin.php?page=restrict-content-settings' );
+				update_option( 'restrict_content_chosen_version', '3.0' );
+				wp_send_json_success( array(
+					'success' => true,
+					'data'    => array(
+						'redirect' => $redirectUrl
+					),
+				) );
+			} else {
+				$redirectUrl = admin_url( 'admin.php?page=rcp-members' );
+				update_option( 'restrict_content_chosen_version', 'legacy' );
+				wp_send_json_success( array(
+					'success' => true,
+					'data'    => array(
+						'redirect' => $redirectUrl
+					)
+				) );
+			}
 		} else {
-			$redirectUrl = admin_url( 'admin.php?page=rcp-members' );
+			$redirectUrl = admin_url( 'admin.php?page=restrict-content-settings' );
 			update_option( 'restrict_content_chosen_version', 'legacy' );
 			wp_send_json_success( array(
 				'success' => true,
@@ -601,15 +613,6 @@ function rc_process_legacy_switch() {
 				)
 			) );
 		}
-	} else {
-		$redirectUrl = admin_url( 'admin.php?page=restrict-content-settings' );
-		update_option( 'restrict_content_chosen_version', 'legacy' );
-		wp_send_json_success( array(
-			'success' => true,
-			'data'    => array(
-				'redirect' => $redirectUrl
-			)
-		) );
 	}
 }
 

@@ -271,8 +271,6 @@ function rc_why_go_pro_page_redesign() {
 }
 
 function rc_need_help_page_redesign() {
-	$rc_welcome_try_free_meta_nonce = wp_create_nonce( 'rc_welcome_try_free_meta_nonce' );
-
 	?>
 	<div class="restrict-content-welcome-header">
 		<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/restrict_content_logo.svg' ); ?>" >
@@ -357,7 +355,7 @@ function rc_need_help_page_redesign() {
 				<div class="restrict-content-welcome-advertisement-form">
 					<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" id="restrict_content_try_free">
 						<input type="hidden" name="action" value="restrict_content_try_free">
-						<input type="hidden" name="rc_welcome_try_free_meta_nonce" value="<?php echo $rc_welcome_try_free_meta_nonce; ?>" >
+						<input type="hidden" name="rc_welcome_try_free_meta_nonce" value="<?php echo wp_create_nonce( 'rc_welcome_try_free_meta_nonce' ); ?>" >
 						<input type="hidden" name="source_page" value="help_page">
 						<input type="email" name="try_email_address" id="try_email_address" placeholder="Email Address">
 						<input type="submit" class="restrict-content-welcome-button" value="<?php _e( 'Try Now, Free!', 'LION' ); ?>">
@@ -381,20 +379,20 @@ function rc_need_help_page_redesign() {
 						</button>
 					</div>
 					<div class="tabpanel" tabindex="0" role="tabpanel" id="1sitetab" aria-labelledby="1site">
-						<h4><?php _e( '$80', 'LION' ); ?></h4>
+						<h4><?php _e( '$99', 'LION' ); ?></h4>
 						<p><?php _e( 'Includes updates & support for one year.', 'LION' ); ?></p>
 					</div>
 					<div class="tabpanel" tabindex="0" role="tabpanel" id="10sitetab" aria-labelledby="10site" hidden="">
-						<h4><?php _e( '$100', 'LION' ); ?></h4>
+						<h4><?php _e( '$149', 'LION' ); ?></h4>
 						<p><?php _e( 'Includes updates & support for one year.', 'LION' ); ?></p>
 					</div>
 					<div class="tabpanel" tabindex="0" role="tabpanel" id="unlimitedtab" aria-labelledby="unlimited" hidden="">
-						<h4><?php _e( '$200', 'LION' ); ?></h4>
+						<h4><?php _e( '$249', 'LION' ); ?></h4>
 						<p><?php _e( 'Includes updates & support for one year.', 'LION' ); ?></p>
 					</div>
 				</div>
 				<a href="https://restrictcontentpro.com/pricing/" class="go-pro-now"><?php _e( 'Go Pro Now', 'LION' ); ?></a>
-				<p class="whats-included"><a href="https://restrictcontentpro.com/add-ons/"><?php _e( "What's included with Pro?", 'LION' ); ?></a></p>
+				<p class="whats-included"><a href="https://restrictcontentpro.com/why-go-pro/"><?php _e( "What's included with Pro?", 'LION' ); ?></a></p>
 			</div>
 		</div>
 	</div>
@@ -510,3 +508,64 @@ function rc_welcome_page_redesign() {
 	</div>
 	<?php
 }
+
+function restrict_content_admin_try_free_success() {
+	if ( ! empty( $_GET['message'] ) && ! empty( $_GET['page'] ) && $_GET['page'] === 'rcp-need-help') {
+		if ( $_GET['message'] === 'success' ) {
+			?>
+			<div class="notice notice-success is-dismissible">
+				<p><?php _e( 'Email Sent Successfully.', 'LION' ); ?></p>
+			</div>
+			<?php
+		} else if ( $_GET['message'] === 'failed' ) {
+			?>
+			<div class="notice notice-error is-dismissible">
+				<p><?php _e( 'Unable to send email.', 'LION' ); ?></p>
+			</div>
+			<?php
+		}
+	} else if ( ! empty( $_GET['message'] ) && ! empty( $_GET['page'] ) && $_GET['page'] === 'restrict-content-welcome' ) {
+		if ( $_GET['message'] === 'success' ) {
+			?>
+			<div class="notice notice-success is-dismissible">
+				<p><?php _e( 'Email Sent Successfully.', 'LION' ); ?></p>
+			</div>
+			<?php
+		} else if ( $_GET['message'] === 'failed' ) {
+			?>
+			<div class="notice notice-error is-dismissible">
+				<p><?php _e( 'Unable to send email.', 'LION' ); ?></p>
+			</div>
+			<?php
+		}
+	}
+}
+add_action( 'admin_notices', 'restrict_content_admin_try_free_success' );
+
+function restrict_content_admin_try_free () {
+
+	if( isset( $_POST['rc_welcome_try_free_meta_nonce'] ) && wp_verify_nonce( $_POST['rc_welcome_try_free_meta_nonce'], 'rc_welcome_try_free_meta_nonce') ) {
+
+		$body = array(
+				'template_name' => 'rcp-demo-delivery',
+				'email' => $_POST['try_email_address']
+		);
+
+		$fields = array(
+				'method'        => 'POST',
+				'body'  => json_encode( $body )
+		);
+
+		$response = wp_remote_request( 'https://api.ithemes.com/email/send', $fields );
+
+		if ( ! is_wp_error( $response ) && $_POST['source_page'] === 'welcome_page' ) {
+			wp_redirect( add_query_arg( 'message', 'success', admin_url( 'admin.php?page=restrict-content-welcome' ) ) );
+		} else if ( ! is_wp_error( $response ) && $_POST['source_page'] === 'help_page' ) {
+			wp_redirect( add_query_arg( 'message', 'success', admin_url( 'admin.php?page=rcp-need-help' ) ) );
+		} else {
+			wp_redirect( add_query_arg( 'message', 'failed', admin_url( 'admin.php?page=rcp-need-help' ) ) );
+		}
+	}
+}
+
+add_action( 'admin_post_restrict_content_try_free', 'restrict_content_admin_try_free' );
