@@ -7,30 +7,17 @@
 // load the plugin options
 global $rc_options;
 
-if ( $rc_options !== FALSE ) {
-	if ( $rc_options['shortcode_message'] === '' ||  $rc_options['shortcode_message'] === FALSE ) {
-		$rc_options['shortcode_message'] = 'You do not have access to this post.';
-	}
+if( false === $rc_options ) {
+    $options = array (
+        'shortcode_message' => 'You do not have access to this post.',
+        'administrator_message' => 'This content is for Administrator Users.',
+        'editor_message' => 'This content is for Editor Users.',
+        'author_message' => 'This content is for Author Users.',
+        'contributor_message' => 'This content is for Contributor Users.',
+        'subscriber_message' => 'This content is for Subscribers Users',
+    );
 
-	if ( $rc_options['administrator_message'] === '' ||  $rc_options['administrator_message'] === FALSE ) {
-		$rc_options['administrator_message'] = 'This content is for Administrator Users.';
-	}
-
-	if ( $rc_options['editor_message'] === ''  ||  $rc_options['editor_message'] === FALSE ) {
-		$rc_options['editor_message'] = 'This content is for Editor Users';
-	}
-
-	if ( $rc_options['author_message'] === ''  ||  $rc_options['author_message'] === FALSE ) {
-		$rc_options['author_message'] = 'This content is for Author Users';
-	}
-
-	if ( $rc_options['contributor_message'] === ''  ||  $rc_options['contributor_message'] === FALSE ) {
-		$rc_options['contributor_message'] = 'This content is for Author Users';
-	}
-
-	if ( $rc_options['subscriber_message'] === ''  ||  $rc_options['subscriber_message'] === FALSE ) {
-		$rc_options['subscriber_message'] = 'This content is for Subscriber Users';
-	}
+   update_option( 'rc_settings', $options );
 }
 
 if ( ! defined( 'RC_PLUGIN_VERSION' ) ) {
