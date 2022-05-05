@@ -33,7 +33,7 @@ function rc_settings_page() {
 					if ( false !== $_REQUEST['updated'] ) {
 						?>
 						<div class="updated fade">
-							<p><strong><?php _e( 'Options saved', 'LION' ); ?> )</strong></p>
+							<p><strong><?php _e( 'Options saved', 'LION' ); ?></strong></p>
 						</div>
 						<?php
 					}
