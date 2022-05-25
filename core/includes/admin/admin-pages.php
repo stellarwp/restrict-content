@@ -435,9 +435,8 @@ function rc_welcome_page_redesign() {
 				<div class="restrict-content-welcome-body-container">
 					<div class="restrict-content-how-to-body restrict-content-container-section">
 						<h2><?php _e( 'Collect Payments with Stripe', 'LION' ); ?></h2>
-						<p class="restrict-content-how-to-message"><?php _e( "Install the free Restrict Content Stripe add-on to start accepting credit and debit card payments.", 'LION' ); ?></p>
 						<p class="restrict-content-how-to-message"><?php _e( 'Stripe is an excellent payment gateway with a simple setup process and exceptional reliability.', 'LION' ); ?></p>
-						<p class="restrict-content-how-to-message"><?php _e( "Placeholder text for Stripe add-on sign-up link.", 'LION' ); ?></p>
+						<p class="restrict-content-how-to-message"><?php printf(__( '<a href="%s">Get Started</a>', 'LION' ), '/wp-admin/admin.php?page=rcp-settings#payments'); ?></p>
 
 					</div>
 				</div>
