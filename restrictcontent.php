@@ -861,8 +861,8 @@ function restrict_content_3_update_notification() {
             <p>
 				<?php
 				printf(
-					__( 'Restrict Content 3.0 is here with powerful new features for memberships and content access. <a target="_blank" href="%s">See What\'s New →</a>', 'LION' ),
-					'https://restrictcontentpro.com/restrict-content-3-0/?utm_source=restrictcontent&utm_medium=plugin&utm_campaign=rc3_release&utm_content=dashboard-notice'
+					__( 'Thinking about upgrading? Check out our pro-only features. <a target="_blank" href="%s">Why Go Pro →</a>', 'LION' ),
+					'https://restrictcontentpro.com/why-go-pro/?utm_source=restrictcontent&utm_medium=plugin&utm_campaign=rc3_release&utm_content=dashboard-notice'
 				);
 				?>
             </p>
