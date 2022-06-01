@@ -345,7 +345,7 @@ function rc_need_help_page_redesign() {
 					<img class="restrict-content-welcome-advertisement-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/restrict-content-pro-logo-vertical-blue-black.svg' ); ?>" >
 				</div>
 				<div class="restrict-content-welcome-try-for-free">
-					<p><?php _e( 'Try For Free!', 'LION' ); ?></p>
+					<p><?php _e( 'Try a Demo!', 'LION' ); ?></p>
 				</div>
 				<div class="restrict-content-welcome-advertisement-content">
 					<p><?php _e( 'Lock away your exclusive content. Give access to valued members.', 'LION' ); ?></p>
@@ -487,7 +487,7 @@ function rc_welcome_page_redesign() {
 					<img class="restrict-content-welcome-advertisement-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/restrict-content-pro-logo-vertical-blue-black.svg' ); ?>" >
 				</div>
 				<div class="restrict-content-welcome-try-for-free">
-					<p><?php _e( 'Try For Free!', 'LION' ); ?></p>
+					<p><?php _e( 'Try a Demo!', 'LION' ); ?></p>
 				</div>
 				<div class="restrict-content-welcome-advertisement-content">
 					<p><?php _e( 'Lock away your exclusive content. Give access to valued members.', 'LION' ); ?></p>
