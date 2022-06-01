@@ -412,7 +412,7 @@ function rc_welcome_page() {
                     <img class="restrict-content-welcome-advertisement-logo" src="<?php echo esc_url( RC_PLUGIN_URL . '/includes/assets/images/restrict-content-pro-logo-vertical-blue-black.svg' ); ?>" >
                 </div>
                 <div class="restrict-content-welcome-try-for-free">
-                    <p><?php _e( 'Try For Free!', 'LION' ); ?></p>
+                    <p><?php _e( 'Try a Demo!', 'LION' ); ?></p>
                 </div>
                 <div class="restrict-content-welcome-advertisement-content">
                     <p><?php _e( 'Lock away your exclusive content. Give access to valued members.', 'LION' ); ?></p>
@@ -425,7 +425,7 @@ function rc_welcome_page() {
                         <input type="hidden" name="rc_welcome_try_free_meta_nonce" value="<?php echo $rc_welcome_try_free_meta_nonce; ?>" >
                         <input type="hidden" name="source_page" value="welcome_page">
                         <input type="email" name="try_email_address" id="try_email_address" placeholder="Email Address">
-                        <input type="submit" class="restrict-content-welcome-button" value="<?php _e( 'Try Now, Free!', 'LION' ); ?>">
+                        <input type="submit" class="restrict-content-welcome-button" value="<?php _e( 'Get Your Demo!', 'LION' ); ?>">
                     </form>
                 </div>
             </div>
@@ -517,7 +517,7 @@ function rc_need_help_page() {
                     <img class="restrict-content-welcome-advertisement-logo" src="<?php echo esc_url( RC_PLUGIN_URL . '/includes/assets/images/restrict-content-pro-logo-vertical-blue-black.svg' ); ?>" >
                 </div>
                 <div class="restrict-content-welcome-try-for-free">
-                    <p><?php _e( 'Try For Free!', 'LION' ); ?></p>
+                    <p><?php _e( 'Try a Demo!', 'LION' ); ?></p>
                 </div>
                 <div class="restrict-content-welcome-advertisement-content">
                     <p><?php _e( 'Lock away your exclusive content. Give access to valued members.', 'LION' ); ?></p>
@@ -530,7 +530,7 @@ function rc_need_help_page() {
                         <input type="hidden" name="rc_welcome_try_free_meta_nonce" value="<?php echo wp_create_nonce( 'rc_welcome_try_free_meta_nonce' ); ?>" >
                         <input type="hidden" name="source_page" value="help_page">
                         <input type="email" name="try_email_address" id="try_email_address" placeholder="Email Address">
-                        <input type="submit" class="restrict-content-welcome-button" value="<?php _e( 'Try Now, Free!', 'LION' ); ?>">
+                        <input type="submit" class="restrict-content-welcome-button" value="<?php _e( 'Get Your Demo!', 'LION' ); ?>">
                     </form>
                 </div>
             </div>
