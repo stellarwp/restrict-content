@@ -358,7 +358,7 @@ function rc_need_help_page_redesign() {
 						<input type="hidden" name="rc_welcome_try_free_meta_nonce" value="<?php echo wp_create_nonce( 'rc_welcome_try_free_meta_nonce' ); ?>" >
 						<input type="hidden" name="source_page" value="help_page">
 						<input type="email" name="try_email_address" id="try_email_address" placeholder="Email Address">
-						<input type="submit" class="restrict-content-welcome-button" value="<?php _e( 'Try Now, Free!', 'LION' ); ?>">
+						<input type="submit" class="restrict-content-welcome-button" value="<?php _e( 'Get Your Demo!', 'LION' ); ?>">
 					</form>
 				</div>
 			</div>
@@ -500,7 +500,7 @@ function rc_welcome_page_redesign() {
 						<input type="hidden" name="rc_welcome_try_free_meta_nonce" value="<?php echo $rc_welcome_try_free_meta_nonce; ?>" >
 						<input type="hidden" name="source_page" value="welcome_page">
 						<input type="email" name="try_email_address" id="try_email_address" placeholder="Email Address">
-						<input type="submit" class="restrict-content-welcome-button" value="<?php _e( 'Try Now, Free!', 'LION' ); ?>">
+						<input type="submit" class="restrict-content-welcome-button" value="<?php _e( 'Get Your Demo!', 'LION' ); ?>">
 					</form>
 				</div>
 			</div>
