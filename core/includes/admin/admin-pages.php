@@ -350,7 +350,7 @@ function rc_need_help_page_redesign() {
 					<img class="restrict-content-welcome-advertisement-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/restrict-content-pro-logo-vertical-blue-black.svg' ); ?>" >
 				</div>
 				<div class="restrict-content-welcome-try-for-free">
-					<p><?php _e( 'Try For Free!', 'LION' ); ?></p>
+					<p><?php _e( 'Try a Demo!', 'LION' ); ?></p>
 				</div>
 				<div class="restrict-content-welcome-advertisement-content">
 					<p><?php _e( 'Lock away your exclusive content. Give access to valued members.', 'LION' ); ?></p>
@@ -363,7 +363,7 @@ function rc_need_help_page_redesign() {
 						<input type="hidden" name="rc_welcome_try_free_meta_nonce" value="<?php echo wp_create_nonce( 'rc_welcome_try_free_meta_nonce' ); ?>" >
 						<input type="hidden" name="source_page" value="help_page">
 						<input type="email" name="try_email_address" id="try_email_address" placeholder="Email Address">
-						<input type="submit" class="restrict-content-welcome-button" value="<?php _e( 'Try Now, Free!', 'LION' ); ?>">
+						<input type="submit" class="restrict-content-welcome-button" value="<?php _e( 'Get Your Demo!', 'LION' ); ?>">
 					</form>
 				</div>
 			</div>
@@ -440,9 +440,8 @@ function rc_welcome_page_redesign() {
 				<div class="restrict-content-welcome-body-container">
 					<div class="restrict-content-how-to-body restrict-content-container-section">
 						<h2><?php _e( 'Collect Payments with Stripe', 'LION' ); ?></h2>
-						<p class="restrict-content-how-to-message"><?php _e( "Install the free Restrict Content Stripe add-on to start accepting credit and debit card payments.", 'LION' ); ?></p>
 						<p class="restrict-content-how-to-message"><?php _e( 'Stripe is an excellent payment gateway with a simple setup process and exceptional reliability.', 'LION' ); ?></p>
-						<p class="restrict-content-how-to-message"><?php _e( "Placeholder text for Stripe add-on sign-up link.", 'LION' ); ?></p>
+						<p class="restrict-content-how-to-message"><?php printf(__( '<a href="%s">Get Started</a>', 'LION' ), '/wp-admin/admin.php?page=rcp-settings#payments'); ?></p>
 
 					</div>
 				</div>
@@ -492,7 +491,7 @@ function rc_welcome_page_redesign() {
 					<img class="restrict-content-welcome-advertisement-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/restrict-content-pro-logo-vertical-blue-black.svg' ); ?>" >
 				</div>
 				<div class="restrict-content-welcome-try-for-free">
-					<p><?php _e( 'Try For Free!', 'LION' ); ?></p>
+					<p><?php _e( 'Try a Demo!', 'LION' ); ?></p>
 				</div>
 				<div class="restrict-content-welcome-advertisement-content">
 					<p><?php _e( 'Lock away your exclusive content. Give access to valued members.', 'LION' ); ?></p>
@@ -505,7 +504,7 @@ function rc_welcome_page_redesign() {
 						<input type="hidden" name="rc_welcome_try_free_meta_nonce" value="<?php echo $rc_welcome_try_free_meta_nonce; ?>" >
 						<input type="hidden" name="source_page" value="welcome_page">
 						<input type="email" name="try_email_address" id="try_email_address" placeholder="Email Address">
-						<input type="submit" class="restrict-content-welcome-button" value="<?php _e( 'Try Now, Free!', 'LION' ); ?>">
+						<input type="submit" class="restrict-content-welcome-button" value="<?php _e( 'Get Your Demo!', 'LION' ); ?>">
 					</form>
 				</div>
 			</div>
