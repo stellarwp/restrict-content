@@ -77,7 +77,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 		/**
 		 * @var RCP_Payments $rcp_payments_db
 		 */
-		global $rcp_payments_db;
+		global $rcp_payments_db, $rcp_options;
 
 		$intent          = null;
 		$stripe_customer = $this->get_or_create_customer( $this->membership->get_customer_id(), $this->membership->get_user_id() );
@@ -154,6 +154,14 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 				$compatible_keys = array( 'amount', 'currency', 'customer', 'description', 'metadata' );
 				foreach ( $compatible_keys as $compatible_key ) {
 					$intent_args[ $compatible_key ] = ! empty( $old_charge_args[ $compatible_key ] ) ? $old_charge_args[ $compatible_key ] : $intent_args[ $compatible_key ];
+				}
+
+				if ( ! empty( $rcp_options['statement_descriptor'] ) ) {
+					$intent_args['statement_descriptor'] = $rcp_options['statement_descriptor'];
+				}
+
+				if ( ! empty( $rcp_options['statement_descriptor_suffix'] ) ) {
+					$intent_args['statement_descriptor_suffix'] = $rcp_options['statement_descriptor_suffix'];
 				}
 
 				/**

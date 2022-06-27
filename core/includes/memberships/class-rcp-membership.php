@@ -1054,11 +1054,19 @@ class RCP_Membership {
 	 * @return bool
 	 */
 	public function is_trialing() {
+		global $rcp_options;
+		$membership_level_id = $this->get_object_id();
+		$membership_level    = rcp_get_membership_level( $membership_level_id );
+		$trial_duration = $membership_level->get_trial_duration();
+		$free_subs_swap = isset($rcp_options['disable_trial_free_subs']) && (bool)$rcp_options['disable_trial_free_subs'];
 
-		// There never was a free trial.
-		if ( empty( $this->trial_end_date ) ) {
+		// Using the $free_subs_swap option will prevent a trailed user to show/hide membership.
+		if( $free_subs_swap ) {
 			$is_trialing = false;
-		} elseif ( strtotime( $this->trial_end_date, current_time( 'timestamp' ) ) > current_time( 'timestamp' ) ) {
+		// There never was a free trial.
+		} elseif ( empty( $this->trial_end_date ) ) {
+			$is_trialing = false;
+		} elseif ( strtotime( $this->trial_end_date, current_time( 'timestamp' ) ) > current_time( 'timestamp' ) && $trial_duration > 0 ) {
 			// There was a free trial, and it is still ongoing.
 			$is_trialing = true;
 		} else {

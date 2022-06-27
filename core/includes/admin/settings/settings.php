@@ -34,6 +34,7 @@ function rcp_settings_page() {
 		'redirect'              => 0,
 		'redirect_from_premium' => 0,
 		'login_redirect'        => 0,
+		'disable_trial_free_subs' => 0,
 		'email_header_img'      => '',
 		'email_header_text'     => __( 'Hello', 'rcp' )
 	);
@@ -384,6 +385,25 @@ function rcp_settings_page() {
 												<?php printf( __( '<a href="%s">Click here</a> to reconnect Stripe in %s mode.', 'rcp' ), esc_url_raw( $stripe_connect_url ), $current_mode ); ?>
 											</p>
 										<?php endif; ?>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										<label for="rcp_settings[statement_descriptor]"><?php _e( 'Statement Descriptor', 'rcp' ); ?></label>
+									</th>
+									<td>
+										<input class="stripe_settings__descriptor--suffix" type="text" id="rcp_settings[statement_descriptor]" name="rcp_settings[statement_descriptor]" value="<?php if( isset( $rcp_options['statement_descriptor'] ) ) echo $rcp_options['statement_descriptor']; ?>" />
+										<p class="description"><?php _e( 'This allows you to add a statement descriptor', 'rcp' ); ?></p>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										<label for="rcp_settings[statement_descriptor_suffix]"><?php _e( 'Statement Descriptor Suffix', 'rcp' ); ?></label>
+									</th>
+									<td>
+										<input class="stripe_settings__descriptor" type="text" id="rcp_settings[statement_descriptor_suffix]" name="rcp_settings[statement_descriptor_suffix]" value="<?php if( isset( $rcp_options['statement_descriptor_suffix'] ) ) echo $rcp_options['statement_descriptor_suffix']; ?>" />
+										<p class="description"><?php _e( 'This allows you to add a suffix to your statement descriptor. <strong>Note:</strong> The suffix will override the Statement descriptor.', 'rcp' ); ?></p>
+										<div class="rcp__notification--inline"><?php _e( '<strong>Note:</strong> The suffix will override the Statement descriptor.', 'rcp' ); ?></div>
 									</td>
 								</tr>
 								<tr class="rcp-settings-gateway-stripe-key-row">
@@ -1133,6 +1153,15 @@ function rcp_settings_page() {
 							<td>
 								<input type="checkbox" value="1" name="rcp_settings[remove_data_on_uninstall]" id="rcp_settings[remove_data_on_uninstall]" <?php checked( true, ! empty( $rcp_options['remove_data_on_uninstall'] ) ); ?>/>
 								<span class="description"><?php _e( 'Remove all saved data for Restrict Content Pro when the plugin is uninstalled.', 'rcp' ); ?></span>
+							</td>
+						</tr>
+						<tr valign="top">
+							<th>
+								<label for="rcp_settings[disable_trial_free_subs]"><?php _e( 'Multiple Free Subscriptions', 'rcp' ); ?></label>
+							</th>
+							<td>
+								<input type="checkbox" value="1" name="rcp_settings[disable_trial_free_subs]" id="rcp_settings[disable_trial_free_subs]" <?php checked( true, ! empty( $rcp_options['disable_trial_free_subs'] ) ); ?>/>
+								<span class="description"><?php _e( 'Check this box if you would like to enable Free subscriptions switching.', 'rcp' ); ?></span>
 							</td>
 						</tr>
 					</table>

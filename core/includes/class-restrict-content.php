@@ -186,7 +186,7 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 		private function setup_constants() {
 
 			if ( ! defined( 'RCP_PLUGIN_VERSION' ) ) {
-				define( 'RCP_PLUGIN_VERSION', '3.5.12' );
+				define( 'RCP_PLUGIN_VERSION', '3.5.17' );
 			}
 
 			if ( ! defined( 'RCP_PLUGIN_FILE' ) ) {

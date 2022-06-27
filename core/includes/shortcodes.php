@@ -75,15 +75,46 @@ function rcp_restrict_shortcode( $atts, $content = null ) {
 		$has_access = false;
 	}
 	if( 'none' != $atts['userlevel'] ) {
-		$roles = array_map( 'trim', explode( ',', $atts['userlevel'] ) );
+		$levels = array_map( 'trim', explode( ',', $atts['userlevel'] ) );
+		$is_level_number = check_array_only_numbers( $levels );
+		$level_exists = false;
+		$user_memberships_levels = array();
 
-		foreach ( $roles as $role ) {
-			if ( current_user_can( strtolower( $role ) ) ) {
-				$has_access = true;
-				break;
-			} else {
-				$has_access = false;
+		// Check for logged-in users.
+		if( is_object( $customer ) ) {
+			if( $is_level_number ) {
+				// Get the customer levels.
+				$user_memberships_levels = rcp_get_member_levels( $customer );
+				// Check for values in $user_memberships_levels.
+				if(  ! empty( $user_memberships_levels )  ) {
+					$level_exists = true;
+				}
+
+				if( $level_exists ) {
+					foreach ( $levels as $level ) {
+						// Check all the users levels against the current level defined in the shortcode attributes.
+						if( in_array( absint( $level ), $user_memberships_levels ) ) {
+							$has_access = true;
+							break;
+						}
+						else {
+							$has_access = false;
+						}
+					}
+				}
 			}
+			else {
+				foreach ( $levels as $level ) {
+					if ( current_user_can(strtolower( $level ) ) ) {
+						$has_access = true;
+						break;
+					}
+					else {
+						$has_access = false;
+					}
+				}
+			}
+
 		}
 	}
 
@@ -106,6 +137,54 @@ function rcp_restrict_shortcode( $atts, $content = null ) {
 }
 add_shortcode( 'restrict', 'rcp_restrict_shortcode' );
 
+/**
+ * Check if all the elements in the array are numbers.
+ *
+ * @since 3.5.16
+ * @param array $_array The array with user levels.
+ * @return bool
+ */
+function check_array_only_numbers( $_array ) : bool {
+	foreach ( $_array as $level ) {
+		if( ! is_numeric( $level ) ){
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/**
+ * Get all the users levels for a customer. Only Memberships with "Active" memberships.
+ *
+ * @since 3.5.16
+ *
+ * @param object $_customer The Customer Object.
+ *
+ * @return array The customer memberships levels, empty otherwise.
+ */
+function rcp_get_member_levels( $_customer ) : array {
+	$user_memberships_levels = array();
+	$args = array(
+			'status' => 'active',
+	);
+
+	$user_memberships = rcp_get_customer_memberships($_customer->get_id(), $args );
+
+	if( ! empty( $user_memberships ) && is_array( $user_memberships ) ) {
+		foreach( $user_memberships as $user_membership ) {
+			// Get the current user subscription.
+			$membership_id = $user_membership->get_object_id();
+			// Get the current subscription level.
+			$membership_level = rcp_get_membership_level( $membership_id );
+			// Get the current user membership level.
+			$user_level = $membership_level->get_access_level();
+			$user_memberships_levels[] = $user_level;
+		}
+	}
+
+	return $user_memberships_levels;
+}
 
 /**
  * Shows content only to active, paid users

@@ -78,7 +78,7 @@ jQuery(document).ready(function($) {
 	var restriction_type = restriction_control.val();
 	Settings_Controls.prepare_type(restriction_type);
 
-	// restrict content metabox
+	// restrict content metabox.
 	restriction_control.on('change', function() {
 		var type = $(this).val();
 		Settings_Controls.prepare_type(type);
@@ -755,6 +755,43 @@ jQuery(document).ready(function($) {
 
 	};
 	RCP_Membership.init();
+	let RCP_Settings = {
+
+		init: function() {
+			this.listeners();
+		},
+
+		listeners: function() {
+			let sandboxCheckbox = document.getElementById( 'rcp_settings[sandbox]' );
+
+			if( ! sandboxCheckbox ) {
+				return;
+			}
+
+			sandboxCheckbox.addEventListener( 'change', function() {
+				let testpub = document.getElementById( 'rcp_settings[stripe_test_publishable]' );
+				let livepub = document.getElementById( 'rcp_settings[stripe_live_publishable]' );
+				let notice = document.getElementById( 'rcp-sandbox-toggle-notice' );
+
+				if( this.checked && testpub.value === '' ) {
+					RCP_Settings.showErrorNotice( notice );
+				}
+
+				if( ! this.checked && livepub.value === '' ) {
+					RCP_Settings.showErrorNotice( notice );
+				}
+			} );
+		},
+
+		showErrorNotice: function( element = false ) {
+			if( ! element ) {
+				return;
+			}
+
+			element.className = 'notice error';
+			element.style.visibility = 'visible';
+		}
+	};
 
 	if( window.adminpage === 'restrict_page_rcp-settings' ) {
 		RCP_Settings.init();
@@ -827,6 +864,36 @@ jQuery(document).ready(function($) {
 		$(this).val($(this).val().replace(/[^a-z0-9]/gi, ''));
 	});
 
+	/*
+	 * Validate the Stripe Statement Descriptor
+	 *
+	 * https://stripe.com/docs/statement-descriptors
+	 *
+	 * @since 3.15.14
+	 */
+	$( "#rcp_settings\\[statement_descriptor\\]" ).on( 'keypress', function(event) {
+		let st_descriptor_value = $(this).val();
+		let keyCode = (event.keyCode ? event.keyCode : event.which); // Normalize the key code.
+
+		if( (keyCode >= 65 && keyCode <= 90) // A-Z
+			||
+			(keyCode >= 97  && keyCode <= 122) // a-z
+			||
+			(keyCode >= 48  && keyCode <= 57) // 0-9
+		)
+		{
+			if ( st_descriptor_value.length > 22) {
+				st_descriptor_value = st_descriptor_value.substring(0, 22);
+			}
+			$(this).val(st_descriptor_value);
+			return true;
+		}
+		else {
+			return false;
+		}
+
+	});
+
 	$( '#restrict_content_legacy_switch' ).on( 'click', function() {
 		$.ajax({
 			data: {
@@ -845,42 +912,55 @@ jQuery(document).ready(function($) {
 			}
 		});
 	});
+
+	$(".toggle-credentials").on('click', function() {
+		let inputName = $( this ).attr( 'toggle' ).toString();
+		let inputObject = $( document.getElementById( inputName ) );
+
+		if ( $( inputObject ).attr( "type" ) === "password" ) {
+			$( inputObject ).attr( "type", "text" );
+			$( this ).removeClass( "dashicons dashicons-visibility" );
+			$( this ).addClass( "dashicons dashicons-hidden" );
+		} else {
+			$( inputObject ).attr( "type", "password" );
+			$( this ).removeClass( "dashicons dashicons-hidden" );
+			$( this ).addClass( "dashicons dashicons-visibility" );
+		}
+	});
+	$("#rcp_setting_braintree_toggle_live").on('click', function() {
+		var toggle = document.getElementById('rcp_setting_braintree_toggle_live');
+		var textArea = document.getElementById('rcp_settings[braintree_live_encryptionKey]');
+		var input = document.getElementById('rcp_settings[braintree_live_encryptionKey_input]');
+
+		if ( textArea.style.display === "none" ) {
+			input.style.display = 'none';
+			textArea.style.display = 'inline-block';
+			toggle.className =  "";
+			toggle.className = "dashicons dashicons-hidden";
+		} else {
+			input.style.display = 'inline-block';
+			textArea.style.display = 'none';
+			toggle.className =  "";
+			toggle.className = "dashicons dashicons-visibility";
+		}
+	});
+	$("#rcp_setting_braintree_toggle_sandbox").on('click', function() {
+		var toggle = document.getElementById('rcp_setting_braintree_toggle');
+		var textArea = document.getElementById('rcp_settings[braintree_sandbox_encryptionKey]');
+		var input = document.getElementById('rcp_settings[braintree_sandbox_encryptionKey_input]');
+
+		if ( textArea.style.display === "none" ) {
+			input.style.display = 'none';
+			textArea.style.display = 'inline-block';
+			toggle.className =  "";
+			toggle.className = "dashicons dashicons-hidden";
+		} else {
+			input.style.display = 'inline-block';
+			textArea.style.display = 'none';
+			toggle.className =  "";
+			toggle.className = "dashicons dashicons-visibility";
+		}
+	});
+
+
 });
-
-let RCP_Settings = {
-
-	init: function() {
-		this.listeners();
-	},
-
-	listeners: function() {
-		let sandboxCheckbox = document.getElementById( 'rcp_settings[sandbox]' );
-
-		if( ! sandboxCheckbox ) {
-			return;
-		}
-
-		sandboxCheckbox.addEventListener( 'change', function() {
-			let testpub = document.getElementById( 'rcp_settings[stripe_test_publishable]' );
-			let livepub = document.getElementById( 'rcp_settings[stripe_live_publishable]' );
-			let notice = document.getElementById( 'rcp-sandbox-toggle-notice' );
-
-			if( this.checked && testpub.value === '' ) {
-				RCP_Settings.showErrorNotice( notice );
-			}
-
-			if( ! this.checked && livepub.value === '' ) {
-				RCP_Settings.showErrorNotice( notice );
-			}
-		} );
-	},
-
-	showErrorNotice: function( element = false ) {
-		if( ! element ) {
-			return;
-		}
-
-		element.className = 'notice error';
-		element.style.visibility = 'visible';
-	}
-};

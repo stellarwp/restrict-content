@@ -848,7 +848,7 @@ function rcp_generate_subscription_key() {
  */
 function rcp_show_subscription_level( $level_id = 0, $user_id = 0 ) {
 
-	global $rcp_register_form_atts;
+	global $rcp_register_form_atts, $rcp_options;
 
 	if ( empty( $user_id ) ) {
 		$user_id = get_current_user_id();
@@ -862,11 +862,15 @@ function rcp_show_subscription_level( $level_id = 0, $user_id = 0 ) {
 		return false;
 	}
 
-	$customer           = rcp_get_customer_by_user_id( $user_id );
-	$membership         = is_object( $customer ) ? rcp_get_customer_single_membership( $customer->get_id() ) : false;
-	$customers_level_id = ! empty( $membership ) ? $membership->get_object_id() : false;
-	$used_trial         = is_object( $customer ) ? $customer->has_trialed() : false;
-
+	$customer                  = rcp_get_customer_by_user_id( $user_id );
+	$membership                = is_object( $customer ) ? rcp_get_customer_single_membership( $customer->get_id() ) : false;
+	$customers_level_id        = ! empty( $membership ) ? $membership->get_object_id() : false;
+	$used_trial                = is_object( $customer ) ? $customer->has_trialed() : false;
+	$free_subs_swaps 	       = isset($rcp_options['disable_trial_free_subs']) && (bool)$rcp_options['disable_trial_free_subs'];
+	$used_trial 		       = ! $free_subs_swaps && $used_trial;
+	$can_renew 				   = false === $membership ? false : $membership->can_renew();
+	$membership_level_price    =  $membership_level->get_price();
+	$membership_level_duration = $membership_level->get_duration();
 
 	if ( ! rcp_multiple_memberships_enabled() ) {
 		/*
@@ -881,15 +885,19 @@ function rcp_show_subscription_level( $level_id = 0, $user_id = 0 ) {
 		if (
 			is_user_logged_in()
 			&&
-			( 0 == $membership_level->get_price() && $membership_level->get_duration() > 0 && $used_trial )
+			// The Membership has a free trial and the user already have it. Having a price means that it has a trial
+			// time. The setting does not allow to have a trial time without a price greater than 0.
+			( $membership_level_price > 0 && $level_id == $customers_level_id && ! $can_renew )
 			||
-			( 0 == $membership_level->get_price() && $customers_level_id == $level_id )
+			( 0 == $membership_level_price && $membership_level_duration > 0 && $used_trial )
 			||
-			( 0 == $membership_level->get_duration() && $customers_level_id == $level_id && ! empty( $membership ) && $membership->is_active() )
+			( 0 == $membership_level_price && $customers_level_id == $level_id )
+			||
+			( 0 == $membership_level_duration && $customers_level_id == $level_id && ! empty( $membership ) && $membership->is_active() )
 			||
 			( ! empty( $membership ) && $membership->is_active() && ! $membership->upgrade_possible() && $customers_level_id != $level_id )
 			||
-			( $customers_level_id == $level_id && ! $membership->can_renew() )
+			( $customers_level_id == $level_id && ! $can_renew )
 		) {
 			$ret = false;
 		}
@@ -897,7 +905,7 @@ function rcp_show_subscription_level( $level_id = 0, $user_id = 0 ) {
 		/*
 		 * Don't show free trial if user has already used it.
 		 */
-		if ( 0 == $membership_level->get_price() && $membership_level->get_duration() > 0 && $used_trial ) {
+		if ( 0 == $membership_level_price && $membership_level_duration > 0 && $used_trial ) {
 			$ret = false;
 		}
 	}
