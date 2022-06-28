@@ -1929,14 +1929,6 @@ img.restrict-content-logo {
 	padding: 30px;
 }
 
-.restrict-content-welcome-standing-rex {
-	max-width: 93px;
-}
-
-.restrict-content-welcome-standing-rex img {
-	width: 100%;
-	height: auto;
-}
 
 .restrict-content-container-section .restrict-content-resource-container {
 	margin-bottom: 30px;
@@ -2351,9 +2343,5 @@ img.restrict-content-logo {
 		letter-spacing: 0px;
 		color: #FFFFFF;
 		padding: 10px 0px;
-	}
-
-	.restrict-content-welcome-standing-rex {
-		display: none;
 	}
 }

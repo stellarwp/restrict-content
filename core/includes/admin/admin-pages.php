@@ -161,7 +161,7 @@ function rc_why_go_pro_page_redesign() {
 	?>
 	<div class="wrap">
 		<div class="rcp-why-go-pro-wrap">
-			<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/restrict_content_logo.svg' ); ?>" >
+			<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/Full-Logo-1.svg' ); ?>" >
 			<div class="rcp-go-pro-color-container">
 				<div class="rcp-why-go-pro-inner-wrapper">
 					<div class="rcp-top-header">
@@ -278,7 +278,7 @@ function rc_why_go_pro_page_redesign() {
 function rc_need_help_page_redesign() {
 	?>
 	<div class="restrict-content-welcome-header">
-		<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/restrict_content_logo.svg' ); ?>" >
+		<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/Full-Logo-1.svg' ); ?>" >
 	</div>
 	<div class="restrict-content-welcome-top-container">
 		<div class="restrict-content-welcome-left-container">
@@ -347,10 +347,10 @@ function rc_need_help_page_redesign() {
 		<div class="restrict-content-welcome-right-container">
 			<div class="restrict-content-welcome-advertisement">
 				<div class="logo">
-					<img class="restrict-content-welcome-advertisement-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/restrict-content-pro-logo-vertical-blue-black.svg' ); ?>" >
+					<img class="restrict-content-welcome-advertisement-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/Stacked_Logo_V2.svg' ); ?>" >
 				</div>
 				<div class="restrict-content-welcome-try-for-free">
-					<p><?php _e( 'Try a Demo!', 'LION' ); ?></p>
+					<p><?php _e( 'Try For Free!', 'LION' ); ?></p>
 				</div>
 				<div class="restrict-content-welcome-advertisement-content">
 					<p><?php _e( 'Lock away your exclusive content. Give access to valued members.', 'LION' ); ?></p>
@@ -363,7 +363,7 @@ function rc_need_help_page_redesign() {
 						<input type="hidden" name="rc_welcome_try_free_meta_nonce" value="<?php echo wp_create_nonce( 'rc_welcome_try_free_meta_nonce' ); ?>" >
 						<input type="hidden" name="source_page" value="help_page">
 						<input type="email" name="try_email_address" id="try_email_address" placeholder="Email Address">
-						<input type="submit" class="restrict-content-welcome-button" value="<?php _e( 'Get Your Demo!', 'LION' ); ?>">
+						<input type="submit" class="restrict-content-welcome-button" value="<?php _e( 'Try Now, Free!', 'LION' ); ?>">
 					</form>
 				</div>
 			</div>
@@ -415,7 +415,7 @@ function rc_welcome_page_redesign() {
 	$rc_welcome_try_free_meta_nonce = wp_create_nonce( 'rc_welcome_try_free_meta_nonce' );
 	?>
 	<div class="restrict-content-welcome-header">
-		<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/restrict_content_logo.svg' ); ?>" >
+		<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/Full-Logo-1.svg' ); ?>" >
 	</div>
 	<div class="restrict-content-welcome-top-container">
 		<div class="restrict-content-welcome-left-container">
@@ -433,15 +433,14 @@ function rc_welcome_page_redesign() {
 						<p class="restrict-content-thanks-message"><?php _e( 'Restrict Content is a simple WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.', 'LION' ); ?></p>
 						<p class="restrict-content-thanks-message"><?php _e( 'Start your membership site and create multiple Membership Levels and collect payments with Stripe.', 'LION' ); ?></p>
 					</div>
-					<div class="restrict-content-welcome-standing-rex">
-						<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/restrict-content-pro-rex-standing.png' ); ?>" >
-					</div>
+					
 				</div>
 				<div class="restrict-content-welcome-body-container">
 					<div class="restrict-content-how-to-body restrict-content-container-section">
 						<h2><?php _e( 'Collect Payments with Stripe', 'LION' ); ?></h2>
+						<p class="restrict-content-how-to-message"><?php _e( "Install the free Restrict Content Stripe add-on to start accepting credit and debit card payments.", 'LION' ); ?></p>
 						<p class="restrict-content-how-to-message"><?php _e( 'Stripe is an excellent payment gateway with a simple setup process and exceptional reliability.', 'LION' ); ?></p>
-						<p class="restrict-content-how-to-message"><?php printf(__( '<a href="%s">Get Started</a>', 'LION' ), '/wp-admin/admin.php?page=rcp-settings#payments'); ?></p>
+						<p class="restrict-content-how-to-message"><?php _e( "Placeholder text for Stripe add-on sign-up link.", 'LION' ); ?></p>
 
 					</div>
 				</div>
@@ -488,10 +487,10 @@ function rc_welcome_page_redesign() {
 		<div class="restrict-content-welcome-right-container">
 			<div class="restrict-content-welcome-advertisement">
 				<div class="logo">
-					<img class="restrict-content-welcome-advertisement-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/restrict-content-pro-logo-vertical-blue-black.svg' ); ?>" >
+					<img class="restrict-content-welcome-advertisement-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/Stacked_Logo_V2.svg' ); ?>" >
 				</div>
 				<div class="restrict-content-welcome-try-for-free">
-					<p><?php _e( 'Try a Demo!', 'LION' ); ?></p>
+					<p><?php _e( 'Try For Free!', 'LION' ); ?></p>
 				</div>
 				<div class="restrict-content-welcome-advertisement-content">
 					<p><?php _e( 'Lock away your exclusive content. Give access to valued members.', 'LION' ); ?></p>
@@ -504,7 +503,7 @@ function rc_welcome_page_redesign() {
 						<input type="hidden" name="rc_welcome_try_free_meta_nonce" value="<?php echo $rc_welcome_try_free_meta_nonce; ?>" >
 						<input type="hidden" name="source_page" value="welcome_page">
 						<input type="email" name="try_email_address" id="try_email_address" placeholder="Email Address">
-						<input type="submit" class="restrict-content-welcome-button" value="<?php _e( 'Get Your Demo!', 'LION' ); ?>">
+						<input type="submit" class="restrict-content-welcome-button" value="<?php _e( 'Try Now, Free!', 'LION' ); ?>">
 					</form>
 				</div>
 			</div>
