@@ -102,6 +102,7 @@ function rcp_tools_system_info_report() {
 
 			$test_api = 'Not Set';
 			$live_api = 'Not Set';
+			$additional_gateway_info = '';
 
 			switch ( $key ) {
 
@@ -128,7 +129,9 @@ function rcp_tools_system_info_report() {
 					if ( ! empty( $rcp_options['stripe_live_secret'] ) && ! empty( $rcp_options['stripe_live_publishable'] ) ) {
 						$live_api = 'Set';
 					}
-					break;
+					$additional_gateway_info .= '   Statement Descriptor:           ' . ( ! empty( $rcp_options['statement_descriptor'] ) ? $rcp_options['statement_descriptor'] . "\n" : "\n" );
+					$additional_gateway_info .= '   Statement Suffix:               ' . ( ! empty( $rcp_options['statement_descriptor_suffix'] ) ? $rcp_options['statement_descriptor_suffix'] . "\n" : "\n" );
+				break;
 
 				case 'twocheckout' :
 					if ( ! empty( $rcp_options['twocheckout_test_private'] ) && ! empty( $rcp_options['twocheckout_test_publishable'] ) && ! empty( $rcp_options['twocheckout_test_seller_id'] ) ) {
@@ -160,6 +163,7 @@ function rcp_tools_system_info_report() {
 			}
 
 			$return .= str_pad( $gateway['admin_label'] . ' (' . $key . '): ', 35 ) . sprintf( 'Test API Keys: %s; Live API Keys: %s', $test_api, $live_api ) . "\n";
+			$return .= $additional_gateway_info;
 		}
 	} else {
 		$return .= 'None' . "\n";
@@ -209,6 +213,8 @@ function rcp_tools_system_info_report() {
 	$return .= 'reCaptcha Site Key:               ' . ( ! empty( $rcp_options['recaptcha_public_key'] ) ? "Set\n" : "Unset\n" );
 	$return .= 'reCaptcha Secret Key:             ' . ( ! empty( $rcp_options['recaptcha_private_key'] ) ? "Set\n" : "Unset\n" );
 	$return .= 'Enable Debug Mode:                ' . ( ! empty( $rcp_options['debug_mode'] ) ? "True\n" : "False\n" );
+	$return .= 'Remove Data on Uninstall:         ' . ( ! empty( $rcp_options['remove_data_on_uninstall'] ) ? "True\n" : "False\n" );
+	$return .= 'Switch Free Subscriptions:        ' . ( ! empty( $rcp_options['disable_trial_free_subs'] ) ? "True\n" : "False\n" );
 	$return .= 'Opt Into Beta:                    ' . ( ! empty( $rcp_options['show_beta_updates'] ) ? "True\n" : "False\n" );
 	$return .= 'Proration:                        ' . ( ! apply_filters( 'rcp_disable_prorate_credit', false, get_current_user_id() ) ? "Enabled\n" : "Disabled\n" );
 

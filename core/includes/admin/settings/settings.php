@@ -1157,7 +1157,7 @@ function rcp_settings_page() {
 						</tr>
 						<tr valign="top">
 							<th>
-								<label for="rcp_settings[disable_trial_free_subs]"><?php _e( 'Multiple Free Subscriptions', 'rcp' ); ?></label>
+								<label for="rcp_settings[disable_trial_free_subs]"><?php _e( 'Switch Free Subscriptions', 'rcp' ); ?></label>
 							</th>
 							<td>
 								<input type="checkbox" value="1" name="rcp_settings[disable_trial_free_subs]" id="rcp_settings[disable_trial_free_subs]" <?php checked( true, ! empty( $rcp_options['disable_trial_free_subs'] ) ); ?>/>

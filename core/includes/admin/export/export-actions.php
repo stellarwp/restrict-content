@@ -133,7 +133,7 @@ function memberships_settings( $exporter ) {
 		<?php if ( $levels ) : ?>
 			<tr>
 				<th>
-					<label for="rcp-membership-level"><?php _e( 'Membership Level', 'rcp' ); ?></label>
+					<label for="rcp-membership-level"><?php _e( 'Memberships', 'rcp' ); ?></label>
 				</th>
 				<td>
 					<select id="rcp-membership-level" name="export_settings[level_id]">

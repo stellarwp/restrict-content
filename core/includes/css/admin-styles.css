@@ -1539,13 +1539,13 @@ img.restrict-content-logo {
 }
 
 .rcp-why-go-pro-wrap .rcp-go-pro-color-container {
-	background: #2A76D2 0% 0% no-repeat padding-box;
+	background: #222222 0% 0% no-repeat padding-box;
 	border-radius: 34px;
 	padding: 1rem;
 }
 
 .rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper {
-	background: transparent radial-gradient(closest-side at 50% 50%, #6EA5E5 0%, #2A76D2 67%, #2A76D2 100%) 0% 0% no-repeat padding-box;
+	background: transparent radial-gradient(closest-side at 50% 50%, #6EA5E5 0%, #222222 67%, #222222 100%) 0% 0% no-repeat padding-box;
 	border-radius: 34px;
 }
 
@@ -1738,7 +1738,7 @@ img.restrict-content-logo {
 
 /* Upgrade Banner */
 .rcp-pro-banner {
-	background: #2A76D2;
+	background: #222222;
 	border-radius: 7px;
 	display: grid;
 	grid-template-rows: auto;
@@ -1814,7 +1814,7 @@ img.restrict-content-logo {
 	.rcp-pro-banner {
 		grid-template-columns: repeat( auto-fill, minmax(300px, 1fr) );
 		margin: 0px auto;
-		background: transparent linear-gradient(95deg, #2A76D2 0%, #CFE0F4 100%) 0% 0% no-repeat padding-box;
+		background: transparent linear-gradient(95deg, #222222 0%, #CFE0F4 100%) 0% 0% no-repeat padding-box;
 	}
 
 	.rcp-pro-banner .rcp-pro-logo {
@@ -1869,7 +1869,7 @@ img.restrict-content-logo {
 }
 
 .restrict-content-welcome-right-container .restrict-content-welcome-advertisement .restrict-content-welcome-try-for-free {
-	background: #2A76D2 0% 0% no-repeat padding-box;
+	background: #222222 0% 0% no-repeat padding-box;
 	text-transform: capitalize;
 	color: #FFFFFF;
 }
@@ -1904,7 +1904,7 @@ img.restrict-content-logo {
 }
 
 .restrict-content-welcome-right-container .restrict-content-welcome-advertisement .restrict-content-welcome-advertisement-content .rcp-highlight {
-	color: #2A76D2;
+	color: #222222;
 	text-transform: uppercase;
 	font-weight: 600;
 	margin: 10px 0px;
@@ -1976,7 +1976,7 @@ img.restrict-content-logo {
 	font-size: 1rem;
 	line-height: 19px;
 	letter-spacing: 0px;
-	color: #2A76D2;
+	color: #222222;
 }
 
 .restrict-content-container-section p {
@@ -2152,7 +2152,7 @@ img.restrict-content-logo {
 }
 
 .restrict-content-unlock-premium-features {
-	background: #2A76D2 0% 0% no-repeat padding-box;
+	background: #222222 0% 0% no-repeat padding-box;
 	border-radius: 4px;
 	padding: 10px 10px;
 	margin-top: 20px;
