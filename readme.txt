@@ -1,11 +1,11 @@
 === WordPress Membership Plugin - Restrict Content ===
-Author URI: https://ithemes.com
-Author: iThemes
+Author URI: https://restrictcontentpro.com
+Author: StellarWP
 Contributors: ithemes, reedyseth, highprrrr, neillmcshea, layotte, jthillithemes
 Tags: restrict pages, restrict posts, restrict access, membership, registration form, access control
 Requires at least: 5.6
-Tested up to: 5.9.4
-Stable tag: 3.0.5
+Tested up to: 6.0
+Stable tag: 3.1.0
 
 Restrict Content is a powerful WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.
 
@@ -255,6 +255,15 @@ Go to the demo page to see examples:
 https://restrictcontentpro.com/tour/screenshots/
 
 == Changelog ==
+
+= 3.1.0 =
+* Fix: Correct trail validation. Trail is valid if the number of days is greater than zero in the Membership configuration.
+* Enhancement: Stripe statement descriptor and Statement descriptor Suffix.
+* Enhancement: Change the label "Membership Level" -> "Membership" in the exporting tools.
+* Enhancement: Add new options in the System Info report.
+* Feature: Add an Option to allow the user to switch between free subs.
+* Feature: Use user levels or roles in the [restrict] shortcode. Parameter user "level".
+* Update: Restrict Content Branding.
 
 = 3.0.5 =
 * Fix: Error using `[restrict]` shortcode in legacy version. props @fdanell
