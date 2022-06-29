@@ -214,7 +214,7 @@ function rc_why_go_pro_page() {
                     <div class="rcp-top-header">
                         <h1>
                             <?php _e( 'Why Go Pro?', 'LION' ); ?></h1>
-                        <img src="<?php echo esc_url( RC_PLUGIN_URL . 'includes/assets/images/flying_rex.png' ); ?>" >
+                        
                     </div>
                     <h2><?php _e( 'Grow Your Sales with Premium Features and Add-ons in Restrict Content PRO', 'LION' ); ?></h2>
                     <div class="rcp-pro-features-container">
@@ -507,7 +507,6 @@ function rc_need_help_page() {
                             ?>
                         </p>
                     </div>
-                    <img class="restrict-content-premium-support-logo" src="<?php echo esc_url( RC_PLUGIN_URL . 'includes/assets/images/flying_rex.png' ); ?>" >
                 </div>
             </div>
         </div>
