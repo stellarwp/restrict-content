@@ -197,7 +197,14 @@ img.restrict-content-logo {
 	line-height: 63px;
 	color: #fff;
 }
-
+.rcp-top-header h1, .rcp-top-header .notice {
+    margin: 0;
+    margin-left: 20px;
+    padding: 10px;
+}
+.rcp-top-header .notice-info {
+    border-left-color: #640af8;
+}
 .rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper a {
 	text-decoration: none;
 }
@@ -226,8 +233,8 @@ img.restrict-content-logo {
 }
 
 .rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-pro-features-container .feature img {
-	background: #CFE0F4 0% 0% no-repeat padding-box;
-	border: 1px solid #CFE0F4;
+	background: #ffffff 0% 0% no-repeat padding-box;
+	border: 1px solid #ffffff;
 	border-radius: 7px;
 	width: 42px;
 	height: 42px;
@@ -278,8 +285,8 @@ img.restrict-content-logo {
 	cursor: pointer;
 	text-decoration: none;
 	color: #fff;
-	background: #a569bc;
-	border: 4px solid #a569bc;
+	background: #4204a7;
+	border: 4px solid #4204a7;
 }
 
 .rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-why-go-pro-buttons-container .rcp-unlock-pro-features-add-ons {
@@ -301,7 +308,7 @@ img.restrict-content-logo {
 	cursor: pointer;
 	text-decoration: none;
 	color: #fff;
-	background: #a569bc;
+	background: #4204a7;
 }
 
 @media all and ( max-width: 782px ) {
@@ -435,15 +442,15 @@ img.restrict-content-logo {
 	cursor: pointer;
 	text-decoration: none;
 	color: #fff;
-	background: #a569bc;
-	border: 1px solid #a569bc;
+	background: #4204a7;
+	border: 1px solid #4204a7;
 }
 
 @media all and ( min-width: 1200px ) {
 	.rcp-pro-banner {
 		grid-template-columns: repeat( auto-fill, minmax(300px, 1fr) );
 		margin: 0px auto;
-		background: transparent linear-gradient(95deg, #222222 0%, #CFE0F4 100%) 0% 0% no-repeat padding-box;
+		background: transparent linear-gradient(95deg, #222222 0%, #ffffff 100%) 0% 0% no-repeat padding-box;
 	}
 
 	.rcp-pro-banner .rcp-pro-logo {
@@ -465,7 +472,7 @@ img.restrict-content-logo {
 }
 
 .restrict-content-welcome-header {
-	background: #CFE0F4 0% 0% no-repeat padding-box;
+	background: #ffffff 0% 0% no-repeat padding-box;
 	border: 1px solid #D4D5D8;
 }
 
@@ -818,7 +825,7 @@ img.restrict-content-logo {
 	font-size: 1.7rem;
 	line-height: 33px;
 	letter-spacing: 0px;
-	color: #CFE0F4;
+	color: #ffffff;
 }
 
 .restrict-content-unlock-premium-features .go-pro-now {
