@@ -61,38 +61,38 @@ if ( ! empty( $memberships ) ) {
 	}
 }
 ?>
-	<table class="rcp-table" id="rcp-account-overview">
-		<thead>
-		<tr>
-			<th><?php _e( 'Membership', 'rcp' ); ?></th>
-			<th><?php _e( 'Status', 'rcp' ); ?></th>
-			<th><?php _e( 'Expiration/Renewal Date', 'rcp' ); ?></th>
+	<div class="rcp-table" id="rcp-account-overview">
+		<header>
+		<div class="rcp-account-overview">
+			<span><?php _e( 'Membership', 'rcp' ); ?></span>
+			<span><?php _e( 'Status', 'rcp' ); ?></span>
+			<span><?php _e( 'Expiration / Renewal Date', 'rcp' ); ?></span>
 			<?php if ( $has_payment_plan ) : ?>
-				<th><?php _e( 'Times Billed', 'rcp' ); ?></th>
+				<span><?php _e( 'Times Billed', 'rcp' ); ?></span>
 			<?php endif; ?>
-			<th><?php _e( 'Actions', 'rcp' ); ?></th>
-		</tr>
-		</thead>
-		<tbody>
+			<span><?php _e( 'Actions', 'rcp' ); ?></span>
+		</div>
+		</header>
+		<main>
 		<?php if ( ! empty( $memberships ) ) : ?>
 			<?php foreach ( $memberships as $membership ) : ?>
-				<tr>
-					<td data-th="<?php esc_attr_e( 'Membership', 'rcp' ); ?>">
+				<div class="rcp-account-overview">
+					<span data-th="<?php esc_attr_e( 'Membership', 'rcp' ); ?>">
 						<?php echo esc_html( $membership->get_membership_level_name() ); ?>
-					</td>
-					<td data-th="<?php esc_attr_e( 'Status', 'rcp' ); ?>">
+					</span>
+					<span data-th="<?php esc_attr_e( 'Status', 'rcp' ); ?>">
 						<?php rcp_print_membership_status( $membership->get_id() ); ?>
-					</td>
-					<td data-th="<?php esc_attr_e( 'Expiration/Renewal Date', 'rcp' ); ?>">
+					</span>
+					<span data-th="<?php esc_attr_e( 'Expiration / Renewal Date', 'rcp' ); ?>">
 						<?php
 						echo $membership->get_expiration_date();
 
 						if ( $membership->is_recurring() && 'active' === $membership->get_status() ) {
-							echo '<div class="rcp-membership-auto-renew-notice">' . __( '(renews automatically)', 'rcp' ) . '</div>';
+							echo '<span class="rcp-membership-auto-renew-notice">' . __( '(renews automatically)', 'rcp' ) . '</span>';
 						}
 
 						if ( $membership->is_active() && $membership->can_toggle_auto_renew() ) {
-							echo '<div class="rcp-auto-renew-toggle">';
+							echo '<span class="rcp-auto-renew-toggle">';
 							if ( $membership->is_recurring() ) {
 								$toggle_off_url = wp_nonce_url( add_query_arg( array(
 										'rcp-action' => 'disable_auto_renew',
@@ -108,14 +108,14 @@ if ( ! empty( $memberships ) ) {
 
 								echo '<a href="' . esc_url( $toggle_on_url ) . '" class="rcp-enable-auto-renew" data-expiration="' . esc_attr( $membership->get_expiration_date( true ) ) . '">' . __( 'Enable auto renew', 'rcp' ) . '</a>';
 							}
-							echo '</div>';
+							echo '</span>';
 						}
 						?>
-					</td>
+					</span>
 					<?php
 					if ( $has_payment_plan ) {
 						?>
-						<td data-th="<?php esc_attr_e( 'Times Billed', 'rcp' ); ?>">
+						<span data-th="<?php esc_attr_e( 'Times Billed', 'rcp' ); ?>">
 							<?php
 							$membership_level = rcp_get_membership_level( $membership->get_object_id() );
 
@@ -129,11 +129,11 @@ if ( ! empty( $memberships ) ) {
 								}
 							}
 							?>
-						</td>
+						</span>
 						<?php
 					}
 					?>
-					<td data-th="<?php esc_attr_e( 'Actions', 'rcp' ); ?>">
+					<span data-th="<?php esc_attr_e( 'Actions', 'rcp' ); ?>">
 						<?php
 						$links = array();
 
@@ -197,53 +197,53 @@ if ( ! empty( $memberships ) ) {
 							<?php
 						}
 						?>
-					</td>
-				</tr>
+					</span>
+				</div>
 			<?php endforeach; ?>
 		<?php else : ?>
-			<tr>
-				<td data-th="<?php esc_attr_e( 'Membership', 'rcp' ); ?>" colspan="4"><?php _e( 'You do not have any memberships.', 'rcp' ); ?></td>
-			</tr>
+			<div>
+				<div data-th="<?php esc_attr_e( 'Membership', 'rcp' ); ?>" colspan="4"><?php _e( 'You do not have any memberships.', 'rcp' ); ?></div>
+			</div>
 		<?php endif; ?>
-		</tbody>
-	</table>
-	<table class="rcp-table" id="rcp-payment-history">
-		<thead>
-		<tr>
-			<th><?php _e( 'Invoice #', 'rcp' ); ?></th>
-			<th><?php _e( 'Membership', 'rcp' ); ?></th>
-			<th><?php _e( 'Amount', 'rcp' ); ?></th>
-			<th><?php _e( 'Payment Status', 'rcp' ); ?></th>
-			<th><?php _e( 'Date', 'rcp' ); ?></th>
-			<th><?php _e( 'Actions', 'rcp' ); ?></th>
-		</tr>
-		</thead>
-		<tbody>
+		</main>
+		</div>
+	<div class="rcp-table" id="rcp-payment-history">
+		<header>
+		<div class="rcp-payment-history">
+			<span><?php _e( 'Invoice #', 'rcp' ); ?></span>
+			<span><?php _e( 'Membership', 'rcp' ); ?></span>
+			<span><?php _e( 'Amount', 'rcp' ); ?></span>
+			<span><?php _e( 'Payment Status', 'rcp' ); ?></span>
+			<span><?php _e( 'Date', 'rcp' ); ?></span>
+			<span><?php _e( 'Actions', 'rcp' ); ?></span>
+		</div>
+		</header>
+		<main>
 		<?php
 		$payments = is_object( $customer ) ? $customer->get_payments() : false;
 		if ( $payments ) : ?>
 			<?php foreach ( $payments as $payment ) : ?>
-				<tr>
-					<td data-th="<?php esc_attr_e( 'Invoice #', 'rcp' ); ?>"><?php echo $payment->id; ?></td>
-					<td data-th="<?php esc_attr_e( 'Membership', 'rcp' ); ?>"><?php echo esc_html( $payment->subscription ); ?></td>
-					<td data-th="<?php esc_attr_e( 'Amount', 'rcp' ); ?>"><?php echo rcp_currency_filter( $payment->amount ); ?></td>
-					<td data-th="<?php esc_attr_e( 'Payment Status', 'rcp' ); ?>"><?php echo rcp_get_payment_status_label( $payment ); ?></td>
-					<td data-th="<?php esc_attr_e( 'Date', 'rcp' ); ?>"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $payment->date, current_time( 'timestamp' ) ) ); ?></td>
-					<td data-th="<?php esc_attr_e( 'Actions', 'rcp' ); ?>">
+				<div class="rcp-payment-history">
+					<span data-th="<?php esc_attr_e( 'Invoice #', 'rcp' ); ?>"><?php echo $payment->id; ?></span>
+					<span data-th="<?php esc_attr_e( 'Membership', 'rcp' ); ?>"><?php echo esc_html( $payment->subscription ); ?></span>
+					<span data-th="<?php esc_attr_e( 'Amount', 'rcp' ); ?>"><?php echo rcp_currency_filter( $payment->amount ); ?></span>
+					<span data-th="<?php esc_attr_e( 'Payment Status', 'rcp' ); ?>"><?php echo rcp_get_payment_status_label( $payment ); ?></span>
+					<span data-th="<?php esc_attr_e( 'Date', 'rcp' ); ?>"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $payment->date, current_time( 'timestamp' ) ) ); ?></span>
+					<span data-th="<?php esc_attr_e( 'Actions', 'rcp' ); ?>">
 						<?php if ( in_array( $payment->status, array( 'pending', 'abandoned', 'failed' ) ) && empty( $payment->transaction_id ) ) : ?>
 							<a href="<?php echo esc_url( rcp_get_payment_recovery_url( $payment->id ) ); ?>">
 								<?php echo 'failed' === $payment->status ? __( 'Retry Payment', 'rcp' ) : __( 'Complete Payment', 'rcp' ); ?>
 							</a> <br/>
 						<?php endif; ?>
 						<a href="<?php echo esc_url( rcp_get_invoice_url( $payment->id ) ); ?>"><?php _e( 'View Receipt', 'rcp' ); ?></a>
-					</td>
-				</tr>
+					</span>
+				</div>
 			<?php endforeach; ?>
 		<?php else : ?>
-			<tr>
-				<td data-th="<?php _e( 'Membership', 'rcp' ); ?>" colspan="6"><?php _e( 'You have not made any payments.', 'rcp' ); ?></td>
-			</tr>
+			<div>
+				<div data-th="<?php _e( 'Membership', 'rcp' ); ?>" colspan="6"><?php _e( 'You have not made any payments.', 'rcp' ); ?></div>
+			</div>
 		<?php endif; ?>
-		</tbody>
-	</table>
+		</main>
+		</div>
 <?php do_action( 'rcp_subscription_details_bottom' );

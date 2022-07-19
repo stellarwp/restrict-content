@@ -167,7 +167,8 @@ function rcpStripeSubmitBillingCardUpdate( e ) {
 		success: function ( response ) {
 			if ( response.success ) {
 				let args = {
-					payment_method_data: {
+					payment_method: {
+						card: rcpStripe.elements.card,
 						billing_details: { name: cardHolderName }
 					}
 				};
@@ -178,7 +179,7 @@ function rcpStripeSubmitBillingCardUpdate( e ) {
 					};
 				}
 
-				let handler = 'payment_intent' === response.data.payment_intent_object ? 'handleCardPayment' : 'confirmCardSetup';
+				let handler = 'payment_intent' === response.data.payment_intent_object ? 'confirmCardPayment' : 'confirmCardSetup';
 
 				/*
 				 * Payment Intent
@@ -199,6 +200,24 @@ function rcpStripeSubmitBillingCardUpdate( e ) {
 			}
 		}
 	} );
+}
+
+/**
+ * Handles a Stripe payment / setup intent, dynamically factoring in:
+ *      - Saved vs new payment method
+ *      - Setup Intent vs Payment Intent
+ *
+ * @param {string}  handler              Stripe handler to call - either `handleCardPayment` or `confirmCardSetup`.
+ * @param {string}  client_secret        Client secret to pass into the function.
+ * @param {object}  args                 Arguments to pass into the function. For a saved payment method this
+ *                                       should contain the payment method ID. For a new payment method this
+ *                                       might contain the billing card name.
+ *
+ * @since 3.3
+ * @return {Promise}
+ */
+function rcpStripeHandleIntent( handler, client_secret, args ) {
+	return rcpStripe.Stripe[ handler ]( client_secret, args );
 }
 
 /**

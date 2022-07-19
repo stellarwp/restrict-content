@@ -31,29 +31,28 @@ if ( ! $membership_level instanceof Membership_Level ) {
 global $rcp_options;
 ?>
 
-<table class="rcp_registration_total_details rcp-table">
+<div class="rcp_registration_total_details rcp-table">
 
-	<thead>
+	<header>
 
-		<tr>
-			<th scope="col"><?php _e( 'Membership', 'rcp' ); ?></th>
-			<th scope="col"><?php _e( 'Amount', 'rcp' ); ?></th>
-		</tr>
+		<div class="membership-amount">
+			<div><p><?php _e( 'Membership', 'rcp' ); ?> <?php _e( 'Amount', 'rcp' ); ?></p></div>
+		</div>
 
-	</thead>
+	</header>
 
-	<tbody style="vertical-align: top;">
+	<main style="vertical-align: top;">
 
-		<tr>
-			<td data-th="<?php esc_attr_e( 'Membership', 'rcp' ); ?>"><?php echo esc_html( $membership_level->get_name() ); ?></td>
-			<td data-th="<?php esc_attr_e( 'Amount', 'rcp' ); ?>"><?php echo ! $membership_level->is_free() ? rcp_currency_filter( $membership_level->get_price() ) : __( 'free', 'rcp' ); ?></td>
-		</tr>
+		<div class="membership-level-price">
+			<div data-th="<?php esc_attr_e( 'Membership', 'rcp' ); ?>"><?php echo esc_html( $membership_level->get_name() ); ?></div>
+			<div data-th="<?php esc_attr_e( 'Amount', 'rcp' ); ?>"><?php echo ! $membership_level->is_free() ? rcp_currency_filter( $membership_level->get_price() ) : __( 'free', 'rcp' ); ?></div>
+		</div>
 
 		<?php if ( ! $membership_level->is_free() ) : ?>
 			<?php if ( rcp_get_registration()->get_fees() || rcp_get_registration()->get_discounts() ) : ?>
-				<tr>
-					<th colspan="2"><?php _e( 'Discounts and Fees', 'rcp' ); ?></th>
-				</tr>
+				<div>
+					<div><?php _e( 'Discounts and Fees', 'rcp' ); ?></div>
+			</div>
 
 				<?php
 				/**
@@ -64,10 +63,10 @@ global $rcp_options;
 				?>
 				<?php if ( empty( $rcp_options['discount_fees'] ) ) : ?>
 					<?php if ( rcp_get_registration()->get_discounts() ) : foreach( rcp_get_registration()->get_discounts() as $code => $recuring ) : if ( ! $discount = rcp_get_discount_details_by_code( $code ) ) continue; ?>
-						<tr class="rcp-discount">
-							<td data-th="<?php esc_attr_e( 'Discount', 'rcp' ); ?>"><?php echo esc_html( $discount->get_name() ); ?></td>
-							<td data-th="<?php esc_attr_e( 'Discount Amount', 'rcp' ); ?>"><?php echo esc_html( rcp_discount_sign_filter( $discount->get_amount(), $discount->get_unit() ) ); ?></td>
-						</tr>
+						<div class="rcp-discount">
+							<div data-th="<?php esc_attr_e( 'Discount', 'rcp' ); ?>"><?php echo esc_html( $discount->get_name() ); ?></div>
+							<div data-th="<?php esc_attr_e( 'Discount Amount', 'rcp' ); ?>"><?php echo esc_html( rcp_discount_sign_filter( $discount->get_amount(), $discount->get_unit() ) ); ?></div>
+				</div>
 					<?php endforeach; endif; ?>
 				<?php endif; ?>
 
@@ -77,10 +76,10 @@ global $rcp_options;
 					$sign          = ( $fee['amount'] < 0 ) ? '-' : '';
 					$fee['amount'] = abs( $fee['amount'] );
 				?>
-					<tr class="rcp-fee">
-						<td data-th="<?php esc_attr_e( 'Fee', 'rcp' ); ?>"><?php echo esc_html( $fee['description'] ); ?></td>
-						<td data-th="<?php esc_attr_e( 'Fee Amount', 'rcp' ); ?>"><?php echo esc_html( $sign . rcp_currency_filter( $fee['amount'] ) ); ?></td>
-					</tr>
+					<div class="rcp-fee">
+						<div data-th="<?php esc_attr_e( 'Fee', 'rcp' ); ?>"><?php echo esc_html( $fee['description'] ); ?></div>
+						<div data-th="<?php esc_attr_e( 'Fee Amount', 'rcp' ); ?>"><?php echo esc_html( $sign . rcp_currency_filter( $fee['amount'] ) ); ?></div>
+				</div>
 				<?php endforeach; endif; ?>
 
 				<?php
@@ -92,24 +91,24 @@ global $rcp_options;
 				?>
 				<?php if ( ! empty( $rcp_options['discount_fees'] ) ) : ?>
 					<?php if ( rcp_get_registration()->get_discounts() ) : foreach( rcp_get_registration()->get_discounts() as $code => $recuring ) : if ( ! $discount = rcp_get_discount_details_by_code( $code ) ) continue; ?>
-						<tr class="rcp-discount">
-							<td data-th="<?php esc_attr_e( 'Discount', 'rcp' ); ?>"><?php echo esc_html( $discount->get_name() ); ?></td>
-							<td data-th="<?php esc_attr_e( 'Discount Amount', 'rcp' ); ?>"><?php echo esc_html( rcp_discount_sign_filter( $discount->get_amount(), $discount->unit ) ); ?></td>
-						</tr>
+						<div class="rcp-discount">
+							<div data-th="<?php esc_attr_e( 'Discount', 'rcp' ); ?>"><?php echo esc_html( $discount->get_name() ); ?></div>
+							<div data-th="<?php esc_attr_e( 'Discount Amount', 'rcp' ); ?>"><?php echo esc_html( rcp_discount_sign_filter( $discount->get_amount(), $discount->unit ) ); ?></div>
+				</div>
 					<?php endforeach; endif; ?>
 				<?php endif; ?>
 
 			<?php endif; ?>
 		<?php endif; ?>
 
-	</tbody>
+	</main>
 
-	<tfoot>
+	<footer>
 
-		<tr class="rcp-total">
-			<th scope="row"><?php _e( 'Total Today', 'rcp' ); ?></th>
-			<td data-th="<?php esc_attr_e( 'Total Today', 'rcp' ); ?>"><?php rcp_registration_total(); ?></td>
-		</tr>
+		<div class="rcp-total">
+			<div scope="row"><?php _e( 'Total Today', 'rcp' ); ?></div>
+			<div data-th="<?php esc_attr_e( 'Total Today', 'rcp' ); ?>"><?php rcp_registration_total(); ?></div>
+		</div>
 
 		<?php if ( rcp_registration_is_recurring() ) : ?>
 			<?php
@@ -128,10 +127,10 @@ global $rcp_options;
 				);
 			}
 			?>
-			<tr class="rcp-recurring-total">
-				<th scope="row"><?php echo $label; ?></th>
-				<td data-th="<?php echo esc_attr( $label ); ?>"><?php rcp_registration_recurring_total(); ?></td>
-			</tr>
+			<div class="rcp-recurring-total">
+				<div scope="row"><?php echo $label; ?></div>
+				<div data-th="<?php echo esc_attr( $label ); ?>"><?php rcp_registration_recurring_total(); ?></div>
+			</div>
 		<?php endif; ?>
 
 		<?php
@@ -143,5 +142,5 @@ global $rcp_options;
 		do_action( 'rcp_register_total_details_footer_bottom' );
 		?>
 
-	</tfoot>
-</table>
+	</footer>
+		</div>
