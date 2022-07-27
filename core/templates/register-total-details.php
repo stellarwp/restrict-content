@@ -36,7 +36,7 @@ global $rcp_options;
 	<header>
 
 		<div class="membership-amount">
-			<div><p><?php _e( 'Membership', 'rcp' ); ?> <?php _e( 'Amount', 'rcp' ); ?></p></div>
+			<p><?php _e( 'Membership', 'rcp' ); ?> <?php _e( 'Amount', 'rcp' ); ?></p>
 		</div>
 
 	</header>
@@ -50,8 +50,8 @@ global $rcp_options;
 
 		<?php if ( ! $membership_level->is_free() ) : ?>
 			<?php if ( rcp_get_registration()->get_fees() || rcp_get_registration()->get_discounts() ) : ?>
-				<div>
-					<div><?php _e( 'Discounts and Fees', 'rcp' ); ?></div>
+				<div class="discounts-fees">
+					<p><?php _e( 'Discounts and Fees', 'rcp' ); ?></p>
 			</div>
 
 				<?php
@@ -106,7 +106,7 @@ global $rcp_options;
 	<footer>
 
 		<div class="rcp-total">
-			<div scope="row"><?php _e( 'Total Today', 'rcp' ); ?></div>
+			<div scope="row"><p><?php _e( 'Total Today', 'rcp' ); ?></p></div>
 			<div data-th="<?php esc_attr_e( 'Total Today', 'rcp' ); ?>"><?php rcp_registration_total(); ?></div>
 		</div>
 
