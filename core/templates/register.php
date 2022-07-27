@@ -2,8 +2,8 @@
 /**
  * Registration Form
  *
- * This template is used to display the registration form with [register_form] If the `id` attribute
- * is passed into the shortcode then register-single.php is used instead.
+ * This template is used to display the registration form with [register_form]. 
+ * If the `id` attribute is passed into the shortcode then register-single.php is used instead.
  * @link http://docs.restrictcontentpro.com/article/1597-registerform
  *
  * For modifying this template, please see: http://docs.restrictcontentpro.com/article/1738-template-files
@@ -51,19 +51,19 @@ rcp_show_error_messages( 'register' ); ?>
 			<label for="rcp_user_email"><?php echo apply_filters ( 'rcp_registration_email_label', __( 'Email', 'rcp' ) ); ?></label>
 			<input name="rcp_user_email" id="rcp_user_email" class="required" type="text" <?php if( isset( $_POST['rcp_user_email'] ) ) { echo 'value="' . esc_attr( $_POST['rcp_user_email'] ) . '"'; } ?>/>
 		</p>
-		<p id="rcp_user_first_wrap">
+		<p id="rcp_user_first_wrap" class="inline">
 			<label for="rcp_user_first"><?php echo apply_filters ( 'rcp_registration_firstname_label', __( 'First Name', 'rcp' ) ); ?></label>
 			<input name="rcp_user_first" id="rcp_user_first" type="text" <?php if( isset( $_POST['rcp_user_first'] ) ) { echo 'value="' . esc_attr( $_POST['rcp_user_first'] ) . '"'; } ?>/>
 		</p>
-		<p id="rcp_user_last_wrap">
+		<p id="rcp_user_last_wrap" class="inline-block">
 			<label for="rcp_user_last"><?php echo apply_filters ( 'rcp_registration_lastname_label', __( 'Last Name', 'rcp' ) ); ?></label>
 			<input name="rcp_user_last" id="rcp_user_last" type="text" <?php if( isset( $_POST['rcp_user_last'] ) ) { echo 'value="' . esc_attr( $_POST['rcp_user_last'] ) . '"'; } ?>/>
 		</p>
-		<p id="rcp_password_wrap">
+		<p id="rcp_password_wrap" class="inline">
 			<label for="rcp_password"><?php echo apply_filters ( 'rcp_registration_password_label', __( 'Password', 'rcp' ) ); ?></label>
 			<input name="rcp_user_pass" id="rcp_password" class="required" type="password"/>
 		</p>
-		<p id="rcp_password_again_wrap">
+		<p id="rcp_password_again_wrap" class="inline-block">
 			<label for="rcp_password_again"><?php echo apply_filters ( 'rcp_registration_password_again_label', __( 'Password Again', 'rcp' ) ); ?></label>
 			<input name="rcp_user_pass_confirm" id="rcp_password_again" class="required" type="password"/>
 		</p>

@@ -82,11 +82,7 @@ function rcpStripeCloseCheckoutModal() {
  * @return {Promise}
  */
 function rcpStripeHandleIntent( handler, client_secret, args ) {
-	if ( ! args.payment_method ) {
-		return rcpStripe.Stripe[ handler ]( client_secret, rcpStripe.elements.card, args );
-	} else {
-		return rcpStripe.Stripe[ handler ]( client_secret, args );
-	}
+	return rcpStripe.Stripe[ handler ]( client_secret, args );
 }
 
 // Reliant on jQuery triggers, so setup jQuery.
@@ -221,9 +217,10 @@ jQuery( function( $ ) {
 
 			let cardHolderName = $( '.card-name' ).val();
 
-			let handler = 'payment_intent' === response.gateway.data.stripe_intent_type ? 'handleCardPayment' : 'confirmCardSetup';
+			let handler = 'payment_intent' === response.gateway.data.stripe_intent_type ? 'confirmCardPayment' : 'confirmCardSetup';
 			let args = {
-				payment_method_data: {
+				payment_method: {
+					card: rcpStripe.elements.card,
 					billing_details: { name: cardHolderName }
 				}
 			};

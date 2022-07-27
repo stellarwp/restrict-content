@@ -113,6 +113,87 @@ div#rcp_card_name_wrap, div#rcp_card_wrap {
 	padding: 1em;
 }
 
+/* Your Membership Page */
+
+header .rcp-account-overview span, header .rcp-payment-history span {
+    font-weight: bold;
+}
+.rcp-table#rcp-account-overview, .rcp-table#rcp-payment-history {
+	max-width: 100%;
+	width: 1000px;
+	margin-bottom: 50px;
+}
+.rcp-account-overview, .rcp-payment-history {
+    display: flex;
+}
+.rcp-account-overview span {
+    width: 25%;
+    max-width: 165px;
+    min-width: 120px;
+}
+.rcp-payment-history span {
+	width: 16%;
+	max-width: 165px;
+    min-width: 120px;
+}
+@media screen and (max-width: 781px) {
+	.rcp-account-overview, .rcp-payment-history {
+		flex-direction: column;
+	}
+	.rcp-table#rcp-account-overview, .rcp-table#rcp-payment-history {
+		display: flex;
+	}
+	.rcp-account-overview span, .rcp-payment-history span {
+		min-height: 70px;
+	}
+}
+
+/* Registration Form (previously a table)
+--------------------------------------------------------------*/
+.rcp_subscription_message {
+	font-weight: bold;
+}
+
+.rcp_registration_total_details .membership-amount {
+	display: flex;
+}
+.rcp_registration_total_details .membership-amount p {
+	font-weight: bold;
+}
+.rcp_registration_total_details .membership-level-price, .rcp_registration_total_details .rcp-total, .rcp_registration_total_details .rcp-renewal-date, .rcp_registration_total_details .rcp-recurring-total, .rcp-fee {
+	display: flex;
+    justify-content: space-between;
+    width: 400px;
+    max-width: 100%;
+	border-bottom: 1px solid #222222;
+	padding-block: 10px;
+}
+.rcp_registration_total_details .discounts-fees {
+	font-weight: bold;
+}
+.rcp_form .rcp_user_fieldset input {
+    width: 100%;
+    max-width: 400px;
+    height: 30px;
+    border-radius: 5px;
+}
+.rcp_form .rcp_user_fieldset label {
+	font-size: max(.8rem, 14px);
+}
+
+.rcp_form input {
+	background-color: #00000005;
+}
+
+.rcp_form input:focus, .rcp_form input:hover {
+    background: unset;
+}
+.rcp-total p, .rcp-renewal-date p {
+	font-weight: bold;
+}
+.membership-level-price div, .rcp-fee div {
+    margin-left: 10px;
+}
 /* Input Fields
 -------------------------------------------------------------- */
 

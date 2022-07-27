@@ -21,25 +21,26 @@ function rcp_settings_menu() {
 
 	// add settings page
 	add_menu_page( __( 'Restrict Content Pro Settings', 'rcp' ), __( 'Restrict', 'rcp' ), 'rcp_view_members', 'rcp-members', 'rcp_members_page', 'dashicons-lock' );
-	$rcp_members_page       = add_submenu_page( 'rcp-members', __( 'Memberships', 'rcp' ), __( 'Memberships', 'rcp' ), 'rcp_view_members', 'rcp-members', 'rcp_members_page', 1 );
-	$rcp_customers_page     = add_submenu_page( 'rcp-members', __( 'Customers', 'rcp' ), __( 'Customers', 'rcp' ), 'rcp_view_members', 'rcp-customers', 'rcp_customers_page', 2 );
-	$rcp_subscriptions_page = add_submenu_page( 'rcp-members', __( 'Membership Levels', 'rcp' ), __( 'Membership Levels', 'rcp' ), 'rcp_view_levels', 'rcp-member-levels', 'rcp_member_levels_page', 3 );
-	$rcp_payments_page      = add_submenu_page( 'rcp-members', __( 'Payments', 'rcp' ), __( 'Payments', 'rcp' ), 'rcp_view_payments', 'rcp-payments', 'rcp_payments_page', 5 );
-	$rcp_settings_page      = add_submenu_page( 'rcp-members', __( 'Restrict Content Pro Settings', 'rcp' ), __( 'Settings', 'rcp' ),'rcp_manage_settings', 'rcp-settings', 'rcp_settings_page', 7 );
-	$rcp_tools_page         = add_submenu_page( 'rcp-members', __( 'Tools', 'rcp' ), __( 'Tools', 'rcp' ), 'rcp_manage_settings', 'rcp-tools', 'rcp_tools_page',  8 );
+	$rcp_members_page                   = add_submenu_page( 'rcp-members', __( 'Memberships', 'rcp' ), __( 'Memberships', 'rcp' ), 'rcp_view_members', 'rcp-members', 'rcp_members_page', 1 );
+	$rcp_customers_page                 = add_submenu_page( 'rcp-members', __( 'Customers', 'rcp' ), __( 'Customers', 'rcp' ), 'rcp_view_members', 'rcp-customers', 'rcp_customers_page', 2 );
+	$rcp_subscriptions_page             = add_submenu_page( 'rcp-members', __( 'Membership Levels', 'rcp' ), __( 'Membership Levels', 'rcp' ), 'rcp_view_levels', 'rcp-member-levels', 'rcp_member_levels_page', 3 );
+	$rcp_payments_page                  = add_submenu_page( 'rcp-members', __( 'Payments', 'rcp' ), __( 'Payments', 'rcp' ), 'rcp_view_payments', 'rcp-payments', 'rcp_payments_page', 5 );
+	$rcp_settings_page                  = add_submenu_page( 'rcp-members', __( 'Restrict Content Pro Settings', 'rcp' ), __( 'Settings', 'rcp' ),'rcp_manage_settings', 'rcp-settings', 'rcp_settings_page', 7 );
+	$rcp_tools_page                     = add_submenu_page( 'rcp-members', __( 'Tools', 'rcp' ), __( 'Tools', 'rcp' ), 'rcp_manage_settings', 'rcp-tools', 'rcp_tools_page',  8 );
 
-	$rcp_reminders_page     = add_submenu_page( 'rcp-members', __( 'Subscription Reminder', 'rcp' ), __( 'Subscription Reminder', 'rcp' ), 'rcp_manage_settings', 'rcp-reminder', 'rcp_subscription_reminder_page', 11 );
+	$rcp_reminders_page                 = add_submenu_page( 'rcp-members', __( 'Subscription Reminder', 'rcp' ), __( 'Subscription Reminder', 'rcp' ), 'rcp_manage_settings', 'rcp-reminder', 'rcp_subscription_reminder_page', 11 );
 
 	// If we are not in PRO include the Free menus.
 	if( false === has_action('admin_menu','include_pro_pages') ) {
 		$restrict_content_pro_why_go_pro    = add_submenu_page( 'rcp-members', __( 'Why Go Pro', 'LION' ), __( 'Why go Pro', 'LION' ), 'manage_options', 'rcp-why-go-pro', 'rc_why_go_pro_page_redesign' );
 		$restrict_content_pro_help_page     = add_submenu_page( 'rcp-members', __( 'Help', 'LION' ), __( 'Help', 'LION' ), 'manage_options', 'rcp-need-help', 'rc_need_help_page_redesign' );
+		$restrict_content_pro_welcome_page  = add_submenu_page( null, __( 'Welcome', 'LION'), __( 'Welcome', 'LION' ), 'manage_options', 'restrict-content-welcome', 'rc_welcome_page_redesign' );
 	}
 	else {
 		$rcp_help_page = add_submenu_page( 'rcp-members', __( 'Help', 'rcp' ), __( 'Help', 'rcp' ), 'rcp_view_help', 'rcp-help', '__return_null' );
 	}
 
-	$restrict_content_pro_welcome_page  = add_submenu_page( null, __( 'Welcome', 'LION'), __( 'Welcome', 'LION' ), 'manage_options', 'restrict-content-welcome', 'rc_welcome_page_redesign' );
+
 
 	// Backwards compatibility - link the old export page to the tools page.
 	$rcp_export_page = $rcp_tools_page;
@@ -161,13 +162,13 @@ function rc_why_go_pro_page_redesign() {
 	?>
 	<div class="wrap">
 		<div class="rcp-why-go-pro-wrap">
-			<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/Full-Logo-1.svg' ); ?>" >
+			<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/rc_logo_horizontal_black.svg' ); ?>" >
 			<div class="rcp-go-pro-color-container">
 				<div class="rcp-why-go-pro-inner-wrapper">
 					<div class="rcp-top-header">
 						<h1>
 							<?php _e( 'Why Go Pro?', 'LION' ); ?></h1>
-						
+
 					</div>
 					<h2><?php _e( 'Grow Your Sales with Premium Features and Add-ons in Restrict Content PRO', 'LION' ); ?></h2>
 					<div class="rcp-pro-features-container">
@@ -278,7 +279,7 @@ function rc_why_go_pro_page_redesign() {
 function rc_need_help_page_redesign() {
 	?>
 	<div class="restrict-content-welcome-header">
-		<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/Full-Logo-1.svg' ); ?>" >
+		<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/rc_logo_horizontal_black.svg' ); ?>" >
 	</div>
 	<div class="restrict-content-welcome-top-container">
 		<div class="restrict-content-welcome-left-container">
@@ -340,7 +341,7 @@ function rc_need_help_page_redesign() {
 							?>
 						</p>
 					</div>
-					
+
 				</div>
 			</div>
 		</div>
@@ -409,13 +410,99 @@ function rc_need_help_page_redesign() {
  *
  * @since 3.6
  */
+function rcp_welcome_page_redesign() {
+	$current_user = wp_get_current_user();
+
+	//  $rc_welcome_try_free_meta_nonce = wp_create_nonce( 'rc_welcome_try_free_meta_nonce' );
+	?>
+	<div class="restrict-content-welcome-header">
+		<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/Full-Logo-1.svg' ); ?>" >
+	</div>
+	<div class="restrict-content-welcome-top-container">
+		<div class="restrict-content-welcome-left-container">
+			<h1 class="restrict-content-welcome-user">
+				<?php
+				printf( __( 'Welcome %s!', 'LION' ),
+					$current_user->first_name ?: $current_user->display_name
+				);
+				?>
+			</h1>
+			<div class="restrict-content-inner-container">
+				<div class="restrict-content-welcome-body-container">
+					<div class="restrict-content-welcome-body restrict-content-container-section">
+						<h2 class="restrict-content-thanks-header"><?php _e( 'Thanks for installing Restrict Content Pro!', 'LION' ); ?></h2>
+						<p class="restrict-content-thanks-message"><?php _e( 'Restrict Content Pro is a simple, yet powerful WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.', 'LION' ); ?></p>
+						<p class="restrict-content-thanks-message"><?php _e( 'Start your membership site and create multiple Membership Levels and collect payments with Stripe, PayPal or Braintree.', 'LION' ); ?></p>
+					</div>
+
+				</div>
+				<div class="restrict-content-welcome-body-container">
+					<div class="restrict-content-how-to-body restrict-content-container-section">
+						<h2><?php _e( 'Collect Payments with Stripe, PayPal or Braintree', 'LION' ); ?></h2>
+
+						<p class="restrict-content-how-to-message">
+							<?php
+							printf(
+								__( 'With Pro you can use Stripe, Braintree or PayPal to collect payments. We even have an <a href="%s" target="_blank">API</a> that you can use to integrate RCP with additional payment gateways ', 'LION' ),
+						'https://help.ithemes.com/hc/en-us/articles/360052351054-Payment-Gateway-API'
+							);
+							?>
+							</p>
+
+
+					</div>
+				</div>
+				<div class="restrict-content-welcome-body-container">
+					<div class="restrict-content-helpful-resources restrict-content-container-section">
+						<h2><?php _e( 'Helpful Resources', 'LION' ); ?></h2>
+						<div class="restrict-content-resource-container">
+							<!-- <h3><?php _e( 'Knowledgebase', 'LION' ); ?></h3> -->
+							<p>
+								<?php
+								printf(
+									__( 'Our <a href="%s">Knowledge base</a> will help you become a Restrict Content & Restrict Content Pro expert.', 'LION' ),
+									'https://restrictcontentpro.com/knowledgebase'
+								);
+								?>
+							</p>
+						</div>
+						<div class="restrict-content-resource-container">
+							<!-- <h3><?php _e( 'Need More Control Over Your Content & Memberships?', 'LION' ); ?></h3> -->
+							<p>
+								 <?php
+								 printf(
+                                     __( 'Check out our <a href="%s">suite of add-ons</a> for building awesome membership websites.', 'LION' ),
+                                     'https://restrictcontentpro.com/add-ons/'
+								 );
+								 ?>
+							</p>
+						</div>
+						<div class="restrict-content-resource-container">
+							<!-- <h3><?php _e( 'Introduction to Restrict Content Pro', 'LION' ); ?></h3> -->
+							<p>
+								<?php
+								printf(
+										__( 'Get a <a href="%s">full overview of Restrict Content Pro</a> and dive into several of its key features.', 'LION' ),
+										'https://training.ithemes.com/webinar/introduction-to-restrict-content-pro/'
+								);
+								?>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<?php
+}
 function rc_welcome_page_redesign() {
 	$current_user = wp_get_current_user();
 
 	$rc_welcome_try_free_meta_nonce = wp_create_nonce( 'rc_welcome_try_free_meta_nonce' );
 	?>
 	<div class="restrict-content-welcome-header">
-		<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/Full-Logo-1.svg' ); ?>" >
+		<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/rc_logo_horizontal_black.svg' ); ?>" >
 	</div>
 	<div class="restrict-content-welcome-top-container">
 		<div class="restrict-content-welcome-left-container">
@@ -433,7 +520,7 @@ function rc_welcome_page_redesign() {
 						<p class="restrict-content-thanks-message"><?php _e( 'Restrict Content is a simple WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.', 'LION' ); ?></p>
 						<p class="restrict-content-thanks-message"><?php _e( 'Start your membership site and create multiple Membership Levels and collect payments with Stripe.', 'LION' ); ?></p>
 					</div>
-					
+
 				</div>
 				<div class="restrict-content-welcome-body-container">
 					<div class="restrict-content-how-to-body restrict-content-container-section">
