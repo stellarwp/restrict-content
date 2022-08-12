@@ -1279,7 +1279,7 @@ function rcp_sanitize_settings( $data ) {
 		}
 	}
 
-	if ( \RCP\PUE\PUE::has_embedded_license() ) {
+	if ( class_exists( \RCP\PUE\PUE::class  ) && \RCP\PUE\PUE::has_embedded_license() ) {
 		$key         = null;
 		$pue_checker = new Tribe__PUE__Checker( 'https://pue.theeventscalendar.com/', 'restrict-content-pro', [
 				'context'     => 'plugin',
