@@ -28,15 +28,15 @@ function rcp_settings_page() {
 	global $rcp_options;
 
 	$defaults = array(
-		'currency_position'     => 'before',
-		'currency'              => 'USD',
-		'registration_page'     => 0,
-		'redirect'              => 0,
-		'redirect_from_premium' => 0,
-		'login_redirect'        => 0,
-		'disable_trial_free_subs' => 0,
-		'email_header_img'      => '',
-		'email_header_text'     => __( 'Hello', 'rcp' )
+			'currency_position'     => 'before',
+			'currency'              => 'USD',
+			'registration_page'     => 0,
+			'redirect'              => 0,
+			'redirect_from_premium' => 0,
+			'login_redirect'        => 0,
+			'disable_trial_free_subs' => 0,
+			'email_header_img'      => '',
+			'email_header_text'     => __( 'Hello', 'rcp' )
 	);
 
 	$rcp_options = wp_parse_args( $rcp_options, $defaults );
@@ -51,10 +51,10 @@ function rcp_settings_page() {
 		<h1><?php _e( 'Restrict Content Pro', 'rcp' ); ?></h1>
 
 		<?php if( ! empty( $_GET['rcp_gateway_connect_error'] ) ): ?>
-		<div class="notice error">
-			<p><?php printf( __( 'There was an error processing your gateway connection request. Code: %s. Message: %s. Please <a href="%s">try again</a>.', 'rcp' ), esc_html( urldecode( $_GET['rcp_gateway_connect_error'] ) ), esc_html( urldecode( $_GET['rcp_gateway_connect_error_description'] ) ), esc_url( admin_url( 'admin.php?page=rcp-settings#payments' ) ) ); ?></p>
-		</div>
-		<?php return; endif; ?>
+			<div class="notice error">
+				<p><?php printf( __( 'There was an error processing your gateway connection request. Code: %s. Message: %s. Please <a href="%s">try again</a>.', 'rcp' ), esc_html( urldecode( $_GET['rcp_gateway_connect_error'] ) ), esc_html( urldecode( $_GET['rcp_gateway_connect_error_description'] ) ), esc_url( admin_url( 'admin.php?page=rcp-settings#payments' ) ) ); ?></p>
+			</div>
+			<?php return; endif; ?>
 
 		<h2 class="nav-tab-wrapper">
 			<a href="#general" id="general-tab" class="nav-tab"><?php _e( 'General', 'rcp' ); ?></a>
@@ -62,12 +62,12 @@ function rcp_settings_page() {
 			<a href="#emails" id="emails-tab" class="nav-tab"><?php _e( 'Emails', 'rcp' ); ?></a>
 			<a href="#invoices" id="invoices-tab" class="nav-tab"><?php _e( 'Invoices', 'rcp' ); ?></a>
 			<a href="#misc" id="misc-tab" class="nav-tab"><?php _e( 'Misc', 'rcp' ); ?></a>
-			<?php if ( $GLOBALS['rcp_requirements_check']->is_common_initialized ) : ?>
+			<?php if ( isset( $_GLOBALS['rcp_requirements_check'] ) && $GLOBALS['rcp_requirements_check']->is_common_initialized ) : ?>
 				<a href="#licenses" id="licenses-tab" class="nav-tab"><?php _e( 'Licenses', 'rcp' ); ?></a>
 			<?php endif; ?>
 		</h2>
 		<?php if ( false !== $_REQUEST['updated'] ) : ?>
-		<div class="updated fade"><p><strong><?php _e( 'Options saved', 'rcp' ); ?></strong></p></div>
+			<div class="updated fade"><p><strong><?php _e( 'Options saved', 'rcp' ); ?></strong></p></div>
 		<?php endif; ?>
 		<form method="post" action="options.php" class="rcp_options_form">
 
@@ -94,7 +94,7 @@ function rcp_settings_page() {
 									<?php
 									if($pages) :
 										foreach ( $pages as $page ) {
-										  	$option = '<option value="' . $page->ID . '" ' . selected($page->ID, $rcp_options['registration_page'], false) . '>';
+											$option = '<option value="' . $page->ID . '" ' . selected($page->ID, $rcp_options['registration_page'], false) . '>';
 											$option .= $page->post_title;
 											$option .= ' (ID: ' . $page->ID . ')';
 											$option .= '</option>';
@@ -121,7 +121,7 @@ function rcp_settings_page() {
 									<?php
 									if($pages) :
 										foreach ( $pages as $page ) {
-										  	$option = '<option value="' . $page->ID . '" ' . selected($page->ID, $rcp_options['redirect'], false) . '>';
+											$option = '<option value="' . $page->ID . '" ' . selected($page->ID, $rcp_options['redirect'], false) . '>';
 											$option .= $page->post_title;
 											$option .= ' (ID: ' . $page->ID . ')';
 											$option .= '</option>';
@@ -149,7 +149,7 @@ function rcp_settings_page() {
 									if($pages) :
 										$rcp_options['account_page'] = isset( $rcp_options['account_page'] ) ? absint( $rcp_options['account_page'] ) : 0;
 										foreach ( $pages as $page ) {
-										  	$option = '<option value="' . $page->ID . '" ' . selected($page->ID, $rcp_options['account_page'], false) . '>';
+											$option = '<option value="' . $page->ID . '" ' . selected($page->ID, $rcp_options['account_page'], false) . '>';
 											$option .= $page->post_title;
 											$option .= ' (ID: ' . $page->ID . ')';
 											$option .= '</option>';
@@ -177,7 +177,7 @@ function rcp_settings_page() {
 									if($pages) :
 										$rcp_options['edit_profile'] = isset( $rcp_options['edit_profile'] ) ? absint( $rcp_options['edit_profile'] ) : 0;
 										foreach ( $pages as $page ) {
-										  	$option = '<option value="' . $page->ID . '" ' . selected($page->ID, $rcp_options['edit_profile'], false) . '>';
+											$option = '<option value="' . $page->ID . '" ' . selected($page->ID, $rcp_options['edit_profile'], false) . '>';
 											$option .= $page->post_title;
 											$option .= ' (ID: ' . $page->ID . ')';
 											$option .= '</option>';
@@ -205,7 +205,7 @@ function rcp_settings_page() {
 									if($pages) :
 										$rcp_options['update_card'] = isset( $rcp_options['update_card'] ) ? absint( $rcp_options['update_card'] ) : 0;
 										foreach ( $pages as $page ) {
-										  	$option = '<option value="' . $page->ID . '" ' . selected($page->ID, $rcp_options['update_card'], false) . '>';
+											$option = '<option value="' . $page->ID . '" ' . selected($page->ID, $rcp_options['update_card'], false) . '>';
 											$option .= $page->post_title;
 											$option .= ' (ID: ' . $page->ID . ')';
 											$option .= '</option>';
@@ -809,7 +809,7 @@ function rcp_settings_page() {
 							 */
 							do_action( 'rcp_emails_tab_after_renewal_payment_failed_email_admin' );
 
-							 ?>
+							?>
 
 							<?php
 
@@ -951,7 +951,7 @@ function rcp_settings_page() {
 									<?php
 									if($pages) :
 										foreach ( $pages as $page ) {
-										  	$option = '<option value="' . $page->ID . '" ' . selected($page->ID, $rcp_options['redirect_from_premium'], false) . '>';
+											$option = '<option value="' . $page->ID . '" ' . selected($page->ID, $rcp_options['redirect_from_premium'], false) . '>';
 											$option .= $page->post_title;
 											$option .= '</option>';
 											echo $option;
@@ -986,7 +986,7 @@ function rcp_settings_page() {
 									<?php
 									if($pages) :
 										foreach ( $pages as $page ) {
-										  	$option = '<option value="' . $page->ID . '" ' . selected($page->ID, $rcp_options['login_redirect'], false) . '>';
+											$option = '<option value="' . $page->ID . '" ' . selected($page->ID, $rcp_options['login_redirect'], false) . '>';
 											$option .= $page->post_title;
 											$option .= '</option>';
 											echo $option;
@@ -1135,8 +1135,8 @@ function rcp_settings_page() {
 
 						<?
 						/**
-						* Action to add the maximum number of simultaneous connections per member
-						*/
+						 * Action to add the maximum number of simultaneous connections per member
+						 */
 						do_action( 'rcp_settings_after_privacy_policy_link', $rcp_options );
 						?>
 
@@ -1171,44 +1171,44 @@ function rcp_settings_page() {
 					<?php do_action( 'rcp_misc_settings', $rcp_options ); ?>
 				</div><!--end #misc-->
 
-				<?php if ( $GLOBALS['rcp_requirements_check']->is_common_initialized ) : ?>
-				<div class="tab_content" id="licenses">
-					<table class="form-table">
-						<tr valign="top">
-							<th>
-								<label for=""><?php _e( 'Restrict Content Pro', 'rcp' ); ?></label>
-							</th>
-							<td>
-								<?php
-								/**
-								* @var $licenses_tab
-								*/
-								include Tribe__Main::instance()->plugin_path . 'src/admin-views/tribe-options-licenses.php';
+				<?php if ( isset( $_GLOBALS['rcp_requirements_check'] ) && $GLOBALS['rcp_requirements_check']->is_common_initialized ) : ?>
+					<div class="tab_content" id="licenses">
+						<table class="form-table">
+							<tr valign="top">
+								<th>
+									<label for=""><?php _e( 'Restrict Content Pro', 'rcp' ); ?></label>
+								</th>
+								<td>
+									<?php
+									/**
+									 * @var $licenses_tab
+									 */
+									include Tribe__Main::instance()->plugin_path . 'src/admin-views/tribe-options-licenses.php';
 
-								/**
-								* Allows the fields displayed in the licenses tab to be modified.
-								*
-								* @var array
-								*/
-								$license_fields = apply_filters( 'tribe_license_fields', $licenses_tab );
-								$key = get_option( 'pue_install_key_restrict_content_pro' );
-								if ( empty( $key ) ) {
-									$key = \RCP\PUE\Helper::DATA;
-								}
+									/**
+									 * Allows the fields displayed in the licenses tab to be modified.
+									 *
+									 * @var array
+									 */
+									$license_fields = apply_filters( 'tribe_license_fields', $licenses_tab );
+									$key = get_option( 'pue_install_key_restrict_content_pro' );
+									if ( empty( $key ) ) {
+										$key = \RCP\PUE\Helper::DATA;
+									}
 
-								new Tribe__Field( 'pue_install_key_restrict_content_pro', $license_fields['pue_install_key_restrict_content_pro'], $key );
+									new Tribe__Field( 'pue_install_key_restrict_content_pro', $license_fields['pue_install_key_restrict_content_pro'], $key );
 
-								$pue_checker = new Tribe__PUE__Checker( 'https://pue.theeventscalendar.com/', 'restrict-content-pro', [
-									'context'     => 'plugin',
-									'plugin_name' => __( 'Restrict Content Pro', 'tribe-common' ),
-								] );
-								$pue_checker->do_license_key_javascript();
-								?>
-							</td>
-						</tr>
-					</table>
-					<?php do_action( 'rcp_licenses_settings', $rcp_options ); ?>
-				</div><!--end #licenses-->
+									$pue_checker = new Tribe__PUE__Checker( 'https://pue.theeventscalendar.com/', 'restrict-content-pro', [
+											'context'     => 'plugin',
+											'plugin_name' => __( 'Restrict Content Pro', 'tribe-common' ),
+									] );
+									$pue_checker->do_license_key_javascript();
+									?>
+								</td>
+							</tr>
+						</table>
+						<?php do_action( 'rcp_licenses_settings', $rcp_options ); ?>
+					</div><!--end #licenses-->
 				<?php endif; ?>
 			</div><!--end #tab_container-->
 
@@ -1234,10 +1234,10 @@ function rcp_sanitize_settings( $data ) {
 
 	// Trim API key fields.
 	$api_key_fields = array(
-		'stripe_test_secret', 'stripe_test_publishable',
-		'stripe_live_secret', 'stripe_live_publishable',
-		'twocheckout_test_private', 'twocheckout_test_publishable',
-		'twocheckout_live_private', 'twocheckout_live_publishable'
+			'stripe_test_secret', 'stripe_test_publishable',
+			'stripe_live_secret', 'stripe_live_publishable',
+			'twocheckout_test_private', 'twocheckout_test_publishable',
+			'twocheckout_live_private', 'twocheckout_live_publishable'
 	);
 
 	foreach ( $api_key_fields as $field ) {
@@ -1259,11 +1259,11 @@ function rcp_sanitize_settings( $data ) {
 		}
 
 		if(
-			// Check for various login form short codes
-			false === strpos( $page->post_content, '[login_form' ) &&
-			false === strpos( $page->post_content, '[edd_login' ) &&
-			false === strpos( $page->post_content, '[subscription_details' ) &&
-			false === strpos( $page->post_content, '[login' )
+				// Check for various login form short codes
+				false === strpos( $page->post_content, '[login_form' ) &&
+				false === strpos( $page->post_content, '[edd_login' ) &&
+				false === strpos( $page->post_content, '[subscription_details' ) &&
+				false === strpos( $page->post_content, '[login' )
 		) {
 			unset( $data['hijack_login_url'] );
 			set_transient( 'rcp_login_redirect_invalid', 1, MINUTE_IN_SECONDS );
@@ -1282,8 +1282,8 @@ function rcp_sanitize_settings( $data ) {
 	if ( \RCP\PUE\PUE::has_embedded_license() ) {
 		$key         = null;
 		$pue_checker = new Tribe__PUE__Checker( 'https://pue.theeventscalendar.com/', 'restrict-content-pro', [
-			'context'     => 'plugin',
-			'plugin_name' => __( 'Restrict Content Pro', 'tribe-common' ),
+				'context'     => 'plugin',
+				'plugin_name' => __( 'Restrict Content Pro', 'tribe-common' ),
 		] );
 		if ( ! empty( $_POST['pue_install_key_restrict_content_pro'] ) ) {
 			$key = sanitize_text_field( $_POST['pue_install_key_restrict_content_pro'] );
@@ -1524,9 +1524,9 @@ function rcp_process_gateway_connect_completion() {
 	}
 
 	$rcp_credentials_url = add_query_arg( array(
-		'live_mode'         => urlencode( (int) ! rcp_is_sandbox() ),
-		'state'             => urlencode( sanitize_text_field( $_GET['state'] ) ),
-		'customer_site_url' => urlencode( admin_url( 'admin.php?page=rcp-settings' ) ),
+			'live_mode'         => urlencode( (int) ! rcp_is_sandbox() ),
+			'state'             => urlencode( sanitize_text_field( $_GET['state'] ) ),
+			'customer_site_url' => urlencode( admin_url( 'admin.php?page=rcp-settings' ) ),
 	), 'https://restrictcontentpro.com/?rcp_gateway_connect_credentials=stripe_connect' );
 
 	$response = wp_remote_get( esc_url_raw( $rcp_credentials_url ) );
