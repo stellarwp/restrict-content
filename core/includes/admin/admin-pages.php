@@ -30,14 +30,16 @@ function rcp_settings_menu() {
 
 	$rcp_reminders_page                 = add_submenu_page( 'rcp-members', __( 'Subscription Reminder', 'rcp' ), __( 'Subscription Reminder', 'rcp' ), 'rcp_manage_settings', 'rcp-reminder', 'rcp_subscription_reminder_page', 11 );
 
+
 	// If we are not in PRO include the Free menus.
 	if( false === has_action('admin_menu','include_pro_pages') ) {
 		$restrict_content_pro_why_go_pro    = add_submenu_page( 'rcp-members', __( 'Why Go Pro', 'LION' ), __( 'Why go Pro', 'LION' ), 'manage_options', 'rcp-why-go-pro', 'rc_why_go_pro_page_redesign' );
 		$restrict_content_pro_help_page     = add_submenu_page( 'rcp-members', __( 'Help', 'LION' ), __( 'Help', 'LION' ), 'manage_options', 'rcp-need-help', 'rc_need_help_page_redesign' );
-		$restrict_content_pro_welcome_page  = add_submenu_page( null, __( 'Welcome', 'LION'), __( 'Welcome', 'LION' ), 'manage_options', 'restrict-content-welcome', 'rc_welcome_page_redesign' );
+		$restrict_content_pro_welcome_page  = add_submenu_page( null, __( 'RCP Welcome', 'LION'), __( 'RCP Welcome', 'LION' ), 'manage_options', 'restrict-content-welcome', 'rc_welcome_page_redesign' );
 	}
 	else {
 		$rcp_help_page = add_submenu_page( 'rcp-members', __( 'Help', 'rcp' ), __( 'Help', 'rcp' ), 'rcp_view_help', 'rcp-help', '__return_null' );
+		$restrict_content_pro_welcome_page  = add_submenu_page( null, __( 'RCP Welcome', 'LION'), __( 'RCP Welcome', 'LION' ), 'manage_options', 'restrict-content-pro-welcome', 'rcp_welcome_page_redesign' );
 	}
 
 
@@ -83,8 +85,8 @@ function rcp_is_rcp_admin_page() {
 
 	$screen = get_current_screen();
 
-	global $rcp_members_page, $rcp_customers_page, $rcp_subscriptions_page, $rcp_discounts_page, $rcp_payments_page, $rcp_reports_page, $rcp_settings_page, $rcp_help_page, $rcp_tools_page;
-	$pages = array( $rcp_members_page, $rcp_customers_page, $rcp_subscriptions_page, $rcp_discounts_page, $rcp_payments_page, $rcp_reports_page, $rcp_settings_page, $rcp_tools_page, $rcp_help_page );
+	global $rcp_members_page, $rcp_customers_page, $rcp_subscriptions_page, $rcp_discounts_page, $rcp_payments_page, $rcp_reports_page, $rcp_settings_page, $rcp_help_page, $rcp_tools_page, $restrict_content_pro_welcome_page;
+	$pages = array( $rcp_members_page, $rcp_customers_page, $rcp_subscriptions_page, $rcp_discounts_page, $rcp_payments_page, $rcp_reports_page, $rcp_settings_page, $rcp_tools_page, $rcp_help_page, $restrict_content_pro_welcome_page );
 
 	// Include post types that support restrictions.
 	if ( 'post' === $screen->base && ! empty( $screen->post_type ) && in_array( $screen->post_type, rcp_get_metabox_post_types() ) ) {
@@ -432,18 +434,18 @@ function rcp_welcome_page_redesign() {
 					<div class="restrict-content-welcome-body restrict-content-container-section">
 						<h2 class="restrict-content-thanks-header"><?php _e( 'Thanks for installing Restrict Content Pro!', 'LION' ); ?></h2>
 						<p class="restrict-content-thanks-message"><?php _e( 'Restrict Content Pro is a simple, yet powerful WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.', 'LION' ); ?></p>
-						<p class="restrict-content-thanks-message"><?php _e( 'Start your membership site and create multiple Membership Levels and collect payments with Stripe, PayPal or Braintree.', 'LION' ); ?></p>
+						<p class="restrict-content-thanks-message"><?php _e( 'Start your membership site and create multiple Membership Levels and collect payments with Stripe, PayPal, Braintree or Authorize.net.', 'LION' ); ?></p>
 					</div>
 
 				</div>
 				<div class="restrict-content-welcome-body-container">
 					<div class="restrict-content-how-to-body restrict-content-container-section">
-						<h2><?php _e( 'Collect Payments with Stripe, PayPal or Braintree', 'LION' ); ?></h2>
+						<h2><?php _e( 'Collect Payments with Stripe, PayPal, Braintree or Authorize.net', 'LION' ); ?></h2>
 
 						<p class="restrict-content-how-to-message">
 							<?php
 							printf(
-								__( 'With Pro you can use Stripe, Braintree or PayPal to collect payments. We even have an <a href="%s" target="_blank">API</a> that you can use to integrate RCP with additional payment gateways ', 'LION' ),
+								__( 'With Pro you can use several popular payment gateways to collect payments. We even have an <a href="%s" target="_blank">API</a> that you can use to integrate RCP with additional payment gateways. ', 'LION' ),
 						'https://help.ithemes.com/hc/en-us/articles/360052351054-Payment-Gateway-API'
 							);
 							?>
@@ -460,7 +462,7 @@ function rcp_welcome_page_redesign() {
 							<p>
 								<?php
 								printf(
-									__( 'Our <a href="%s">Knowledge base</a> will help you become a Restrict Content & Restrict Content Pro expert.', 'LION' ),
+									__( 'Our <a href="%s">Knowledgebase</a> will help you become a Restrict Content & Restrict Content Pro expert.', 'LION' ),
 									'https://restrictcontentpro.com/knowledgebase'
 								);
 								?>

@@ -3,7 +3,7 @@
  * Plugin Name: Restrict Content
  * Plugin URI: https://restrictcontentpro.com
  * Description: Set up a complete membership system for your WordPress site and deliver premium content to your members. Unlimited membership packages, membership management, discount codes, registration / login forms, and more.
- * Version: 3.1.2
+ * Version: 3.1.3
  * Author: StellarWP
  * Author URI: https://stellarwp.com/
  * Text Domain: rcp
@@ -12,6 +12,8 @@
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
+
+define( 'RCP_PLUGIN_FILE', __FILE__ );
 
 $rc_options = get_option( 'rc_settings' );
 

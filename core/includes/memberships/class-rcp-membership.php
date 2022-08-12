@@ -2566,6 +2566,11 @@ class RCP_Membership {
 	public function can_cancel() {
 
 		$can_cancel = false;
+		$paypal_gateways = [
+			'paypal',
+			'paypal_express',
+			'paypal_pro',
+		];
 
 		if ( $this->is_recurring() && 'active' == $this->get_status() && $this->is_paid() && ! $this->is_expired() ) {
 
@@ -2574,7 +2579,7 @@ class RCP_Membership {
 
 				$can_cancel = true;
 
-			} elseif ( 'paypal' == $this->get_gateway() ) {
+			} elseif ( in_array( $this->get_gateway(),$paypal_gateways ) ) {
 
 				if ( rcp_is_paypal_membership( $this ) && rcp_has_paypal_api_access() ) {
 					$can_cancel = true;

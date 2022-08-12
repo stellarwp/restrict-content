@@ -171,22 +171,14 @@ header .rcp-account-overview span, header .rcp-payment-history span {
 .rcp_registration_total_details .discounts-fees {
 	font-weight: bold;
 }
-.rcp_form .rcp_user_fieldset input {
+.rcp_form .rcp_user_fieldset input:not([type="checkbox"]):not([type="submit"]) {
     width: 100%;
     max-width: 400px;
-    height: 30px;
+    padding-block: 10px;
     border-radius: 5px;
 }
-.rcp_form .rcp_user_fieldset label {
-	font-size: max(.8rem, 14px);
-}
-
-.rcp_form input {
-	background-color: #00000005;
-}
-
-.rcp_form input:focus, .rcp_form input:hover {
-    background: unset;
+.rcp_form label, #rcp_user_pass_requirements {
+	font-size: max(.8rem, 16px);
 }
 .rcp-total p, .rcp-renewal-date p {
 	font-weight: bold;

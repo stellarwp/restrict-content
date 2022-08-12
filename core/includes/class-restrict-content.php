@@ -26,6 +26,16 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 	 * @since 3.0
 	 */
 	final class Restrict_Content_Pro {
+		const VERSION = '3.5.21';
+
+		/**
+		 * Stores the base slug for the extension.
+		 *
+		 * @since 3.5.18
+		 *
+		 * @var string
+		 */
+		const FILE = RCP_PLUGIN_FILE;
 
 		/**
 		 * @var Restrict_Content_Pro The one true Restrict_Content_Pro
@@ -177,6 +187,17 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 		}
 
 		/**
+		 * Constructor.
+		 *
+		 * @since 3.5.18
+		 */
+		public function __construct() {
+			if ( function_exists( 'tribe_register_provider' ) ) {
+				tribe_register_provider( \RCP\PUE\Provider::class );
+			}
+		}
+
+		/**
 		 * Setup plugin constants.
 		 *
 		 * @access private
@@ -186,7 +207,7 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 		private function setup_constants() {
 
 			if ( ! defined( 'RCP_PLUGIN_VERSION' ) ) {
-				define( 'RCP_PLUGIN_VERSION', '3.5.20' );
+				define( 'RCP_PLUGIN_VERSION', self::VERSION );
 			}
 
 			if ( ! defined( 'RCP_PLUGIN_FILE' ) ) {
