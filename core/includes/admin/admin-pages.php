@@ -29,19 +29,20 @@ function rcp_settings_menu() {
 	$rcp_tools_page                     = add_submenu_page( 'rcp-members', __( 'Tools', 'rcp' ), __( 'Tools', 'rcp' ), 'rcp_manage_settings', 'rcp-tools', 'rcp_tools_page',  8 );
 
 	$rcp_reminders_page                 = add_submenu_page( 'rcp-members', __( 'Subscription Reminder', 'rcp' ), __( 'Subscription Reminder', 'rcp' ), 'rcp_manage_settings', 'rcp-reminder', 'rcp_subscription_reminder_page', 11 );
-	
+
 
 	// If we are not in PRO include the Free menus.
 	if( false === has_action('admin_menu','include_pro_pages') ) {
 		$restrict_content_pro_why_go_pro    = add_submenu_page( 'rcp-members', __( 'Why Go Pro', 'LION' ), __( 'Why go Pro', 'LION' ), 'manage_options', 'rcp-why-go-pro', 'rc_why_go_pro_page_redesign' );
 		$restrict_content_pro_help_page     = add_submenu_page( 'rcp-members', __( 'Help', 'LION' ), __( 'Help', 'LION' ), 'manage_options', 'rcp-need-help', 'rc_need_help_page_redesign' );
+		$restrict_content_pro_welcome_page  = add_submenu_page( null, __( 'RCP Welcome', 'LION'), __( 'RCP Welcome', 'LION' ), 'manage_options', 'restrict-content-welcome', 'rc_welcome_page_redesign' );
 	}
 	else {
 		$rcp_help_page = add_submenu_page( 'rcp-members', __( 'Help', 'rcp' ), __( 'Help', 'rcp' ), 'rcp_view_help', 'rcp-help', '__return_null' );
-		$restrict_content_pro_welcome_page  = add_submenu_page( null, __( 'RCP Welcome', 'LION'), __( 'RCP Welcome', 'LION' ), 'manage_options', 'restrict-content-welcome', 'rcp_welcome_page_redesign' );
+		$restrict_content_pro_welcome_page  = add_submenu_page( null, __( 'RCP Welcome', 'LION'), __( 'RCP Welcome', 'LION' ), 'manage_options', 'restrict-content-pro-welcome', 'rcp_welcome_page_redesign' );
 	}
 
-	
+
 
 	// Backwards compatibility - link the old export page to the tools page.
 	$rcp_export_page = $rcp_tools_page;
@@ -169,7 +170,7 @@ function rc_why_go_pro_page_redesign() {
 					<div class="rcp-top-header">
 						<h1>
 							<?php _e( 'Why Go Pro?', 'LION' ); ?></h1>
-						
+
 					</div>
 					<h2><?php _e( 'Grow Your Sales with Premium Features and Add-ons in Restrict Content PRO', 'LION' ); ?></h2>
 					<div class="rcp-pro-features-container">
@@ -342,7 +343,7 @@ function rc_need_help_page_redesign() {
 							?>
 						</p>
 					</div>
-					
+
 				</div>
 			</div>
 		</div>
@@ -435,21 +436,21 @@ function rcp_welcome_page_redesign() {
 						<p class="restrict-content-thanks-message"><?php _e( 'Restrict Content Pro is a simple, yet powerful WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.', 'LION' ); ?></p>
 						<p class="restrict-content-thanks-message"><?php _e( 'Start your membership site and create multiple Membership Levels and collect payments with Stripe, PayPal, Braintree or Authorize.net.', 'LION' ); ?></p>
 					</div>
-					
+
 				</div>
 				<div class="restrict-content-welcome-body-container">
 					<div class="restrict-content-how-to-body restrict-content-container-section">
 						<h2><?php _e( 'Collect Payments with Stripe, PayPal, Braintree or Authorize.net', 'LION' ); ?></h2>
-						
+
 						<p class="restrict-content-how-to-message">
-							<?php 
-							printf( 
-								__( 'With Pro you can use several popular payment gateways to collect payments. We even have an <a href="%s" target="_blank">API</a> that you can use to integrate RCP with additional payment gateways. ', 'LION' ), 
+							<?php
+							printf(
+								__( 'With Pro you can use several popular payment gateways to collect payments. We even have an <a href="%s" target="_blank">API</a> that you can use to integrate RCP with additional payment gateways. ', 'LION' ),
 						'https://help.ithemes.com/hc/en-us/articles/360052351054-Payment-Gateway-API'
-							); 
+							);
 							?>
 							</p>
-						
+
 
 					</div>
 				</div>
@@ -493,7 +494,7 @@ function rcp_welcome_page_redesign() {
 				</div>
 			</div>
 		</div>
-		
+
 	</div>
 	<?php
 }
@@ -521,7 +522,7 @@ function rc_welcome_page_redesign() {
 						<p class="restrict-content-thanks-message"><?php _e( 'Restrict Content is a simple WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.', 'LION' ); ?></p>
 						<p class="restrict-content-thanks-message"><?php _e( 'Start your membership site and create multiple Membership Levels and collect payments with Stripe.', 'LION' ); ?></p>
 					</div>
-					
+
 				</div>
 				<div class="restrict-content-welcome-body-container">
 					<div class="restrict-content-how-to-body restrict-content-container-section">
