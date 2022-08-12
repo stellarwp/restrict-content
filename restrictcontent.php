@@ -13,6 +13,8 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
+define( 'RCP_PLUGIN_FILE', __FILE__ );
+
 $rc_options = get_option( 'rc_settings' );
 
 /**
