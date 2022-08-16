@@ -14,6 +14,8 @@
 defined( 'ABSPATH' ) || exit;
 
 define( 'RCP_PLUGIN_FILE', __FILE__ );
+// Load Composer autoload file only if we've not included this file already.
+require_once dirname( RCP_PLUGIN_FILE ) . '/vendor/autoload.php';
 
 $rc_options = get_option( 'rc_settings' );
 
