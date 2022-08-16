@@ -106,7 +106,7 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 		 *
 		 * @return Restrict_Content_Pro The one true Restrict_Content_Pro
 		 */
-		public static function instance( $file = '' ) {
+		public static function instance( $file = '', $use_PUE = false ) {
 
 			// Return if already instantiated
 			if ( self::is_instantiated() ) {
@@ -114,7 +114,7 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 			}
 
 			// Setup the singleton
-			self::setup_instance( $file );
+			self::setup_instance( $file, $use_PUE );
 
 			// Bootstrap
 			self::$instance->setup_constants();
@@ -181,8 +181,8 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 		 * @access private
 		 * @since  3.0
 		 */
-		private static function setup_instance( $file = '' ) {
-			self::$instance       = new Restrict_Content_Pro();
+		private static function setup_instance( $file = '', $use_PUE = false) {
+			self::$instance       = new Restrict_Content_Pro( $use_PUE );
 			self::$instance->file = $file;
 		}
 
@@ -191,9 +191,11 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 		 *
 		 * @since 3.5.18
 		 */
-		public function __construct() {
-			if ( function_exists( 'tribe_register_provider' ) ) {
-				tribe_register_provider( \RCP\PUE\Provider::class );
+		public function __construct( $use_PUE ) {
+			if( $use_PUE ) {
+				if ( function_exists( 'tribe_register_provider' ) ) {
+					tribe_register_provider( \RCP\PUE\Provider::class );
+				}
 			}
 		}
 
