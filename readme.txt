@@ -256,7 +256,7 @@ https://restrictcontentpro.com/tour/screenshots/
 
 == Changelog ==
 
-= 3.1.4 =
+= 3.1.3.1 =
 * Fix: Compatibility with The Events Calendar and Pods.
 
 = 3.1.3 =
