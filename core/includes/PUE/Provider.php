@@ -57,7 +57,7 @@ class Provider extends \tad_DI52_ServiceProvider {
 		$this->container->singleton( static::class, $this );
 		$this->container->singleton( PUE::class, PUE::class );
 
-		add_action( 'tribe_helper_activation_complete', [ $this, 'load_plugin_update_engine' ] );
+//		add_action( 'tribe_helper_activation_complete', [ $this, 'load_plugin_update_engine' ] );
 
 		if ( ! is_multisite() || is_super_admin() ) {
 			add_filter( 'plugin_action_links', [ $this, 'filter_plugin_action_links' ], 100, 4 );
@@ -69,7 +69,7 @@ class Provider extends \tad_DI52_ServiceProvider {
 			$this->load_plugin_update_engine();
 		}
 
-		register_uninstall_hook( Restrict_Content_Pro::FILE, [ 'tribe_events_virtual_uninstall' ] );
+//		register_uninstall_hook( Restrict_Content_Pro::FILE, [ 'tribe_events_virtual_uninstall' ] );
 	}
 
 	/**
