@@ -48,7 +48,14 @@ function rcp_settings_page() {
 			$_REQUEST['updated'] = false;
 		?>
 
-		<h1><?php _e( 'Restrict Content Pro', 'rcp' ); ?></h1>
+		<h1><?php
+			if( defined('IS_PRO') && IS_PRO ) {
+				_e( 'Restrict Content Pro', 'rcp' );
+			}
+			else {
+				_e( 'Restrict Content', 'rcp' );
+			}
+			?></h1>
 
 		<?php if( ! empty( $_GET['rcp_gateway_connect_error'] ) ): ?>
 			<div class="notice error">

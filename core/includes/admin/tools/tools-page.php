@@ -23,7 +23,14 @@ function rcp_tools_page() {
     ?>
 
 	<div class="wrap">
-		<h1><?php _e( 'Restrict Content Pro Tools', 'rcp' ); ?></h1>
+		<h1><?php
+			if( defined('IS_PRO') && IS_PRO ) {
+				_e( 'Restrict Content Pro Tools', 'rcp' );
+			}
+			else {
+				_e( 'Restrict Content Tools', 'rcp' );
+			}
+		?></h1>
 		<h2 class="nav-tab-wrapper">
 			<?php
 			foreach( rcp_get_tools_tabs() as $tab_id => $tab_name ) {
