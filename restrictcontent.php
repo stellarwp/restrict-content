@@ -14,6 +14,8 @@
 defined( 'ABSPATH' ) || exit;
 
 define( 'RCP_PLUGIN_FILE', __FILE__ );
+define( 'RCP_ROOT', plugin_dir_path( __FILE__ ));
+define( 'RCP_WEB_ROOT', plugin_dir_url( __FILE__ ));
 // Load Composer autoload file only if we've not included this file already.
 require_once dirname( RCP_PLUGIN_FILE ) . '/vendor/autoload.php';
 
