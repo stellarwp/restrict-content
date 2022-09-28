@@ -436,6 +436,10 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 				require_once RCP_PLUGIN_DIR . 'pro/integrations/freemius.php';
 				include_pro_files();
 			}
+			else {
+				// Integrations.
+				require_once RCP_PLUGIN_DIR . 'core/includes/integrations/class-rcp-freemius.php';
+			}
 
 		}
 
