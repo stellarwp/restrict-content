@@ -963,4 +963,5 @@ jQuery(document).ready(function($) {
 	});
 
 
+	$('body').addClass('restrict-content');
 });

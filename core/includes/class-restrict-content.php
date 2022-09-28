@@ -427,13 +427,13 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 			// @todo load this only when needed
 			require_once RCP_PLUGIN_DIR . 'core/includes/batch/v3/class-migrate-memberships.php';
 
-
-
 			// block functions
 			require_once RCP_PLUGIN_DIR . 'core/includes/block-functions.php';
 
 			if ( file_exists( RCP_PLUGIN_DIR . 'pro/class-restrict-content-pro.php') ) {
 				require_once( RCP_PLUGIN_DIR . 'pro/class-restrict-content-pro.php' );
+				// Integrations.
+				require_once RCP_PLUGIN_DIR . 'pro/integrations/freemius.php';
 				include_pro_files();
 			}
 
