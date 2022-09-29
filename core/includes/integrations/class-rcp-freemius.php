@@ -30,7 +30,7 @@ class RcpFreemius {
 				'is_org_compliant' => false,
 				'menu' => array(
 					'slug' => 'rcp-members',
-					'first-path' => 'admin.php?page=restrict-content-pro-welcome',
+					'first-path' => 'admin.php?page=restrict-content-welcome',
 					'account' => false,
 					'contact' => false,
 					'support' => false,
