@@ -909,6 +909,10 @@ img.restrict-content-logo {
 	border-color: #1e7e34;
 }
 
+#restrict_content_legacy_switch[disabled] {
+	cursor: not-allowed;
+}
+
 @media all and ( max-width: 768px ) {
 	.restrict-content-welcome-top-container {
 		display: block;
