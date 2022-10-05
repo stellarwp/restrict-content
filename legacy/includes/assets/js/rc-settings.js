@@ -29,7 +29,5 @@ jQuery(document).ready(function($) {
 function enableUpgradeButton() { // this function enables the "Use the new version of Restrict Content?" button when the checkbox is checked that tells them they can't downgrade again once they upgrade
     const upgradeBtn = document.querySelector("#restrict_content_legacy_switch");
     const upgradeCheckbox = document.querySelector("#restrict_content_legacy_switch_agree");
-    if (upgradeCheckbox.checked) {
-        upgradeBtn.disabled = false;
-    } else (upgradeBtn.disabled = true)
+    upgradeBtn.disabled = (false) ? upgradeCheckbox.checked : !upgradeCheckbox.checked;
     }
