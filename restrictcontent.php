@@ -652,8 +652,6 @@ function restrict_content_add_legacy_button_to_pro() {
 	<?php
 }
 
-add_action( 'rcp_misc_settings', 'restrict_content_add_legacy_button_to_pro' );
-
 /**
  * Load admin styles
  */
