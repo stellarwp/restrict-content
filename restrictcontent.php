@@ -652,8 +652,6 @@ function restrict_content_add_legacy_button_to_pro() {
 	<?php
 }
 
-add_action( 'rcp_misc_settings', 'restrict_content_add_legacy_button_to_pro' );
-
 /**
  * Load admin styles
  */
@@ -684,6 +682,7 @@ function rc_admin_styles_primary( $hook_suffix ) {
 		}
 
 		wp_enqueue_style( 'rcp-metabox', trailingslashit( plugins_url() ) . 'restrict-content/legacy/includes/assets/css/rc-metabox.css', array(), RCP_PLUGIN_VERSION );
+		wp_enqueue_style( 'rcp-global-admin', trailingslashit( plugins_url() ) . 'restrict-content/core/includes/css/rcp-global-admin.css', array(), RCP_PLUGIN_VERSION );
 	}
 }
 
@@ -863,7 +862,7 @@ add_action( 'admin_init', 'rc_deactivate_plugin' );
 function restrict_content_3_update_notification() {
 	if ( ! get_option( 'dismissed-restrict-content-upgrade-notice', false ) ) {
 		?>
-        <div class="notice restrict-content-upgrade-notice notice-info is-dismissible">
+		<div class="notice restrict-content-upgrade-notice notice-info is-dismissible">
             <p>
 				<?php
 				printf(
@@ -876,5 +875,24 @@ function restrict_content_3_update_notification() {
 		<?php
 	}
 }
+function restrict_content_bfcm_notice() {
+	if ( ! get_option( 'dismissed-restrict-content-bfcm-notice', false ) ) {
+		?>
+		<div class="notice restrict-content-bfcm-notice notice-info is-dismissible">
+            
+				<?php
+				printf(
+					__( '<img src="%s"><div><strong>Save 40%% off new purchases with coupon code BFCM22&nbsp; </strong>| Black Friday Sale November 21 - 29. &nbsp;<a target="_blank" href="%s"><strong>Shop now</strong></a></div>', 'LION' ),
+					trailingslashit( plugins_url() ) . 'restrict-content/core/includes/images/sale_burst.png',
+					'https://restrictcontentpro.com/black-friday/?utm_source=restrictcontentpro&utm_medium=plugin&utm_campaign=bfcm22'
+				);
+				?>
+            
+        </div> 
+		<?php
+	}
+}
 
 add_action( 'admin_notices', 'restrict_content_3_update_notification' );
+add_action( 'admin_notices', 'restrict_content_bfcm_notice' );
+

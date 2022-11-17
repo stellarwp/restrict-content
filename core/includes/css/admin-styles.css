@@ -1519,7 +1519,8 @@ only screen and (min-device-pixel-ratio: 1.5) {
 	padding-left: 0;
 }
 
-/* Notifications */
+/* Notifications 
+---------------------------------------------------------------*/
 .rcp__notification--inline {
 	background-color: #eeb9b9;
 	width: 700px;
@@ -1528,11 +1529,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
 }
 
 /* Why Go Pro && Welcome Pages
--------------------------------------------------------------- */
-.rcp-why-go-pro-wrap {
-
-}
-
+---------------------------------------------------------------*/
 img.restrict-content-logo {
 	margin: 20px 0;
 	max-height: 50px;
