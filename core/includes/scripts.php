@@ -115,6 +115,16 @@ function rcp_admin_scripts( $hook ) {
 				'rcp_dismissed_nonce' => wp_create_nonce( 'rcp_dismissed_nonce' ),
 		) );
 	}
+
+	// RCP Black Friday Notice Script Inclusion and Localization - Notice Dismissal
+	if ( ! get_option( 'dismissed-restrict-content-bfcm-notice', false ) ) {
+		wp_enqueue_script( 'restrict-content-pro-admin-notices', RCP_PLUGIN_URL . 'core/includes/js/restrict-content-pro-admin-notices.js', array( 'jquery' ), RCP_PLUGIN_VERSION );
+		wp_localize_script( 'restrict-content-pro-admin-notices', 'rcp_admin_notices_vars', array(
+				'rcp_dismissed_nonce' => wp_create_nonce( 'rcp_dismissed_nonce' ),
+		) );
+	}
+
+	
 }
 add_action( 'admin_enqueue_scripts', 'rcp_admin_scripts' );
 
@@ -330,6 +340,8 @@ function rcp_ajax_dismissed_notice_handler() {
 		if ( $_POST['name'] === 'rcp-plugin-migration-notice' ) {
 			update_option( 'dismissed-' . $_POST['name'], true );
 		} else if ( $_POST['name'] === 'restrict-content-upgrade-notice' ) {
+			update_option( 'dismissed-' . $_POST['name'], true );
+		} else if ( $_POST['name'] === 'restrict-content-bfcm-notice' ) {
 			update_option( 'dismissed-' . $_POST['name'], true );
 		}
 	}

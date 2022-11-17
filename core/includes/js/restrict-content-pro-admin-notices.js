@@ -36,4 +36,22 @@ jQuery(document).ready(function($) {
 			}
 		});
 	});
+	
+	$( document ).on( 'click', '.restrict-content-bfcm-notice .notice-dismiss', function() {
+		$.ajax({
+			url: ajaxurl,
+			method: 'POST',
+			data: {
+				action: 'rcp_ajax_dismissed_notice_handler',
+				name: 'restrict-content-bfcm-notice',
+				rcp_nonce: rcp_admin_notices_vars.rcp_dismissed_nonce
+			},
+			success: function ( response ) {
+				console.log( response );
+			},
+			error: function ( error ) {
+				console.log( error );
+			}
+		});
+	});
 });
