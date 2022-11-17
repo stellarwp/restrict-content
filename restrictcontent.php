@@ -877,19 +877,28 @@ function restrict_content_3_update_notification() {
 }
 function restrict_content_bfcm_notice() {
 	if ( ! get_option( 'dismissed-restrict-content-bfcm-notice', false ) ) {
+
+		$saleDate = date( 'Ymd' );
+		$saleBegin = 20221121;
+		$saleEnd = 20221129;
+		
+		if ( $saleDate >= $saleBegin && $saleDate <= $saleEnd ) {
 		?>
 		<div class="notice restrict-content-bfcm-notice notice-info is-dismissible">
             
 				<?php
-				printf(
+
+					printf(
 					__( '<img src="%s"><div><strong>Save 40%% off new purchases with coupon code BFCM22&nbsp; </strong>| Black Friday Sale November 21 - 29. &nbsp;<a target="_blank" href="%s"><strong>Shop now</strong></a></div>', 'LION' ),
 					trailingslashit( plugins_url() ) . 'restrict-content/core/includes/images/sale_burst.png',
 					'https://restrictcontentpro.com/black-friday/?utm_source=restrictcontentpro&utm_medium=plugin&utm_campaign=bfcm22'
-				);
+					);
+				
 				?>
             
         </div> 
 		<?php
+		}
 	}
 }
 
