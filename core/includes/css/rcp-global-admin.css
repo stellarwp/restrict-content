@@ -1,0 +1,21 @@
+/* Black Friday Banner
+---------------------------------------------------------------*/
+.notice.restrict-content-bfcm-notice {
+    background: #4204A7;
+    color: white;
+    text-align: center;
+    font-family: 'Helvetica';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    padding-block: 10px;
+}
+
+.notice.restrict-content-bfcm-notice img {
+margin-right: 10px;
+}
+
+.notice.restrict-content-bfcm-notice a {
+    color: #F9E26E;
+}

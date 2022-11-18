@@ -115,8 +115,36 @@ function rcp_admin_scripts( $hook ) {
 				'rcp_dismissed_nonce' => wp_create_nonce( 'rcp_dismissed_nonce' ),
 		) );
 	}
+
+	// RCP Black Friday Notice Script Inclusion and Localization - Notice Dismissal
+	if ( ! get_option( 'dismissed-restrict-content-bfcm-notice', false ) ) {
+		wp_enqueue_script( 'restrict-content-pro-admin-notices', RCP_PLUGIN_URL . 'core/includes/js/restrict-content-pro-admin-notices.js', array( 'jquery' ), RCP_PLUGIN_VERSION );
+		wp_localize_script( 'restrict-content-pro-admin-notices', 'rcp_admin_notices_vars', array(
+				'rcp_dismissed_nonce' => wp_create_nonce( 'rcp_dismissed_nonce' ),
+		) );
+	}
+
+	
 }
 add_action( 'admin_enqueue_scripts', 'rcp_admin_scripts' );
+
+/**
+ * Sets the URL of the Restrict > Help page
+ *
+ * @access      public
+ * @since       2.5
+ * @return      void
+ */
+function rcp_admin_help_url() {
+?>
+	<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$('#adminmenu .toplevel_page_rcp-members .wp-submenu-wrap a[href="admin.php?page=rcp-help"]').prop('href', 'http://restrictcontentpro.com/knowledgebase/').prop('target', '_blank');
+	});
+	</script>
+<?php
+}
+add_action( 'admin_head', 'rcp_admin_help_url' );
 
 /**
  * Load admin stylesheets
@@ -246,9 +274,7 @@ function rcp_print_scripts() {
 			'recaptcha_version'  => rcp_get_recaptcha_version(),
 			'error_occurred'     => esc_html__( 'An unexpected error has occurred. Please try again or contact support if the issue persists.', 'rcp' ),
 			'enter_card_details' => esc_html__( 'Please enter your card details.', 'rcp' ),
-			'invalid_cardholder' => esc_html__( 'The card holder name you have entered is invalid', 'rcp' ),
-			'braintree_empty_fields' => esc_html__( 'Billing fields should be completed.', 'rcp' ),
-			'braintree_invalid_nonce' => esc_html__( 'RCP 3DS: There was an error validating your information. Please reload the page.', 'rcp' ),
+			'invalid_cardholder' => esc_html__( 'The card holder name you have entered is invalid', 'rcp' )
 		)
 	);
 
@@ -314,6 +340,8 @@ function rcp_ajax_dismissed_notice_handler() {
 		if ( $_POST['name'] === 'rcp-plugin-migration-notice' ) {
 			update_option( 'dismissed-' . $_POST['name'], true );
 		} else if ( $_POST['name'] === 'restrict-content-upgrade-notice' ) {
+			update_option( 'dismissed-' . $_POST['name'], true );
+		} else if ( $_POST['name'] === 'restrict-content-bfcm-notice' ) {
 			update_option( 'dismissed-' . $_POST['name'], true );
 		}
 	}
