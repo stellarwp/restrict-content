@@ -115,11 +115,23 @@ function rc_settings_page() {
                                             id="rcp_settings_nonce"
                                             value="<?php echo wp_create_nonce( 'rc_process_legacy_nonce' ); ?>"
                                     />
+                                    <label for="understand">I understand that once I upgrade, I CANNOT downgrade back to legacy</label>
+                                    <input
+                                    type="checkbox"
+                                    id="restrict_content_legacy_switch_agree"
+                                    name="understand"
+                                    value="understand"
+                                    onchange="enableUpgradeButton()"
+
+                                    />
+                </br></br>
                                     <input
                                             type="button"
                                             id="restrict_content_legacy_switch"
                                             class="button-primary btn-success"
                                             value="<?php _e( 'Use the new version of Restrict Content?', 'LION' ); ?>"
+                                            disabled="true"
+                                            
                                     />
                                 </td>
                             </tr>
@@ -140,7 +152,7 @@ function rc_settings_page() {
 						</p>
 					</form>
 
-					<?php rc_pro_features(); ?>
+					
 
 				</div>
 
@@ -149,27 +161,6 @@ function rc_settings_page() {
 		</div><!--end sf-wrap-->
 
 	</div><!--end wrap-->
-
-	<?php
-}
-
-/**
- * Features list for Restrict Content Pro
- */
-function rc_pro_features() {
-	?>
-
-    <div class="rcp-pro-banner">
-        <div class="rcp-pro-logo">
-            <img src="<?php echo esc_url( RC_PLUGIN_URL . '/includes/assets/images/restrict_content_logo_white.svg' ); ?>" >
-        </div>
-        <div class="rcp-unlock-text">
-            <h2><?php _e( 'Get powerful new membership capabilities and content access features', 'LION' ); ?></h2>
-        </div>
-        <div class="rcp-pro-button">
-            <a><?php _e( 'Update now to 3.0 (Free!)', 'LION' ); ?></a>
-        </div>
-    </div>
 
 	<?php
 }

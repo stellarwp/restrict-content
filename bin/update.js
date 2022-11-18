@@ -2,7 +2,7 @@ const { spawnSync } = require( 'child_process' );
 const { rmdirSync } = require( 'fs' );
 const tmp = require( 'tmp' );
 
-const REPO = 'git@github.com:ithemes/restrict-content-pro.git';
+const REPO = 'git@github.com:stellarwp/restrict-content-pro.git';
 
 function run( command, args, options ) {
     console.log( `${command} ${args.join( ' ' )}` );

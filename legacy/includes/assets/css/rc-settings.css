@@ -900,13 +900,17 @@ img.restrict-content-logo {
 }
 
 #restrict_content_legacy_switch {
-	background-color: #28a745 !important;
-	border-color: #28a745 !important;
+	background-color: #28a745;
+	border-color: #28a745;
 }
 
 #restrict_content_legacy_switch:hover {
-	background-color: #218838 !important;
-	border-color: #1e7e34 !important;
+	background-color: #218838;
+	border-color: #1e7e34;
+}
+
+#restrict_content_legacy_switch[disabled] {
+	cursor: not-allowed;
 }
 
 @media all and ( max-width: 768px ) {

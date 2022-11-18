@@ -1055,7 +1055,7 @@ function rcp_settings_page() {
 						/**
 						 * Action to add Discount Signup Fees
 						 */
-						do_action('rcp_after_content_excerpts_admin');
+						do_action('rcp_after_content_excerpts_admin', $rcp_options);
 
 						?>
 
@@ -1306,6 +1306,13 @@ function rcp_sanitize_settings( $data ) {
 		$query_args['key'] = sanitize_text_field( $key );
 
 		$pue_checker->license_key_status( $query_args );
+	}
+
+	if( ! defined('IS_PRO') ) {
+		// We need to set the default templates for Free. See RC-141.
+		$default_templates = rcp_create_default_email_templates();
+		$default_templates['email_verification'] = 'all';
+		$data = array_merge( $data, $default_templates);
 	}
 
 	do_action( 'rcp_save_settings', $data );

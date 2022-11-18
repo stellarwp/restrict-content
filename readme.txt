@@ -1,11 +1,11 @@
 === WordPress Membership Plugin - Restrict Content ===
 Author URI: https://restrictcontentpro.com
 Author: StellarWP
-Contributors: ithemes, reedyseth, highprrrr, neillmcshea, layotte, jthillithemes
+Contributors: stellarwp, reedyseth, highprrrr, layotte
 Tags: restrict pages, restrict posts, restrict access, membership, registration form, access control
 Requires at least: 5.6
-Tested up to: 6.1
-Stable tag: 3.1.6
+Tested up to: 6.1.1
+Stable tag: 3.1.7
 
 Restrict Content is a powerful WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.
 
@@ -255,6 +255,10 @@ Go to the demo page to see examples:
 https://restrictcontentpro.com/tour/screenshots/
 
 == Changelog ==
+
+= 3.1.7 =
+* Fix: Email templates that were deleted when saving any RC setting.
+* Enhancement: Register templates and remove duplicated code.
 
 = 3.1.6 =
 * Add: Freemius integration to help Restrict Content Pro be a better plugin.
