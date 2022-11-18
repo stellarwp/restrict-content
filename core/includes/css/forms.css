@@ -396,3 +396,8 @@ p.rcp_success {
 	text-align: center;
 	width: 100%;
 }
+
+/** Braintree Styles **/
+#rcp_registration_form .rcp_gateway_braintree_fields .rcp_braintree_billing_info input[type="text"]{
+	width: 30%;
+}

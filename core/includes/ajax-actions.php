@@ -250,3 +250,6 @@ function rcp_validate_registration_state_ajax() {
 }
 add_action( 'wp_ajax_rcp_validate_registration_state', 'rcp_validate_registration_state_ajax' );
 add_action( 'wp_ajax_nopriv_rcp_validate_registration_state', 'rcp_validate_registration_state_ajax' );
+
+add_action( 'wp_ajax_rcp_braintree_3ds_validation_fields', 'rcp_braintree_3ds_validation_fields' );
+add_action( 'wp_ajax_nopriv_rcp_braintree_3ds_validation_fields', 'rcp_braintree_3ds_validation_fields' );

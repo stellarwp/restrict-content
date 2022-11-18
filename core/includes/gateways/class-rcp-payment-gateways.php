@@ -162,6 +162,7 @@ class RCP_Payment_Gateways {
 	 */
 	public function get_gateway_fields( $gateway ) {
 
+		$gateway_name = sanitize_text_field( $gateway );
 		$gateway     = $this->get_gateway( sanitize_text_field( $gateway ) );
 		$gateway_obj = false;
 
@@ -208,6 +209,9 @@ class RCP_Payment_Gateways {
 				<?php endif; ?>
 			</div>
 			<?php
+			if( 'braintree' == $gateway_name ) {
+				do_action( 'rcp_braintree_additional_fields' );
+			}
 			$fields = ob_get_clean() . $fields;
 		}
 

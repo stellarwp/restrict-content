@@ -1629,7 +1629,7 @@ img.restrict-content-logo {
 }
 
 .rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-why-go-pro-buttons-container .try-before-you-buy {
-	border: 4px solid #B685C9;
+	border: 4px solid #640af8;
 	border-radius: 7px;
 	text-align: center;
 	font-weight: 800;
@@ -1651,7 +1651,7 @@ img.restrict-content-logo {
 }
 
 .rcp-why-go-pro-wrap .rcp-go-pro-color-container .rcp-why-go-pro-inner-wrapper .rcp-why-go-pro-buttons-container .rcp-unlock-pro-features-add-ons {
-	background: transparent linear-gradient(94deg, #B685C9 0%, #743195 100%) 0% 0% no-repeat padding-box;
+	background: transparent linear-gradient(94deg, #640af8 0%, #743195 100%) 0% 0% no-repeat padding-box;
 	border-radius: 7px;
 	text-align: center;
 	font-weight: 800;
@@ -1784,7 +1784,7 @@ img.restrict-content-logo {
 }
 
 .rcp-pro-banner .rcp-pro-button a {
-	background: transparent linear-gradient(94deg, #B685C9 0%, #743195 100%) 0% 0% no-repeat padding-box;
+	background: transparent linear-gradient(94deg, #640af8 0%, #743195 100%) 0% 0% no-repeat padding-box;
 	border-radius: 7px;
 	text-align: center;
 	font-weight: 800;
@@ -1932,7 +1932,7 @@ img.restrict-content-logo {
 }
 
 .restrict-content-try-free-submit {
-	background: #B685C9 0% 0% no-repeat padding-box;
+	background: #640af8 0% 0% no-repeat padding-box;
 	border-radius: 0px 4px 4px 0px;
 	text-align: center;
 	font-weight: bold;
@@ -1996,7 +1996,7 @@ img.restrict-content-logo {
 }
 
 .restrict-content-welcome-right-container .restrict-content-welcome-advertisement .restrict-content-welcome-button {
-	background: #B685C9 0% 0% no-repeat padding-box;
+	background: #640af8 0% 0% no-repeat padding-box;
 	border-radius: 4px;
 	text-align: center;
 	font-weight: bold;
@@ -2039,7 +2039,7 @@ img.restrict-content-logo {
 }
 
 .restrict-content-welcome-top-container .restrict-content-welcome-left-container .restrict-content-inner-container .restrict-content-help-section:hover .restrict-content-help-section-icon {
-	background-color: #B685C9;
+	background-color: #640af8;
 }
 
 .restrict-content-welcome-top-container .restrict-content-welcome-left-container .restrict-content-inner-container .restrict-content-help-section:hover .restrict-content-help-section-arrow {
@@ -2049,7 +2049,7 @@ img.restrict-content-logo {
 .restrict-content-help-section .restrict-content-help-section-icon {
 	width: 29px;
 	height: 29px;
-	border: 1px solid #B685C9;
+	border: 1px solid #640af8;
 	border-radius: 7px;
 	padding: 12px;
 }
@@ -2061,7 +2061,7 @@ img.restrict-content-logo {
 }
 
 .restrict-content-welcome-top-container .restrict-content-welcome-left-container .restrict-content-inner-container .restrict-content-help-section:hover #restrict-content-help-center {
-	background: url(../images/help-white.svg) no-repeat scroll right center #B685C9;
+	background: url(../images/help-white.svg) no-repeat scroll right center #640af8;
 	width: 30px;
 	height: 30px
 }
@@ -2073,7 +2073,7 @@ img.restrict-content-logo {
 }
 
 .restrict-content-welcome-top-container .restrict-content-welcome-left-container .restrict-content-inner-container .restrict-content-help-section:hover #restrict-content-trouble-shooting {
-	background: url(../images/bug-white.svg) no-repeat scroll right center #B685C9;
+	background: url(../images/bug-white.svg) no-repeat scroll right center #640af8;
 	width: 30px;
 	height: 30px
 }
@@ -2085,7 +2085,7 @@ img.restrict-content-logo {
 }
 
 .restrict-content-welcome-top-container .restrict-content-welcome-left-container .restrict-content-inner-container .restrict-content-help-section:hover #restrict-content-support-forum {
-	background: url(../images/support-white.svg) no-repeat scroll right center #B685C9;
+	background: url(../images/support-white.svg) no-repeat scroll right center #640af8;
 	width: 30px;
 	height: 30px
 }
@@ -2114,7 +2114,7 @@ img.restrict-content-logo {
 
 .restrict-content-help-section:hover {
 	box-shadow: 0px 3px 6px #22222240;
-	border: 1px solid #B685C9 !important;
+	border: 1px solid #640af8 !important;
 }
 
 .restrict-content-premium-support {
@@ -2186,11 +2186,11 @@ img.restrict-content-logo {
 .restrict-content-unlock-premium-features .go-pro-now {
 	text-align: center;
 	font-weight: 700;
-	font-size: 1.1rem;
+	font-size: 1rem;
 	line-height: 19px;
 	letter-spacing: 0px;
 	color: #FFFFFF;
-	background: #B685C9 0% 0% no-repeat padding-box;
+	background: #640af8 0% 0% no-repeat padding-box;
 	border-radius: 4px;
 	padding: 10px 40px;
 	text-decoration: none;
@@ -2330,7 +2330,7 @@ img.restrict-content-logo {
 	}
 
 	.restrict-content-try-free-submit {
-		background: #B685C9 0% 0% no-repeat padding-box;
+		background: #640af8 0% 0% no-repeat padding-box;
 		border-radius: 4px;
 		width: 100%;
 		display: block;
