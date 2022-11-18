@@ -637,22 +637,24 @@ add_action( 'admin_notices', 'restrict_content_admin_try_free_success' );
 function restrict_content_admin_try_free () {
 
 	if( isset( $_POST['rc_welcome_try_free_meta_nonce'] ) && wp_verify_nonce( $_POST['rc_welcome_try_free_meta_nonce'], 'rc_welcome_try_free_meta_nonce') ) {
-
-		$body = array(
-				'template_name' => 'rcp-demo-delivery',
-				'email' => $_POST['try_email_address']
+		$body = array (
+			'email' => $_POST['try_email_address'],
 		);
-
+		
 		$fields = array(
-				'method'        => 'POST',
-				'body'  => json_encode( $body )
+			'headers' => array( 'Content-Type' => 'application/json' ),
+			'body' => wp_json_encode( $body ),
 		);
 
-		$response = wp_remote_request( 'https://api.ithemes.com/email/send', $fields );
+		$rcp_newsletter_subscribe_api_url = defined( 'RCP_NEWSLETTER_SUBSCRIBE_API_URL' ) ? sanitize_url( RCP_NEWSLETTER_SUBSCRIBE_API_URL ) : 'https://my.restrictcontentpro.com/wp-json/my-rcp/v1/newsletter-subscribe';
 
-		if ( ! is_wp_error( $response ) && $_POST['source_page'] === 'welcome_page' ) {
+		$response = wp_remote_post( $rcp_newsletter_subscribe_api_url, $fields );
+
+		$is_response_error = ( 500 === $response["response"]["code"] );
+
+		if ( ! $is_response_error && $_POST['source_page'] === 'welcome_page' ) {
 			wp_redirect( add_query_arg( 'message', 'success', admin_url( 'admin.php?page=restrict-content-welcome' ) ) );
-		} else if ( ! is_wp_error( $response ) && $_POST['source_page'] === 'help_page' ) {
+		} else if ( ! $is_response_error && $_POST['source_page'] === 'help_page' ) {
 			wp_redirect( add_query_arg( 'message', 'success', admin_url( 'admin.php?page=rcp-need-help' ) ) );
 		} else {
 			wp_redirect( add_query_arg( 'message', 'failed', admin_url( 'admin.php?page=rcp-need-help' ) ) );
