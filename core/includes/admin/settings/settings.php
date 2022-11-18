@@ -1055,7 +1055,7 @@ function rcp_settings_page() {
 						/**
 						 * Action to add Discount Signup Fees
 						 */
-						do_action('rcp_after_content_excerpts_admin');
+						do_action('rcp_after_content_excerpts_admin', $rcp_options);
 
 						?>
 

@@ -119,24 +119,6 @@ function rcp_admin_scripts( $hook ) {
 add_action( 'admin_enqueue_scripts', 'rcp_admin_scripts' );
 
 /**
- * Sets the URL of the Restrict > Help page
- *
- * @access      public
- * @since       2.5
- * @return      void
- */
-function rcp_admin_help_url() {
-?>
-	<script type="text/javascript">
-	jQuery(document).ready(function($) {
-		$('#adminmenu .toplevel_page_rcp-members .wp-submenu-wrap a[href="admin.php?page=rcp-help"]').prop('href', 'http://restrictcontentpro.com/knowledgebase/').prop('target', '_blank');
-	});
-	</script>
-<?php
-}
-add_action( 'admin_head', 'rcp_admin_help_url' );
-
-/**
  * Load admin stylesheets
  *
  * @param string $hook Page hook.
@@ -264,7 +246,9 @@ function rcp_print_scripts() {
 			'recaptcha_version'  => rcp_get_recaptcha_version(),
 			'error_occurred'     => esc_html__( 'An unexpected error has occurred. Please try again or contact support if the issue persists.', 'rcp' ),
 			'enter_card_details' => esc_html__( 'Please enter your card details.', 'rcp' ),
-			'invalid_cardholder' => esc_html__( 'The card holder name you have entered is invalid', 'rcp' )
+			'invalid_cardholder' => esc_html__( 'The card holder name you have entered is invalid', 'rcp' ),
+			'braintree_empty_fields' => esc_html__( 'Billing fields should be completed.', 'rcp' ),
+			'braintree_invalid_nonce' => esc_html__( 'RCP 3DS: There was an error validating your information. Please reload the page.', 'rcp' ),
 		)
 	);
 

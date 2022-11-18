@@ -15,8 +15,7 @@
  */
 function rcp_settings_menu() {
 	global $rcp_members_page, $rcp_customers_page, $rcp_subscriptions_page, $rcp_payments_page,
-		   $rcp_settings_page, $rcp_export_page, $rcp_help_page, $rcp_tools_page,
-		   $rcp_add_ons_page, $rcp_reminders_page, $restrict_content_pro_why_go_pro,
+		   $rcp_settings_page, $rcp_export_page, $rcp_tools_page, $rcp_reminders_page, $restrict_content_pro_why_go_pro, 
 		   $restrict_content_pro_help_page, $restrict_content_pro_welcome_page;
 
 	// add settings page
@@ -27,18 +26,15 @@ function rcp_settings_menu() {
 	$rcp_payments_page                  = add_submenu_page( 'rcp-members', __( 'Payments', 'rcp' ), __( 'Payments', 'rcp' ), 'rcp_view_payments', 'rcp-payments', 'rcp_payments_page', 5 );
 	$rcp_settings_page                  = add_submenu_page( 'rcp-members', __( 'Restrict Content Pro Settings', 'rcp' ), __( 'Settings', 'rcp' ),'rcp_manage_settings', 'rcp-settings', 'rcp_settings_page', 7 );
 	$rcp_tools_page                     = add_submenu_page( 'rcp-members', __( 'Tools', 'rcp' ), __( 'Tools', 'rcp' ), 'rcp_manage_settings', 'rcp-tools', 'rcp_tools_page',  8 );
-
 	$rcp_reminders_page                 = add_submenu_page( 'rcp-members', __( 'Subscription Reminder', 'rcp' ), __( 'Subscription Reminder', 'rcp' ), 'rcp_manage_settings', 'rcp-reminder', 'rcp_subscription_reminder_page', 11 );
-
+	$restrict_content_pro_help_page     = add_submenu_page( 'rcp-members', __( 'Help', 'LION' ), __( 'Help', 'LION' ), 'manage_options', 'rcp-need-help', 'rc_need_help_page_redesign' );
 
 	// If we are not in PRO include the Free menus.
 	if( false === has_action('admin_menu','include_pro_pages') ) {
 		$restrict_content_pro_why_go_pro    = add_submenu_page( 'rcp-members', __( 'Why Go Pro', 'LION' ), __( 'Why go Pro', 'LION' ), 'manage_options', 'rcp-why-go-pro', 'rc_why_go_pro_page_redesign' );
-		$restrict_content_pro_help_page     = add_submenu_page( 'rcp-members', __( 'Help', 'LION' ), __( 'Help', 'LION' ), 'manage_options', 'rcp-need-help', 'rc_need_help_page_redesign' );
 		$restrict_content_pro_welcome_page  = add_submenu_page( null, __( 'RCP Welcome', 'LION'), __( 'RCP Welcome', 'LION' ), 'manage_options', 'restrict-content-welcome', 'rc_welcome_page_redesign' );
 	}
 	else {
-		$rcp_help_page = add_submenu_page( 'rcp-members', __( 'Help', 'rcp' ), __( 'Help', 'rcp' ), 'rcp_view_help', 'rcp-help', '__return_null' );
 		$restrict_content_pro_welcome_page  = add_submenu_page( null, __( 'RCP Welcome', 'LION'), __( 'RCP Welcome', 'LION' ), 'manage_options', 'restrict-content-pro-welcome', 'rcp_welcome_page_redesign' );
 	}
 
@@ -85,8 +81,8 @@ function rcp_is_rcp_admin_page() {
 
 	$screen = get_current_screen();
 
-	global $rcp_members_page, $rcp_customers_page, $rcp_subscriptions_page, $rcp_discounts_page, $rcp_payments_page, $rcp_reports_page, $rcp_settings_page, $rcp_help_page, $rcp_tools_page, $restrict_content_pro_welcome_page;
-	$pages = array( $rcp_members_page, $rcp_customers_page, $rcp_subscriptions_page, $rcp_discounts_page, $rcp_payments_page, $rcp_reports_page, $rcp_settings_page, $rcp_tools_page, $rcp_help_page, $restrict_content_pro_welcome_page );
+	global $rcp_members_page, $rcp_customers_page, $rcp_subscriptions_page, $rcp_discounts_page, $rcp_payments_page, $rcp_reports_page, $rcp_settings_page, $rcp_help_page, $rcp_tools_page, $restrict_content_pro_welcome_page, $restrict_content_pro_help_page;
+	$pages = array( $rcp_members_page, $rcp_customers_page, $rcp_subscriptions_page, $rcp_discounts_page, $rcp_payments_page, $rcp_reports_page, $rcp_settings_page, $rcp_tools_page, $rcp_help_page, $restrict_content_pro_welcome_page, $restrict_content_pro_help_page );
 
 	// Include post types that support restrictions.
 	if ( 'post' === $screen->base && ! empty( $screen->post_type ) && in_array( $screen->post_type, rcp_get_metabox_post_types() ) ) {
@@ -295,7 +291,7 @@ function rc_need_help_page_redesign() {
 				?>
 			</p>
 			<div class="restrict-content-inner-container">
-				<a class="restrict-content-section-link" href="https://help.ithemes.com">
+				<a class="restrict-content-section-link" href="https://restrictcontentpro.com/knowledgebase" target="_blank">
 					<div class="restrict-content-help-section">
 						<div class="restrict-content-help-section-icon">
 							<div id="restrict-content-help-center" class="restrict-content-help-section-trouble-shooting-image"></div>
@@ -307,7 +303,7 @@ function rc_need_help_page_redesign() {
 						<img class="restrict-content-help-section-arrow hidden" style="display: none;" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/purple-arrow-right.svg' ); ?>" >
 					</div>
 				</a>
-				<a class="restrict-content-section-link" href="https://help.ithemes.com/hc/en-us/articles/115003073433-Checking-for-a-Conflict">
+				<a class="restrict-content-section-link" href="https://restrictcontentpro.com/knowledgebase/testing-for-conflicts-with-themes-and-other-plugins/" target="_blank">
 					<div id="restrict-content-troubleshooting-link" class="restrict-content-help-section">
 						<div class="restrict-content-help-section-icon">
 							<div id="restrict-content-trouble-shooting" class="restrict-content-help-section-trouble-shooting-image"></div>
@@ -319,7 +315,10 @@ function rc_need_help_page_redesign() {
 						<img class="restrict-content-help-section-arrow hidden" style="display: none;" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/purple-arrow-right.svg' ); ?>" >
 					</div>
 				</a>
-				<a class="restrict-content-section-link" href="https://wordpress.org/support/plugin/restrict-content/">
+				
+				<?php if( false === has_action('admin_menu','include_pro_pages') ) { ?>
+
+				<a class="restrict-content-section-link" href="https://wordpress.org/support/plugin/restrict-content/" target="_blank">
 					<div id="restrict-content-support-link" class="restrict-content-help-section">
 						<div class="restrict-content-help-section-icon">
 							<div id="restrict-content-support-forum" class="restrict-content-help-section-trouble-shooting-image"></div>
@@ -331,6 +330,22 @@ function rc_need_help_page_redesign() {
 						<img class="restrict-content-help-section-arrow hidden" style="display:none;" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/purple-arrow-right.svg' ); ?>" >
 					</div>
 				</a>
+				<?php } else { ?>
+					<a class="restrict-content-section-link" href="https://restrictcontentpro.com/support/" target="_blank">
+					<div id="restrict-content-support-link" class="restrict-content-help-section">
+						<div class="restrict-content-help-section-icon">
+							<div id="restrict-content-support-forum" class="restrict-content-help-section-trouble-shooting-image"></div>
+						</div>
+						<div class="restrict-content-help-section-content">
+							<h3><?php _e( 'Submit Support Ticket', 'LION' ); ?></h3>
+							<p><?php _e( 'If you are still having trouble after checking for a conflict, feel free to start a new thread on the Restrict Content support forum.', 'LION' ); ?></p>
+						</div>
+						<img class="restrict-content-help-section-arrow hidden" style="display:none;" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/purple-arrow-right.svg' ); ?>" >
+					</div>
+				</a>
+
+				<?php } ?>
+				<?php if( false === has_action('admin_menu','include_pro_pages') ) { ?>
 				<div class="restrict-content-premium-support">
 					<div class="premium-support-content">
 						<h3><?php _e( 'Get Premium Support', 'LION' ); ?></h3>
@@ -345,6 +360,7 @@ function rc_need_help_page_redesign() {
 					</div>
 
 				</div>
+				<?php } ?>
 			</div>
 		</div>
 		<div class="restrict-content-welcome-right-container">
