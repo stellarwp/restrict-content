@@ -117,19 +117,21 @@ rcp_show_error_messages( 'register' ); ?>
 	<?php
 	}
 
-	function rcp_should_show_discounts( $level ) {
-		// This one is easy. No discounts? Stop here.
-		if ( ! rcp_has_discounts() ) {
-			return false;
-		}
+	if ( ! function_exists( 'rcp_should_show_discounts' ) ) :
+		function rcp_should_show_discounts( $level ) {
+			// This one is easy. No discounts? Stop here.
+			if ( ! rcp_has_discounts() ) {
+				return false;
+			}
 
-		// On "register-single.php" and it's free.
-		if ( $level && $level->is_free() ) {
-			return false;
-		}
+			// On "register-single.php" and it's free.
+			if ( $level && $level->is_free() ) {
+				return false;
+			}
 
-		return true;
-	}
+			return true;
+		}
+	endif;
 
 	$show_discounts = rcp_should_show_discounts( $level );
 
@@ -164,18 +166,20 @@ rcp_show_error_messages( 'register' ); ?>
 	// So we return true immediately if so
 	// If $level is a thing, we check if it's free, and return false
 	// Don't need gateways on free stuff
-	function rcp_should_show_gateway_fields( $level ) {
-		if ( ! $level ) {
+	if ( ! function_exists( 'rcp_should_show_gateway_fields' ) ) :
+		function rcp_should_show_gateway_fields( $level ) {
+			if ( ! $level ) {
+				return true;
+			}
+
+			if ( $level->is_free() ) {
+				return false;
+			}
+
+			// We have a $level, but it ain't free
 			return true;
 		}
-
-		if ( $level->is_free() ) {
-			return false;
-		}
-
-		// We have a $level, but it ain't free
-		return true;
-	}
+	endif;
 
 	$should_show_gateway_fields = rcp_should_show_gateway_fields( $level );
 
