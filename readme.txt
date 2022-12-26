@@ -1,4 +1,4 @@
-=== WordPress Membership Plugin - Restrict Content ===
+=== Membership Plugin - Restrict Content ===
 Author URI: https://restrictcontentpro.com
 Author: StellarWP
 Contributors: stellarwp, reedyseth, highprrrr, layotte
