@@ -15,18 +15,18 @@
  * @since 2.6.4
  * @return bool True if we are in sandbox mode
  */
-function rcp_is_sandbox(){
+function rcp_is_sandbox() {
 
-    global $rcp_options;
+	global $rcp_options;
 
-    $is_sandbox = ( defined( 'RCP_GATEWAY_SANDBOX_MODE' ) && RCP_GATEWAY_SANDBOX_MODE ) ? true : isset( $rcp_options['sandbox'] );
+	$is_sandbox = ( defined( 'RCP_GATEWAY_SANDBOX_MODE' ) && RCP_GATEWAY_SANDBOX_MODE ) ? true : isset( $rcp_options['sandbox'] );
 
 	/**
 	 * Filters whether or not sandbox mode is enabled.
 	 *
 	 * @param bool $is_sandbox
 	 */
-    return (bool) apply_filters( 'rcp_is_sandbox', $is_sandbox );
+	return (bool) apply_filters( 'rcp_is_sandbox', $is_sandbox );
 
 }
 
@@ -43,8 +43,8 @@ function rcp_is_paid_content( $post_id ) {
 		$post_id = get_the_ID();
 	}
 
-	$return = false;
-	$post_type_restrictions = rcp_get_post_type_restrictions( get_post_type( $post_id) );
+	$return                 = false;
+	$post_type_restrictions = rcp_get_post_type_restrictions( get_post_type( $post_id ) );
 
 	if ( ! empty( $post_type_restrictions ) ) {
 
@@ -52,7 +52,6 @@ function rcp_is_paid_content( $post_id ) {
 		if ( array_key_exists( 'is_paid', $post_type_restrictions ) ) {
 			$return = true;
 		}
-
 	} else {
 
 		// Check regular post.
@@ -61,7 +60,6 @@ function rcp_is_paid_content( $post_id ) {
 			// this post is for paid users only
 			$return = true;
 		}
-
 	}
 
 	return (bool) apply_filters( 'rcp_is_paid_content', $return, $post_id );
@@ -75,13 +73,13 @@ function rcp_is_paid_content( $post_id ) {
  * @return array Lists all paid only posts.
  */
 function rcp_get_paid_posts() {
-	$args = array(
+	$args     = array(
 		'meta_key'       => '_is_paid',
 		'meta_value'     => 1,
 		'post_status'    => 'publish',
 		'posts_per_page' => -1,
 		'post_type'      => 'any',
-		'fields'         => 'ids'
+		'fields'         => 'ids',
 	);
 	$paid_ids = get_posts( $args );
 	if ( $paid_ids ) {
@@ -139,34 +137,87 @@ function rcp_get_currency_symbol( $currency = false ) {
 		$currency = rcp_get_currency();
 	}
 
-	switch( $currency ) {
-		case "USD" : $symbol = '&#36;'; break;
-		case "EUR" : $symbol = '&#8364;'; break;
-		case "GBP" : $symbol = '&#163;'; break;
-		case "AUD" : $symbol = '&#36;'; break;
-		case "BRL" : $symbol = '&#82;&#36;'; break;
-		case "CAD" : $symbol = '&#36;'; break;
-		case "CHF" : $symbol = '&#67;&#72;&#70;'; break;
-		case "CZK" : $symbol = '&#75;&#269;'; break;
-		case "DKK" : $symbol = '&#107;&#114;'; break;
-		case "HKD" : $symbol = '&#36;'; break;
-		case "HUF" : $symbol = '&#70;&#116;'; break;
-		case "ILS" : $symbol = '&#8362;'; break;
-		case "IRR" : $symbol = '&#65020;'; break;
-		case "JPY" : $symbol = '&#165;'; break;
-		case "MXN" : $symbol = '&#36;'; break;
-		case "MYR" : $symbol = '&#82;&#77;'; break;
-		case "NOK" : $symbol = 'after' == $position ? '&nbsp;&#107;&#114;' : '&#107;&#114;&nbsp;'; break;
-		case "NZD" : $symbol = '&#36;'; break;
-		case "PHP" : $symbol = '&#8369;'; break;
-		case "PLN" : $symbol = 'after' == $position ? '&nbsp;&#122;&#322;' : '&#122;&#322;&nbsp;'; break;
-		case "RUB" : $symbol = '&#1088;&#1091;&#1073;'; break;
-		case "SEK" : $symbol = '&#107;&#114;'; break;
-		case "SGD" : $symbol = '&#36;'; break;
-		case "THB" : $symbol = '&#3647;'; break;
-		case "TRY" : $symbol = '&#8356;'; break;
-		case "TWD" : $symbol = '&#78;&#84;&#36;'; break;
-		default: $symbol = $currency;
+	switch ( $currency ) {
+		case 'USD':
+			$symbol = '&#36;';
+			break;
+		case 'EUR':
+			$symbol = '&#8364;';
+			break;
+		case 'GBP':
+			$symbol = '&#163;';
+			break;
+		case 'AUD':
+			$symbol = '&#36;';
+			break;
+		case 'BRL':
+			$symbol = '&#82;&#36;';
+			break;
+		case 'CAD':
+			$symbol = '&#36;';
+			break;
+		case 'CHF':
+			$symbol = '&#67;&#72;&#70;';
+			break;
+		case 'CZK':
+			$symbol = '&#75;&#269;';
+			break;
+		case 'DKK':
+			$symbol = '&#107;&#114;';
+			break;
+		case 'HKD':
+			$symbol = '&#36;';
+			break;
+		case 'HUF':
+			$symbol = '&#70;&#116;';
+			break;
+		case 'ILS':
+			$symbol = '&#8362;';
+			break;
+		case 'IRR':
+			$symbol = '&#65020;';
+			break;
+		case 'JPY':
+			$symbol = '&#165;';
+			break;
+		case 'MXN':
+			$symbol = '&#36;';
+			break;
+		case 'MYR':
+			$symbol = '&#82;&#77;';
+			break;
+		case 'NOK':
+			$symbol = 'after' == $position ? '&nbsp;&#107;&#114;' : '&#107;&#114;&nbsp;';
+			break;
+		case 'NZD':
+			$symbol = '&#36;';
+			break;
+		case 'PHP':
+			$symbol = '&#8369;';
+			break;
+		case 'PLN':
+			$symbol = 'after' == $position ? '&nbsp;&#122;&#322;' : '&#122;&#322;&nbsp;';
+			break;
+		case 'RUB':
+			$symbol = '&#1088;&#1091;&#1073;';
+			break;
+		case 'SEK':
+			$symbol = '&#107;&#114;';
+			break;
+		case 'SGD':
+			$symbol = '&#36;';
+			break;
+		case 'THB':
+			$symbol = '&#3647;';
+			break;
+		case 'TRY':
+			$symbol = '&#8356;';
+			break;
+		case 'TWD':
+			$symbol = '&#78;&#84;&#36;';
+			break;
+		default:
+			$symbol = $currency;
 	}
 
 	return apply_filters( 'rcp_' . strtolower( $currency ) . '_symbol', $symbol, $currency );
@@ -207,7 +258,7 @@ function rcp_get_currencies() {
 		'CHF' => __( 'Swiss Franc (&#67;&#72;&#70;)', 'rcp' ),
 		'TWD' => __( 'Taiwan New Dollars (&#78;&#84;&#36;)', 'rcp' ),
 		'THB' => __( 'Thai Baht (&#3647;)', 'rcp' ),
-		'TRY' => __( 'Turkish Lira (&#8356;)', 'rcp' )
+		'TRY' => __( 'Turkish Lira (&#8356;)', 'rcp' ),
 	);
 	return apply_filters( 'rcp_currencies', $currencies );
 }
@@ -231,9 +282,9 @@ function rcp_is_odd( $int ) {
  * Gets the excerpt of a specific post ID or object.
  *
  * @param object/int $post The ID or object of the post to get the excerpt of.
- * @param int $length The length of the excerpt in words.
- * @param string $tags The allowed HTML tags. These will not be stripped out.
- * @param string $extra Text to append to the end of the excerpt.
+ * @param int        $length The length of the excerpt in words.
+ * @param string     $tags The allowed HTML tags. These will not be stripped out.
+ * @param string     $extra Text to append to the end of the excerpt.
  *
  * @return string Post excerpt.
  */
@@ -242,15 +293,15 @@ function rcp_excerpt_by_id( $post, $length = 50, $tags = '<a><em><strong><blockq
 	if ( is_int( $post ) ) {
 		// get the post object of the passed ID
 		$post = get_post( $post );
-	} elseif ( !is_object( $post ) ) {
+	} elseif ( ! is_object( $post ) ) {
 		return false;
 	}
 	$more = false;
 	if ( has_excerpt( $post->ID ) ) {
 		$the_excerpt = $post->post_excerpt;
 	} elseif ( strstr( $post->post_content, '<!--more-->' ) ) {
-		$more = true;
-		$length = strpos( $post->post_content, '<!--more-->' );
+		$more        = true;
+		$length      = strpos( $post->post_content, '<!--more-->' );
 		$the_excerpt = $post->post_content;
 	} else {
 		$the_excerpt = $post->post_content;
@@ -261,11 +312,11 @@ function rcp_excerpt_by_id( $post, $length = 50, $tags = '<a><em><strong><blockq
 	if ( $more ) {
 		$the_excerpt = strip_shortcodes( strip_tags( stripslashes( substr( $the_excerpt, 0, $length ) ), $tags ) );
 	} else {
-		$the_excerpt = strip_shortcodes( strip_tags( stripslashes( $the_excerpt ), $tags ) );
-		$the_excerpt = preg_split( '/\b/', $the_excerpt, $length * 2+1 );
+		$the_excerpt   = strip_shortcodes( strip_tags( stripslashes( $the_excerpt ), $tags ) );
+		$the_excerpt   = preg_split( '/\b/', $the_excerpt, $length * 2 + 1 );
 		$excerpt_waste = array_pop( $the_excerpt );
-		$the_excerpt = implode( $the_excerpt );
-		$the_excerpt .= $extra;
+		$the_excerpt   = implode( $the_excerpt );
+		$the_excerpt  .= $extra;
 	}
 
 	$the_excerpt = wpautop( $the_excerpt );
@@ -304,7 +355,7 @@ function rcp_get_current_url() {
 
 		global $wp;
 
-		if( get_option( 'permalink_structure' ) ) {
+		if ( get_option( 'permalink_structure' ) ) {
 
 			$base = trailingslashit( home_url( $wp->request ) );
 
@@ -342,7 +393,7 @@ function rcp_no_account_sharing() {
  * @access private
  * @since  2.7
  * @return int
-*/
+ */
 function rcp_no_account_sharing_number() {
 	global $rcp_options;
 
@@ -375,7 +426,7 @@ function rcp_no_account_sharing_number() {
  */
 function rcp_set_user_logged_in_status( $logged_in_cookie, $expire, $expiration, $user_id, $status = 'logged_in' ) {
 
-	if( ! rcp_no_account_sharing() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
+	if ( ! rcp_no_account_sharing() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
 		return;
 	}
 
@@ -383,8 +434,9 @@ function rcp_set_user_logged_in_status( $logged_in_cookie, $expire, $expiration,
 
 		$data = get_transient( 'rcp_user_logged_in_' . $user_id );
 
-		if( false === $data )
+		if ( false === $data ) {
 			$data = array();
+		}
 
 		$data[] = $logged_in_cookie;
 
@@ -404,7 +456,7 @@ add_action( 'set_logged_in_cookie', 'rcp_set_user_logged_in_status', 10, 5 );
  */
 function rcp_clear_auth_cookie() {
 
-	if( ! rcp_no_account_sharing() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) || ! isset( $_COOKIE[ LOGGED_IN_COOKIE ] ) ) {
+	if ( ! rcp_no_account_sharing() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) || ! isset( $_COOKIE[ LOGGED_IN_COOKIE ] ) ) {
 		return;
 	}
 
@@ -424,13 +476,13 @@ function rcp_clear_auth_cookie() {
 		}
 	}
 
-	if( $already_logged_in !== false ) :
+	if ( $already_logged_in !== false ) :
 
 		$data = maybe_unserialize( $already_logged_in );
 
-		$key = array_search( $_COOKIE[LOGGED_IN_COOKIE], $data );
-		if( false !== $key ) {
-			unset( $data[$key] );
+		$key = array_search( $_COOKIE[ LOGGED_IN_COOKIE ], $data );
+		if ( false !== $key ) {
+			unset( $data[ $key ] );
 			$data = array_values( $data );
 			set_transient( 'rcp_user_logged_in_' . $user_id, $data, MONTH_IN_SECONDS );
 		}
@@ -479,7 +531,7 @@ function rcp_can_user_be_logged_in() {
 			}
 		}
 
-		if( $already_logged_in !== false ) {
+		if ( $already_logged_in !== false ) {
 
 			$data = maybe_unserialize( $already_logged_in );
 
@@ -495,13 +547,12 @@ function rcp_can_user_be_logged_in() {
 				set_transient( 'rcp_user_logged_in_' . $user_id, $data, MONTH_IN_SECONDS );
 			}
 
-			if( ! in_array( $_COOKIE[LOGGED_IN_COOKIE], $data ) ) {
+			if ( ! in_array( $_COOKIE[ LOGGED_IN_COOKIE ], $data ) ) {
 
 				// Log the user out - this is one of the oldest user logged into this account
 				wp_logout();
 				wp_safe_redirect( trailingslashit( get_bloginfo( 'wpurl' ) ) . 'wp-login.php?loggedout=true' );
 			}
-
 		}
 	}
 }
@@ -519,34 +570,34 @@ add_action( 'init', 'rcp_can_user_be_logged_in' );
  */
 function rcp_allowed_html_tags() {
 	$tags = array(
-		'p' => array(
-			'class' => array()
+		'p'      => array(
+			'class' => array(),
 		),
-		'span' => array(
-			'class' => array()
+		'span'   => array(
+			'class' => array(),
 		),
-		'a' => array(
-       		'href' => array(),
-        	'title' => array(),
-        	'class' => array()
-        ),
+		'a'      => array(
+			'href'  => array(),
+			'title' => array(),
+			'class' => array(),
+		),
 		'strong' => array(),
-		'em' => array(),
-		'br' => array(),
-		'img' => array(
-       		'src' => array(),
-        	'title' => array(),
-        	'alt' => array()
-        ),
-		'div' => array(
-			'class' => array()
+		'em'     => array(),
+		'br'     => array(),
+		'img'    => array(
+			'src'   => array(),
+			'title' => array(),
+			'alt'   => array(),
 		),
-		'ul' => array(
-			'class' => array()
+		'div'    => array(
+			'class' => array(),
 		),
-		'li' => array(
-			'class' => array()
-		)
+		'ul'     => array(
+			'class' => array(),
+		),
+		'li'     => array(
+			'class' => array(),
+		),
 	);
 
 	return apply_filters( 'rcp_allowed_html_tags', $tags );
@@ -563,7 +614,7 @@ function rcp_allowed_html_tags() {
  * @return bool Whether or not function is disabled.
  */
 function rcp_is_func_disabled( $function ) {
-	$disabled = explode( ',',  ini_get( 'disable_functions' ) );
+	$disabled = explode( ',', ini_get( 'disable_functions' ) );
 
 	return in_array( $function, $disabled );
 }
@@ -578,11 +629,11 @@ function rcp_is_func_disabled( $function ) {
  * @since  1.8
  * @return string The name of the month.
  */
-if( ! function_exists( 'rcp_get_month_name' ) ) {
-	function rcp_get_month_name($n) {
-		$timestamp = mktime(0, 0, 0, $n, 1, 2005);
+if ( ! function_exists( 'rcp_get_month_name' ) ) {
+	function rcp_get_month_name( $n ) {
+		$timestamp = mktime( 0, 0, 0, $n, 1, 2005 );
 
-		return date_i18n( "F", $timestamp );
+		return date_i18n( 'F', $timestamp );
 	}
 }
 
@@ -594,32 +645,35 @@ if( ! function_exists( 'rcp_get_month_name' ) ) {
  */
 function rcp_get_timezone_id() {
 
-    // if site timezone string exists, return it
-    if ( $timezone = get_option( 'timezone_string' ) )
-        return $timezone;
+	// if site timezone string exists, return it
+	if ( $timezone = get_option( 'timezone_string' ) ) {
+		return $timezone;
+	}
 
-    // get UTC offset, if it isn't set return UTC
-    if ( ! ( $utc_offset = 3600 * get_option( 'gmt_offset', 0 ) ) )
-        return 'UTC';
+	// get UTC offset, if it isn't set return UTC
+	if ( ! ( $utc_offset = 3600 * get_option( 'gmt_offset', 0 ) ) ) {
+		return 'UTC';
+	}
 
-    // attempt to guess the timezone string from the UTC offset
-    $timezone = timezone_name_from_abbr( '', $utc_offset );
+	// attempt to guess the timezone string from the UTC offset
+	$timezone = timezone_name_from_abbr( '', $utc_offset );
 
-    // last try, guess timezone string manually
-    if ( $timezone === false ) {
+	// last try, guess timezone string manually
+	if ( $timezone === false ) {
 
-        $is_dst = date('I');
+		$is_dst = date( 'I' );
 
-        foreach ( timezone_abbreviations_list() as $abbr ) {
-            foreach ( $abbr as $city ) {
-                if ( $city['dst'] == $is_dst &&  $city['offset'] == $utc_offset )
-                    return $city['timezone_id'];
-            }
-        }
-    }
+		foreach ( timezone_abbreviations_list() as $abbr ) {
+			foreach ( $abbr as $city ) {
+				if ( $city['dst'] == $is_dst && $city['offset'] == $utc_offset ) {
+					return $city['timezone_id'];
+				}
+			}
+		}
+	}
 
-    // fallback
-    return 'UTC';
+	// fallback
+	return 'UTC';
 }
 
 /**
@@ -650,12 +704,12 @@ if ( ! function_exists( 'cal_days_in_month' ) ) {
  */
 function rcp_get_payment_status_label( $payment ) {
 
-	if( is_numeric( $payment ) ) {
+	if ( is_numeric( $payment ) ) {
 		$payments = new RCP_Payments();
 		$payment  = $payments->get_payment( $payment );
 	}
 
-	if( ! $payment ) {
+	if ( ! $payment ) {
 		return '';
 	}
 
@@ -679,15 +733,15 @@ function rcp_get_ip() {
 	$ip = false;
 
 	if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
-		//check ip from share internet
-		$ip = $_SERVER['HTTP_CLIENT_IP'];
+		// check ip from share internet
+		$ip = sanitize_text_field( wp_unslash( $_SERVER['HTTP_CLIENT_IP'] ) );
 	} elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-		//to check ip is pass from proxy
+		// to check ip is pass from proxy
 		// can include more than 1 ip, first is the public one
-		$ip = explode( ',',$_SERVER['HTTP_X_FORWARDED_FOR'] );
+		$ip = explode( ',', sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) );
 		$ip = $ip[0];
-	} elseif( ! empty( $_SERVER['REMOTE_ADDR'] ) ) {
-		$ip = $_SERVER['REMOTE_ADDR'];
+	} elseif ( ! empty( $_SERVER['REMOTE_ADDR'] ) ) {
+		$ip = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
 	}
 
 	// Fix potential CSV returned from $_SERVER variables
@@ -776,7 +830,7 @@ function rcp_get_post_restrictions( $post_id ) {
 	$restrictions = array(
 		'membership_levels' => '', // Can be a string "any-paid", "any", or array of level IDs.
 		'access_level'      => 0,
-		'user_level'        => array()
+		'user_level'        => array(),
 	);
 
 	$post_type_restrictions = rcp_get_post_type_restrictions( get_post_type( $post_id ) );
@@ -910,7 +964,16 @@ function rcp_has_term_restrictions( $post_id ) {
  * @return array
  */
 function rcp_get_restricted_taxonomies( $output = 'names' ) {
-	return apply_filters( 'rcp_get_restricted_taxonomies', get_taxonomies( array( 'public' => true, 'show_ui' => true ), $output ) );
+	return apply_filters(
+		'rcp_get_restricted_taxonomies',
+		get_taxonomies(
+			array(
+				'public'  => true,
+				'show_ui' => true,
+			),
+			$output
+		)
+	);
 }
 
 /**
@@ -1016,7 +1079,7 @@ function rcp_is_post_taxonomy_restricted( $post_id, $taxonomy, $user_id = null )
 	$is_paid  = is_object( $customer ) ? $customer->has_paid_membership() : false;
 
 	// Loop through the categories and determine if one has restriction options
-	foreach( $terms as $term ) {
+	foreach ( $terms as $term ) {
 
 		$term_meta = rcp_get_term_restrictions( $term->term_id );
 
@@ -1026,23 +1089,23 @@ function rcp_is_post_taxonomy_restricted( $post_id, $taxonomy, $user_id = null )
 
 		$restricted = true;
 
-		/** Check that the user has a paid subscription ****************************************************************/
+		/** Check that the user has a paid subscription */
 		$paid_only = ! empty( $term_meta['paid_only'] );
-		if( $paid_only && $is_paid ) {
+		if ( $paid_only && $is_paid ) {
 			$restricted = false;
 			break;
 		}
 
 		/** If restricted to one or more membership levels, make sure that the user is a member of one of the levels */
 		$subscriptions = ! empty( $term_meta['subscriptions'] ) ? array_map( 'absint', $term_meta['subscriptions'] ) : false;
-		if( $subscriptions && $customer && count( array_intersect( rcp_get_customer_membership_level_ids( $customer->get_id() ), $subscriptions ) ) ) {
+		if ( $subscriptions && $customer && count( array_intersect( rcp_get_customer_membership_level_ids( $customer->get_id() ), $subscriptions ) ) ) {
 			$restricted = false;
 			break;
 		}
 
-		/** If restricted to one or more access levels, make sure that the user is a member of one of the levls ********/
+		/** If restricted to one or more access levels, make sure that the user is a member of one of the levls */
 		$access_level = ! empty( $term_meta['access_level'] ) ? absint( $term_meta['access_level'] ) : 0;
-		if( $access_level > 0 && $customer && $customer->has_access_level( $access_level ) ) {
+		if ( $access_level > 0 && $customer && $customer->has_access_level( $access_level ) ) {
 			$restricted = false;
 			break;
 		}
@@ -1079,6 +1142,7 @@ function rcp_is_valid_currency( $currency_code ) {
 
 /**
  * Determines if a given currency code matches the currency associated with a membership.
+ *
  * @param $currency_code
  * @param $membership
  *
@@ -1121,7 +1185,7 @@ function rcp_is_zero_decimal_currency( $currency = '' ) {
 		'VUV',
 		'XAF',
 		'XOF',
-		'XPF'
+		'XPF',
 	);
 
 	return apply_filters( 'rcp_is_zero_decimal_currency', in_array( $currency, $zero_dec_currencies ) );
@@ -1164,8 +1228,8 @@ function rcp_format_amount( $amount ) {
 
 	// Format the amount
 	if ( $decimal_sep === ',' && false !== ( $sep_found = strpos( $amount, $decimal_sep ) ) ) {
-		$whole = substr( $amount, 0, $sep_found );
-		$part = substr( $amount, $sep_found + 1, ( strlen( $amount ) - 1 ) );
+		$whole  = substr( $amount, 0, $sep_found );
+		$part   = substr( $amount, $sep_found + 1, ( strlen( $amount ) - 1 ) );
 		$amount = $whole . '.' . $part;
 	}
 
@@ -1225,9 +1289,9 @@ function rcp_get_post_ids_assigned_to_restricted_terms() {
 				'hide_empty' => false,
 				'meta_query' => array(
 					array(
-						'key' => 'rcp_restricted_meta'
-					)
-				)
+						'key' => 'rcp_restricted_meta',
+					),
+				),
 			)
 		);
 
@@ -1243,7 +1307,7 @@ function rcp_get_post_ids_assigned_to_restricted_terms() {
 			 * and for meta with just an access_level of 'None'
 			 * and ignore them.
 			 */
-			$meta = get_term_meta( $term->term_id , 'rcp_restricted_meta', true );
+			$meta = get_term_meta( $term->term_id, 'rcp_restricted_meta', true );
 
 			if ( empty( $meta ) ) {
 				// Remove the legacy metadata
@@ -1251,14 +1315,14 @@ function rcp_get_post_ids_assigned_to_restricted_terms() {
 				continue;
 			}
 
-			if ( 1 === count( $meta) && array_key_exists( 'access_level', $meta ) && 'None' === $meta['access_level'] ) {
+			if ( 1 === count( $meta ) && array_key_exists( 'access_level', $meta ) && 'None' === $meta['access_level'] ) {
 				// Remove the legacy metadata
 				delete_term_meta( $term->term_id, 'rcp_restricted_meta' );
 				continue;
 			}
 
 			$p_ids = $wpdb->get_results( $wpdb->prepare( "SELECT object_id FROM {$wpdb->term_relationships} WHERE term_taxonomy_id = %d", absint( $term->term_taxonomy_id ) ), ARRAY_A );
-			foreach( $p_ids as $p_id ) {
+			foreach ( $p_ids as $p_id ) {
 				if ( ! in_array( $p_id['object_id'], $post_ids ) ) {
 					$post_ids[] = $p_id['object_id'];
 				}
@@ -1281,32 +1345,34 @@ function rcp_get_restricted_post_ids() {
 
 	if ( false === ( $post_ids = get_transient( 'rcp_restricted_post_ids' ) ) ) {
 
-		$post_ids = get_posts( array(
-			'post_status'    => 'publish',
-			'posts_per_page' => -1,
-			'post_type'      => 'any',
-			'fields'         => 'ids',
-			'meta_query'     => array(
-				'relation' => 'OR',
-				array(
-					'key'   => '_is_paid',
-					'value' => 1
+		$post_ids = get_posts(
+			array(
+				'post_status'    => 'publish',
+				'posts_per_page' => -1,
+				'post_type'      => 'any',
+				'fields'         => 'ids',
+				'meta_query'     => array(
+					'relation' => 'OR',
+					array(
+						'key'   => '_is_paid',
+						'value' => 1,
+					),
+					array(
+						'key' => 'rcp_subscription_level',
+					),
+					array(
+						'key'     => 'rcp_user_level',
+						'value'   => 'All',
+						'compare' => '!=',
+					),
+					array(
+						'key'     => 'rcp_access_level',
+						'value'   => 'None',
+						'compare' => '!=',
+					),
 				),
-				array(
-					'key' => 'rcp_subscription_level'
-				),
-				array(
-					'key'     => 'rcp_user_level',
-					'value'   => 'All',
-					'compare' => '!='
-				),
-				array(
-					'key'     => 'rcp_access_level',
-					'value'   => 'None',
-					'compare' => '!='
-				)
 			)
-		) );
+		);
 
 		set_transient( 'rcp_restricted_post_ids', $post_ids, DAY_IN_SECONDS );
 	}
@@ -1494,7 +1560,7 @@ function rcp_format_counts( $counts = array(), $groupby = '' ) {
 
 	// Default array
 	$c = array(
-		'total' => 0
+		'total' => 0,
 	);
 
 	// Loop through counts and shape return value
@@ -1536,9 +1602,9 @@ function rcp_get_status_label( $status = '' ) {
 			'pending'   => __( 'Pending', 'rcp' ),
 
 			// Memberships
-			'cancelled' => __( 'Cancelled',  'rcp' ),
-			'expired'   => __( 'Expired',   'rcp' ),
-			'free'      => __( 'Free',    'rcp' ), // deprecated
+			'cancelled' => __( 'Cancelled', 'rcp' ),
+			'expired'   => __( 'Expired', 'rcp' ),
+			'free'      => __( 'Free', 'rcp' ), // deprecated
 
 			// Payments
 			'abandoned' => __( 'Abandoned', 'rcp' ),
@@ -1582,7 +1648,7 @@ function rcp_get_restricted_content_message( $paid = false ) {
 
 	$message = __( 'This content is restricted to subscribers', 'rcp' );
 
-	if( ! empty( $rcp_options['free_message'] ) ) {
+	if ( ! empty( $rcp_options['free_message'] ) ) {
 		$message = $rcp_options['free_message'];
 	}
 
@@ -1624,4 +1690,17 @@ function rcp_wp_version_compare( $version, $operator, $allow_dev = true ) {
  */
 function rcp_is_wp_version_at_least( $version, $allow_dev = true ) {
 	return rcp_wp_version_compare( $version, '>=', $allow_dev );
+}
+
+/**
+ * Sanitized the text field using WordPress functions. This is useful to use it in many fields and prevent
+ * PHPCS asking to sanitized the field, plush the field will be sanitized.
+ *
+ * @since 3.5.25
+ *
+ * @param string $_text The text to sanitized.
+ * @return string The sanitized string.
+ */
+function rcp_sanitize_request_field( $_text ) {
+	return sanitize_text_field( wp_unslash( $_text ) );
 }

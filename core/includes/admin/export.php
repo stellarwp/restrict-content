@@ -28,18 +28,20 @@ function rcp_export_page() {
 
 		<h2><?php _e( 'Memberships Export', 'rcp' ); ?></h2>
 		<p><?php _e( 'Download membership data as a CSV file. This is useful for tasks such as importing batch users into MailChimp, or other systems.', 'rcp' ); ?></p>
-		<form id="rcp_export" action="<?php echo $current_page; ?>" method="post">
+		<form id="rcp_export" action="<?php echo esc_attr( $current_page ); ?>" method="post">
 			<p>
 				<select name="rcp-subscription" id="rcp-subscription">
 					<option value="0"><?php _e( 'All', 'rcp' ); ?></option>
 					<?php
 					$levels = rcp_get_membership_levels( array( 'number' => 999 ) );
-					if($levels) :
-						foreach( $levels as $key => $level) : ?>
+					if ( $levels ) :
+						foreach ( $levels as $key => $level ) :
+							?>
 						<option value="<?php echo absint( $level->get_id() ); ?>"><?php echo esc_html( $level->get_name() ); ?></option>
-						<?php
+							<?php
 						endforeach;
-					endif; ?>
+					endif;
+					?>
 				</select>
 				<label for="rcp-subscription"><?php _e( 'Choose the subscription to export memberships from', 'rcp' ); ?></label><br/>
 				<select name="rcp-status" id="rcp-status">
@@ -70,16 +72,20 @@ function rcp_export_page() {
 					$current = date( 'Y' );
 					$year    = $current;
 					$end     = $current - 5;
-					while( $year >= $end ) : ?>
+					while ( $year >= $end ) :
+						// phpcs:disable
+						?>
 						<option value="<?php echo $year; ?>"><?php echo $year; ?></option>
 						<?php
 						$year--;
-					endwhile; ?>
+					endwhile;
+						// phpcs:enable
+					?>
 				</select>
 				<select name="rcp-month" id="rcp-month">
 					<option value="0"><?php _e( 'All months', 'rcp' ); ?>
-					<?php for( $i = 1; $i <= 12; $i++ ) : ?>
-						<option value="<?php echo $i; ?>"><?php echo rcp_get_month_name( $i ); ?></option>
+					<?php for ( $i = 1; $i <= 12; $i++ ) : ?>
+						<option value="<?php echo esc_attr( $i ); ?>"><?php echo esc_attr( rcp_get_month_name( $i ) ); ?></option>
 					<?php endfor; ?>
 				</select>
 			</p>

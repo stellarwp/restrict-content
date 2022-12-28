@@ -825,7 +825,7 @@ function restrict_content_submit_data_to_stripe_mailing_list() {
 			'account' => 'rcp',
 			'list_id' => 'ebb8b55cda',
 			'tags'    => [ 'RC-Stripe-Activation' ],
-			'email'   => $_POST['stripe_mailing_list_email']
+			'email'   => sanitize_text_field( wp_unslash( $_POST['stripe_mailing_list_email'] ) )
 		);
 
 		$fields = array(
