@@ -14,7 +14,9 @@
 // Exit if accessed directly
 use RCP\Membership_Level;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 
 /**
@@ -27,23 +29,27 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function rcp_process_registration() {
 
 	// check nonce
-	if ( ! ( isset( $_POST["rcp_register_nonce"] ) && wp_verify_nonce( $_POST['rcp_register_nonce'], 'rcp-register-nonce' ) ) ) {
+	if ( ! ( isset( $_POST['rcp_register_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['rcp_register_nonce'] ) ), 'rcp-register-nonce' ) ) ) {
 		rcp_errors()->add( 'invalid_nonce', __( 'An authentication error occurred. Please try again.', 'rcp' ), 'register' );
 
-		wp_send_json_error( array(
-			'success' => false,
-			'errors'  => rcp_get_error_messages_html( 'register' ),
-			'nonce'   => wp_create_nonce( 'rcp-register-nonce' )
-		) );
+		wp_send_json_error(
+			array(
+				'success' => false,
+				'errors'  => rcp_get_error_messages_html( 'register' ),
+				'nonce'   => wp_create_nonce( 'rcp-register-nonce' ),
+			)
+		);
 	}
 
 	global $rcp_options;
 
-	$membership_level    = rcp_get_membership_level( rcp_get_registration()->get_membership_level_id() );
-	$discount            = isset( $_POST['rcp_discount'] ) ? sanitize_text_field( strtolower( wp_unslash( $_POST['rcp_discount'] ) ) ) : '';
-	$price               = number_format( $membership_level->get_price(), 2, '.', '' );
-	$initial_amount      = rcp_get_registration()->get_total();
-	$auto_renew          = rcp_registration_is_recurring();
+	$membership_level = rcp_get_membership_level( rcp_get_registration()->get_membership_level_id() );
+		// We are already sanitizing, but PHPCS keep complaining about the isset function.
+	// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+	$discount       = isset( $_POST['rcp_discount'] ) ? sanitize_text_field( strtolower( wp_unslash( $_POST['rcp_discount'] ) ) ) : '';
+	$price          = number_format( $membership_level->get_price(), 2, '.', '' );
+	$initial_amount = rcp_get_registration()->get_total();
+	$auto_renew     = rcp_registration_is_recurring();
 	// if both today's total and the recurring total are 0, the there is a full discount
 	// if this is not a recurring membership only check today's total
 	$full_discount     = ( $auto_renew ) ? ( rcp_get_registration()->get_total() == 0 && rcp_get_registration()->get_recurring_total() == 0 ) : ( rcp_get_registration()->get_total() == 0 );
@@ -68,7 +74,7 @@ function rcp_process_registration() {
 
 	/***********************
 	 * validate the form
-	 ***********************/
+	 */
 
 	do_action( 'rcp_before_form_errors', $_POST, $customer );
 
@@ -95,20 +101,18 @@ function rcp_process_registration() {
 			if ( $price > 0 && ! $user_data['need_new'] && rcp_user_has_used_discount( $user_data['id'], $discount ) && apply_filters( 'rcp_discounts_once_per_user', false, $discount, $membership_level->get_id() ) ) {
 				rcp_errors()->add( 'discount_already_used', __( 'You can only use the discount code once', 'rcp' ), 'register' );
 			}
-
 		} else {
 			// the entered discount code is incorrect
 			rcp_errors()->add( 'invalid_discount', __( 'The discount you entered is invalid', 'rcp' ), 'register' );
 		}
-
 	}
 
 	// Validate extra fields in gateways with the 2.1+ gateway API
 	if ( ! has_action( 'rcp_gateway_' . $gateway ) && $price > 0 && ! $full_discount ) {
 
-		$gateways    = new RCP_Payment_Gateways;
+		$gateways    = new RCP_Payment_Gateways();
 		$gateway_var = $gateways->get_gateway( $gateway );
-		$gateway_obj = new $gateway_var['class'];
+		$gateway_obj = new $gateway_var['class']();
 		$gateway_obj->validate_fields();
 	}
 
@@ -130,49 +134,54 @@ function rcp_process_registration() {
 	if ( ! empty( $errors ) ) {
 		rcp_log( sprintf( 'Registration cancelled with the following errors: %s.', implode( ', ', $errors ) ) );
 
-		wp_send_json_error( array(
-			'success' => false,
-			'errors'  => rcp_get_error_messages_html( 'register' ),
-			'nonce'   => wp_create_nonce( 'rcp-register-nonce' ),
-			'gateway' => array(
-				'slug'     => $gateway,
-				'supports' => ! empty( $gateway_obj->supports ) ? $gateway_obj->supports : false
+		wp_send_json_error(
+			array(
+				'success' => false,
+				'errors'  => rcp_get_error_messages_html( 'register' ),
+				'nonce'   => wp_create_nonce( 'rcp-register-nonce' ),
+				'gateway' => array(
+					'slug'     => $gateway,
+					'supports' => ! empty( $gateway_obj->supports ) ? $gateway_obj->supports : false,
+				),
 			)
-		) );
+		);
 
 	} elseif ( $validate_only ) {
-		wp_send_json_success( array(
-			'success'         => true,
-			'nonce'           => wp_create_nonce( 'rcp-register-nonce' ),
-			'total'           => rcp_get_registration()->get_total(),
-			'total_formatted' => rcp_currency_filter( rcp_get_registration()->get_total() ),
-			'recurring_total' => rcp_get_registration()->get_recurring_total(),
-			'auto_renew'      => $auto_renew,
-			'gateway'         => array(
-				'slug'     => $gateway,
-				'supports' => ! empty( $gateway_obj->supports ) ? $gateway_obj->supports : false
-			),
-			'level'           => array(
-				'id'          => $membership_level->get_id(),
-				'name'        => $membership_level->get_name(),
-				'description' => $membership_level->get_description(),
-				'trial'       => $membership_level->has_trial()
-			),
-		) );
+		wp_send_json_success(
+			array(
+				'success'         => true,
+				'nonce'           => wp_create_nonce( 'rcp-register-nonce' ),
+				'total'           => rcp_get_registration()->get_total(),
+				'total_formatted' => rcp_currency_filter( rcp_get_registration()->get_total() ),
+				'recurring_total' => rcp_get_registration()->get_recurring_total(),
+				'auto_renew'      => $auto_renew,
+				'gateway'         => array(
+					'slug'     => $gateway,
+					'supports' => ! empty( $gateway_obj->supports ) ? $gateway_obj->supports : false,
+				),
+				'level'           => array(
+					'id'          => $membership_level->get_id(),
+					'name'        => $membership_level->get_name(),
+					'description' => $membership_level->get_description(),
+					'trial'       => $membership_level->has_trial(),
+				),
+			)
+		);
 
 	}
 
 	if ( $user_data['need_new'] ) {
 		$display_name = trim( $user_data['first_name'] . ' ' . $user_data['last_name'] );
 
-		$user_data['id'] = wp_insert_user( array(
+		$user_data['id'] = wp_insert_user(
+			array(
 				'user_login'      => $user_data['login'],
 				'user_pass'       => $user_data['password'],
 				'user_email'      => $user_data['email'],
 				'first_name'      => $user_data['first_name'],
 				'last_name'       => $user_data['last_name'],
 				'display_name'    => ! empty( $display_name ) ? $display_name : $user_data['login'],
-				'user_registered' => date( 'Y-m-d H:i:s' )
+				'user_registered' => date( 'Y-m-d H:i:s' ),
 			)
 		);
 
@@ -201,7 +210,6 @@ function rcp_process_registration() {
 		if ( empty( $customer ) ) {
 			rcp_errors()->add( 'customer_creation_failed', __( 'Failed to create customer record', 'rcp' ), 'register' );
 		}
-
 	}
 
 	// Refresh error messages to account for any user creation errors.
@@ -210,15 +218,17 @@ function rcp_process_registration() {
 	if ( ! empty( $errors ) ) {
 		rcp_log( sprintf( 'Registration cancelled with the following errors: %s.', implode( ', ', $errors ) ) );
 
-		wp_send_json_error( array(
-			'success' => false,
-			'errors'  => rcp_get_error_messages_html( 'register' ),
-			'nonce'   => wp_create_nonce( 'rcp-register-nonce' ),
-			'gateway' => array(
-				'slug'     => $gateway,
-				'supports' => ! empty( $gateway_obj->supports ) ? $gateway_obj->supports : false
+		wp_send_json_error(
+			array(
+				'success' => false,
+				'errors'  => rcp_get_error_messages_html( 'register' ),
+				'nonce'   => wp_create_nonce( 'rcp-register-nonce' ),
+				'gateway' => array(
+					'slug'     => $gateway,
+					'supports' => ! empty( $gateway_obj->supports ) ? $gateway_obj->supports : false,
+				),
 			)
-		) );
+		);
 	}
 
 	$user_id = $user_data['id'];
@@ -317,7 +327,7 @@ function rcp_process_registration() {
 			'maximum_renewals' => $membership_level->get_maximum_renewals(),
 			'status'           => 'pending',
 			'gateway'          => $gateway,
-			'subscription_key' => $subscription_key
+			'subscription_key' => $subscription_key,
 		);
 
 		if ( in_array( $registration_type, array( 'upgrade', 'downgrade' ) ) && ! empty( $previous_membership ) ) {
@@ -328,7 +338,7 @@ function rcp_process_registration() {
 
 		if ( in_array( $registration_type, array( 'upgrade', 'downgrade' ) ) ) {
 			$membership = rcp_get_membership( $membership_id );
-			$membership->add_note( sprintf( __( 'Upgraded from %s (membership #%d).', 'rcp' ), $previous_membership_level->get_name(), $previous_membership->get_id() ) );
+			$membership->add_note( sprintf( __( 'Upgraded from %1$s (membership #%2$d).', 'rcp' ), $previous_membership_level->get_name(), $previous_membership->get_id() ) );
 		}
 	} elseif ( ! empty( $previous_membership ) ) {
 		/**
@@ -339,7 +349,7 @@ function rcp_process_registration() {
 		$new_membership_data = array(
 			'auto_renew'       => $auto_renew,
 			'gateway'          => $gateway,
-			'recurring_amount' => $membership_level->is_lifetime() ? 0.00 : rcp_get_registration()->get_recurring_total( true, true )
+			'recurring_amount' => $membership_level->is_lifetime() ? 0.00 : rcp_get_registration()->get_recurring_total( true, true ),
 		);
 
 		if ( $auto_renew || ! $previous_membership->get_subscription_key() ) {
@@ -389,7 +399,7 @@ function rcp_process_registration() {
 		'fees'             => rcp_get_registration()->get_total_fees() + $credits,
 		'discount_amount'  => rcp_get_registration()->get_total_discounts(),
 		'discount_code'    => $discount,
-		'transaction_type' => $registration_type
+		'transaction_type' => $registration_type,
 	);
 
 	$rcp_payments = new RCP_Payments();
@@ -438,12 +448,12 @@ function rcp_process_registration() {
 		'auto_renew'      => $auto_renew,
 		'gateway'         => array(
 			'slug'     => $gateway,
-			'supports' => ! empty( $gateway_obj->supports ) ? $gateway_obj->supports : false
+			'supports' => ! empty( $gateway_obj->supports ) ? $gateway_obj->supports : false,
 		),
 		'level'           => array(
-			'trial' => $membership_level->has_trial()
+			'trial' => $membership_level->has_trial(),
 		),
-		'payment_id'      => $payment_id
+		'payment_id'      => $payment_id,
 	);
 
 	// Handle gateway ajax processing.
@@ -455,19 +465,20 @@ function rcp_process_registration() {
 		if ( is_wp_error( $result ) ) {
 			rcp_errors()->add( $result->get_error_code(), $result->get_error_message(), 'register' );
 
-			wp_send_json_error( array(
-				'success' => false,
-				'errors'  => rcp_get_error_messages_html( 'register' ),
-				'nonce'   => wp_create_nonce( 'rcp-register-nonce' ),
-				'gateway' => array(
-					'slug'     => $gateway,
-					'supports' => ! empty( $gateway_obj->supports ) ? $gateway_obj->supports : false
+			wp_send_json_error(
+				array(
+					'success' => false,
+					'errors'  => rcp_get_error_messages_html( 'register' ),
+					'nonce'   => wp_create_nonce( 'rcp-register-nonce' ),
+					'gateway' => array(
+						'slug'     => $gateway,
+						'supports' => ! empty( $gateway_obj->supports ) ? $gateway_obj->supports : false,
+					),
 				)
-			) );
+			);
 		} elseif ( is_array( $result ) ) {
 			$success_data['gateway']['data'] = $result;
 		}
-
 	}
 
 	wp_send_json_success( $success_data );
@@ -510,7 +521,7 @@ function rcp_send_registration_to_gateway() {
 	}
 
 	// Check nonce
-	if ( ! ( isset( $_POST["rcp_register_nonce"] ) && wp_verify_nonce( $_POST['rcp_register_nonce'], 'rcp-register-nonce' ) ) ) {
+	if ( ! ( isset( $_POST['rcp_register_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['rcp_register_nonce'] ) ), 'rcp-register-nonce' ) ) ) {
 		return;
 	}
 
@@ -525,7 +536,7 @@ function rcp_send_registration_to_gateway() {
 	 */
 	global $rcp_payments_db;
 
-	$payment = $rcp_payments_db->get_payment( absint( $_POST['rcp_registration_payment_id'] ) );
+	$payment = $rcp_payments_db->get_payment( absint( sanitize_text_field( wp_unslash( $_POST['rcp_registration_payment_id'] ) ) ) );
 
 	if ( empty( $payment ) ) {
 		rcp_errors()->add( 'invalid_payment', __( 'Invalid payment. Please try again.', 'rcp' ), 'register' );
@@ -613,7 +624,7 @@ function rcp_get_payment_registration_details( $payment_id ) {
 		'payment_id'              => $payment_id,
 		'membership_id'           => absint( $payment->membership_id ),
 		'customer'                => $customer,
-		'subscription_start_date' => '' // Empty means it starts today.
+		'subscription_start_date' => '', // Empty means it starts today.
 	);
 
 	// if giving the user a credit, make sure the credit does not exceed the first payment
@@ -660,11 +671,11 @@ function rcp_handle_stripe_checkout() {
 	}
 
 	if ( empty( $_POST['rcp_user_login'] ) ) {
-		$_POST['rcp_user_login'] = $_POST['rcp_user_email'];
+		$_POST['rcp_user_login'] = sanitize_text_field( wp_unslash( $_POST['rcp_user_email'] ) );
 	}
 
 	if ( empty( $_POST['rcp_user_first'] ) ) {
-		$user_email              = explode( '@', $_POST['rcp_user_email'] );
+		$user_email              = explode( '@', sanitize_text_field( wp_unslash( $_POST['rcp_user_email'] ) ) );
 		$_POST['rcp_user_first'] = $user_email[0];
 	}
 
@@ -677,7 +688,7 @@ function rcp_handle_stripe_checkout() {
 	}
 
 	if ( empty( $_POST['rcp_user_pass_confirm'] ) ) {
-		$_POST['rcp_user_pass_confirm'] = $_POST['rcp_user_pass'];
+		$_POST['rcp_user_pass_confirm'] = sanitize_text_field( wp_unslash( $_POST['rcp_user_pass'] ) );
 	}
 
 }
@@ -698,12 +709,12 @@ function rcp_validate_user_data() {
 
 	if ( ! is_user_logged_in() ) {
 		$user['id']               = 0;
-		$user['login']            = sanitize_text_field( $_POST['rcp_user_login'] );
-		$user['email']            = sanitize_text_field( $_POST['rcp_user_email'] );
-		$user['first_name']       = sanitize_text_field( $_POST['rcp_user_first'] );
-		$user['last_name']        = sanitize_text_field( $_POST['rcp_user_last'] );
-		$user['password']         = $_POST['rcp_user_pass'];
-		$user['password_confirm'] = $_POST['rcp_user_pass_confirm'];
+		$user['login']            = sanitize_text_field( wp_unslash( isset( $_POST['rcp_user_login'] ) ? $_POST['rcp_user_login'] : '' ) );
+		$user['email']            = sanitize_text_field( wp_unslash( isset( $_POST['rcp_user_email'] ) ? $_POST['rcp_user_login'] : '' ) );
+		$user['first_name']       = sanitize_text_field( wp_unslash( isset( $_POST['rcp_user_first'] ) ? $_POST['rcp_user_login'] : '' ) );
+		$user['last_name']        = sanitize_text_field( wp_unslash( isset( $_POST['rcp_user_last'] ) ? $_POST['rcp_user_login'] : '' ) );
+		$user['password']         = sanitize_text_field( wp_unslash( isset( $_POST['rcp_user_pass'] ) ? $_POST['rcp_user_login'] : '' ) );
+		$user['password_confirm'] = sanitize_text_field( wp_unslash( isset( $_POST['rcp_user_pass_confirm'] ) ? $_POST['rcp_user_login'] : '' ) );
 		$user['need_new']         = true;
 	} else {
 		$userdata         = get_userdata( get_current_user_id() );
@@ -716,10 +727,14 @@ function rcp_validate_user_data() {
 	if ( $user['need_new'] ) {
 		if ( username_exists( $user['login'] ) ) {
 			// Username already registered
-			rcp_errors()->add( 'username_unavailable', sprintf(
-				__( 'This username is already in use. If this is your username, please <a href="%s">log in</a> and try again.', 'rcp' ),
-				esc_url( rcp_get_login_url() )
-			), 'register' );
+			rcp_errors()->add(
+				'username_unavailable',
+				sprintf(
+					__( 'This username is already in use. If this is your username, please <a href="%s">log in</a> and try again.', 'rcp' ),
+					esc_url( rcp_get_login_url() )
+				),
+				'register'
+			);
 		}
 		if ( ! rcp_validate_username( $user['login'] ) ) {
 			// invalid username
@@ -730,15 +745,19 @@ function rcp_validate_user_data() {
 			rcp_errors()->add( 'username_empty', __( 'Please enter a username', 'rcp' ), 'register' );
 		}
 		if ( ! is_email( $user['email'] ) ) {
-			//invalid email
+			// invalid email
 			rcp_errors()->add( 'email_invalid', __( 'Invalid email', 'rcp' ), 'register' );
 		}
 		if ( email_exists( $user['email'] ) ) {
-			//Email address already registered
-			rcp_errors()->add( 'email_used', sprintf(
-				__( 'This email address is already in use. If this is your email address, please <a href="%s">log in</a> and try again.', 'rcp' ),
-				esc_url( rcp_get_login_url() )
-			), 'register' );
+			// Email address already registered
+			rcp_errors()->add(
+				'email_used',
+				sprintf(
+					__( 'This email address is already in use. If this is your email address, please <a href="%s">log in</a> and try again.', 'rcp' ),
+					esc_url( rcp_get_login_url() )
+				),
+				'register'
+			);
 		}
 		if ( empty( $user['password'] ) ) {
 			// passwords do not match
@@ -761,7 +780,7 @@ function rcp_validate_user_data() {
  *
  * @access      public
  * @since       1.5
- * @since		3.5.8 Looking inside the $_POST for the content_upgrade_redirect block
+ * @since       3.5.8 Looking inside the $_POST for the content_upgrade_redirect block
  * @return      string
  */
 function rcp_get_return_url( $user_id = 0 ) {
@@ -772,7 +791,7 @@ function rcp_get_return_url( $user_id = 0 ) {
 
 	// Redirect coming from Content Upgrade Redirect block
 	if ( ! empty( $_POST['rcp_redirect'] ) ) {
-		$validated_rcp_redirect = wp_validate_redirect( $_POST['rcp_redirect'] );
+		$validated_rcp_redirect = wp_validate_redirect( sanitize_text_field( wp_unslash( $_POST['rcp_redirect'] ) ) );
 		if ( ! empty( $validated_rcp_redirect ) ) {
 			return apply_filters( 'rcp_return_url', $validated_rcp_redirect, $user_id );
 		}
@@ -826,7 +845,6 @@ function rcp_is_registration_page() {
 function rcp_get_auto_renew_behavior() {
 
 	global $rcp_options, $rcp_level;
-
 
 	// Check for old disable auto renew option
 	if ( isset( $rcp_options['disable_auto_renew'] ) ) {
@@ -930,11 +948,11 @@ function rcp_registration_is_recurring() {
 
 	// make sure this gateway supports recurring payments
 	if ( $auto_renew && ! empty( $_POST['rcp_gateway'] ) ) {
-		$auto_renew = rcp_gateway_supports( sanitize_text_field( $_POST['rcp_gateway'] ), 'recurring' );
+		$auto_renew = rcp_gateway_supports( sanitize_text_field( wp_unslash( $_POST['rcp_gateway'] ) ), 'recurring' );
 	}
 
 	if ( $auto_renew && ! empty( $_POST['rcp_level'] ) ) {
-		$membership_level = rcp_get_membership_level( $_POST['rcp_level'] );
+		$membership_level = rcp_get_membership_level( sanitize_text_field( wp_unslash( $_POST['rcp_level'] ) ) );
 
 		if ( $membership_level instanceof Membership_Level ) {
 			// check if this is an unlimited or free membership
@@ -947,7 +965,7 @@ function rcp_registration_is_recurring() {
 				$customer       = rcp_get_customer();
 				$trial_eligible = empty( $customer ) || ( ! empty( $customer ) && ! $customer->has_trialed() );
 
-				if ( $trial_eligible && ! rcp_gateway_supports( sanitize_text_field( $_POST['rcp_gateway'] ), 'trial' ) ) {
+				if ( $trial_eligible && ! rcp_gateway_supports( sanitize_text_field( wp_unslash( $_POST['rcp_gateway'] ) ), 'trial' ) ) {
 					$auto_renew = false;
 				}
 			}
@@ -1056,14 +1074,15 @@ function rcp_registration_recurring_total( $echo = true ) {
 				$total .= '/' . rcp_filter_duration_unit( $membership_level->get_duration_unit(), 1 );
 			} else {
 				$total .= sprintf(
-					__( ' every %s %s', 'rcp' ),
+					__( ' every %1$s %2$s', 'rcp' ),
 					$membership_level->get_duration(),
 					rcp_filter_duration_unit( $membership_level->get_duration_unit(), $membership_level->get_duration() )
 				);
 			}
 		}
 	} else {
-		$total = __( 'free', 'rcp' );;
+		$total = __( 'free', 'rcp' );
+
 	}
 
 	$total = apply_filters( 'rcp_registration_recurring_total', $total );
@@ -1148,9 +1167,9 @@ function rcp_setup_registration_init() {
 		return;
 	}
 
-	$level_id = abs( $_POST['rcp_level'] );
-	$discount = ! empty( $_REQUEST['discount'] ) ? sanitize_text_field( $_REQUEST['discount'] ) : null;
-	$discount = ! empty( $_POST['rcp_discount'] ) ? sanitize_text_field( $_POST['rcp_discount'] ) : $discount;
+	$level_id = abs( sanitize_text_field( wp_unslash( $_POST['rcp_level'] ) ) );
+	$discount = ! empty( $_REQUEST['discount'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['discount'] ) ) : null;
+	$discount = ! empty( $_POST['rcp_discount'] ) ? sanitize_text_field( wp_unslash( $_POST['rcp_discount'] ) ) : $discount;
 
 	rcp_setup_registration( $level_id, $discount );
 }
@@ -1194,7 +1213,6 @@ function rcp_filter_registration_upgrade_levels( $levels = array() ) {
 		} elseif ( 'new' == $type && ! rcp_multiple_memberships_enabled() ) {
 			$levels = rcp_get_upgrade_paths();
 		}
-
 	}
 
 	add_filter( 'rcp_get_levels', 'rcp_filter_registration_upgrade_levels' );
@@ -1243,7 +1261,7 @@ function rcp_display_new_membership_message() {
 	// Bail if this customer doesn't have any memberships.
 	$memberships = $customer->get_memberships(
 		array(
-			'status__in' => array( 'active', 'cancelled', 'expired' )
+			'status__in' => array( 'active', 'cancelled', 'expired' ),
 		)
 	);
 
@@ -1270,7 +1288,7 @@ function rcp_display_new_membership_message() {
 
 		$membership_array[ $membership->get_id() ] = array(
 			'name'    => sprintf( '%s (%s)', $membership->get_membership_level_name(), $membership->get_status() ),
-			'actions' => implode( sprintf( ' %s ', __( 'or', 'rcp' ) ), $actions )
+			'actions' => implode( sprintf( ' %s ', __( 'or', 'rcp' ) ), $actions ),
 		);
 	}
 
@@ -1288,7 +1306,8 @@ function rcp_display_new_membership_message() {
 				/**
 				 * @var RCP_Membership $membership
 				 */
-				foreach ( $membership_array as $id => $this_membership ) : ?>
+				foreach ( $membership_array as $id => $this_membership ) :
+					?>
 					<li>
 						<?php printf( '%s - %s', $this_membership['name'], $this_membership['actions'] ); ?>
 					</li>
@@ -1336,7 +1355,7 @@ function rcp_display_change_membership_message() {
 	?>
 	<div id="rcp-membership-renew-upgrade-notice">
 		<p>
-			<?php printf( __( 'You are changing your "%s" membership. <a href="%s">Click here to sign up for an additional membership instead.</a>', 'rcp' ), $membership->get_membership_level_name(), esc_url( rcp_get_registration_page_url() ) ); ?>
+			<?php printf( __( 'You are changing your "%1$s" membership. <a href="%2$s">Click here to sign up for an additional membership instead.</a>', 'rcp' ), $membership->get_membership_level_name(), esc_url( rcp_get_registration_page_url() ) ); ?>
 		</p>
 	</div>
 	<?php
@@ -1429,9 +1448,9 @@ add_action( 'rcp_before_subscription_form_fields', 'rcp_add_prorate_message' );
  */
 function rcp_add_registration_type_field() {
 
-	$reg_type      = ! empty( $_GET['registration_type'] ) ? $_GET['registration_type'] : '';
-	$membership_id = ! empty( $_GET['membership_id'] ) ? $_GET['membership_id'] : 0;
-	$payment_id    = ! empty( $_GET['rcp_registration_payment_id'] ) ? $_GET['rcp_registration_payment_id'] : 0;
+	$reg_type      = ! empty( $_GET['registration_type'] ) ? sanitize_text_field( wp_unslash( $_GET['registration_type'] ) ) : '';
+	$membership_id = ! empty( $_GET['membership_id'] ) ? sanitize_text_field( wp_unslash( $_GET['membership_id'] ) ) : 0;
+	$payment_id    = ! empty( $_GET['rcp_registration_payment_id'] ) ? sanitize_text_field( wp_unslash( $_GET['rcp_registration_payment_id'] ) ) : 0;
 	?>
 	<input type="hidden" id="rcp-registration-type" name="registration_type" value="<?php echo esc_attr( $reg_type ); ?>" />
 	<input type="hidden" id="rcp-membership-id" name="membership_id" value="<?php echo absint( $membership_id ); ?>" />
@@ -1468,7 +1487,7 @@ function rcp_remove_expiring_soon_email_sent_flag( $status, $user_id, $old_statu
 	$wpdb->query( $query );
 
 }
-//add_action( 'rcp_set_status', 'rcp_remove_expiring_soon_email_sent_flag', 10, 4 );
+// add_action( 'rcp_set_status', 'rcp_remove_expiring_soon_email_sent_flag', 10, 4 );
 
 /**
  * Trigger email verification during registration.
@@ -1515,9 +1534,11 @@ function rcp_set_email_verification_flag( $posted, $user_id, $price, $payment_id
 	}
 
 	// Add meta flag to indicate they're pending email verification. This also sends the email.
-	$customer->update( array(
-		'email_verification' => 'pending'
-	) );
+	$customer->update(
+		array(
+			'email_verification' => 'pending',
+		)
+	);
 
 }
 
@@ -1570,7 +1591,6 @@ function rcp_remove_subscription_data_on_failure( $gateway ) {
 				delete_user_meta( $customer->get_user_id(), 'rcp_pending_payment_id' );
 			}
 		}
-
 	}
 
 	// Log error.
@@ -1691,9 +1711,9 @@ add_action( 'rcp_update_payment_status_complete', 'rcp_complete_registration' );
  * @deprecated 3.0 Use `RCP_Customer::add_membership()` instead.
  * @see        RCP_Customer::add_membership()
  *
- * @param int     $user_id             ID of the user to add the membership to.
- * @param array   $args                {
- *                                     Array of membership arguments. Only `subscription_id` is required.
+ * @param int   $user_id             ID of the user to add the membership to.
+ * @param array $args                {
+ *                                   Array of membership arguments. Only `subscription_id` is required.
  *
  * @type string   $status              Optional.    Status to set: free, active, cancelled, or expired. If omitted, set
  *       to free or active.
@@ -1724,7 +1744,7 @@ function rcp_add_user_to_subscription( $user_id, $args = array() ) {
 		'trial_duration'      => false, // To set as trialing.
 		'trial_duration_unit' => 'day',
 		'recurring'           => false,
-		'payment_profile_id'  => ''
+		'payment_profile_id'  => '',
 	);
 
 	$args = wp_parse_args( $args, $defaults );
@@ -1738,9 +1758,11 @@ function rcp_add_user_to_subscription( $user_id, $args = array() ) {
 	$customer = rcp_get_customer_by_user_id( $user_id );
 
 	if ( empty( $customer ) ) {
-		$customer_id = rcp_add_customer( array(
-			'user_id' => $user_id
-		) );
+		$customer_id = rcp_add_customer(
+			array(
+				'user_id' => $user_id,
+			)
+		);
 
 		if ( empty( $customer_id ) ) {
 			return false;
@@ -1775,7 +1797,6 @@ function rcp_add_user_to_subscription( $user_id, $args = array() ) {
 		if ( ! empty( $args['payment_profile_id'] ) ) {
 			$previous_membership->set_gateway_customer_id( $args['payment_profile_id'] );
 		}
-
 	} else {
 
 		/**
@@ -1783,7 +1804,7 @@ function rcp_add_user_to_subscription( $user_id, $args = array() ) {
 		 */
 
 		$membership_data = array(
-			'object_id' => $membership_level->get_id()
+			'object_id' => $membership_level->get_id(),
 		);
 
 		if ( ! empty( $args['subscription_key'] ) ) {
@@ -1847,7 +1868,6 @@ function rcp_add_user_to_subscription( $user_id, $args = array() ) {
 		if ( empty( $membership_id ) ) {
 			return false;
 		}
-
 	}
 
 	/**
@@ -1912,11 +1932,13 @@ function rcp_user_register_add_subscription_level( $user_id ) {
 		return;
 	}
 
-	$customer->add_membership( array(
-		'object_id'     => $level_id,
-		'status'        => 'active', // Note: this bypasses RCP_Membership::activate(). Not sure if desired.
-		'signup_method' => 'manual'
-	) );
+	$customer->add_membership(
+		array(
+			'object_id'     => $level_id,
+			'status'        => 'active', // Note: this bypasses RCP_Membership::activate(). Not sure if desired.
+			'signup_method' => 'manual',
+		)
+	);
 
 }
 
@@ -1973,7 +1995,7 @@ function rcp_add_membership_renewal_date_to_total_details() {
 		$from_today = false;
 
 		if ( ! empty( $_POST['rcp_gateway'] ) ) {
-			$from_today = rcp_gateway_supports( $_POST['rcp_gateway'], 'expiration-extension-on-renewals' ) ? false : rcp_registration_is_recurring();
+			$from_today = rcp_gateway_supports( sanitize_text_field( wp_unslash( $_POST['rcp_gateway'] ) ), 'expiration-extension-on-renewals' ) ? false : rcp_registration_is_recurring();
 		}
 
 		$renewal_date = $membership->calculate_expiration( $from_today );
