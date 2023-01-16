@@ -1,1 +1,25 @@
-node_modules
+.DS_STORE
+.idea/
+composer.lock
+/node_modules/
+
+# Vendor Dev dependencies.
+vendor/bin/
+vendor/composer/autoload_files.php
+vendor/composer/platform_check.php
+vendor/dealerdirect/
+vendor/doctrine/
+vendor/myclabs/
+vendor/phar-io/
+vendor/php-stubs/
+vendor/phpdocumentor/
+vendor/phpspec/
+vendor/phpstan/
+vendor/phpunit/
+vendor/sebastian/
+vendor/squizlabs/
+vendor/symfony/
+vendor/szepeviktor/
+vendor/theseer/
+vendor/webmozart/
+vendor/wp-coding-standards/
