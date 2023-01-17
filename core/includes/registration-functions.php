@@ -697,7 +697,7 @@ add_action( 'rcp_before_form_errors', 'rcp_handle_stripe_checkout' );
 
 
 /**
- * Validate and setup the user data for registration
+ * Validate and set up the user data for registration
  *
  * @access      public
  * @since       1.5
@@ -710,11 +710,11 @@ function rcp_validate_user_data() {
 	if ( ! is_user_logged_in() ) {
 		$user['id']               = 0;
 		$user['login']            = sanitize_text_field( wp_unslash( isset( $_POST['rcp_user_login'] ) ? $_POST['rcp_user_login'] : '' ) );
-		$user['email']            = sanitize_text_field( wp_unslash( isset( $_POST['rcp_user_email'] ) ? $_POST['rcp_user_login'] : '' ) );
-		$user['first_name']       = sanitize_text_field( wp_unslash( isset( $_POST['rcp_user_first'] ) ? $_POST['rcp_user_login'] : '' ) );
-		$user['last_name']        = sanitize_text_field( wp_unslash( isset( $_POST['rcp_user_last'] ) ? $_POST['rcp_user_login'] : '' ) );
-		$user['password']         = sanitize_text_field( wp_unslash( isset( $_POST['rcp_user_pass'] ) ? $_POST['rcp_user_login'] : '' ) );
-		$user['password_confirm'] = sanitize_text_field( wp_unslash( isset( $_POST['rcp_user_pass_confirm'] ) ? $_POST['rcp_user_login'] : '' ) );
+		$user['email']            = sanitize_text_field( wp_unslash( isset( $_POST['rcp_user_email'] ) ? $_POST['rcp_user_email'] : '' ) );
+		$user['first_name']       = sanitize_text_field( wp_unslash( isset( $_POST['rcp_user_first'] ) ? $_POST['rcp_user_first'] : '' ) );
+		$user['last_name']        = sanitize_text_field( wp_unslash( isset( $_POST['rcp_user_last'] ) ? $_POST['rcp_user_last'] : '' ) );
+		$user['password']         = sanitize_text_field( wp_unslash( isset( $_POST['rcp_user_pass'] ) ? $_POST['rcp_user_pass'] : '' ) );
+		$user['password_confirm'] = sanitize_text_field( wp_unslash( isset( $_POST['rcp_user_pass_confirm'] ) ? $_POST['rcp_user_pass_confirm'] : '' ) );
 		$user['need_new']         = true;
 	} else {
 		$userdata         = get_userdata( get_current_user_id() );
