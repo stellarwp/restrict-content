@@ -1,11 +1,11 @@
 === Membership Plugin - Restrict Content ===
 Author URI: https://restrictcontentpro.com
 Author: StellarWP
-Contributors: stellarwp, reedyseth, highprrrr, layotte
+Contributors: stellarwp, reedyseth, highprrrr
 Tags: restrict pages, restrict posts, restrict access, membership, registration form, access control
 Requires at least: 5.6
 Tested up to: 6.1.1
-Stable tag: 3.1.7
+Stable tag: 3.1.8
 
 Restrict Content is a powerful WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.
 
@@ -255,6 +255,11 @@ Go to the demo page to see examples:
 https://restrictcontentpro.com/tour/screenshots/
 
 == Changelog ==
+
+= 3.1.8 =
+* Fix: Sanitation issues in core files.
+* Fix: Fatal error cannot redeclare “rcp_should_show_discounts” when using multiple paid registration forms.
+* Enhancement: Update Stripe library to version 10.3.
 
 = 3.1.7 =
 * Fix: Email templates that were deleted when saving any RC setting.
