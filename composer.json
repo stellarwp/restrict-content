@@ -12,8 +12,26 @@
 			"homepage": "https://restrictcontentpro.com"
 		}
 	],
+	"scripts": {
+		"cs": "./vendor/squizlabs/php_codesniffer/bin/phpcs .",
+		"cbf": "./vendor/squizlabs/php_codesniffer/bin/phpcbf .",
+		"strauss": [
+			"test -f ./bin/strauss.phar || curl -o bin/strauss.phar -L -C - https://github.com/BrianHenryIE/strauss/releases/download/0.13.0/strauss.phar",
+			"@php bin/strauss.phar",
+			"echo \"<?php\" > vendor/lucatume/di52/aliases.php",
+			"echo \"<?php\" > vendor/strauss/lucatume/di52/aliases.php"
+		],
+		"post-install-cmd": [
+			"@strauss"
+		],
+		"post-update-cmd": [
+			"@strauss"
+		]
+	},
 	"require": {
-		"composer/installers": "^1.0.6"
+		"lucatume/di52": "^3.0",
+		"stellarwp/container-contract": "^1.0",
+		"stellarwp/telemetry": "^1.0.5"
 	},
         "autoload": {
 		"psr-4": {
@@ -31,6 +49,21 @@
 		"allow-plugins": {
 			"composer/installers": true,
 			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
+	"extra": {
+		"strauss": {
+			"target_directory": "vendor/strauss",
+			"classmap_prefix": "RCP",
+			"constant_prefix": "RCP",
+			"delete_vendor_files": true,
+			"include_modified_date": false,
+			"include_author": false,
+			"packages": [
+				"stellarwp/container-contract",
+				"stellarwp/telemetry",
+				"lucatume/di52"
+			]
 		}
 	}
 }
