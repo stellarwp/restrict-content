@@ -189,6 +189,7 @@ function rcp_register_scripts() {
 	wp_register_script( 'rcp-register',  RCP_PLUGIN_URL . 'core/includes/js/register' . $suffix . '.js', array('jquery'), RCP_PLUGIN_VERSION );
 	wp_register_script( 'jquery-blockui',  RCP_PLUGIN_URL . 'core/includes/js/jquery.blockUI.js', array('jquery'), RCP_PLUGIN_VERSION );
 	wp_register_script( 'rcp-account', RCP_PLUGIN_URL . 'core/includes/js/account' . $suffix . '.js', array( 'jquery' ), RCP_PLUGIN_VERSION, true );
+	wp_register_script( 'rcp-general', RCP_PLUGIN_URL . 'core/includes/js/general.js', array(), RCP_PLUGIN_VERSION, true );
 
 	wp_localize_script( 'rcp-account', 'rcpAccountVars', array(
 		'confirmEnableAutoRenew'  => __( 'Are you sure you want to enable auto renew? You will automatically be charged on %s.', 'rcp' ),
@@ -281,6 +282,7 @@ function rcp_print_scripts() {
 	wp_print_scripts( 'es6-promise' );
 	wp_print_scripts( 'rcp-register' );
 	wp_print_scripts( 'jquery-blockui' );
+	wp_print_scripts( 'rcp-general' );
 	if ( rcp_is_recaptcha_enabled() ) {
 		wp_print_scripts( 'recaptcha-v' . rcp_get_recaptcha_version() );
 	}

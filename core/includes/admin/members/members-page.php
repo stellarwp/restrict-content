@@ -15,6 +15,7 @@
  */
 function rcp_members_page() {
 
+	do_action( 'stellarwp/telemetry/restrict-content-pro/optin' );
 	if ( ! empty( $_GET['view'] ) && 'edit' == $_GET['view'] && ! empty( $_GET['membership_id'] ) ) {
 		require_once RCP_PLUGIN_DIR . 'core/includes/admin/memberships/edit-membership.php';
 	} elseif ( ! empty( $_GET['view'] ) && 'add' == $_GET['view'] ) {

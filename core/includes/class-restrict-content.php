@@ -26,7 +26,7 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 	 * @since 3.0
 	 */
 	final class Restrict_Content_Pro {
-		const VERSION = '3.5.24.1';
+		const VERSION = '3.5.27';
 
 		/**
 		 * Stores the base slug for the extension.
@@ -118,8 +118,8 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 
 			// Bootstrap
 			self::$instance->setup_constants();
-			self::$instance->setup_globals();
 			self::$instance->setup_files();
+			self::$instance->setup_globals();
 			self::$instance->setup_application();
 
 			// Backwards compat globals
@@ -430,15 +430,12 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 			// block functions
 			require_once RCP_PLUGIN_DIR . 'core/includes/block-functions.php';
 
+			// Integrations.
+			require_once RCP_PLUGIN_DIR . 'core/includes/integrations/class-rcp-telemetry.php';
+
 			if ( file_exists( RCP_PLUGIN_DIR . 'pro/class-restrict-content-pro.php') ) {
 				require_once( RCP_PLUGIN_DIR . 'pro/class-restrict-content-pro.php' );
-				// Integrations.
-				require_once RCP_PLUGIN_DIR . 'pro/integrations/freemius.php';
 				include_pro_files();
-			}
-			else {
-				// Integrations.
-				require_once RCP_PLUGIN_DIR . 'core/includes/integrations/class-rcp-freemius.php';
 			}
 
 		}

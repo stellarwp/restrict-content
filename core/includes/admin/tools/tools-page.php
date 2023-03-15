@@ -19,6 +19,8 @@ function rcp_tools_page() {
 		return;
 	}
 
+	do_action( 'stellarwp/telemetry/restrict-content-pro/optin' );
+
 	$active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'system_info';
     ?>
 

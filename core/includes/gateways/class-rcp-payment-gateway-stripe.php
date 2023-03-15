@@ -871,6 +871,12 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 			rcp_log( sprintf( 'Event ID: %s; Event Type: %s', $event->id, $event->type ) );
 
+			// Check for valid webhooks in the current RCP settings.
+			if ( ! validate_stripe_webhook( $event->type ) ) {
+				rcp_log( sprintf( 'Exiting Stripe webhook - Unregistered Stripe webhook.  "%s" was provided.', $event->type ), true );
+				die( 'Unregister Stripe webhooks' );
+			}
+
 			if( empty( $payment_event->customer ) ) {
 				rcp_log( 'Exiting Stripe webhook - no customer attached to event.' );
 
