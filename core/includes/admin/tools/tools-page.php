@@ -20,6 +20,7 @@ function rcp_tools_page() {
 	}
 
 	do_action( 'stellarwp/telemetry/restrict-content-pro/optin' );
+	do_action( 'stellarwp/telemetry/restrict-content/optin' );
 
 	$active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'system_info';
     ?>

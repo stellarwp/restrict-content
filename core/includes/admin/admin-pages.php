@@ -17,6 +17,7 @@ function rcp_settings_menu() {
 	global $rcp_members_page, $rcp_customers_page, $rcp_subscriptions_page, $rcp_payments_page,
 		   $rcp_settings_page, $rcp_export_page, $rcp_tools_page, $rcp_reminders_page, $restrict_content_pro_why_go_pro,
 		   $restrict_content_pro_help_page, $restrict_content_pro_welcome_page, $restrict_content_pro_addons;
+	$restrict_content = restrict_content_pro();
 
 	// add settings page
 	add_menu_page( __( 'Restrict Content Pro Settings', 'rcp' ), __( 'Restrict', 'rcp' ), 'rcp_view_members', 'rcp-members', 'rcp_members_page', 'dashicons-lock' );
@@ -28,13 +29,12 @@ function rcp_settings_menu() {
 	$rcp_tools_page                     = add_submenu_page( 'rcp-members', __( 'Tools', 'rcp' ), __( 'Tools', 'rcp' ), 'rcp_manage_settings', 'rcp-tools', 'rcp_tools_page',  8 );
 	$rcp_reminders_page                 = add_submenu_page( 'rcp-members', __( 'Subscription Reminder', 'rcp' ), __( 'Subscription Reminder', 'rcp' ), 'rcp_manage_settings', 'rcp-reminder', 'rcp_subscription_reminder_page', 11 );
 	$restrict_content_pro_help_page     = add_submenu_page( 'rcp-members', __( 'Help', 'rcp' ), __( 'Help', 'rcp' ), 'manage_options', 'rcp-need-help', 'rc_need_help_page_redesign' );
-	$restrict_content_pro_addons    = add_submenu_page( 'rcp-members', __( 'RCP Addons', 'rcp' ), __( 'RCP Addons', 'rcp' ), 'manage_options', 'rcp-addons', 'rc_pro_addons' );
+	$restrict_content_pro_addons        = add_submenu_page( 'rcp-members', __( 'RCP Addons', 'rcp' ), __( 'RCP Addons', 'rcp' ), 'manage_options', 'rcp-addons', 'rc_pro_addons' );
 
 	// If we are not in PRO include the Free menus.
-	if( false === has_action('admin_menu','include_pro_pages') ) {
+	if( false === $restrict_content->is_pro() ) {
 		$restrict_content_pro_why_go_pro    = add_submenu_page( 'rcp-members', __( 'Why Go Pro', 'rcp' ), __( 'Why Go Pro', 'rcp' ), 'manage_options', 'rcp-why-go-pro', 'rc_why_go_pro_page_redesign' );
 		$restrict_content_pro_welcome_page  = add_submenu_page( null, __( 'rcp-members', 'rcp'), __( 'RCP Welcome', 'rcp' ), 'manage_options', 'restrict-content-welcome', 'rc_welcome_page_redesign' );
-		$restrict_content_pro_addons    = add_submenu_page( 'rcp-members', __( 'RCP Addons', 'rcp' ), __( 'RCP Addons', 'rcp' ), 'manage_options', 'rcp-addons', 'rc_pro_addons' );
 	}
 	else {
 		$restrict_content_pro_welcome_page  = add_submenu_page( null, __( 'RCP Welcome', 'rcp'), __( 'RCP Welcome', 'rcp' ), 'manage_options', 'restrict-content-pro-welcome', 'rcp_welcome_page_redesign' );
@@ -159,6 +159,8 @@ function rcp_get_customers_admin_page( $args = array() ) {
 }
 
 function rc_pro_addons() {
+	do_action( 'stellarwp/telemetry/restrict-content-pro/optin' );
+	do_action( 'stellarwp/telemetry/restrict-content/optin' );
 	?>
 	<div class="restrict-content-welcome-header">
 		<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/rc_logo_horizontal_black.svg' ); ?>" >
@@ -284,7 +286,11 @@ function rc_pro_addons() {
 			<div class="addons-cta"><a href="https://restrictcontentpro.com/add-ons/pro/" target="_blank">View all Pro add-ons</a></div>
 		</div>
 		<div class="restrict-content-welcome-right-container">
-		<div class="restrict-content-welcome-advertisement">
+			<?php
+			$restrict_content = restrict_content_pro();
+			if ( ! $restrict_content->is_pro() ) {
+			?>
+			<div class="restrict-content-welcome-advertisement">
 				<div class="logo">
 					<img class="restrict-content-welcome-advertisement-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/Stacked_Logo_V2.svg' ); ?>" >
 				</div>
@@ -338,6 +344,7 @@ function rc_pro_addons() {
 				<a href="https://restrictcontentpro.com/pricing/" class="go-pro-now"><?php _e( 'Go Pro Now', 'rcp' ); ?></a>
 				<p class="whats-included"><a href="https://restrictcontentpro.com/why-go-pro/"><?php _e( "What's included with Pro?", 'rcp' ); ?></a></p>
 			</div>
+			<?php } ?>
 		</div>
 	</div>
 <?php
@@ -345,6 +352,8 @@ function rc_pro_addons() {
 }
 
 function rc_why_go_pro_page_redesign() {
+	do_action( 'stellarwp/telemetry/restrict-content-pro/optin' );
+	do_action( 'stellarwp/telemetry/restrict-content/optin' );
 	?>
 	<div class="wrap">
 		<div class="rcp-why-go-pro-wrap">
@@ -464,6 +473,7 @@ function rc_why_go_pro_page_redesign() {
 
 function rc_need_help_page_redesign() {
 	do_action( 'stellarwp/telemetry/restrict-content-pro/optin' );
+	do_action( 'stellarwp/telemetry/restrict-content/optin' );
 	?>
 	<div class="restrict-content-welcome-header">
 		<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/rc_logo_horizontal_black.svg' ); ?>" >
