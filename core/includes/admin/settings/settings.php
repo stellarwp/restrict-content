@@ -44,6 +44,7 @@ function rcp_settings_page() {
 	$rcp_options = wp_parse_args( $rcp_options, $defaults );
 
 	do_action( 'stellarwp/telemetry/restrict-content-pro/optin' );
+	do_action( 'stellarwp/telemetry/restrict-content/optin' );
 	?>
 	<div id="rcp-settings-wrap" class="wrap">
 		<?php

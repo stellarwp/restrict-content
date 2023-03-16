@@ -25,12 +25,22 @@ class RCP_Telemetry {
 	protected $container;
 
 	/**
+	 * The Restrict Content Instance
+	 *
+	 * @since 3.5.28
+	 * @var Restrict_Content_Pro $restrict_content The RCP Instance.
+	 * @access private
+	 */
+	private $restrict_content;
+
+	/**
 	 * Initialize variables.
 	 *
 	 * @since 3.5.27
 	 */
 	public function __construct() {
-		$this->container = Config::get_container();
+		$this->container        = Config::get_container();
+		$this->restrict_content = restrict_content_pro();
 	}
 
 	/**
@@ -44,6 +54,8 @@ class RCP_Telemetry {
 		// Add Filters.
 		add_filter( 'stellarwp/telemetry/restrict-content-pro/optin_args', [ $this, 'telemetry_messages' ] );
 		add_filter( 'stellarwp/telemetry/restrict-content-pro/exit_interview_args', [ $this, 'exit_interview' ] );
+		add_filter( 'stellarwp/telemetry/restrict-content/optin_args', [ $this, 'telemetry_messages' ] );
+		add_filter( 'stellarwp/telemetry/restrict-content/exit_interview_args', [ $this, 'exit_interview' ] );
 		add_filter( 'plugin_action_links', [ $this, 'add_opt_in_link' ], 10, 2 );
 		add_filter( 'admin_init', [ $this, 'update_opt_in_get_status' ] );
 		add_filter( 'admin_init', [ $this, 'update_opt_in_post_status' ] );
@@ -58,20 +70,37 @@ class RCP_Telemetry {
 	 * @return array The modified labels.
 	 */
 	public function telemetry_messages( $_args ) {
-		$_args['plugin_logo']        = RCP_WEB_ROOT . 'core/includes/images/Full-Logo-1.svg';
 		$_args['plugin_logo_width']  = '300';
 		$_args['plugin_logo_height'] = '50';
 		$_args['permissions_url']    = 'https://restrictcontentpro.com/telemetry-tracking/';
 		$_args['tos_url']            = 'https://restrictcontentpro.com/terms-of-service/';
 		$_args['privacy_url']        = 'https://stellarwp.com/privacy-policy/';
-		$_args['heading']            = __( 'We hope you love Restrict Content Pro.', 'rcp' );
+		$rcp_title                   = 'Restrict Content Pro';
+
+		if ( $this->restrict_content->is_pro() ) {
+			$_args['plugin_logo'] = RCP_WEB_ROOT . 'core/includes/images/Full-Logo-1.svg';
+			$_args['heading']     = __( 'We hope you love Restrict Content Pro.', 'rcp' );
+		} else {
+			$_args['plugin_logo'] = RCP_WEB_ROOT . 'core/includes/images/restrict_content_logo.svg';
+			$_args['heading']     = __( 'We hope you love Restrict Content.', 'rcp' );
+			$rcp_title            = 'Restrict Content';
+		}
 
 		if ( ! $this->check_freemius_status() ) {
-			// translators: %s: The user name.
-			$_args['intro'] = sprintf( __( "Hi, %s! This is an invitation to help our Restrict Content Pro community. If you opt-in, some data about your usage of Restrict Content Pro will be shared with our teams (so they can work their butts off to improve). We will also share some helpful info on membership site management, WordPress, and our products from time to time. And if you skip this, that's okay! Restrict Content Pro will still work just fine.", 'rcp' ), wp_get_current_user()->display_name );
+			$_args['intro'] = sprintf(
+				// translators:%1\$s: The user name.
+				__( "Hi, %1\$s! This is an invitation to help our %2\$s community. If you opt-in, some data about your usage of %3\$s will be shared with our teams (so they can work their butts off to improve). We will also share some helpful info on membership site management, WordPress, and our products from time to time. And if you skip this, that's okay! %4\$s will still work just fine.", 'rcp' ),
+				wp_get_current_user()->display_name,
+				$rcp_title,
+				$rcp_title,
+				$rcp_title
+			);
 		} else {
-			// translators: %s: The user name.
-			$_args['intro'] = sprintf( __( "Hello, %s! We just wanted to let you know that we've replaced Freemius with our own Telemetry feature. This new Telemetry removes the middle man (Freemius) and as a result is much more privacy-friendly. Rather than sending helpful information to Freemius, who then sends it to us, the information is now sent directly to us. Click 'Allow & Continue' to continue sharing this helpful information using our new Telemetry feature.", 'rcp' ), wp_get_current_user()->display_name );
+			$_args['intro'] = sprintf(
+				// translators: %s: The user name.
+				__( "Hello, %s! We just wanted to let you know that we've replaced Freemius with our own Telemetry feature. This new Telemetry removes the middle man (Freemius) and as a result is much more privacy-friendly. Rather than sending helpful information to Freemius, who then sends it to us, the information is now sent directly to us. Click 'Allow & Continue' to continue sharing this helpful information using our new Telemetry feature.", 'rcp' ),
+				wp_get_current_user()->display_name
+			);
 		}
 
 		return $_args;
@@ -89,17 +118,19 @@ class RCP_Telemetry {
 		$new_actions   = array();
 		$opt_in_status = $this->container->get( Status::class )->is_active();
 
-		if ( $opt_in_status && ( basename( RCP_ROOT ) . '/restrict-content-pro.php' === $plugin_file ) ) {
+		if ( ( $opt_in_status && ( basename( RCP_ROOT ) . '/restrict-content-pro.php' === $plugin_file ) )
+			|| ( $opt_in_status && ( basename( RCP_ROOT ) . '/restrictcontent.php' === $plugin_file ) ) ) {
 			$new_actions['rcp_opt_out'] = sprintf(
-				// translators: %s: The admin URL.
+			// translators: %s: The admin URL.
 				__( '<a href="%1$s" alt="%2$s">Opt-Out</a>', 'rcp' ),
 				// translators: %s: The Opt-Out alt text.
 				esc_url( admin_url( 'plugins.php?opt-in-status=0' ) ),
 				__( 'Change to Opt Out Status', 'rcp' )
 			);
-		} elseif ( ! $opt_in_status && ( basename( RCP_ROOT ) . '/restrict-content-pro.php' === $plugin_file ) ) {
+		} elseif ( ( ! $opt_in_status && ( basename( RCP_ROOT ) . '/restrict-content-pro.php' === $plugin_file ) )
+			|| ( ! $opt_in_status && ( basename( RCP_ROOT ) . '/restrictcontent.php' === $plugin_file ) ) ) {
 			$new_actions['rcp_opt_in'] = sprintf(
-				// translators: %s: The admin URL.
+			// translators: %s: The admin URL.
 				__( '<a href="%1$s" alt="%2$s">Opt-In</a>', 'rcp' ),
 				esc_url( admin_url( 'plugins.php?opt-in-status=1' ) ),
 				// translators: %s: The Opt-Out alt text.
@@ -158,10 +189,16 @@ class RCP_Telemetry {
 	 * @return array The custom labels.
 	 */
 	public function exit_interview( $_args ) {
-		$_args['plugin_logo']        = RCP_WEB_ROOT . 'core/includes/images/Full-Logo-1.svg';
 		$_args['plugin_logo_width']  = '300';
 		$_args['plugin_logo_height'] = '50';
-		$_args['plugin_logo_alt']    = 'Restrict Content Pro Logo';
+
+		if ( $this->restrict_content->is_pro() ) {
+			$_args['plugin_logo']     = RCP_WEB_ROOT . 'core/includes/images/Full-Logo-1.svg';
+			$_args['plugin_logo_alt'] = 'Restrict Content Pro Logo';
+		} else {
+			$_args['plugin_logo']     = RCP_WEB_ROOT . 'core/includes/images/restrict_content_logo.svg';
+			$_args['plugin_logo_alt'] = 'Restrict Content Logo';
+		}
 
 		return $_args;
 	}
@@ -187,6 +224,10 @@ class RCP_Telemetry {
 
 		if ( isset( $fs_accounts['file_slug_map']['restrict-content-pro/restrict-content-pro.php'] ) ) {
 			unset( $fs_accounts['file_slug_map']['restrict-content-pro/restrict-content-pro.php'] );
+		}
+
+		if ( isset( $fs_accounts['file_slug_map']['restrict-content/restrictcontent.php'] ) ) {
+			unset( $fs_accounts['file_slug_map']['restrict-content/restrictcontent.php'] );
 		}
 
 		if ( isset( $fs_accounts['plugins']['rcp'] ) ) {

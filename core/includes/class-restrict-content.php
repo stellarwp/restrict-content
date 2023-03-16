@@ -88,6 +88,11 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 		public $components;
 
 		/**
+		 * @var boolean
+		 */
+		private $is_pro;
+
+		/**
 		 * Main Restrict_Content_Pro Instance.
 		 *
 		 * Insures that only one instance of Restrict_Content_Pro exists in memory at any one
@@ -556,6 +561,20 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 			global $rcp_export_page;
 			global $rcp_help_page;
 
+		}
+
+		/**
+		 * Check if the current instance is PRO. This does not fully determine if the actual code is PRO.
+		 * The main purpose of this function is for labels.
+		 *
+		 * @since 3.5.28
+		 * @return bool
+		 */
+		public function is_pro() {
+			if( false === has_action('admin_menu','include_pro_pages') ) {
+				return false;
+			}
+			return true;
 		}
 
 	}
