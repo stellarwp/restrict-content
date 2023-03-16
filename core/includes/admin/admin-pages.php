@@ -161,11 +161,17 @@ function rcp_get_customers_admin_page( $args = array() ) {
 function rc_pro_addons() {
 	do_action( 'stellarwp/telemetry/restrict-content-pro/optin' );
 	do_action( 'stellarwp/telemetry/restrict-content/optin' );
+	$restrict_content = restrict_content_pro();
+			if ( $restrict_content->is_pro() ) {
+				$hidegrid = "hide-grid";
+			}
 	?>
 	<div class="restrict-content-welcome-header">
 		<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/rc_logo_horizontal_black.svg' ); ?>" >
 	</div>
-	<div class="restrict-content-addons-top-container">
+
+	
+	<div class="restrict-content-addons-top-container <?php echo $hidegrid; ?>">
 		<div class="restrict-content-addons-left-container">
 			<h1 class="restrict-content-addons-user"><?php _e( 'Pro Add-ons', 'rcp' ); ?></h1>
 			<p>
