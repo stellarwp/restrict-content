@@ -16,8 +16,15 @@ defined('ABSPATH') || exit;
 define('RCP_PLUGIN_FILE', __FILE__);
 define('RCP_ROOT', plugin_dir_path(__FILE__));
 define('RCP_WEB_ROOT', plugin_dir_url(__FILE__));
+
+// Load Strauss autoload.
+require_once plugin_dir_path( __FILE__ ) . 'vendor/strauss/autoload.php';
 // Load Composer autoload file only if we've not included this file already.
 require_once dirname(RCP_PLUGIN_FILE) . '/vendor/autoload.php';
+
+use RCP\StellarWP\Telemetry\Config;
+use RCP\StellarWP\Telemetry\Core as Telemetry;
+use RCP\Container;
 
 $rc_options = get_option('rc_settings');
 
@@ -96,11 +103,30 @@ final class RC_Requirements_Check
 
         // Always load translations
         add_action('plugins_loaded', array( $this, 'load_textdomain' ));
+        add_action('plugins_loaded', array( $this, 'plugins_loaded' ));
 
         // Load or quit
         $this->met()
         ? $this->load()
         : $this->quit();
+    }
+
+    public function plugins_loaded() {
+        // Initialize Telemetry.
+        $container = new Container();
+        Config::set_hook_prefix( 'rcp' );
+        Config::set_stellar_slug( 'restrict-content' );
+        if ( defined('TELEMETRY_SERVER') ) {
+            Config::set_server_url( TELEMETRY_SERVER );
+        }
+        else {
+            Config::set_server_url( 'https://telemetry.stellarwp.com/api/v1' );
+        }
+        Config::set_container( $container );
+        Telemetry::instance()->init( __FILE__ );
+
+        $rcp_telemetry = new RCP_Telemetry();
+        $rcp_telemetry->init();
     }
 
     /**
