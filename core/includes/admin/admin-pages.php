@@ -162,9 +162,11 @@ function rc_pro_addons() {
 	do_action( 'stellarwp/telemetry/restrict-content-pro/optin' );
 	do_action( 'stellarwp/telemetry/restrict-content/optin' );
 	$restrict_content = restrict_content_pro();
-			if ( $restrict_content->is_pro() ) {
-				$hidegrid = "hide-grid";
-			}
+	$hidegrid = "";
+
+	if ( $restrict_content->is_pro() ) {
+		$hidegrid = "hide-grid";
+	} 
 	?>
 	<div class="restrict-content-welcome-header">
 		<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/rc_logo_horizontal_black.svg' ); ?>" >
