@@ -23,6 +23,8 @@ function rcp_payments_page() {
 
 	$rcp_payments  = new RCP_Payments();
 	$status = $table_class->get_request_var( 'status' );
+	do_action( 'stellarwp/telemetry/restrict-content-pro/optin' );
+	do_action( 'stellarwp/telemetry/restrict-content/optin' );
 	?>
 
 	<div class="wrap">

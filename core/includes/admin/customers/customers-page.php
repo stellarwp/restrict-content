@@ -16,6 +16,9 @@
  */
 function rcp_customers_page() {
 
+	do_action( 'stellarwp/telemetry/restrict-content-pro/optin' );
+	do_action( 'stellarwp/telemetry/restrict-content/optin' );
+
 	if ( ! empty( $_GET['view'] ) && 'edit' == $_GET['view'] && ! empty( $_GET['customer_id'] ) ) {
 		require_once RCP_PLUGIN_DIR . 'core/includes/admin/customers/edit-customer.php';
 	} elseif ( ! empty( $_GET['view'] ) && 'add' == $_GET['view'] ) {

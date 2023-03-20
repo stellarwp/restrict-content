@@ -55,7 +55,7 @@ add_action( 'enqueue_block_editor_assets', 'rcp_enqueue_block_editor_assets_for_
 function rcp_register_blocks_init() {
 	// Register the registration redirect block using blocks.json
 	register_block_type_from_metadata(
-		RCP_PLUGIN_DIR . '/src/blocks/content-upgrade-redirect/',
+		RCP_PLUGIN_DIR . '/core/src/blocks/content-upgrade-redirect/',
 		array ()
 	);
 }

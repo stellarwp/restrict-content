@@ -61,6 +61,8 @@ function rcp_options_install( $network_wide = false ) {
 
 	update_option( 'rcp_settings', $rcp_options );
 
+	// Initialize new RCP Settings.
+	rcp_init_settings( RCP_PLUGIN_VERSION );
 	// and option that allows us to make sure RCP is installed
 	update_option( 'rcp_is_installed', '1' );
 
@@ -431,4 +433,25 @@ function rcp_create_default_email_templates() {
 
 	return $templates;
 
+}
+
+/**
+ * Initialize new settings or update existing settings.
+ *
+ * The goal is to handle versioning for any new or existing versions.
+ *
+ * @param string $_rcp_version The RCP versions.
+ * @return void It doesn't return information it just set up information.
+ */
+function rcp_init_settings( $_rcp_version ) {
+	// Get current setting if exists.
+	$all_rcp_options = get_option('rcp_settings');
+	// Add new settings for version 3.5.25
+	if ( version_compare($_rcp_version, '3.5.25', '>=' ) )  {
+		// Check if options exits.
+		if (!array_key_exists('stripe_webhooks', $all_rcp_options)) {
+			$all_rcp_options['stripe_webhooks'] = get_stripe_webhooks(true);
+			update_option('rcp_settings', $all_rcp_options);
+		}
+	}
 }

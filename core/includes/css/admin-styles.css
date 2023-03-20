@@ -8,6 +8,9 @@
  * @copyright   Copyright (c) 2017, Restrict Content Pro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
+#optin-modal-restrict-content-pro p {
+	max-width: 900px;
+}
 
 .rcp_key_wrap {
 	position: relative;
@@ -1519,13 +1522,83 @@ only screen and (min-device-pixel-ratio: 1.5) {
 	padding-left: 0;
 }
 
-/* Notifications 
+/* Notifications
 ---------------------------------------------------------------*/
 .rcp__notification--inline {
 	background-color: #eeb9b9;
 	width: 700px;
 	padding: 10px;
 	border-radius: 5px;
+}
+
+/* Why Go Pro && Welcome Pages && addons page
+-------------------------------------------------------------- */
+.restrict-content-addons-top-container {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    grid-template-rows: 1fr;
+    padding: 20px 20px 20px 0;
+	gap: 10px;
+}
+@media screen and (max-width: 768px) {
+	.restrict-content-addons-top-container {
+		display: block!important;
+	}
+}
+.hide-grid {
+	display: flex!important;
+}
+.addons-flex-container {
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+	margin-top: 25px;
+	justify-content: center;
+}
+.addon-card {
+	box-shadow: 0px 0px 4px #00000036;
+	border-radius: 10px;
+	width: 23%;
+	min-width: 260px;
+	font-size: 1rem;
+
+}
+@media screen and (max-width: 976px) {
+	.addon-card {
+		width: 90%;
+	}
+}
+.addon-card-header img {
+    width: 100%;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+}
+.addon-card-body {
+	padding: 20px;
+	display: flex;
+    flex-direction: column;
+    min-height: 225px;
+}
+.addon-card-title {
+	font-size: 1.3em;
+	line-height: 1.5em;
+}
+.addon-card-text {
+	font-size: 1em;
+}
+.addon-card-cta {
+	text-decoration: none;
+	font-weight: bold;
+	margin-top: auto;
+}
+.addons-cta a {
+    text-decoration: none;
+}
+.addons-cta {
+    margin-top: 75px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 /* Why Go Pro && Welcome Pages
@@ -2158,7 +2231,7 @@ img.restrict-content-logo {
 }
 
 .restrict-content-unlock-premium-features h3 {
-	text-align: left;
+	text-align: center;
 	font-weight: 700;
 	font-size: 1rem;
 	line-height: 21px;
@@ -2167,7 +2240,7 @@ img.restrict-content-logo {
 }
 
 .restrict-content-unlock-premium-features p {
-	text-align: left;
+	text-align: center;
 	font-weight: 400;
 	font-size: .7rem;
 	line-height: 14px;
@@ -2184,6 +2257,8 @@ img.restrict-content-logo {
 }
 
 .restrict-content-unlock-premium-features .go-pro-now {
+	display: flex;
+    justify-content: center;
 	text-align: center;
 	font-weight: 700;
 	font-size: 1rem;
@@ -2343,4 +2418,9 @@ img.restrict-content-logo {
 		color: #FFFFFF;
 		padding: 10px 0px;
 	}
+}
+
+/* Override Telemetry 90% with. */
+.stellarwp-telemetry-modal__inner {
+	width: 900px !important;
 }

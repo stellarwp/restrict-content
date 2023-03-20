@@ -402,6 +402,17 @@ function rcp_admin_notices() {
 		}
 	}
 
+	// Telemetry Notices.
+	if( current_user_can( 'rcp_manage_settings' ) ) {
+		switch( $message ) {
+			case 'opt_in_message' :
+				$text = __('Telemetry status changed to Opt In', 'rcp');
+				break;
+			case 'opt_out_message' :
+				$text = __('Telemetry status changed to Opt Out', 'rcp');
+				break;
+		}
+	}
 	// Membership reminder messages.
 	if( current_user_can( 'rcp_manage_settings' ) ) {
 		switch( $message ) {

@@ -21,6 +21,8 @@ function rcp_member_levels_page() {
 
 	$table_class = new Membership_Levels_Table();
 	$table_class->prepare_items();
+	do_action( 'stellarwp/telemetry/restrict-content-pro/optin' );
+	do_action( 'stellarwp/telemetry/restrict-content/optin' );
 	?>
 	<div class="wrap">
 		<?php if(isset($_GET['edit_subscription'])) :

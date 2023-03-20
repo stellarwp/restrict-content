@@ -2016,10 +2016,10 @@ function rcp_add_membership_renewal_date_to_total_details() {
 		return;
 	}
 	?>
-	<div class="rcp-renewal-date">
-		<div scope="row"><p><?php _e( 'Next Renewal Due', 'rcp' ); ?></p></div>
-		<div data-th="<?php esc_attr_e( 'Next Renewal Due', 'rcp' ); ?>"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $renewal_date, current_time( 'timestamp' ) ) ); ?></div>
-	</div>
+	<tr class="row rcp-renewal-date">
+		<td class="cell" scope="col"><?php _e( 'Next Renewal Due', 'rcp' ); ?></td>
+		<td class="cell" data-th="<?php esc_attr_e( 'Next Renewal Due', 'rcp' ); ?>"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $renewal_date, current_time( 'timestamp' ) ) ); ?></td>
+	</tr>
 	<?php
 
 }
