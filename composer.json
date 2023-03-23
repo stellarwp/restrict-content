@@ -1,6 +1,6 @@
 {
 	"name": "restrictcontent/restrict-content",
-	"version": "3.1.8",
+	"version": "3.1.9",
 	"type": "wordpress-plugin",
 	"description": "A simple, yet powerful membership solution for WordPress.",
 	"keywords": [ "rcp", "pippin", "membership"],
@@ -9,6 +9,11 @@
 		{
 			"name": "Pippin Williamson",
 			"email": "pippin@pippinsplugins.com",
+			"homepage": "https://restrictcontentpro.com"
+		},
+		{
+			"name": "Israel Barragan",
+			"email": "reedyseth@gmail.com",
 			"homepage": "https://restrictcontentpro.com"
 		}
 	],

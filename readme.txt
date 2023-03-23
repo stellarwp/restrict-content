@@ -3,9 +3,10 @@ Author URI: https://restrictcontentpro.com
 Author: StellarWP
 Contributors: stellarwp, reedyseth, highprrrr
 Tags: restrict pages, restrict posts, restrict access, membership, registration form, access control
-Requires at least: 5.6
-Tested up to: 6.1.1
-Stable tag: 3.1.8
+Requires at least: 6.0
+Requires PHP: 7.4
+Tested up to: 6.2
+Stable tag: 3.1.9
 
 Restrict Content is a powerful WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.
 
@@ -255,6 +256,16 @@ Go to the demo page to see examples:
 https://restrictcontentpro.com/tour/screenshots/
 
 == Changelog ==
+
+= 3.1.9 =
+* Enhancement: Replace Freemius third-party integration with our StellarWP Telemetry.
+* Enhancement: Add reCaptcha feature from Pro.
+* Enhancement: Add Add-Ons page.
+* Enhancement: Add Stripe webhooks option to include any missing webhook.
+* Update: Language domain in were using LION for rcp.
+* Fix: Replaces Divs with tables on the 'Register page' and 'Your Membership' page.
+* Fix: Gutenberg Block “Content Upgrade Redirect” that was missing.
+* Fix: Revert div for tables in registration pages.
 
 = 3.1.8 =
 * Fix: Sanitation issues in core files.
