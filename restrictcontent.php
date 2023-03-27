@@ -105,7 +105,6 @@ final class RC_Requirements_Check
 
         // Always load translations
         add_action('plugins_loaded', array( $this, 'load_textdomain' ));
-        add_action('plugins_loaded', array( $this, 'plugins_loaded' ));
 
         // Load or quit
         $this->met()
@@ -255,6 +254,7 @@ final class RC_Requirements_Check
             // Bootstrap to plugins_loaded before priority 10 to make sure
             // add-ons are loaded after us.
             add_action('plugins_loaded', array( $this, 'bootstrap' ), 4);
+            add_action('plugins_loaded', array( $this, 'plugins_loaded' ));
 
             // Register the activation hook
             register_activation_hook($this->file, array( $this, 'install' ));

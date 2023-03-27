@@ -23,6 +23,8 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) exit;
 // Load RCP file.
 include_once 'restrictcontent.php';
 
+use RCP\StellarWP\Telemetry\Uninstall;
+
 global $wpdb;
 $rcp_options = get_option( 'rcp_settings' );
 
@@ -99,4 +101,6 @@ if( isset( $rcp_options['remove_data_on_uninstall'] ) ) {
 	// Delete database version from options table.
 	$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name = 'wpdb_restrict_content_pro_version'" );
 
+    // Remove Telemetry stuff.
+    Uninstall::run( 'restrict-content' );
 }
