@@ -943,15 +943,22 @@ function rc_deactivate_plugin()
 
 add_action('admin_init', 'rc_deactivate_plugin');
 
-function restrict_content_3_update_notification()
-{
-    if (! get_option('dismissed-restrict-content-upgrade-notice', false) ) {
+function restrict_content_3_update_notification() {
+    global $pagenow;
+
+    // Check if the current page is an admin.php page
+    if ($pagenow !== 'admin.php') {
+        return;
+    }
+
+    // Check if the current screen is one of the Restrict Content screens
+    if (isset($_GET['page']) && strpos($_GET['page'], 'rcp-') === 0 && !get_option('dismissed-restrict-content-upgrade-notice', false)) {
         ?>
         <div class="notice restrict-content-upgrade-notice notice-info is-dismissible">
             <p>
         <?php
         printf(
-            __('Thinking about upgrading? Check out our pro-only features. <a target="_blank" href="%s">Why Go Pro →</a>', 'LION'),
+            __('Thinking about upgrading to Restrict Content Pro? Check out our pro-only features. <a target="_blank" href="%s">Why Go Pro →</a>', 'LION'),
             'https://restrictcontentpro.com/why-go-pro/?utm_source=restrictcontent&utm_medium=plugin&utm_campaign=rc3_release&utm_content=dashboard-notice'
         );
         ?>
@@ -960,6 +967,9 @@ function restrict_content_3_update_notification()
         <?php
     }
 }
+add_action('admin_notices', 'restrict_content_3_update_notification');
+
+
 function restrict_content_bfcm_notice()
 {
     if (! get_option('dismissed-restrict-content-bfcm-notice', false) ) {
@@ -988,6 +998,6 @@ function restrict_content_bfcm_notice()
     }
 }
 
-add_action('admin_notices', 'restrict_content_3_update_notification');
+
 add_action('admin_notices', 'restrict_content_bfcm_notice');
 
