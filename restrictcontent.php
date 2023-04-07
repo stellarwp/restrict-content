@@ -951,8 +951,8 @@ function restrict_content_3_update_notification() {
         return;
     }
 
-    // Sanitize the 'page' query parameter
-    $page = isset($_GET['page']) ? sanitize_key($_GET['page']) : '';
+     // Sanitize the 'page' query parameter
+     $page = isset($_GET['page']) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 
     // Check if the current screen is one of the Restrict Content screens or the plugins page
     if (($pagenow === 'plugins.php' || (strpos($page, 'rcp-') === 0)) && !get_option('dismissed-restrict-content-upgrade-notice', false)) {
