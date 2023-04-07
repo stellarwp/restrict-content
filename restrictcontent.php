@@ -951,8 +951,11 @@ function restrict_content_3_update_notification() {
         return;
     }
 
+    // Sanitize the 'page' query parameter
+    $page = isset($_GET['page']) ? sanitize_key($_GET['page']) : '';
+
     // Check if the current screen is one of the Restrict Content screens or the plugins page
-    if (($pagenow === 'plugins.php' || (isset($_GET['page']) && strpos($_GET['page'], 'rcp-') === 0)) && !get_option('dismissed-restrict-content-upgrade-notice', false)) {
+    if (($pagenow === 'plugins.php' || (strpos($page, 'rcp-') === 0)) && !get_option('dismissed-restrict-content-upgrade-notice', false)) {
         ?>
         <div class="notice restrict-content-upgrade-notice notice-info is-dismissible">
             <p>
