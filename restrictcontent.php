@@ -946,13 +946,13 @@ add_action('admin_init', 'rc_deactivate_plugin');
 function restrict_content_3_update_notification() {
     global $pagenow;
 
-    // Check if the current page is an admin.php page
-    if ($pagenow !== 'admin.php') {
+    // Check if the current page is an admin.php or plugins.php page
+    if ($pagenow !== 'admin.php' && $pagenow !== 'plugins.php') {
         return;
     }
 
-    // Check if the current screen is one of the Restrict Content screens
-    if (isset($_GET['page']) && strpos($_GET['page'], 'rcp-') === 0 && !get_option('dismissed-restrict-content-upgrade-notice', false)) {
+    // Check if the current screen is one of the Restrict Content screens or the plugins page
+    if (($pagenow === 'plugins.php' || (isset($_GET['page']) && strpos($_GET['page'], 'rcp-') === 0)) && !get_option('dismissed-restrict-content-upgrade-notice', false)) {
         ?>
         <div class="notice restrict-content-upgrade-notice notice-info is-dismissible">
             <p>
