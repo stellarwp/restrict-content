@@ -320,7 +320,8 @@ class RCP_Telemetry {
 
 		$_info[ $rcp_slug ] = [
 			'label'       => $rcp_title,
-			'description' => esc_html__( 'These are Restrict Content Pro fields that we use for analysis and to make the product better.', 'rcp' ),
+			// translators: %s: The RCP Title.
+			'description' => sprintf( esc_html__( 'These are %s fields that we use for analysis and to make the product better.', 'rcp' ), $rcp_title ),
 			'fields'      => [
 				[
 					'label' => esc_html__( 'Version', 'rcp' ),
