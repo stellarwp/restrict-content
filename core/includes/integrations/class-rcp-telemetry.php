@@ -60,6 +60,7 @@ class RCP_Telemetry {
 		add_filter( 'admin_init', [ $this, 'update_opt_in_get_status' ] );
 		add_filter( 'admin_init', [ $this, 'update_opt_in_post_status' ] );
 		add_filter( 'admin_init', [ $this, 'check_interview_selection' ] );
+		add_filter( 'debug_information', [ $this, 'add_rcp_info_to_telemetry' ], 10, 1 );
 	}
 
 	/**
@@ -299,5 +300,91 @@ class RCP_Telemetry {
 				$this->wipe_rcp_freemius();
 			}
 		}
+	}
+
+	/**
+	 * Fill information that is sent to Telemetry for analysis purposes.
+	 *
+	 * @param array $_info Information if exists.
+	 * @return array the Filtered array.
+	 */
+	public function add_rcp_info_to_telemetry( array $_info ) : array {
+		$telemetry_info = new RCP_Telemetry_Info();
+		$rcp_title      = 'Restrict Content Pro';
+		$rcp_slug       = 'restrict-content-pro';
+
+		if ( ! $this->restrict_content->is_pro() ) {
+			$rcp_title = 'Restrict Content';
+			$rcp_slug  = 'restrict-content';
+		}
+
+		$_info[ $rcp_slug ] = [
+			'label'       => $rcp_title,
+			'description' => esc_html__( 'These are Restrict Content Pro fields that we use for analysis and to make the product better.', 'rcp' ),
+			'fields'      => [
+				[
+					'label' => esc_html__( 'Version', 'rcp' ),
+					'value' => RCP_PLUGIN_VERSION,
+				],
+				[
+					'label' => esc_html__( 'Last Updated', 'rcp' ),
+					'value' => $telemetry_info->rcp_last_updated(),
+				],
+				[
+					'label' => esc_html__( 'Total Membership Levels', 'rcp' ),
+					'value' => $telemetry_info->total_membership_levels(),
+				],
+				[
+					'label' => esc_html__( 'Total Paid Membership Levels', 'rcp' ),
+					'value' => $telemetry_info->total_paid_membership_levels(),
+				],
+				[
+					'label' => esc_html__( 'Total Free Membership Levels', 'rcp' ),
+					'value' => $telemetry_info->total_free_membership_levels(),
+				],
+				[
+					'label' => esc_html__( 'Total One-Time Membership Levels', 'rcp' ),
+					'value' => $telemetry_info->total_one_time_membership_levels(),
+				],
+				[
+					'label' => esc_html__( 'Total Recurring Membership Levels', 'rcp' ),
+					'value' => $telemetry_info->total_recurring_membership_levels(),
+				],
+				[
+					'label' => esc_html__( 'Total Paying Customers', 'rcp' ),
+					'value' => $telemetry_info->total_paying_customers(),
+				],
+				[
+					'label' => esc_html__( 'Total Free Customers', 'rcp' ),
+					'value' => $telemetry_info->total_free_customers(),
+				],
+				[
+					'label' => esc_html__( 'Total No-Membership Customers', 'rcp' ),
+					'value' => $telemetry_info->total_no_membership_customers(),
+				],
+				[
+					'label' => esc_html__( 'Is Multiple Memberships', 'rcp' ),
+					'value' => $telemetry_info->is_multiple_memberships(),
+				],
+				[
+					'label' => esc_html__( 'Monthly Revenue', 'rcp' ),
+					'value' => $telemetry_info->monthly_revenue(),
+				],
+				[
+					'label' => esc_html__( 'Payment Gateways', 'rcp' ),
+					'value' => wp_json_encode( $telemetry_info->payment_gateways() ),
+				],
+				[
+					'label' => esc_html__( 'Active Add-ons', 'rcp' ),
+					'value' => wp_json_encode( $telemetry_info->active_addons() ),
+				],
+				[
+					'label' => esc_html__( 'Deactivated Add-ons', 'rcp' ),
+					'value' => wp_json_encode( $telemetry_info->deactivated_addons() ),
+				],
+			],
+		];
+
+		return $_info;
 	}
 }

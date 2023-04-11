@@ -123,8 +123,10 @@ table.rcp-table#rcp-account-overview td,
 table.rcp-table#rcp-payment-history td {
     vertical-align: top;
     padding-inline: 20px;
-    width: 1%;
+    /* width: 1%; */
     white-space: nowrap;
+    text-align: left;
+    max-height: 100px;
 }
 @media screen and (max-width: 580px) {
     table.rcp-table {
@@ -267,7 +269,6 @@ p.rcp_success {
         height: 100%;
         line-height: 100%;
         width: 100%;
-        margin-left: -100%;
     }
     .rcp-table td:first-child {
         background-color: rgba(0, 0, 0, 0.1);

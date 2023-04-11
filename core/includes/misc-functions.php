@@ -1704,3 +1704,58 @@ function rcp_is_wp_version_at_least( $version, $allow_dev = true ) {
 function rcp_sanitize_request_field( $_text ) {
 	return sanitize_text_field( wp_unslash( $_text ) );
 }
+/**
+ * Returns an associative array with the list of RCP Add-Ons.
+ *
+ * @since 3.5.28
+ */
+function rcp_get_addons_list(): array {
+	return [
+		'rcp-avatax' => 'Restrict Content Pro - AvaTax',
+		'rcp-functionality' => 'Restrict Content Pro - Custom Functionality',
+		'rcp-authorize-net' => 'Restrict Content Pro - Authorize.net',
+		'rcp-ultimate-member' => 'RCP Ultimate Member',
+		'rcp-group-accounts' => 'Restrict Content Pro - Group Accounts',
+		'rcp-drip-content' => 'Restrict Content Pro - Drip Content',
+		'rcp-mailchimp-pro' => 'Restrict Content Pro - MailChimp Pro',
+		'rcp-site-creation' => 'Restrict Content Pro - Site Creation',
+		'rcp-timelock' => 'Restrict Content Pro - Timelock',
+		'rcp-edd-member-downloads' => 'Restrict Content Pro - EDD Member Downloads',
+		'rcp-strong-passwords' => 'Restrict Content Pro - Enforce Strong Passwords',
+		'rcp-edd-wallet' => 'Restrict Content Pro - Easy Digital Downloads Wallet',
+		'rcp-restriction-timeouts' => 'Restrict Content Pro - Restriction Timeouts',
+		'rcp-limited-quantity-available' => 'Restrict Content Pro - Limited Quantity Available',
+		'rcp-mailchimp' => 'Restrict Content Pro - MailChimp',
+		'rcp-gravity-forms' => 'GF RCP connection',
+		'rcp-woocommerce-member-discounts' => 'Restrict Content Pro - WooCommerce Member Discounts',
+		'rcp-woocommerce-checkout' => 'Restrict Content Pro - WooCommerce Checkout',
+		'rcp-usage-tracking' => 'Restrict Content Pro - Usage Tracking',
+		'rcp-stripe-connect-proxy' => 'Sandhills: Stripe Connect proxy for Restrict Content Pro',
+		'rcp-site-child' => 'RCP Site child theme',
+		'rcp-restrict-past-content' => 'Restrict Content Pro - Restrict Past Content',
+		'rcp-rest-api' => 'Restrict Content Pro - REST API',
+		'rcp-per-level-emails' => 'Restrict Content Pro - Per-Level Emails',
+		'rcp-math-verification' => 'Restrict Content Pro - Math Verification',
+		'rcp-mailerlite' => 'Restrict Content Pro - MailerLite',
+		'rcp-library' => 'Restrict Content Pro Code Snippet Library',
+		'rcp-ip-restriction' => 'Restrict Content Pro - IP Restriction',
+		'rcp-honeypot' => 'Restrict Content Pro - Honeypot',
+		'rcp-help-scout' => 'Restrict Content Pro - Help Scout',
+		'rcp-hardset-expiration-dates' => 'Restrict Content Pro - Hard-set Expiration Dates',
+		'rcp-gifts-through-edd' => 'Restrict Content Pro - Gift Memberships',
+		'rcp-getresponse' => 'Restrict Content Pro - GetResponse',
+		'rcp-forms' => 'Restrict Content Pro - Forms',
+		'rcp-fatwpl' => 'Restrict Content Pro - Force Admins to wp-login.php',
+		'rcp-dev-tools' => 'Restrict Content Pro - Dev Tools',
+		'rcp-custom-redirects' => 'Restrict Content Pro - Custom Redirects',
+		'rcp-convertkit' => 'Restrict Content Pro - ConvertKit',
+		'rcp-braintree' => 'Restrict Content Pro - Braintree Gateway',
+		'rcp-aweber-pro' => 'Restrict Content Pro - AWeber Pro',
+		'rcp-add-on-version-response' => 'RCP Add-On Version Response',
+		'rcp-activecampaign' => 'Restrict Content Pro - ActiveCampaign',
+		'rcp-view-limit' => 'Restrict Content Pro - View Limit',
+		'rcp-upgrade-paths' => 'RCP Upgrade Paths',
+		'rcp-custom-renew' => 'RCP Custom Renew',
+		'restrict-content-pro-buddypress' => 'Restrict Content Pro - BuddyPress',
+	];
+}

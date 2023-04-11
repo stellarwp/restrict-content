@@ -109,11 +109,15 @@ class RCP_Payment_Gateways {
 
 		}
 
+		/**
+		 * TODO: If PayPay is activated as default then the settings should be actiavted before sending the result.
+
 		if( empty( $enabled ) ) {
 
 			$enabled[ 'paypal'] = __( 'PayPal', 'rcp' );
 
 		}
+		 **/
 
 
 		return apply_filters( 'rcp_enabled_payment_gateways', $enabled, $this->available_gateways );

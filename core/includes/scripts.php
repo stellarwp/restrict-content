@@ -36,7 +36,7 @@ function rcp_admin_scripts( $hook ) {
 		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 		wp_enqueue_script( 'jquery-ui-tooltip' );
-		wp_enqueue_script( 'rcp-admin-scripts',  RCP_PLUGIN_URL . 'core/includes/js/admin-scripts.js', array( 'jquery' ), RCP_PLUGIN_VERSION );
+		wp_enqueue_script( 'rcp-admin-scripts',  RCP_PLUGIN_URL . 'core/includes/js/admin-scripts.js', array( 'jquery' ), RCP_PLUGIN_VERSION, true );
 	}
 
 	if ( $rcp_reports_page == $hook ) {
@@ -124,7 +124,7 @@ function rcp_admin_scripts( $hook ) {
 		) );
 	}
 
-	
+
 }
 add_action( 'admin_enqueue_scripts', 'rcp_admin_scripts' );
 

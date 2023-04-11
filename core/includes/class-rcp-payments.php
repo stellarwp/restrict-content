@@ -1040,6 +1040,8 @@ class RCP_Payments {
 			set_transient( $cache_key, $earnings, 3600 );
 		}
 
+		$earnings = empty( $earnings ) ? 0 : $earnings;
+
 		return round( $earnings, 2 );
 
 	}
