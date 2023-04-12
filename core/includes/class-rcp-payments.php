@@ -1028,7 +1028,7 @@ class RCP_Payments {
 
 		$earnings = get_transient( $cache_key );
 
-		if( $earnings === false ) {
+		if( empty( $earnings ) ) {
 			$query = "SELECT SUM(amount) FROM " . $this->db_name . " {$where};";
 
 			if ( ! empty( $values ) ) {
