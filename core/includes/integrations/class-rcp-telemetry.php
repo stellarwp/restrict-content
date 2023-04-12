@@ -368,7 +368,7 @@ class RCP_Telemetry {
 					'value' => $telemetry_info->is_multiple_memberships(),
 				],
 				[
-					'label' => esc_html__( 'Monthly Revenue', 'rcp' ),
+					'label' => esc_html__( 'Total Revenue This Month', 'rcp' ),
 					'value' => $telemetry_info->monthly_revenue(),
 				],
 				[
