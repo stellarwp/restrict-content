@@ -64,8 +64,8 @@ if ( ! empty( $memberships ) ) {
 
 <div class="rcp-table-wrapper" id="rcp-table-wrapper">
 <h3>Account Overview</h3>
-	<table class="rcp-table" id="rcp-account-overview">
-		<thead>
+	<table class="rcp-table subscription" id="rcp-account-overview">
+		<thead class="hide-mobile">
 			<tr>
 				<th><?php _e( 'Membership', 'rcp' ); ?></th>
 				<th><?php _e( 'Status', 'rcp' ); ?></th>
@@ -213,8 +213,8 @@ if ( ! empty( $memberships ) ) {
 		</tbody>
 		</table> <!-- rcp-table -->
 <h3>Payment History</h3>
-	<table class="rcp-table" id="rcp-payment-history">
-		<thead>
+	<table class="rcp-table subscription" id="rcp-payment-history">
+		<thead class="hide-mobile">
 			<tr>
 				<th><?php _e( 'Invoice #', 'rcp' ); ?></th>
 				<th><?php _e( 'Membership', 'rcp' ); ?></th>

@@ -174,6 +174,7 @@ class RCP_Telemetry_Info {
 	}
 	/**
 	 * Get the total Free customers.
+	 * Customers who have always had free memberships and have never ever paid for anything. Customers who have expired or canceled memberships should not show up here. Gold-star Free users only.
 	 *
 	 * @since 3.5.28
 	 *
@@ -181,19 +182,15 @@ class RCP_Telemetry_Info {
 	 */
 	public function total_free_customers() : int {
 		global $wpdb;
-		// Array of values that will be use by the prepared method.
-		$data = array(
-			'status'   => 'active',
-			'disabled' => 0,
-			'gateway'  => 'free',
-		);
 
-		$sql = "SELECT * FROM {$wpdb->prefix}rcp_memberships WHERE status = %s AND disabled = %d AND gateway = %s";
-		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-		$prepare = $wpdb->prepare( $sql, $data );
-		// Execute the query with the prepared statements.
+		$sql = "SELECT * FROM {$wpdb->prefix}rcp_memberships m INNER JOIN {$wpdb->prefix}restrict_content_pro r
+				ON m.object_id = r.id
+				WHERE m.status = 'active' AND m.disabled = 0 AND m.gateway IN ('free','manual')
+				AND r.price = 0 AND m.customer_id NOT IN (
+					SELECT customer_id FROM wp_rcp_memberships WHERE status = 'active' AND gateway NOT IN ('free','manual') and disabled = 0 GROUP BY customer_id
+				)";
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
-		$paying_customers = $wpdb->get_results( $prepare, ARRAY_A );
+		$paying_customers = $wpdb->get_results( $sql, ARRAY_A );
 
 		if ( null !== $paying_customers ) {
 			return count( $paying_customers );
@@ -203,6 +200,7 @@ class RCP_Telemetry_Info {
 	}
 	/**
 	 * Get the total No Membership customers.
+	 * Customers with expired or canceled memberships. Customers who also have a free membership alongside their canceled or expired ones will show up here.
 	 *
 	 * @since 3.5.28
 	 *
@@ -210,20 +208,20 @@ class RCP_Telemetry_Info {
 	 */
 	public function total_no_membership_customers() : int {
 		global $wpdb;
-		// Array of values that will be use by the prepared method.
-		$data = array(
-			'status'   => 'expired',
-			'disabled' => 1,
-		);
 
-		$sql = "SELECT m.customer_id FROM {$wpdb->prefix}rcp_memberships m
-							INNER JOIN {$wpdb->prefix}rcp_customers c ON m.customer_id = c.id
-							WHERE status = %s AND disabled = %d GROUP BY m.customer_id LIMIT 9999";
-		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-		$prepare = $wpdb->prepare( $sql, $data );
-		// Execute the query with the prepared statements.
+		$sql = "SELECT m.customer_id FROM wp_rcp_memberships m
+				INNER JOIN wp_rcp_customers c ON m.customer_id = c.id
+				WHERE status IN ('expired','cancelled') OR m.customer_id IN (
+					SELECT m.customer_id FROM wp_rcp_memberships m INNER JOIN wp_restrict_content_pro r
+					ON m.object_id = r.id
+					WHERE m.status = 'active' AND m.disabled = 0 AND m.gateway IN ('free','manual')
+					AND r.price = 0 AND m.customer_id NOT IN (
+						SELECT customer_id FROM wp_rcp_memberships WHERE status = 'active' AND gateway NOT IN ('free','manual') and disabled = 0 GROUP BY customer_id
+					)
+				)
+				GROUP BY m.customer_id;";
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
-		$no_membership_customers = $wpdb->get_results( $prepare, ARRAY_A );
+		$no_membership_customers = $wpdb->get_results( $sql, ARRAY_A );
 
 		if ( null !== $no_membership_customers ) {
 			return count( $no_membership_customers );

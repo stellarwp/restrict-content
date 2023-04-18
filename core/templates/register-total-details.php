@@ -34,16 +34,21 @@ global $rcp_options;
 <div class="rcp_registration_total">
 	<table class="rcp_registration_total_details rcp-table">
 		<thead class="membership-amount">
-			<tr>
-				<th><?php _e( 'Membership', 'rcp' ); ?></th>
-				<th><?php _e( 'Amount', 'rcp' ); ?></th>
-			</tr>
+		<tr>
+			<th>Membership Details</th>
+		</tr>
+		
 		</thead>
 
 	<tbody style="vertical-align: top;">
-
+		<tr>
+			<td><?php _e( 'Membership', 'rcp' ); ?></td>
+			<td data-title="Membership" data-th="<?php esc_attr_e( 'Membership', 'rcp' ); ?>"><?php echo esc_html( $membership_level->get_name() ); ?></td>
+			
+		</tr>
+		
 		<tr class="membership-level-price">
-			<td data-th="<?php esc_attr_e( 'Membership', 'rcp' ); ?>"><?php echo esc_html( $membership_level->get_name() ); ?></td>
+			<td><?php _e( 'Amount', 'rcp' ); ?></td>
 			<td data-th="<?php esc_attr_e( 'Amount', 'rcp' ); ?>"><?php echo ! $membership_level->is_free() ? rcp_currency_filter( $membership_level->get_price() ) : __( 'free', 'rcp' ); ?></td>
 		</tr>
 
@@ -51,7 +56,7 @@ global $rcp_options;
 			<?php if ( rcp_get_registration()->get_fees() || rcp_get_registration()->get_discounts() ) : ?>
 				<tr class="discounts-fees">
 					<th><?php _e( 'Discounts and Fees', 'rcp' ); ?></th>
-			</tr>
+				</tr>
 
 				<?php
 				/**
@@ -63,8 +68,8 @@ global $rcp_options;
 				<?php if ( empty( $rcp_options['discount_fees'] ) ) : ?>
 					<?php if ( rcp_get_registration()->get_discounts() ) : foreach( rcp_get_registration()->get_discounts() as $code => $recuring ) : if ( ! $discount = rcp_get_discount_details_by_code( $code ) ) continue; ?>
 						<tr class="rcp-discount">
-							<td data-th="<?php esc_attr_e( 'Discount', 'rcp' ); ?>"><?php echo esc_html( $discount->get_name() ); ?></td>
-							<td data-th="<?php esc_attr_e( 'Discount Amount', 'rcp' ); ?>"><?php echo esc_html( rcp_discount_sign_filter( $discount->get_amount(), $discount->get_unit() ) ); ?></td>
+							<td data-title="Discount" data-th="<?php esc_attr_e( 'Discount', 'rcp' ); ?>"><?php echo esc_html( $discount->get_name() ); ?></td>
+							<td data-title="Discount Amount" data-th="<?php esc_attr_e( 'Discount Amount', 'rcp' ); ?>"><?php echo esc_html( rcp_discount_sign_filter( $discount->get_amount(), $discount->get_unit() ) ); ?></td>
 						</tr>
 					<?php endforeach; endif; ?>
 				<?php endif; ?>
@@ -76,8 +81,8 @@ global $rcp_options;
 					$fee['amount'] = abs( $fee['amount'] );
 				?>
 					<tr class="rcp-fee">
-						<td data-th="<?php esc_attr_e( 'Fee', 'rcp' ); ?>"><?php echo esc_html( $fee['description'] ); ?></td>
-						<td data-th="<?php esc_attr_e( 'Fee Amount', 'rcp' ); ?>"><?php echo esc_html( $sign . rcp_currency_filter( $fee['amount'] ) ); ?></td>
+						<td data-title="Fee" data-th="<?php esc_attr_e( 'Fee/Credit', 'rcp' ); ?>"><?php echo esc_html( $fee['description'] ); ?></td>
+						<td data-title="Amount" data-th="<?php esc_attr_e( 'Amount', 'rcp' ); ?>"><?php echo esc_html( $sign . rcp_currency_filter( $fee['amount'] ) ); ?></td>
 					</tr>
 				<?php endforeach; endif; ?>
 
@@ -91,8 +96,8 @@ global $rcp_options;
 				<?php if ( ! empty( $rcp_options['discount_fees'] ) ) : ?>
 					<?php if ( rcp_get_registration()->get_discounts() ) : foreach( rcp_get_registration()->get_discounts() as $code => $recuring ) : if ( ! $discount = rcp_get_discount_details_by_code( $code ) ) continue; ?>
 						<tr class="rcp-discount">
-							<td data-th="<?php esc_attr_e( 'Discount', 'rcp' ); ?>"><?php echo esc_html( $discount->get_name() ); ?></td>
-							<td data-th="<?php esc_attr_e( 'Discount Amount', 'rcp' ); ?>"><?php echo esc_html( rcp_discount_sign_filter( $discount->get_amount(), $discount->unit ) ); ?></td>
+							<td data-title="Discount" data-th="<?php esc_attr_e( 'Discount', 'rcp' ); ?>"><?php echo esc_html( $discount->get_name() ); ?></td>
+							<td data-title="Discount Amount" data-th="<?php esc_attr_e( 'Discount Amount', 'rcp' ); ?>"><?php echo esc_html( rcp_discount_sign_filter( $discount->get_amount(), $discount->unit ) ); ?></td>
 						</tr>
 					<?php endforeach; endif; ?>
 				<?php endif; ?>
@@ -102,11 +107,11 @@ global $rcp_options;
 
 	</tbody>
 
-	<footer>
+	<tfoot>
 
 		<tr class="rcp-total">
-			<th scope="row"><?php _e( 'Total Today', 'rcp' ); ?></th>
-			<th data-th="<?php esc_attr_e( 'Total Today', 'rcp' ); ?>"><?php rcp_registration_total(); ?></th>
+			<td data-title="Total Today" data-th="<?php rcp_registration_total(); ?>"><?php _e( 'Total Today', 'rcp' ); ?></td>
+			<td data-th="<?php esc_attr_e( 'Total Today', 'rcp' ); ?>"><?php rcp_registration_total(); ?></td>
 		</tr>
 
 		<?php if ( rcp_registration_is_recurring() ) : ?>
@@ -141,6 +146,6 @@ global $rcp_options;
 		do_action( 'rcp_register_total_details_footer_bottom' );
 		?>
 
-	</footer>
+		</tfoot>
 	</table>
 </div>

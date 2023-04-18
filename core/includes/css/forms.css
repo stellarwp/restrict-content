@@ -85,6 +85,7 @@ div#rcp_card_wrap {
 }
 .rcp-table-wrapper {
     width: auto;
+    max-width: 1000px!important;
 }
 body.twentytwentytwo-theme .wp-container-7 .rcp-table-wrapper {
     max-width: 900px;
@@ -106,6 +107,9 @@ body.hello-elementor table tbody tr:hover > th {
     background-color: transparent;
 }
 table.rcp-table {
+    width: auto;
+}
+.rcp-table#rcp-account-overview, .rcp-table#rcp-payment-history {
     width: 100%;
 }
 .rcp-table a button {
@@ -117,20 +121,18 @@ table.rcp-table {
 .rcp-table thead tr td {
     font-weight: bold;
 }
-table.rcp-table#rcp-account-overview th,
-table.rcp-table#rcp-payment-history th,
-table.rcp-table#rcp-account-overview td,
-table.rcp-table#rcp-payment-history td {
+#rcp-account-overview th,
+#rcp-payment-history th,
+#rcp-account-overview td,
+#rcp-payment-history td {
     vertical-align: top;
     padding-inline: 20px;
-    /* width: 1%; */
-    white-space: nowrap;
     text-align: left;
-    max-height: 100px;
 }
-@media screen and (max-width: 580px) {
-    table.rcp-table {
-        display: block;
+@media screen and (max-width: 900px) {
+
+    #rcp-table-wrapper {
+        margin-inline: 20px;
     }
     .rcp-table tbody {
         display: block;
@@ -138,7 +140,7 @@ table.rcp-table#rcp-payment-history td {
     .rcp-table tr {
         display: block;
     }
-    .rcp-table thead th {
+    .rcp-table#rcp-account-overview thead th, .rcp-table#rcp-payment-history thead th {
         display: none;
     }
     .rcp-table-wrapper .rcp-table tr td:before {
@@ -155,6 +157,7 @@ table.rcp-table#rcp-payment-history td {
         display: block;
         margin-bottom: 15px;
     }
+
 }
 .rcp_subscription_message {
     font-weight: bold;
@@ -244,39 +247,7 @@ p.rcp_success {
     color: #333;
 }
 @media only screen and (max-width: 480px) {
-    .rcp-table {
-        overflow: hidden;
-        width: 100%;
-    }
-    .rcp-table th {
-        display: none;
-    }
-    .rcp-table tr td {
-        display: block;
-        text-align: left;
-        padding-left: 50%;
-    }
-    .rcp-table td:first-child {
-        padding-top: 0.5em;
-    }
-    .rcp-table td:last-child {
-        padding-bottom: 0.5em;
-    }
-    .rcp-table td:before {
-        content: attr(data-th) ": ";
-        font-weight: bold;
-        display: inline-block;
-        height: 100%;
-        line-height: 100%;
-        width: 100%;
-    }
-    .rcp-table td:first-child {
-        background-color: rgba(0, 0, 0, 0.1);
-    }
-    #order_summary .rcp-ppe-confirm-price {
-        text-align: left;
-        width: auto;
-    }
+    
 }
 .StripeElement--focus {
     border-color: #aaa;
