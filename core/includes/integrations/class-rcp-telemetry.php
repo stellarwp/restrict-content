@@ -309,9 +309,10 @@ class RCP_Telemetry {
 	 * @return array the Filtered array.
 	 */
 	public function add_rcp_info_to_telemetry( array $_info ) : array {
-		$telemetry_info = new RCP_Telemetry_Info();
-		$rcp_title      = 'Restrict Content Pro';
-		$rcp_slug       = 'restrict-content-pro';
+		$telemetry_info           = new RCP_Telemetry_Info();
+		$rcp_title                = 'Restrict Content Pro';
+		$rcp_slug                 = 'restrict-content-pro';
+		$restrict_content_version = ! $this->restrict_content->is_pro() ? RCF_VERSION : RCP_PLUGIN_VERSION;
 
 		if ( ! $this->restrict_content->is_pro() ) {
 			$rcp_title = 'Restrict Content';
@@ -325,7 +326,7 @@ class RCP_Telemetry {
 			'fields'      => [
 				[
 					'label' => esc_html__( 'Version', 'rcp' ),
-					'value' => RCP_PLUGIN_VERSION,
+					'value' => $restrict_content_version,
 				],
 				[
 					'label' => esc_html__( 'Last Updated', 'rcp' ),

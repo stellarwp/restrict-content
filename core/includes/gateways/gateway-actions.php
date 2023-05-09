@@ -37,7 +37,7 @@ function rcp_process_gateway_webooks() {
 add_action( 'init', 'rcp_process_gateway_webooks', -99999 );
 
 /**
- * Process gateway confirmaions
+ * Process gateway confirmations.
  *
  * @access      public
  * @since       2.1
