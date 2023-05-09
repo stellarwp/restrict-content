@@ -19,6 +19,7 @@ use RCP\Membership_Level;
 function rcp_tools_system_info_report() {
 
 	global $rcp_options, $wpdb;
+	$restrict_content_obj = restrict_content_pro();
 
 	// Get theme info
 	$theme_data = wp_get_theme();
@@ -67,8 +68,10 @@ function rcp_tools_system_info_report() {
 	// RCP Config
 	$auto_renew_options         = array( 1 => 'Always auto renew', 2 => 'Never auto renew', 3 => 'Let customer choose whether to auto renew' );
 
+	$restrict_content_version = ! $restrict_content_obj->is_pro() ? RCF_VERSION : RCP_PLUGIN_VERSION;
+
 	$return .= "\n" . '-- RCP Configuration' . "\n\n";
-	$return .= 'Version:                          ' . RCP_PLUGIN_VERSION . "\n";
+	$return .= 'Version:                          ' . $restrict_content_version . "\n";
 	$return .= 'Upgraded on:                      ' . sprintf( '%s from %s', get_option( 'rcp_version_upgraded_on', '(unknown date)' ), get_option( 'rcp_version_upgraded_from', 0 ) ) . "\n";
 	$return .= 'License Key:                      ' . ( ! empty( $rcp_options['license_key'] ) ? $rcp_options['license_key'] . "\n" : "Not set\n" );
 	$return .= 'Multiple Memberships:             ' . ( rcp_multiple_memberships_enabled() ? "Enabled\n" : "Disabled\n" );
@@ -131,7 +134,7 @@ function rcp_tools_system_info_report() {
 					}
 					$additional_gateway_info .= '   Statement Descriptor:           ' . ( ! empty( $rcp_options['statement_descriptor'] ) ? $rcp_options['statement_descriptor'] . "\n" : "\n" );
 					$additional_gateway_info .= '   Statement Suffix:               ' . ( ! empty( $rcp_options['statement_descriptor_suffix'] ) ? $rcp_options['statement_descriptor_suffix'] . "\n" : "\n" );
-				break;
+					break;
 
 				case 'twocheckout' :
 					if ( ! empty( $rcp_options['twocheckout_test_private'] ) && ! empty( $rcp_options['twocheckout_test_publishable'] ) && ! empty( $rcp_options['twocheckout_test_seller_id'] ) ) {
@@ -177,7 +180,7 @@ function rcp_tools_system_info_report() {
 	if ( ! empty( $levels ) ) {
 		foreach ( $levels as $level ) {
 			$return .= str_pad( $level->get_name() . ':', 40 ) . sprintf(
-			'%s; ID: %d; Price: %s; Fee: %s; Duration: %s %s; Trial: %s %s; Access Level: %s; Role: %s; Maximum Renewals: %d (%s)',
+					'%s; ID: %d; Price: %s; Fee: %s; Duration: %s %s; Trial: %s %s; Access Level: %s; Role: %s; Maximum Renewals: %d (%s)',
 					$level->get_status(),
 					$level->get_id(),
 					$level->get_price(),

@@ -852,11 +852,25 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 		// for extra security, retrieve from the Stripe API
 		if ( ! isset( $event_json_id->id ) ) {
-
 			rcp_log( 'Exiting Stripe webhook - no event ID found.' );
 
-			die( 'no event ID found' );
+			wp_send_json_error(
+			  [
+			    'message' => __( 'Exiting Stripe webhook - no event ID found.', 'rcp' ),
+			  ],
+			  404
+			);
+		}
 
+		if ( isset( $event_json_id->object ) && $event_json_id->object !== 'event' ) {
+			rcp_log( 'Exiting Stripe webhook - Stripe object is an invalid event type.' );
+
+			wp_send_json_error(
+			  [
+			    'message' => __( 'Exiting Stripe webhook - Stripe object is an invalid event type.', 'rcp' ),
+			  ],
+			  401
+			);
 		}
 
 		$rcp_payments = new RCP_Payments();
@@ -865,6 +879,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 		try {
 
+			\Stripe\Stripe::setMaxNetworkRetries(3);
 			$event         = \Stripe\Event::retrieve( $event_id );
 			$payment_event = $event->data->object;
 			$membership    = false;
@@ -873,14 +888,29 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 			// Check for valid webhooks in the current RCP settings.
 			if ( ! validate_stripe_webhook( $event->type ) ) {
-				rcp_log( sprintf( 'Exiting Stripe webhook - Unregistered Stripe webhook.  "%s" was provided.', $event->type ), true );
-				die( 'Unregister Stripe webhooks' );
+				rcp_log( sprintf( 'Exiting Stripe webhook - Unregistered Stripe webhook. The webhook "%s" is not currently handled.', $event->type ), true );
+
+				wp_send_json_error(
+				  [
+				    // Translators: %s is the event type.
+				    'message' => sprintf(
+					  __( 'Exiting Stripe webhook - Unregistered Stripe webhook. The webhook "%s" is not currently handled.', 'rcp' ),
+					  esc_html( $event->type )
+				    )
+				  ],
+				  200
+				);
 			}
 
 			if( empty( $payment_event->customer ) ) {
 				rcp_log( 'Exiting Stripe webhook - no customer attached to event.' );
 
-				die( 'no customer attached' );
+				wp_send_json_error(
+				  [
+				    'message' => __( 'Exiting Stripe webhook - no customer attached to event.', 'rcp' ),
+				  ],
+				  200
+				);
 			}
 
 			$invoice = $customer = $subscription = false;
@@ -957,7 +987,16 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 			if ( ! $membership instanceof RCP_Membership ) {
 				rcp_log( sprintf( 'Exiting Stripe webhook - membership not found. Customer ID: %s.', $payment_event->customer ), true );
 
-				die( 'no membership ID found' );
+				wp_send_json_error(
+				  [
+				    // Translators: %s is the event type.
+				    'message' => sprintf(
+				      __( 'Exiting Stripe webhook - membership not found. Customer ID: %s.', 'rcp' ),
+				      esc_html( $payment_event->customer )
+					)
+				  ],
+				  404
+				);
 			}
 
 			$this->membership = $membership;
@@ -971,7 +1010,12 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 			if( ! $subscription_level_id ) {
 				rcp_log( 'Exiting Stripe webhook - no membership level ID for membership.', true );
 
-				die( 'no membership level ID for member' );
+				wp_send_json_error(
+				  [
+				    'message' => __( 'Exiting Stripe webhook - no membership level ID for membership.', 'rcp' ),
+				  ],
+				  404
+				);
 			}
 
 			if( $event->type == 'customer.subscription.created' ) {
@@ -1093,14 +1137,23 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 					do_action( 'rcp_gateway_payment_processed', $member, $payment_id, $this );
 					do_action( 'rcp_stripe_charge_succeeded', $customer->get_user_id(), $payment_data, $event );
 
-					die( 'rcp_stripe_charge_succeeded action fired successfully' );
+					wp_send_json_success(
+					  [
+					    'message' => __( 'rcp_stripe_charge_succeeded action fired successfully', 'rcp' ),
+					  ],
+					  200
+					);
 
 				} elseif ( ! empty( $payment_data['transaction_id'] ) && $rcp_payments->payment_exists( $payment_data['transaction_id'] ) ) {
 
 					do_action( 'rcp_ipn_duplicate_payment', $payment_data['transaction_id'], $member, $this );
 
-					die( 'duplicate payment found' );
-
+					wp_send_json_error(
+					  [
+					    'message' => __( 'duplicate payment found', 'rcp' ),
+					  ],
+					  401
+					);
 				}
 
 			}
@@ -1121,8 +1174,12 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 				do_action( 'rcp_stripe_charge_failed', $payment_event, $event, $member );
 
-				die( 'rcp_stripe_charge_failed action fired successfully' );
-
+				wp_send_json_success(
+				  [
+				    'message' => __( 'rcp_stripe_charge_failed action fired successfully', 'rcp' ),
+				  ],
+				  200
+				);
 			}
 
 			// Cancelled / failed subscription
@@ -1136,13 +1193,33 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 					$toggle = rcp_get_membership_meta( $membership->get_id(), 'auto_renew_toggled_off', true );
 					if ( ! empty( $toggle ) && strtotime( $toggle ) >= strtotime( '-5 minutes' ) ) {
 						rcp_log( sprintf( 'Membership #%d just disabled auto renew - not cancelling.', $membership->get_id() ) );
-						die( 'membership auto renew was toggled off' );
+
+						wp_send_json_success(
+						  [
+						    // Translators: %d is the membership ID.
+						    'message' => sprintf(
+							  __( 'Membership #%d just disabled auto renew - not cancelling.', 'rcp' ),
+							  esc_html( $membership->get_id() )
+						    )
+						  ],
+						  200
+						);
 					}
 
 					// If this is a completed payment plan, we can skip any cancellation actions. This is handled in renewals.
 					if ( $membership->has_payment_plan() && $membership->at_maximum_renewals() ) {
 						rcp_log( sprintf( 'Membership #%d has completed its payment plan - not cancelling.', $membership->get_id() ) );
-						die( 'membership payment plan completed' );
+
+						wp_send_json_success(
+						  [
+						    // Translators: %d is the membership ID.
+						    'message' => sprintf(
+						      __( 'Membership #%d has completed its payment plan - not cancelling.', 'rcp' ),
+							  esc_html( $membership->get_id() )
+							)
+						  ],
+						  200
+						);
 					}
 
 					if ( $membership->is_active() ) {
@@ -1154,7 +1231,12 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 					do_action( 'rcp_webhook_cancel', $member, $this );
 
-					die( 'member cancelled successfully' );
+					wp_send_json_success(
+					  [
+						'message' => __( 'member cancelled successfully', 'rcp' ),
+					  ],
+					  200
+					);
 
 				} else {
 					rcp_log( sprintf( 'Payment event ID (%s) doesn\'t match membership\'s merchant subscription ID (%s).', $payment_event->id, $membership->get_gateway_subscription_id() ), true );
@@ -1191,10 +1273,26 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 			// something failed
 			rcp_log( sprintf( 'Exiting Stripe webhook due to PHP exception: %s.', $e->getMessage() ), true );
 
-			die( 'PHP exception: ' . $e->getMessage() );
+			wp_send_json_error(
+			  [
+			    // Translators: %s is the error message.
+			    'message' => sprintf(
+			      __( 'Exiting Stripe webhook due to PHP exception: %s.', 'rcp' ),
+				  esc_html( $e->getMessage() )
+				)
+			  ],
+		  500
+			);
 		}
 
-		die( '1' );
+		rcp_log( 'Restrict Content reached the end of webhooks processing.', true );
+
+		wp_send_json_success(
+		  [
+		    'message' => __( 'Restrict Content completed processing webhooks.', 'rcp' ),
+		  ],
+		  404
+		);
 
 	}
 
