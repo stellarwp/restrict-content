@@ -1257,22 +1257,6 @@ function rcp_settings_page() {
 								<span class="description"><?php _e( 'Check this box if you would like to enable Free subscriptions switching.', 'rcp' ); ?></span>
 							</td>
 						</tr>
-						<tr valign="top">
-							<th>
-								<label for="telemetry-active"><?php _e( 'Telemetry "Opt In" / "Opt Out"', 'rcp' ); ?></label>
-							</th>
-							<td>
-								<?php
-								$container = Telemetry::instance()->container();
-								$opt_in_status_value = $container->get( Status::class )->get();
-								?>
-								<label for="active"><input type="radio" value="1" name="opt-in-status-settings" id="telemetry-active" <?php checked( '1', $opt_in_status_value ); ?>/>Active</label><br/>
-								<label for="inactive"><input type="radio" value="0" name="opt-in-status-settings" id="telemetry-inactive" <?php checked( '2', $opt_in_status_value ); ?>/>Inactive</label><br/>
-								<label for="mixed"><input type="radio" value="3" name="opt-in-status-settings" id="telemetry-mixed" <?php checked( '3', $opt_in_status_value ); ?> disabled/>
-									Mixed - At least one plugin implementing Telemetry does not have an active opt-in status.</label>
-								<input type="hidden" name="opt-in-src" value="rcp_settings">
-							</td>
-						</tr>
 					</table>
 					<?php do_action( 'rcp_misc_settings', $rcp_options ); ?>
 				</div><!--end #misc-->

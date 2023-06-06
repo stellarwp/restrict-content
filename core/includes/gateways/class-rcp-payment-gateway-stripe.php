@@ -847,23 +847,24 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 		// retrieve the request's body and parse it as JSON
 		$body          = @file_get_contents( 'php://input' );
-		$event_json_id = json_decode( $body );
+		$event_data = json_decode( $body );
 		$expiration    = '';
 
 		// for extra security, retrieve from the Stripe API
-		if ( ! isset( $event_json_id->id ) ) {
+		if ( ! isset( $event_data->id ) ) {
 			rcp_log( 'Exiting Stripe webhook - no event ID found.' );
 
 			wp_send_json_error(
 			  [
 			    'message' => __( 'Exiting Stripe webhook - no event ID found.', 'rcp' ),
 			  ],
-			  404
+			  401
 			);
 		}
 
-		if ( isset( $event_json_id->object ) && $event_json_id->object !== 'event' ) {
-			rcp_log( 'Exiting Stripe webhook - Stripe object is an invalid event type.' );
+		if ( ! isset( $event_data->object ) || $event_data->object !== 'event' ) {
+			$event_object = $event_data->object ?? 'empty';
+			rcp_log( 'Exiting Stripe webhook - Stripe object is an invalid event type. "' . $event_object->object . '"' . ' was provided.' );
 
 			wp_send_json_error(
 			  [
@@ -875,7 +876,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 		$rcp_payments = new RCP_Payments();
 
-		$event_id = $event_json_id->id;
+		$event_id = $event_data->id;
 
 		try {
 
@@ -890,7 +891,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 			if ( ! validate_stripe_webhook( $event->type ) ) {
 				rcp_log( sprintf( 'Exiting Stripe webhook - Unregistered Stripe webhook. The webhook "%s" is not currently handled.', $event->type ), true );
 
-				wp_send_json_error(
+				wp_send_json_success(
 				  [
 				    // Translators: %s is the event type.
 				    'message' => sprintf(
@@ -905,7 +906,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 			if( empty( $payment_event->customer ) ) {
 				rcp_log( 'Exiting Stripe webhook - no customer attached to event.' );
 
-				wp_send_json_error(
+				wp_send_json_success(
 				  [
 				    'message' => __( 'Exiting Stripe webhook - no customer attached to event.', 'rcp' ),
 				  ],
@@ -995,7 +996,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 				      esc_html( $payment_event->customer )
 					)
 				  ],
-				  404
+				  401
 				);
 			}
 
@@ -1014,7 +1015,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 				  [
 				    'message' => __( 'Exiting Stripe webhook - no membership level ID for membership.', 'rcp' ),
 				  ],
-				  404
+				  401
 				);
 			}
 
@@ -1147,10 +1148,11 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 				} elseif ( ! empty( $payment_data['transaction_id'] ) && $rcp_payments->payment_exists( $payment_data['transaction_id'] ) ) {
 
 					do_action( 'rcp_ipn_duplicate_payment', $payment_data['transaction_id'], $member, $this );
+					rcp_log( 'Duplicate payment found. Transaction ID: ' . $payment_data[ 'transaction_id' ] );
 
 					wp_send_json_error(
 					  [
-					    'message' => __( 'duplicate payment found', 'rcp' ),
+					    'message' => __( 'Duplicate payment found. Transaction ID ' . $payment_data[ 'transaction_id' ], 'rcp' ),
 					  ],
 					  401
 					);
@@ -1189,7 +1191,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 				if( $payment_event->id == $membership->get_gateway_subscription_id() ) {
 
-					// Bail if auto renew was toggled within the last 5 minutes.
+					// Bail if auto-renew was toggled within the last 5 minutes.
 					$toggle = rcp_get_membership_meta( $membership->get_id(), 'auto_renew_toggled_off', true );
 					if ( ! empty( $toggle ) && strtotime( $toggle ) >= strtotime( '-5 minutes' ) ) {
 						rcp_log( sprintf( 'Membership #%d just disabled auto renew - not cancelling.', $membership->get_id() ) );
@@ -1233,7 +1235,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 					wp_send_json_success(
 					  [
-						'message' => __( 'member cancelled successfully', 'rcp' ),
+						'message' => __( 'Membership cancelled successfully', 'rcp' ),
 					  ],
 					  200
 					);
@@ -1291,7 +1293,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 		  [
 		    'message' => __( 'Restrict Content completed processing webhooks.', 'rcp' ),
 		  ],
-		  404
+		  200
 		);
 
 	}

@@ -6,6 +6,7 @@
  * @package RCP
  */
 
+use RCP\StellarWP\Telemetry\Opt_In\Opt_In_Template;
 use RCP\StellarWP\Telemetry\Opt_In\Status;
 use RCP\StellarWP\Telemetry\Config;
 /**
@@ -58,7 +59,6 @@ class RCP_Telemetry {
 		add_filter( 'stellarwp/telemetry/restrict-content/exit_interview_args', [ $this, 'exit_interview' ] );
 		add_filter( 'plugin_action_links', [ $this, 'add_opt_in_link' ], 10, 2 );
 		add_filter( 'admin_init', [ $this, 'update_opt_in_get_status' ] );
-		add_filter( 'admin_init', [ $this, 'update_opt_in_post_status' ] );
 		add_filter( 'admin_init', [ $this, 'check_interview_selection' ] );
 		add_filter( 'debug_information', [ $this, 'add_rcp_info_to_telemetry' ], 10, 1 );
 	}
@@ -156,31 +156,19 @@ class RCP_Telemetry {
 		}
 
 		$value = (int) filter_input( INPUT_GET, 'opt-in-status' );
-		$this->container->get( Status::class )->set_status( $value );
+		// Get the slug configured.
+		$stellar_slug = Config::get_stellar_slug();
 
 		if ( $value ) {
-			$redirect = add_query_arg( 'rcp_message', 'opt_in_message', esc_url( admin_url( 'plugins.php' ) ) );
+			// Set Telemetry modal to be visible if the user decides to Opt In.
+			update_option( $this->container->get( Opt_In_Template::class )->get_option_name( $stellar_slug ), '1' );
+			$redirect = add_query_arg( 'rcp_message', '', esc_url( admin_url( 'admin.php?page=rcp-settings' ) ) );
 		} else {
-			$redirect = add_query_arg( 'rcp_message', 'opt_out_message', esc_url( admin_url( 'plugins.php' ) ) );
+			$this->container->get( Status::class )->set_status( $value );
+			$redirect = add_query_arg( 'rcp_message', 'opt_out_message', esc_url( admin_url( 'admin.php?page=rcp-settings' ) ) );
 		}
 		wp_safe_redirect( $redirect );
 		exit;
-	}
-	/**
-	 * Update the Opt-In status that is selected in the RCP Settings Misc page.
-	 *
-	 * @since 3.5.27
-	 * @return void
-	 */
-	public function update_opt_in_post_status() {
-		// Bail early if we're not saving the Opt-In Status field.
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		if ( ! isset( $_POST['opt-in-status-settings'] ) ) {
-			return;
-		}
-
-		$value = (int) filter_input( INPUT_POST, 'opt-in-status-settings' );
-		$this->container->get( Status::class )->set_status( $value );
 	}
 	/**
 	 * Sets the logo and labels for the exit interview.

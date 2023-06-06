@@ -290,51 +290,6 @@ function rcp_print_scripts() {
 }
 add_action( 'wp_footer', 'rcp_print_scripts' );
 
-function rcp_admin_check_for_org_plugins() {
-
-	// If the option has not already been dismissed
-	if ( ! get_option( 'dismissed-rcp-plugin-migration-notice', false ) ) {
-
-		// Setup plugins array
-		$plugins = [
-				'rcp-limited-quantity-available/rcp-limited-quantity-available.php'                                      => 'RCP Limited Quantity Available',
-				'restrict-content-pro-wysija/rcp-wysija.php'                                                             => 'Restrict Content Pro MailPoet',
-				'rcp-edd-member-downloads/rcp-edd-member-downloads.php'                                                  => 'RCP EDD Member Downloads',
-				'rcp-strong-passwords/rcp-strong-passwords.php'                                                          => 'RCP Strong Passwords',
-				'restrict-content-pro-download-monitor/rcp-download-monitor.php'                                         => 'RCP Download Monitor',
-				'rcp-edd-wallet/rcp-edd-wallet.php'                                                                      => 'RCP EDD Wallet',
-				'restrict-content-pro-easy-digital-downloads-vendor-submission-limits/rcp-edd-fes-submission-limits.php' => 'RCP EDD Vendor Submission Limits',
-				'rcp-authorize-net/rcp-authorize-net.php'                                                                => 'RCP Authorize Net',
-				'restrict-content-pro-campaign-monitor/rcp-campaign-monitor.php'                                         => 'RCP Campaign Monitor',
-				'restrict-content-pro-bbpress/rcp-bbpress.php'                                                           => 'RCP BBPress',
-				'restrict-content-pro-wp-job-manager/rcp-wp-job-manager.php'                                             => 'RCP WP Job Manager Bridge'
-		];
-
-		$plugins = apply_filters( 'rcp_dot_org_migrated_plugins', $plugins );
-
-		// Iterate over plugins array, add single notice if one of the plugins is installed.
-		foreach ( $plugins as $key => $value ) {
-			if ( is_plugin_active( $key ) ) {
-				?>
-				<div class="notice rcp-plugin-migration-notice notice-info is-dismissible">
-					<p>
-						<?php
-						printf(
-								__( 'All Restrict Content Pro plans now include every add-on. Plus, On October 14th, 2021, all add-ons will be moved to the iThemes Member Panel. <a target="_blank" href="%s">Learn More</a>', 'LION' ),
-								'https://restrictcontentpro.com/blog/34-pro-add-ons-included-all-restrict-content-pro-plans/'
-						);
-						?>
-					</p>
-				</div>
-				<?php
-				break;
-			}
-		}
-	}
-}
-
-add_action( 'admin_notices', 'rcp_admin_check_for_org_plugins' );
-
 function rcp_ajax_dismissed_notice_handler() {
 	print_r($_POST);
 	// If nonce is valid and current user can manage options
