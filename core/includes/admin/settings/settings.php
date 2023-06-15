@@ -38,7 +38,6 @@ function rcp_settings_page() {
 			'disable_trial_free_subs' => 0,
 			'email_header_img'      => '',
 			'email_header_text'     => __( 'Hello', 'rcp' ),
-			'stripe_webhooks'      => get_stripe_webhooks(),
 	);
 
 	$rcp_options = wp_parse_args( $rcp_options, $defaults );
@@ -418,32 +417,6 @@ function rcp_settings_page() {
 										<input class="stripe_settings__descriptor" type="text" id="rcp_settings[statement_descriptor_suffix]" name="rcp_settings[statement_descriptor_suffix]" value="<?php if( isset( $rcp_options['statement_descriptor_suffix'] ) ) echo $rcp_options['statement_descriptor_suffix']; ?>" />
 										<p class="description"><?php _e( 'This allows you to add a suffix to your statement descriptor. <strong>Note:</strong> The suffix will override the Statement descriptor.', 'rcp' ); ?></p>
 										<div class="rcp__notification--inline"><?php _e( '<strong>Note:</strong> The suffix will override the Statement descriptor.', 'rcp' ); ?></div>
-									</td>
-								</tr>
-								<tr>
-									<th>
-										<label for="rcp_settings[stripe_webhooks]"><?php _e( 'Stripe Webhooks', 'rcp' ); ?></label>
-									</th>
-									<td>
-										<?php
-										$stripe_webhooks = $rcp_options[ 'stripe_webhooks' ] ?? [];
-										$webhooks_str = '';
-										if ( isset( $rcp_options['stripe_webhooks'] ) ) {
-											$size = count( $stripe_webhooks );
-											for ( $i = 0; $i < $size; $i++ ) {
-												if( $i === $size-1 ) {
-													// We don't need a new line in the last item.
-													$webhooks_str .= $stripe_webhooks[ $i ];
-												}
-												else{
-													$webhooks_str .= $stripe_webhooks[ $i ] . "\r\n";
-												}
-											}
-										}
-
-										?>
-										<textarea name="rcp_settings[stripe_webhooks]" id="stripe_webhooks" cols="100" rows="8"><?php echo esc_attr( $webhooks_str ); ?></textarea>
-										<p class="description"><?php _e( 'Here you can add any missing webhook that is not registered in RCP.', 'rcp' ); ?></p>
 									</td>
 								</tr>
 								<tr class="rcp-settings-gateway-stripe-key-row">
@@ -1389,46 +1362,6 @@ function rcp_sanitize_settings( $data ) {
 		$query_args['key'] = sanitize_text_field( $key );
 
 		$pue_checker->license_key_status( $query_args );
-	}
-
-	// Sanitize Stripe Webhooks
-	if( isset( $data['stripe_webhooks'] ) ) {
-		// If we have the settings in place that means that we don't need to parse the textarea field.
-		if( ! is_array( $data['stripe_webhooks'] ) ) {
-			$webhooks = str_replace( "\r", '', $data['stripe_webhooks'] ); // Remove carriage return.
-			$new_webhooks = [];
-			// Extract and sanitize the values.
-			$webhooks_sanitized = array_map( function($item ) {
-				return sanitize_text_field( $item );
-			}
-					, explode("\n", $webhooks )
-			);
-		}
-		else {
-			$new_webhooks = [];
-			// Extract and sanitize the values.
-			$webhooks_sanitized = array_map( function($item ) {
-				return sanitize_text_field( $item );
-			},
-				$data['stripe_webhooks']
-			);
-		}
-
-		// Remove empty fields.
-		$size = count( $webhooks_sanitized );
-		for ($i = 0; $i < $size; $i ++) {
-			if( empty( $webhooks_sanitized[ $i ] ) ) {
-				unset( $webhooks_sanitized[ $i ]  );
-			}
-			elseif ( false === validate_stripe_webhook( $webhooks_sanitized[ $i ], true ) ) {
-				rcp_log( 'Invalid Stripe webhook. "'. $webhooks_sanitized[ $i ] . '" was provided in "RCP Settings > Payments > Stripe Webhooks"' );
-			}
-			elseif ( false === in_array( $webhooks_sanitized[ $i ], $new_webhooks ) ) { // Check for existing value.
-				$new_webhooks[] = $webhooks_sanitized[ $i ];
-			}
-		}
-
-		$data['stripe_webhooks'] = $new_webhooks;
 	}
 
 	if( ! defined('IS_PRO') ) {

@@ -450,7 +450,7 @@ function rcp_init_settings( $_rcp_version ) {
 	if ( version_compare($_rcp_version, '3.5.25', '>=' ) )  {
 		// Check if options exits.
 		if (!array_key_exists('stripe_webhooks', $all_rcp_options)) {
-			$all_rcp_options['stripe_webhooks'] = get_stripe_webhooks(true);
+			$all_rcp_options['stripe_webhooks'] = get_stripe_webhooks();
 			update_option('rcp_settings', $all_rcp_options);
 		}
 	}

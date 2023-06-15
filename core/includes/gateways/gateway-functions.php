@@ -540,51 +540,34 @@ function rcp_get_gateway_slug_from_gateway_ids( $args ) {
 }
 
 /**
- * Get the Stripe Webhooks store in RCP settings. If no setting is present then it will create default values.
+ * A list of webhooks that RCP process in the Stripe webhook call.
  *
  * @since 3.5.25
- * @param bool $_get_defaults If provided and true then it will return the default values. Use it for validation.
- * @return false|mixed|string[] The stored webhooks or default webhooks.
+ * @return array An array with the webhooks.
  */
-function get_stripe_webhooks( bool $_get_defaults = false ) {
-	global $rcp_options;
-	$default_webhooks = "account.external_account.created,account.external_account.deleted,account.external_account.updated,account.updated,balance.available,billing_portal.configuration.created,billing_portal.configuration.updated,billing_portal.session.created,capability.updated,cash_balance.funds_available,charge.captured,charge.dispute.closed,charge.dispute.created,charge.dispute.funds_reinstated,charge.dispute.funds_withdrawn,charge.dispute.updated,charge.expired,charge.failed,charge.pending,charge.refund.updated,charge.refunded,charge.succeeded,charge.updated,checkout.session.async_payment_failed,checkout.session.async_payment_succeeded,checkout.session.completed,checkout.session.expired,coupon.created,coupon.deleted,coupon.updated,credit_note.created,credit_note.updated,credit_note.voided,customer.bank_account.created,customer.bank_account.deleted,customer.bank_account.updated,customer.card.created,customer.card.deleted,customer.card.updated,customer.created,customer.deleted,customer.discount.created,customer.discount.deleted,customer.discount.updated,customer.source.created,customer.source.deleted,customer.source.expiring,customer.source.updated,customer.subscription.created,customer.subscription.deleted,customer.subscription.pending_update_applied,customer.subscription.pending_update_expired,customer.subscription.trial_will_end,customer.subscription.updated,customer.tax_id.created,customer.tax_id.deleted,customer.tax_id.updated,customer.updated,customer_cash_balance_transaction.created,file.created,financial_connections.account.created,financial_connections.account.deactivated,financial_connections.account.disconnected,financial_connections.account.reactivated,financial_connections.account.refreshed_balance,identity.verification_session.canceled,identity.verification_session.created,identity.verification_session.processing,identity.verification_session.requires_input,identity.verification_session.verified,invoice.created,invoice.deleted,invoice.finalization_failed,invoice.finalized,invoice.marked_uncollectible,invoice.paid,invoice.payment_action_required,invoice.payment_failed,invoice.payment_succeeded,invoice.sent,invoice.upcoming,invoice.updated,invoice.voided,invoiceitem.created,invoiceitem.deleted,invoiceitem.updated,issuing_authorization.created,issuing_authorization.updated,issuing_card.created,issuing_card.updated,issuing_cardholder.created,issuing_cardholder.updated,issuing_dispute.closed,issuing_dispute.created,issuing_dispute.funds_reinstated,issuing_dispute.submitted,issuing_dispute.updated,issuing_transaction.created,issuing_transaction.updated,mandate.updated,order.created,payment_intent.amount_capturable_updated,payment_intent.canceled,payment_intent.created,payment_intent.partially_funded,payment_intent.payment_failed,payment_intent.processing,payment_intent.requires_action,payment_intent.succeeded,payment_link.created,payment_link.updated,payment_method.attached,payment_method.automatically_updated,payment_method.card_automatically_updated,payment_method.detached,payment_method.updated,payout.canceled,payout.created,payout.failed,payout.paid,payout.updated,person.created,person.deleted,person.updated,plan.created,plan.deleted,plan.updated,price.created,price.deleted,price.updated,product.created,product.deleted,product.updated,promotion_code.created,promotion_code.updated,quote.accepted,quote.canceled,quote.created,quote.finalized,radar.early_fraud_warning.created,radar.early_fraud_warning.updated,recipient.created,recipient.deleted,recipient.updated,reporting.report_run.failed,reporting.report_run.succeeded,review.closed,review.opened,setup_intent.canceled,setup_intent.created,setup_intent.requires_action,setup_intent.setup_failed,setup_intent.succeeded,sigma.scheduled_query_run.created,sku.created,sku.deleted,sku.updated,source.canceled,source.chargeable,source.failed,source.mandate_notification,source.refund_attributes_required,source.transaction.created,source.transaction.updated,subscription_schedule.aborted,subscription_schedule.canceled,subscription_schedule.completed,subscription_schedule.created,subscription_schedule.expiring,subscription_schedule.released,subscription_schedule.updated,tax_rate.created,tax_rate.updated,terminal.reader.action_failed,terminal.reader.action_succeeded,test_helpers.test_clock.advancing,test_helpers.test_clock.created,test_helpers.test_clock.deleted,test_helpers.test_clock.internal_failure,test_helpers.test_clock.ready,topup.canceled,topup.created,topup.failed,topup.reversed,topup.succeeded,transfer.canceled,transfer.created,transfer.reversed,transfer.updated,account.application.authorized";
-	$all_rcp_options = get_option( 'rcp_settings' );
-	if ( $_get_defaults ) {
-		return explode( ',', $default_webhooks);
-	}
-	// Check if options exits.
-	if ( array_key_exists( 'stripe_webhooks', $all_rcp_options) ) {
-		return $all_rcp_options[ 'stripe_webhooks' ];
-	}
-	// If it doesn't exit then return defaults.
-	else {
-		return explode( ',', $default_webhooks);
-	}
+function get_stripe_webhooks() : array {
+	return [
+		'customer.subscription.created',
+		'customer.subscription.deleted',
+		'charge.succeeded',
+		'charge.refunded',
+		'invoice.payment_succeeded',
+		'invoice.payment_failed',
+	];
 }
 
 /**
- * Check if the given stripe webhook exits in the default webhooks that I have created in function `get_stripe_webhooks`.
+ * Check if the given stripe webhook is handled by RCP.
  *
  * @since 3.5.25
  * @param string $_webhook The webhook name.
- * @param bool $_default_webhooks Set to true if you want to use the default webhooks for validation.
  * @return bool true|false If the webhook exits.
  */
-function validate_stripe_webhook( string $_webhook, bool $_default_webhooks = false ) : bool {
-	$valid_webhooks = get_stripe_webhooks( true );
-	$settings_webhooks = get_stripe_webhooks();
+function validate_stripe_webhook( string $_webhook ) : bool {
+	$valid_webhooks = get_stripe_webhooks();
 
-	if ( $_default_webhooks ) {
-		if ( in_array( $_webhook, $valid_webhooks ) ) {
-			return true;
-		}
+	if ( in_array( $_webhook, $valid_webhooks ) ) {
+		return true;
 	}
-	else {
-		if ( in_array( $_webhook, $settings_webhooks ) ) {
-			return true;
-		}
-	}
-
 	return false;
 }

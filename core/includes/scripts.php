@@ -291,16 +291,29 @@ function rcp_print_scripts() {
 add_action( 'wp_footer', 'rcp_print_scripts' );
 
 function rcp_ajax_dismissed_notice_handler() {
-	print_r($_POST);
-	// If nonce is valid and current user can manage options
-	if( wp_verify_nonce( $_POST['rcp_nonce'], 'rcp_dismissed_nonce' ) && current_user_can( 'manage_options' ) ) {
-		if ( $_POST['name'] === 'rcp-plugin-migration-notice' ) {
-			update_option( 'dismissed-' . $_POST['name'], true );
-		} else if ( $_POST['name'] === 'restrict-content-upgrade-notice' ) {
-			update_option( 'dismissed-' . $_POST['name'], true );
-		} else if ( $_POST['name'] === 'restrict-content-bfcm-notice' ) {
-			update_option( 'dismissed-' . $_POST['name'], true );
-		}
+	// Verify nonce.
+	if ( empty( $_POST['rcp_nonce'] ) || ! wp_verify_nonce( $_POST['rcp_nonce'], 'rcp_dismissed_nonce' ) ) {
+		return;
+	}
+
+	// Name not in $_POST? Bail.
+	if ( ! array_key_exists( 'name', $_POST ) ) {
+		return;
+	}
+
+	// Check user permissions.
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+
+	$name = sanitize_text_field( $_POST['name'] );
+
+	if ( $name === 'rcp-plugin-migration-notice' ) {
+		update_option( 'dismissed-' . $name, true );
+	} else if ( $name === 'restrict-content-upgrade-notice' ) {
+		update_option( 'dismissed-' . $name, true );
+	} else if ( $name === 'restrict-content-bfcm-notice' ) {
+		update_option( 'dismissed-' . $name, true );
 	}
 }
 
