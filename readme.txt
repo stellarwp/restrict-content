@@ -6,7 +6,7 @@ Tags: restrict pages, restrict posts, restrict access, membership, registration 
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.2
-Stable tag: 3.2.2
+Stable tag: 3.2.3
 
 Restrict Content is a powerful WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.
 
@@ -256,6 +256,14 @@ Go to the demo page to see examples:
 https://restrictcontentpro.com/tour/screenshots/
 
 == Changelog ==
+
+= 3.2.3 =
+* Fix: Resolved a security vulnerability on the admin pages to ensure the protection of your website.
+* Improvement: We removed the Stripe webhooks setting in `Restrict > Settings / Misc`.
+RCP uses these 6 webhooks only: customer.subscription.created, customer.subscription.deleted, charge.succeeded, charge.refunded, invoice.payment_succeeded, invoice.payment_failed.
+See https://restrictcontentpro.com/knowledgebase/stripe/ for additional details.
+* Enhancement: We have enhanced the functionality of the RCP core by incorporating the 'RCP Custom Redirect' add-on. This addition allows for custom redirection capabilities within the RCP system, providing more flexibility and control for administrators.
+
 
 = 3.2.2 =
 * Fix: Updated codes for Stripe Error messages to reduce false positives.
