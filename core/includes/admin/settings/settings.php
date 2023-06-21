@@ -72,9 +72,6 @@ function rcp_settings_page() {
 			<a href="#emails" id="emails-tab" class="nav-tab"><?php _e( 'Emails', 'rcp' ); ?></a>
 			<a href="#invoices" id="invoices-tab" class="nav-tab"><?php _e( 'Invoices', 'rcp' ); ?></a>
 			<a href="#misc" id="misc-tab" class="nav-tab"><?php _e( 'Misc', 'rcp' ); ?></a>
-			<?php if ( isset( $_GLOBALS['rcp_requirements_check'] ) && $GLOBALS['rcp_requirements_check']->is_common_initialized ) : ?>
-				<a href="#licenses" id="licenses-tab" class="nav-tab"><?php _e( 'Licenses', 'rcp' ); ?></a>
-			<?php endif; ?>
 		</h2>
 		<?php if ( false !== $_REQUEST['updated'] ) : ?>
 			<div class="updated fade"><p><strong><?php _e( 'Options saved', 'rcp' ); ?></strong></p></div>
@@ -1233,46 +1230,6 @@ function rcp_settings_page() {
 					</table>
 					<?php do_action( 'rcp_misc_settings', $rcp_options ); ?>
 				</div><!--end #misc-->
-
-				<?php if ( isset( $_GLOBALS['rcp_requirements_check'] ) && $GLOBALS['rcp_requirements_check']->is_common_initialized ) : ?>
-					<div class="tab_content" id="licenses">
-						<table class="form-table">
-							<tr valign="top">
-								<th>
-									<label for=""><?php _e( 'Restrict Content Pro', 'rcp' ); ?></label>
-								</th>
-								<td>
-									<?php
-									/**
-									 * @var $licenses_tab
-									 */
-									include Tribe__Main::instance()->plugin_path . 'src/admin-views/tribe-options-licenses.php';
-
-									/**
-									 * Allows the fields displayed in the licenses tab to be modified.
-									 *
-									 * @var array
-									 */
-									$license_fields = apply_filters( 'tribe_license_fields', $licenses_tab );
-									$key = get_option( 'pue_install_key_restrict_content_pro' );
-									if ( empty( $key ) ) {
-										$key = \RCP\PUE\Helper::DATA;
-									}
-
-									new Tribe__Field( 'pue_install_key_restrict_content_pro', $license_fields['pue_install_key_restrict_content_pro'], $key );
-
-									$pue_checker = new Tribe__PUE__Checker( 'https://pue.theeventscalendar.com/', 'restrict-content-pro', [
-											'context'     => 'plugin',
-											'plugin_name' => __( 'Restrict Content Pro', 'tribe-common' ),
-									] );
-									$pue_checker->do_license_key_javascript();
-									?>
-								</td>
-							</tr>
-						</table>
-						<?php do_action( 'rcp_licenses_settings', $rcp_options ); ?>
-					</div><!--end #licenses-->
-				<?php endif; ?>
 			</div><!--end #tab_container-->
 
 			<!-- save the options -->
@@ -1340,28 +1297,6 @@ function rcp_sanitize_settings( $data ) {
 		if ( ! empty( $data[$email_body] ) ) {
 			$data[$email_body] = wp_kses_post( $data[$email_body] );
 		}
-	}
-
-	if ( class_exists( \RCP\PUE\PUE::class  ) && \RCP\PUE\PUE::has_embedded_license() ) {
-		$key         = null;
-		$pue_checker = new Tribe__PUE__Checker( 'https://pue.theeventscalendar.com/', 'restrict-content-pro', [
-				'context'     => 'plugin',
-				'plugin_name' => __( 'Restrict Content Pro', 'tribe-common' ),
-		] );
-		if ( ! empty( $_POST['pue_install_key_restrict_content_pro'] ) ) {
-			$key = sanitize_text_field( $_POST['pue_install_key_restrict_content_pro'] );
-			update_option( 'pue_install_key_restrict_content_pro', $key );
-		} else {
-			delete_option( 'pue_install_key_restrict_content_pro' );
-		}
-
-		$pue_checker->check_for_updates( [], true );
-
-		$query_args = $pue_checker->get_validate_query();
-
-		$query_args['key'] = sanitize_text_field( $key );
-
-		$pue_checker->license_key_status( $query_args );
 	}
 
 	if( ! defined('IS_PRO') ) {
