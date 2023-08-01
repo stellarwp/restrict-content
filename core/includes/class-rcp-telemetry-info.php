@@ -187,7 +187,7 @@ class RCP_Telemetry_Info {
 				ON m.object_id = r.id
 				WHERE m.status = 'active' AND m.disabled = 0 AND m.gateway IN ('free','manual')
 				AND r.price = 0 AND m.customer_id NOT IN (
-					SELECT customer_id FROM wp_rcp_memberships WHERE status = 'active' AND gateway NOT IN ('free','manual') and disabled = 0 GROUP BY customer_id
+					SELECT customer_id FROM {$wpdb->prefix}rcp_memberships WHERE status = 'active' AND gateway NOT IN ('free','manual') and disabled = 0 GROUP BY customer_id
 				)";
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 		$paying_customers = $wpdb->get_results( $sql, ARRAY_A );
@@ -209,14 +209,14 @@ class RCP_Telemetry_Info {
 	public function total_no_membership_customers() : int {
 		global $wpdb;
 
-		$sql = "SELECT m.customer_id FROM wp_rcp_memberships m
-				INNER JOIN wp_rcp_customers c ON m.customer_id = c.id
+		$sql = "SELECT m.customer_id FROM {$wpdb->prefix}rcp_memberships m
+				INNER JOIN {$wpdb->prefix}rcp_customers c ON m.customer_id = c.id
 				WHERE status IN ('expired','cancelled') OR m.customer_id IN (
-					SELECT m.customer_id FROM wp_rcp_memberships m INNER JOIN wp_restrict_content_pro r
+					SELECT m.customer_id FROM {$wpdb->prefix}rcp_memberships m INNER JOIN {$wpdb->prefix}restrict_content_pro r
 					ON m.object_id = r.id
 					WHERE m.status = 'active' AND m.disabled = 0 AND m.gateway IN ('free','manual')
 					AND r.price = 0 AND m.customer_id NOT IN (
-						SELECT customer_id FROM wp_rcp_memberships WHERE status = 'active' AND gateway NOT IN ('free','manual') and disabled = 0 GROUP BY customer_id
+						SELECT customer_id FROM {$wpdb->prefix}rcp_memberships WHERE status = 'active' AND gateway NOT IN ('free','manual') and disabled = 0 GROUP BY customer_id
 					)
 				)
 				GROUP BY m.customer_id;";

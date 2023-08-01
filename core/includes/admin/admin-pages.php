@@ -34,10 +34,10 @@ function rcp_settings_menu() {
 	// If we are not in PRO include the Free menus.
 	if( false === $restrict_content->is_pro() ) {
 		$restrict_content_pro_why_go_pro    = add_submenu_page( 'rcp-members', __( 'Why Go Pro', 'rcp' ), __( 'Why Go Pro', 'rcp' ), 'manage_options', 'rcp-why-go-pro', 'rc_why_go_pro_page_redesign' );
-		$restrict_content_pro_welcome_page  = add_submenu_page( null, __( 'rcp-members', 'rcp'), __( 'RCP Welcome', 'rcp' ), 'manage_options', 'restrict-content-welcome', 'rc_welcome_page_redesign' );
+		$restrict_content_pro_welcome_page  = add_submenu_page( '', __( 'rcp-members', 'rcp' ), __( 'RCP Welcome', 'rcp' ), 'manage_options', 'restrict-content-welcome', 'rc_welcome_page_redesign' );
 	}
 	else {
-		$restrict_content_pro_welcome_page  = add_submenu_page( null, __( 'RCP Welcome', 'rcp'), __( 'RCP Welcome', 'rcp' ), 'manage_options', 'restrict-content-pro-welcome', 'rcp_welcome_page_redesign' );
+		$restrict_content_pro_welcome_page  = add_submenu_page( '', __( 'RCP Welcome', 'rcp' ), __( 'RCP Welcome', 'rcp' ), 'manage_options', 'restrict-content-pro-welcome', 'rcp_welcome_page_redesign' );
 	}
 
 
@@ -158,6 +158,11 @@ function rcp_get_customers_admin_page( $args = array() ) {
 
 }
 
+/**
+ * Displays the must used add-ons used by RCP.
+ *
+ * @return void
+ */
 function rc_pro_addons() {
 	do_action( 'stellarwp/telemetry/restrict-content-pro/optin' );
 	do_action( 'stellarwp/telemetry/restrict-content/optin' );
@@ -166,13 +171,13 @@ function rc_pro_addons() {
 
 	if ( $restrict_content->is_pro() ) {
 		$hidegrid = "hide-grid";
-	} 
+	}
 	?>
 	<div class="restrict-content-welcome-header">
 		<img class="restrict-content-logo" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/rc_logo_horizontal_black.svg' ); ?>" >
 	</div>
 
-	
+
 	<div class="restrict-content-addons-top-container <?php echo $hidegrid; ?>">
 		<div class="restrict-content-addons-left-container">
 			<h1 class="restrict-content-addons-user"><?php _e( 'Pro Add-ons', 'rcp' ); ?></h1>
