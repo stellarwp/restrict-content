@@ -34,10 +34,10 @@ function rcp_settings_menu() {
 	// If we are not in PRO include the Free menus.
 	if( false === $restrict_content->is_pro() ) {
 		$restrict_content_pro_why_go_pro    = add_submenu_page( 'rcp-members', __( 'Why Go Pro', 'rcp' ), __( 'Why Go Pro', 'rcp' ), 'manage_options', 'rcp-why-go-pro', 'rc_why_go_pro_page_redesign' );
-		$restrict_content_pro_welcome_page  = add_submenu_page( '', __( 'rcp-members', 'rcp' ), __( 'RCP Welcome', 'rcp' ), 'manage_options', 'restrict-content-welcome', 'rc_welcome_page_redesign' );
+		$restrict_content_pro_welcome_page  = add_submenu_page( 'rcp-none', __( 'rcp-members', 'rcp' ), __( 'RCP Welcome', 'rcp' ), 'manage_options', 'restrict-content-welcome', 'rc_welcome_page_redesign' );
 	}
 	else {
-		$restrict_content_pro_welcome_page  = add_submenu_page( '', __( 'RCP Welcome', 'rcp' ), __( 'RCP Welcome', 'rcp' ), 'manage_options', 'restrict-content-pro-welcome', 'rcp_welcome_page_redesign' );
+		$restrict_content_pro_welcome_page  = add_submenu_page( 'rcp-none', __( 'RCP Welcome', 'rcp' ), __( 'RCP Welcome', 'rcp' ), 'manage_options', 'restrict-content-pro-welcome', 'rcp_welcome_page_redesign' );
 	}
 
 
