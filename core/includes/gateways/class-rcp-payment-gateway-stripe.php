@@ -1,7 +1,4 @@
 <?php
-
-use RCP\Membership_Level;
-
 /**
  * Stripe Payment Gateway
  *
@@ -10,8 +7,13 @@ use RCP\Membership_Level;
  * @copyright   Copyright (c) 2017, Pippin Williamson
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       2.1
-*/
+ */
 
+use RCP\Membership_Level;
+
+/**
+ * Class RCP_Payment_Gateway_Stripe. This Class takes care of the Stripe integration.
+ */
 class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 	protected $secret_key;
@@ -53,7 +55,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 		}
 
-		if( ! class_exists( 'Stripe\Stripe' ) ) {
+		if ( ! class_exists( 'Stripe\Stripe' ) ) {
 			require_once RCP_PLUGIN_DIR . 'core/includes/libraries/stripe/init.php';
 		}
 
@@ -99,8 +101,8 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 				'key'                  => sanitize_text_field( $this->membership->get_subscription_key() ),
 				'membership_id'        => absint( $this->membership->get_id() ),
 				'rcp_payment_id'       => absint( $this->payment->id ),
-				'rcp_subscription_key' => $this->membership->get_subscription_key()
-			)
+				'rcp_subscription_key' => $this->membership->get_subscription_key(),
+			),
 		);
 
 		// Maybe add saved card.
@@ -131,13 +133,16 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 			if ( ! empty( $this->initial_amount ) ) {
 				// Create a payment intent.
-				$intent_args = wp_parse_args( $intent_args, array(
-					'amount'              => $this->initial_amount * rcp_stripe_get_currency_multiplier(),
-					'confirmation_method' => 'automatic',
-					'confirm'             => false,
-					'currency'            => strtolower( rcp_get_currency() ),
-					'setup_future_usage'  => 'off_session'
-				) );
+				$intent_args = wp_parse_args(
+					$intent_args,
+					array(
+						'amount'              => $this->initial_amount * rcp_stripe_get_currency_multiplier(),
+						'confirmation_method' => 'automatic',
+						'confirm'             => false,
+						'currency'            => strtolower( rcp_get_currency() ),
+						'setup_future_usage'  => 'off_session',
+					)
+				);
 
 				/**
 				 * @deprecated 3.2 In favour of `rcp_stripe_create_payment_intent_args`.
@@ -145,10 +150,15 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 				 * @param array                      $args
 				 * @param RCP_Payment_Gateway_Stripe $this
 				 */
-				$old_charge_args = apply_filters_deprecated( 'rcp_stripe_charge_create_args', array(
-					$intent_args,
-					$this
-				), '3.2', 'rcp_stripe_create_payment_intent_args' );
+				$old_charge_args = apply_filters_deprecated(
+					'rcp_stripe_charge_create_args',
+					array(
+						$intent_args,
+						$this,
+					),
+					'3.2',
+					'rcp_stripe_create_payment_intent_args'
+				);
 
 				// Grab a few compatible arguments from the old charges filter.
 				$compatible_keys = array( 'amount', 'currency', 'customer', 'description', 'metadata' );
@@ -173,8 +183,8 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 				$intent_args = apply_filters( 'rcp_stripe_create_payment_intent_args', $intent_args, $this );
 
 				if ( ! empty( $existing_intent ) && 'payment_intent' === $existing_intent->object ) {
-					$idempotency_args = $intent_args;
-					$idempotency_args['update'] = true;
+					$idempotency_args                  = $intent_args;
+					$idempotency_args['update']        = true;
 					$intent_options['idempotency_key'] = rcp_stripe_generate_idempotency_key( $idempotency_args );
 
 					// Unset some options we can't update.
@@ -188,18 +198,20 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 					$intent = \Stripe\PaymentIntent::update( $existing_intent->id, $intent_args, $intent_options );
 				} else {
 					$intent_options['idempotency_key'] = rcp_stripe_generate_idempotency_key( $intent_args );
-					$intent = \Stripe\PaymentIntent::create( $intent_args, $intent_options );
+					$intent                            = \Stripe\PaymentIntent::create( $intent_args, $intent_options );
 				}
-
 			} else {
 				// Create a setup intent.
-				$intent_args = wp_parse_args( $intent_args, array(
-					'usage' => 'off_session'
-				) );
+				$intent_args = wp_parse_args(
+					$intent_args,
+					array(
+						'usage' => 'off_session',
+					)
+				);
 
 				if ( empty( $existing_intent ) || 'setup_intent' !== $existing_intent->object ) {
 					$intent_options['idempotency_key'] = rcp_stripe_generate_idempotency_key( $intent_args );
-					$intent = \Stripe\SetupIntent::create( $intent_args, $intent_options );
+					$intent                            = \Stripe\SetupIntent::create( $intent_args, $intent_options );
 				}
 			}
 		} catch ( \Stripe\Exception\ApiErrorException $e ) {
@@ -214,7 +226,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 		// Add the client secret to the JSON success data.
 		return array(
 			'stripe_client_secret' => sanitize_text_field( $intent->client_secret ),
-			'stripe_intent_type'   => sanitize_text_field( $intent->object )
+			'stripe_intent_type'   => sanitize_text_field( $intent->object ),
 		);
 
 	}
@@ -224,6 +236,9 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 	 *
 	 * @access public
 	 * @since  2.1
+	 *
+	 * @throws Exception If there was an error with the Stripe code.
+	 *
 	 * @return void
 	 */
 	public function process_signup() {
@@ -259,20 +274,30 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 		 * Update customer record to set description and metadata.
 		 */
 		try {
-			$description = sprintf( __( 'User ID: %d - User Email: %s - Membership: %s', 'rcp' ), $this->user_id, $this->email, $this->subscription_name );
+			$description = sprintf(
+				// translators: %1$d The user ID. %2$d The email. %3$d The subscription name.
+				__( 'User ID: %1$d - User Email: %2$s - Membership: %3$s', 'rcp' ),
+				$this->user_id,
+				$this->email,
+				$this->subscription_name
+			);
+
 			if ( strlen( $description ) > 350 ) {
 				$description = substr( $description, 0, 350 );
 			}
 
-			\Stripe\Customer::update( $customer->id, array(
-				'description' => sanitize_text_field( $description ),
-				'metadata'    => array(
-					'user_id'      => absint( $this->user_id ),
-					'email'        => sanitize_text_field( $this->email ),
-					'subscription' => sanitize_text_field( $this->subscription_name ),
-					'customer_id'  => absint( $this->customer->get_id() )
+			\Stripe\Customer::update(
+				$customer->id,
+				array(
+					'description' => sanitize_text_field( $description ),
+					'metadata'    => array(
+						'user_id'      => absint( $this->user_id ),
+						'email'        => sanitize_text_field( $this->email ),
+						'subscription' => sanitize_text_field( $this->subscription_name ),
+						'customer_id'  => absint( $this->customer->get_id() ),
+					),
 				)
-			) );
+			);
 		} catch ( Exception $e ) {
 			$error = sprintf( 'Stripe Gateway: Failed to update Stripe customer metadata while activating membership #%d. Message: %s', $this->membership->get_id(), $e->getMessage() );
 			rcp_log( $error, true );
@@ -293,7 +318,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 		 */
 		$payment_data = array(
 			'payment_type'   => 'Credit Card',
-			'transaction_id' => ''
+			'transaction_id' => '',
 		);
 
 		if ( 'payment_intent' == $payment_intent->object && ! empty( $payment_intent->charges->data[0]['id'] ) && 'succeeded' === $payment_intent->charges->data[0]['status'] ) {
@@ -325,9 +350,11 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 			try {
 				$subscription = \Stripe\Subscription::retrieve( $current_sub_id );
 
-				$this->membership->update( array(
-					'gateway_subscription_id' => ''
-				) );
+				$this->membership->update(
+					array(
+						'gateway_subscription_id' => '',
+					)
+				);
 
 				$subscription->cancel();
 			} catch ( Exception $e ) {
@@ -361,10 +388,12 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 				// Set up array of subscriptions we cancel below so we don't try to cancel the same one twice.
 				$cancelled_subscriptions = array();
 
-				$subscriptions = \Stripe\Subscription::all( array(
+				$subscriptions = \Stripe\Subscription::all(
+					array(
 						'customer' => $customer->id,
-						'expand' => array( 'data.plan.product' )
-				) );
+						'expand'   => array( 'data.plan.product' ),
+					)
+				);
 
 				foreach ( $subscriptions->data as $subscription ) {
 
@@ -390,7 +419,6 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 							$cancelled_subscriptions[] = $subscription->id;
 							rcp_log( sprintf( 'Stripe Gateway: Cancelled Stripe subscription %s.', $subscription->id ) );
 						}
-
 					}
 				}
 			} catch ( Exception $e ) {
@@ -405,16 +433,21 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 			$payment_method = \Stripe\PaymentMethod::retrieve( $payment_intent->payment_method );
 
 			if ( empty( $payment_method->customer ) ) {
-				$payment_method->attach( array(
-					'customer' => $customer->id
-				) );
+				$payment_method->attach(
+					array(
+						'customer' => $customer->id,
+					)
+				);
 			}
 
-			\Stripe\Customer::update( $customer->id, array(
-				'invoice_settings' => array(
-					'default_payment_method' => $payment_intent->payment_method,
+			\Stripe\Customer::update(
+				$customer->id,
+				array(
+					'invoice_settings' => array(
+						'default_payment_method' => $payment_intent->payment_method,
+					),
 				)
-			) );
+			);
 
 			/*
 			 * Dedupe payment methods.
@@ -427,10 +460,12 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 			 *
 			 * @link https://github.com/stripe/stripe-payments-demo/issues/45
 			 */
-			$customer_payment_methods = \Stripe\PaymentMethod::all( array(
-				'customer' => $customer->id,
-				'type'     => 'card'
-			) );
+			$customer_payment_methods = \Stripe\PaymentMethod::all(
+				array(
+					'customer' => $customer->id,
+					'type'     => 'card',
+				)
+			);
 			if ( ! empty( $customer_payment_methods->data ) ) {
 				foreach ( $customer_payment_methods->data as $existing_method ) {
 					// Detach if the fingerprint matches but payment method ID is different.
@@ -454,12 +489,14 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 			 */
 
 			// Retrieve or create the plan.
-			$plan_id = $this->maybe_create_plan( array(
-				'name'           => $this->subscription_name,
-				'price'          => $this->amount,
-				'interval'       => $this->length_unit,
-				'interval_count' => $this->length
-			) );
+			$plan_id = $this->maybe_create_plan(
+				array(
+					'name'           => $this->subscription_name,
+					'price'          => $this->amount,
+					'interval'       => $this->length_unit,
+					'interval_count' => $this->length,
+				)
+			);
 
 			try {
 
@@ -478,16 +515,16 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 					$base_date = $this->membership->get_expiration_date( false );
 					rcp_log( sprintf( 'Stripe Gateway: Using newly calculated expiration for subscription start date: %s', $base_date ) );
 
-					$timezone = get_option( 'timezone_string' );
-					$timezone = ! empty( $timezone ) ? $timezone : 'UTC';
-					$datetime = new DateTime( $base_date, new DateTimeZone( $timezone ) );
+					$timezone     = get_option( 'timezone_string' );
+					$timezone     = ! empty( $timezone ) ? $timezone : 'UTC';
+					$datetime     = new DateTime( $base_date, new DateTimeZone( $timezone ) );
 					$current_time = getdate();
 					$datetime->setTime( $current_time['hours'], $current_time['minutes'], $current_time['seconds'] );
 					$start_date = $datetime->getTimestamp() - HOUR_IN_SECONDS; // Reduce by 60 seconds to account for inaccurate server times.
 				}
 
 				$sub_args = array(
-					'customer' => $customer->id,
+					'customer'               => $customer->id,
 					'default_payment_method' => $payment_method->id,
 					'plan'                   => $plan_id,
 					'proration_behavior'     => 'none',
@@ -496,7 +533,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 						'rcp_member_id'             => $this->user_id,
 						'rcp_customer_id'           => $this->customer->get_id(),
 						'rcp_membership_id'         => $this->membership->get_id(),
-						'rcp_initial_payment_id'    => $this->payment->id
+						'rcp_initial_payment_id'    => $this->payment->id,
 					),
 				);
 
@@ -519,14 +556,14 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 					rcp_log( sprintf( 'Stripe Gateway: Creating subscription with %s start date via trial_end.', $start_date ) );
 				} else {
 					$sub_args['billing_cycle_anchor'] = $start_date;
-					$sub_args['proration_behavior']	= 'none';
+					$sub_args['proration_behavior']   = 'none';
 					rcp_log( sprintf( 'Stripe Gateway: Creating subscription with %s start date via billing_cycle_anchor.', $start_date ) );
 				}
 
 				$set_anchor = isset( $sub_args['billing_cycle_anchor'] );
 
 				$sub_options = array(
-					'idempotency_key' => rcp_stripe_generate_idempotency_key( $sub_args )
+					'idempotency_key' => rcp_stripe_generate_idempotency_key( $sub_args ),
 				);
 
 				$stripe_connect_user_id = get_option( 'rcp_stripe_connect_account_id', false );
@@ -572,18 +609,19 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 				// If this all started with a Setup Intent then let's use the subscription ID as the transaction ID.
 				if ( 'setup_intent' === $payment_intent->object ) {
-					$rcp_payments_db->update( $this->payment->id, array(
-						'transaction_id' => sanitize_text_field( $subscription->id )
-					) );
+					$rcp_payments_db->update(
+						$this->payment->id,
+						array(
+							'transaction_id' => sanitize_text_field( $subscription->id ),
+						)
+					);
 				}
-
 			} catch ( Exception $e ) {
 				$error = sprintf( 'Stripe Gateway: Failed to create subscription for membership #%d. Message: %s', $this->membership->get_id(), $e->getMessage() );
 				rcp_log( $error, true );
 				$this->membership->add_note( $error );
 				$this->membership->set_recurring( false );
 			}
-
 		}
 
 		/**
@@ -604,10 +642,10 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 	 * Attempt to guess the maximum `billing_cycle_anchor` Stripe will allow us to set, given a signup date
 	 * and billing cycle interval.
 	 *
-	 * @param int      $interval      Billing cycle interval.
-	 * @param string   $interval_unit Billing cycle interval unit.
-	 * @param string   $signup_date   Signup date that can be parsed by `strtotime()`. Will almost always be
-	 *                                `now`, but can be overridden for help in unit tests.
+	 * @param int    $interval      Billing cycle interval.
+	 * @param string $interval_unit Billing cycle interval unit.
+	 * @param string $signup_date   Signup date that can be parsed by `strtotime()`. Will almost always be
+	 *                              `now`, but can be overridden for help in unit tests.
 	 *
 	 * @since 3.3.7
 	 * @return DateTime
@@ -691,7 +729,6 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 				$customer_exists = false;
 
 			}
-
 		}
 
 		if ( empty( $customer_exists ) ) {
@@ -700,7 +737,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 				$customer_args = array(
 					'email' => $user->user_email,
-					'name'  => sanitize_text_field( trim( $user->first_name . ' ' . $user->last_name ) )
+					'name'  => sanitize_text_field( trim( $user->first_name . ' ' . $user->last_name ) ),
 				);
 
 				/**
@@ -718,7 +755,6 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 				return new WP_Error( $e->getCode(), $e->getMessage() );
 
 			}
-
 		}
 
 		return $customer;
@@ -770,7 +806,8 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 		if ( ! empty( $errors[ $error_code ] ) ) {
 			return $errors[ $error_code ];
 		} else {
-			return sprintf( __( 'An error has occurred (code: %s; message: %s).', 'rcp' ), $error_code, $error_message );
+			// translators: %1$s The error code. %2$s The error message.
+			return sprintf( __( 'An error has occurred (code: %1$s; message: %2$s).', 'rcp' ), $error_code, $error_message );
 		}
 
 	}
@@ -778,10 +815,11 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 	/**
 	 * Handle Stripe processing error
 	 *
-	 * @param \Stripe\Exception\ApiErrorException|Exception|WP_Error $e
+	 * @param \Stripe\Exception\ApiErrorException|Exception|WP_Error $e Stripe error exception.
 	 *
 	 * @access protected
 	 * @since  2.5
+	 *
 	 * @return void
 	 */
 	protected function handle_processing_error( $e ) {
@@ -803,7 +841,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 				'message' => $this->error_message,
 				'type'    => 'other',
 				'param'   => false,
-				'code'    => 'other'
+				'code'    => 'other',
 			);
 
 		}
@@ -813,28 +851,36 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 		$error = '<h4>' . __( 'An error occurred', 'rcp' ) . '</h4>';
 
-		if( ! empty( $error_code ) ) {
+		if ( ! empty( $error_code ) ) {
 			$error .= '<p>' . sprintf( __( 'Error code: %s', 'rcp' ), $error_code ) . '</p>';
 		}
 
 		if ( method_exists( $e, 'getHttpStatus' ) ) {
-			$error .= "<p>Status: " . $e->getHttpStatus() ."</p>";
+			$error .= '<p>Status: ' . $e->getHttpStatus() . '</p>';
 		}
 
-		$error .= "<p>Message: " . $this->error_message . "</p>";
+		$error .= '<p>Message: ' . $this->error_message . '</p>';
 
 		wp_die( $error, __( 'Error', 'rcp' ), array( 'response' => 401 ) );
 	}
 
 	/**
-	 * Process webhooks
+	 * Process webhooks. This is the list of current webhooks handle by RC:
+	 *
+	 * - customer.subscription.created
+	 * - customer.subscription.deleted
+	 * - charge.succeeded
+	 * - charge.refunded
+	 * - invoice.payment_succeeded
+	 * - invoice.payment_failed
 	 *
 	 * @access public
 	 * @return void
 	 */
 	public function process_webhooks() {
 
-		if( ! isset( $_GET['listener'] ) || strtolower( $_GET['listener'] ) != 'stripe' ) {
+		if ( ! isset( $_GET['listener'] )
+			 || strtolower( sanitize_text_field( wp_unslash( $_GET['listener'] ) ) ) != 'stripe' ) {
 			return;
 		}
 
@@ -846,19 +892,19 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 		}
 
 		// retrieve the request's body and parse it as JSON
-		$body          = @file_get_contents( 'php://input' );
+		$body       = @file_get_contents( 'php://input' );
 		$event_data = json_decode( $body );
-		$expiration    = '';
+		$expiration = '';
 
 		// for extra security, retrieve from the Stripe API
 		if ( ! isset( $event_data->id ) ) {
 			rcp_log( 'Exiting Stripe webhook - no event ID found.' );
 
 			wp_send_json_error(
-			  [
-			    'message' => __( 'Exiting Stripe webhook - no event ID found.', 'rcp' ),
-			  ],
-			  401
+				[
+					'message' => __( 'Exiting Stripe webhook - no event ID found.', 'rcp' ),
+				],
+				401
 			);
 		}
 
@@ -867,10 +913,10 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 			rcp_log( 'Exiting Stripe webhook - Stripe object is an invalid event type. "' . $event_object->object . '"' . ' was provided.' );
 
 			wp_send_json_error(
-			  [
-			    'message' => __( 'Exiting Stripe webhook - Stripe object is an invalid event type.', 'rcp' ),
-			  ],
-			  401
+				[
+					'message' => __( 'Exiting Stripe webhook - Stripe object is an invalid event type.', 'rcp' ),
+				],
+				401
 			);
 		}
 
@@ -880,7 +926,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 		try {
 
-			\Stripe\Stripe::setMaxNetworkRetries(3);
+			\Stripe\Stripe::setMaxNetworkRetries( 3 );
 			$event         = \Stripe\Event::retrieve( $event_id );
 			$payment_event = $event->data->object;
 			$membership    = false;
@@ -892,25 +938,25 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 				rcp_log( sprintf( 'Exiting Stripe webhook - Unregistered Stripe webhook. The webhook "%s" is not currently handled.', $event->type ), true );
 
 				wp_send_json_success(
-				  [
-				    // Translators: %s is the event type.
-				    'message' => sprintf(
-					  __( 'Exiting Stripe webhook - Unregistered Stripe webhook. The webhook "%s" is not currently handled.', 'rcp' ),
-					  esc_html( $event->type )
-				    )
-				  ],
-				  200
+					[
+						'message' => sprintf(
+							// translators: %s is the event type.
+							__( 'Exiting Stripe webhook - Unregistered Stripe webhook. The webhook "%s" is not currently handled.', 'rcp' ),
+							esc_html( $event->type )
+						),
+					],
+					200
 				);
 			}
 
-			if( empty( $payment_event->customer ) ) {
+			if ( empty( $payment_event->customer ) ) {
 				rcp_log( 'Exiting Stripe webhook - no customer attached to event.' );
 
 				wp_send_json_success(
-				  [
-				    'message' => __( 'Exiting Stripe webhook - no customer attached to event.', 'rcp' ),
-				  ],
-				  200
+					[
+						'message' => __( 'Exiting Stripe webhook - no customer attached to event.', 'rcp' ),
+					],
+					200
 				);
 			}
 
@@ -919,7 +965,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 			// Try to get an invoice object from the payment event.
 			if ( ! empty( $payment_event->object ) && 'invoice' === $payment_event->object ) {
 				$invoice = $payment_event;
-			} elseif( ! empty( $payment_event->invoice ) ) {
+			} elseif ( ! empty( $payment_event->invoice ) ) {
 				$invoice = \Stripe\Invoice::retrieve( $payment_event->invoice );
 			}
 
@@ -949,7 +995,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 				$membership = rcp_get_membership_by( 'subscription_key', $payment_event->metadata->rcp_subscription_key );
 			}
 
-			if( empty( $membership ) ) {
+			if ( empty( $membership ) ) {
 
 				// Grab the customer ID from the old meta keys
 				global $wpdb;
@@ -966,7 +1012,6 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 						$membership = rcp_get_customer_single_membership( $customer->get_id() );
 					}
 				}
-
 			}
 
 			/**
@@ -989,67 +1034,65 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 				rcp_log( sprintf( 'Exiting Stripe webhook - membership not found. Customer ID: %s.', $payment_event->customer ), true );
 
 				wp_send_json_error(
-				  [
-				    // Translators: %s is the event type.
-				    'message' => sprintf(
-				      __( 'Exiting Stripe webhook - membership not found. Customer ID: %s.', 'rcp' ),
-				      esc_html( $payment_event->customer )
-					)
-				  ],
-				  401
+					[
+						// translators: %s is the event type.
+						'message' => sprintf( __( 'Exiting Stripe webhook - membership not found. Customer ID: %s.', 'rcp' ), esc_html( $payment_event->customer ) ),
+					],
+					200
 				);
 			}
 
 			$this->membership = $membership;
-			$customer = $membership->get_customer();
-			$member   = new RCP_Member( $customer->get_user_id() ); // for backwards compatibility
+			$customer         = $membership->get_customer();
+			$member           = new RCP_Member( $customer->get_user_id() ); // for backwards compatibility.
 
 			rcp_log( sprintf( 'Processing webhook for membership #%d.', $membership->get_id() ) );
 
 			$subscription_level_id = $membership->get_object_id();
 
-			if( ! $subscription_level_id ) {
+			if ( ! $subscription_level_id ) {
 				rcp_log( 'Exiting Stripe webhook - no membership level ID for membership.', true );
 
-				wp_send_json_error(
-				  [
-				    'message' => __( 'Exiting Stripe webhook - no membership level ID for membership.', 'rcp' ),
-				  ],
-				  401
+				wp_send_json_success(
+					[
+						'message' => __( 'Exiting Stripe webhook - no membership level ID for membership.', 'rcp' ),
+					],
+					200
 				);
 			}
 
-			if( $event->type == 'customer.subscription.created' ) {
+			if ( $event->type == 'customer.subscription.created' ) {
 				do_action( 'rcp_webhook_recurring_payment_profile_created', $member, $this );
 			}
 
-			if( $event->type == 'charge.succeeded' || $event->type == 'invoice.payment_succeeded' ) {
+			if ( $event->type == 'charge.succeeded' || $event->type == 'invoice.payment_succeeded' ) {
 
 				rcp_log( sprintf( 'Processing Stripe %s webhook.', $event->type ) );
 
 				// setup payment data
 				$payment_data = array(
-					'date'                  => date( 'Y-m-d H:i:s', $event->created ),
-					'payment_type'          => 'Credit Card',
-					'user_id'               => $member->ID,
-					'customer_id'           => $customer->get_id(),
-					'membership_id'         => $membership->get_id(),
-					'amount'                => '',
-					'transaction_id'        => '',
-					'object_id'             => $subscription_level_id,
-					'status'                => 'complete',
-					'gateway'               => 'stripe'
+					// phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+					'date'           => date( 'Y-m-d H:i:s', $event->created ),
+					'payment_type'   => 'Credit Card',
+					'user_id'        => $member->ID,
+					'customer_id'    => $customer->get_id(),
+					'membership_id'  => $membership->get_id(),
+					'amount'         => '',
+					'transaction_id' => '',
+					'object_id'      => $subscription_level_id,
+					'status'         => 'complete',
+					'gateway'        => 'stripe',
 				);
 
 				if ( $event->type == 'charge.succeeded' ) {
 
-					// Successful one-time payment
+					// Successful one-time payment.
 					if ( empty( $payment_event->invoice ) ) {
 
 						$payment_data['amount']         = $payment_event->amount / rcp_stripe_get_currency_multiplier();
 						$payment_data['transaction_id'] = $payment_event->id;
 
-					// Successful subscription payment
+						// Successful subscription payment.
 					} else {
 
 						$payment_data['amount']         = $invoice->amount_due / rcp_stripe_get_currency_multiplier();
@@ -1058,12 +1101,10 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 						if ( ! empty( $payment_event->discount ) ) {
 							$payment_data['discount_code'] = $payment_event->discount->coupon_id;
 						}
-
 					}
-
 				}
 
-				if( ! empty( $payment_data['transaction_id'] ) && ! $rcp_payments->payment_exists( $payment_data['transaction_id'] ) ) {
+				if ( ! empty( $payment_data['transaction_id'] ) && ! $rcp_payments->payment_exists( $payment_data['transaction_id'] ) ) {
 
 					if ( ! empty( $subscription ) ) {
 
@@ -1097,17 +1138,19 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 						 * Check to see if the current date is occurring before today and
 						 * updating the next_bill_date in Stripe
 						 */
-						$current_expiration_date 	= $membership->get_expiration_date( false );
-						$timezone     				= get_option( 'timezone_string' );
-						$timezone     				= ! empty( $timezone ) ? $timezone : 'UTC';
-						$current_expiration_date    = new DateTime( $current_expiration_date, new DateTimeZone( $timezone ) );
+						$current_expiration_date = $membership->get_expiration_date( false );
+						$timezone                = get_option( 'timezone_string' );
+						$timezone                = ! empty( $timezone ) ? $timezone : 'UTC';
+						$current_expiration_date = new DateTime( $current_expiration_date, new DateTimeZone( $timezone ) );
 
 						if ( $current_expiration_date->getTimestamp() < time() ) {
-							$this->update_subscription( $subscription->id, array(
+							$this->update_subscription(
+								$subscription->id,
+								array(
 									'next_bill_date' => $expiration,
-							) );
+								)
+							);
 						}
-
 					}
 
 					$pending_payment_id = rcp_get_membership_meta( $this->membership->get_id(), 'pending_payment_id', true );
@@ -1132,32 +1175,31 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 						if ( $membership->is_recurring() ) {
 							do_action( 'rcp_webhook_recurring_payment_processed', $member, $payment_id, $this );
 						}
-
 					}
 
 					do_action( 'rcp_gateway_payment_processed', $member, $payment_id, $this );
 					do_action( 'rcp_stripe_charge_succeeded', $customer->get_user_id(), $payment_data, $event );
 
 					wp_send_json_success(
-					  [
-					    'message' => __( 'rcp_stripe_charge_succeeded action fired successfully', 'rcp' ),
-					  ],
-					  200
+						[
+							'message' => __( 'rcp_stripe_charge_succeeded action fired successfully', 'rcp' ),
+						],
+						200
 					);
 
 				} elseif ( ! empty( $payment_data['transaction_id'] ) && $rcp_payments->payment_exists( $payment_data['transaction_id'] ) ) {
 
 					do_action( 'rcp_ipn_duplicate_payment', $payment_data['transaction_id'], $member, $this );
-					rcp_log( 'Duplicate payment found. Transaction ID: ' . $payment_data[ 'transaction_id' ] );
+					rcp_log( 'Duplicate payment found. Transaction ID: ' . $payment_data['transaction_id'] );
 
-					wp_send_json_error(
-					  [
-					    'message' => __( 'Duplicate payment found. Transaction ID ' . $payment_data[ 'transaction_id' ], 'rcp' ),
-					  ],
-					  401
+					wp_send_json_success(
+						[
+							// translators: %s The transaction id.
+							'message' => sprintf( __( 'Duplicate payment found. Transaction ID %s', 'rcp' ), $payment_data['transaction_id'] ),
+						],
+						200
 					);
 				}
-
 			}
 
 			// failed payment
@@ -1177,19 +1219,19 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 				do_action( 'rcp_stripe_charge_failed', $payment_event, $event, $member );
 
 				wp_send_json_success(
-				  [
-				    'message' => __( 'rcp_stripe_charge_failed action fired successfully', 'rcp' ),
-				  ],
-				  200
+					[
+						'message' => __( 'rcp_stripe_charge_failed action fired successfully', 'rcp' ),
+					],
+					200
 				);
 			}
 
 			// Cancelled / failed subscription
-			if( $event->type == 'customer.subscription.deleted' ) {
+			if ( $event->type == 'customer.subscription.deleted' ) {
 
 				rcp_log( 'Processing Stripe customer.subscription.deleted webhook.' );
 
-				if( $payment_event->id == $membership->get_gateway_subscription_id() ) {
+				if ( $payment_event->id == $membership->get_gateway_subscription_id() ) {
 
 					// Bail if auto-renew was toggled within the last 5 minutes.
 					$toggle = rcp_get_membership_meta( $membership->get_id(), 'auto_renew_toggled_off', true );
@@ -1197,14 +1239,14 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 						rcp_log( sprintf( 'Membership #%d just disabled auto renew - not cancelling.', $membership->get_id() ) );
 
 						wp_send_json_success(
-						  [
-						    // Translators: %d is the membership ID.
-						    'message' => sprintf(
-							  __( 'Membership #%d just disabled auto renew - not cancelling.', 'rcp' ),
-							  esc_html( $membership->get_id() )
-						    )
-						  ],
-						  200
+							[
+								'message' => sprintf(
+									// translators: %d is the membership ID.
+									__( 'Membership #%d just disabled auto renew - not cancelling.', 'rcp' ),
+									esc_html( $membership->get_id() )
+								),
+							],
+							200
 						);
 					}
 
@@ -1213,14 +1255,14 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 						rcp_log( sprintf( 'Membership #%d has completed its payment plan - not cancelling.', $membership->get_id() ) );
 
 						wp_send_json_success(
-						  [
-						    // Translators: %d is the membership ID.
-						    'message' => sprintf(
-						      __( 'Membership #%d has completed its payment plan - not cancelling.', 'rcp' ),
-							  esc_html( $membership->get_id() )
-							)
-						  ],
-						  200
+							[
+								'message' => sprintf(
+									// translators: %d is the membership ID.
+									__( 'Membership #%d has completed its payment plan - not cancelling.', 'rcp' ),
+									esc_html( $membership->get_id() )
+								),
+							],
+							200
 						);
 					}
 
@@ -1234,16 +1276,15 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 					do_action( 'rcp_webhook_cancel', $member, $this );
 
 					wp_send_json_success(
-					  [
-						'message' => __( 'Membership cancelled successfully', 'rcp' ),
-					  ],
-					  200
+						[
+							'message' => __( 'Membership cancelled successfully', 'rcp' ),
+						],
+						200
 					);
 
 				} else {
 					rcp_log( sprintf( 'Payment event ID (%s) doesn\'t match membership\'s merchant subscription ID (%s).', $payment_event->id, $membership->get_gateway_subscription_id() ), true );
 				}
-
 			}
 
 			if ( $event->type == 'charge.refunded' ) {
@@ -1252,14 +1293,17 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 				$payment = $rcp_payments->get_payment_by( 'transaction_id', sanitize_text_field( $payment_event->id ) );
 
-				if ( empty( $payment) ) {
+				if ( empty( $payment ) ) {
 					rcp_log( sprintf( 'No payment found with transaction Id #%s.', $payment_event->id ) );
 				} else {
 					rcp_log( sprintf( 'Updating status of payment #%d ( transaction ID %s) to "refunded".', $payment->id, $payment_event->id ) );
 
-					$rcp_payments->update( $payment->id, array(
-							'status' => 'refunded'
-					) );
+					$rcp_payments->update(
+						$payment->id,
+						array(
+							'status' => 'refunded',
+						)
+					);
 
 					if ( $membership->is_active() ) {
 						$membership->expire();
@@ -1270,30 +1314,29 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 			do_action( 'rcp_stripe_' . $event->type, $payment_event, $event );
 
-
 		} catch ( Exception $e ) {
 			// something failed
 			rcp_log( sprintf( 'Exiting Stripe webhook due to PHP exception: %s.', $e->getMessage() ), true );
 
 			wp_send_json_error(
-			  [
-			    // Translators: %s is the error message.
-			    'message' => sprintf(
-			      __( 'Exiting Stripe webhook due to PHP exception: %s.', 'rcp' ),
-				  esc_html( $e->getMessage() )
-				)
-			  ],
-		  500
+				[
+					'message' => sprintf(
+						// translators: %s is the error message.
+						__( 'Exiting Stripe webhook due to PHP exception: %s.', 'rcp' ),
+						esc_html( $e->getMessage() )
+					),
+				],
+				500
 			);
 		}
 
 		rcp_log( 'Restrict Content reached the end of webhooks processing.', true );
 
 		wp_send_json_success(
-		  [
-		    'message' => __( 'Restrict Content completed processing webhooks.', 'rcp' ),
-		  ],
-		  200
+			[
+				'message' => __( 'Restrict Content completed processing webhooks.', 'rcp' ),
+			],
+			200
 		);
 
 	}
@@ -1320,7 +1363,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 					 */
 					$classes = array(
 						'rcp-gateway-saved-payment-method',
-						'rcp-gateway-saved-payment-method-type-' . $payment_method->type
+						'rcp-gateway-saved-payment-method-type-' . $payment_method->type,
 					);
 
 					if ( 'card' === $payment_method->type ) {
@@ -1427,7 +1470,8 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 		global $rcp_options;
 
-		if( empty( $_POST['rcp_card_name'] ) && ( empty( $_POST['rcp_gateway_existing_payment_method'] ) || 'new' === $_POST['rcp_gateway_existing_payment_method'] ) ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( empty( $_POST['rcp_card_name'] ) && ( empty( $_POST['rcp_gateway_existing_payment_method'] ) || 'new' === $_POST['rcp_gateway_existing_payment_method'] ) ) {
 			rcp_errors()->add( 'missing_card_name', __( 'The card holder name you have entered is invalid', 'rcp' ), 'register' );
 		}
 
@@ -1456,7 +1500,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 				'keys'   => array(
 					'publishable' => $this->publishable_key,
 				),
-				'errors' => rcp_stripe_get_localized_error_messages()
+				'errors' => rcp_stripe_get_localized_error_messages(),
 			)
 		);
 
@@ -1467,7 +1511,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 			RCP_PLUGIN_URL . 'core/includes/gateways/stripe/js/register' . $suffix . '.js',
 			array(
 				'jquery',
-				'rcp-stripe'
+				'rcp-stripe',
 			),
 			RCP_PLUGIN_VERSION
 		);
@@ -1505,29 +1549,29 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 			$product_args = array(
 				'name' => $name,
-				'type' => 'service'
+				'type' => 'service',
 			);
 
 			$product = \Stripe\Product::create(
 				$product_args,
 				array(
-					'idempotency_key' => rcp_stripe_generate_idempotency_key( $product_args )
+					'idempotency_key' => rcp_stripe_generate_idempotency_key( $product_args ),
 				)
 			);
 
 			$plan_args = array(
-				"amount"         => $price,
-				"interval"       => $interval,
-				"interval_count" => $interval_count,
-				"currency"       => $currency,
-				"id"             => $plan_id,
-				"product"        => $product->id
+				'amount'         => $price,
+				'interval'       => $interval,
+				'interval_count' => $interval_count,
+				'currency'       => $currency,
+				'id'             => $plan_id,
+				'product'        => $product->id,
 			);
 
 			$plan = \Stripe\Plan::create(
 				$plan_args,
 				array(
-					'idempotency_key' => rcp_stripe_generate_idempotency_key( $plan_args )
+					'idempotency_key' => rcp_stripe_generate_idempotency_key( $plan_args ),
 				)
 			);
 
@@ -1579,7 +1623,10 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 			$plan = \Stripe\Plan::retrieve( $new_plan_id );
 			return $plan->id;
 
-		} catch ( Exception $e ) {}
+		} catch ( Exception $e ) {
+			// translators: %s The new plan ID.
+			rcp_log( sprintf( __( 'New Plan ID doesn\'t exist. New Plan ID: %s', 'rcp' ), $new_plan_id ) );
+		}
 
 		try {
 			// fall back to the old plan id structure and verify that the plan metadata also matches
@@ -1629,14 +1676,17 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 	 */
 	public function maybe_create_plan( $args ) {
 
-		$args = wp_parse_args( $args, array(
-			'name'           => '',
-			'price'          => 0.00,
-			'interval'       => 'month',
-			'interval_count' => 1,
-			'currency'       => strtolower( rcp_get_currency() ),
-			'id'             => ''
-		) );
+		$args = wp_parse_args(
+			$args,
+			array(
+				'name'           => '',
+				'price'          => 0.00,
+				'interval'       => 'month',
+				'interval_count' => 1,
+				'currency'       => strtolower( rcp_get_currency() ),
+				'id'             => '',
+			)
+		);
 
 		// Name and price are required.
 		if ( empty( $args['name'] ) || empty( $args['price'] ) ) {
@@ -1649,12 +1699,14 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 		 * don't actually have one.
 		 */
 		if ( empty( $args['id'] ) ) {
-			$plan_level = new Membership_Level( array(
+			$plan_level = new Membership_Level(
+				array(
 					'name'          => $args['name'],
 					'price'         => $args['price'],
 					'duration'      => $args['interval_count'],
-					'duration_unit' => $args['interval']
-			) );
+					'duration_unit' => $args['interval'],
+				)
+			);
 
 			$plan_id = $this->generate_plan_id( $plan_level );
 		} else {
@@ -1694,19 +1746,23 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 		try {
 
-			$product = \Stripe\Product::create( array(
-				'name' => $args['name'],
-				'type' => 'service'
-			) );
+			$product = \Stripe\Product::create(
+				array(
+					'name' => $args['name'],
+					'type' => 'service',
+				)
+			);
 
-			$plan = \Stripe\Plan::create( array(
-				"amount"         => $price,
-				"interval"       => $args['interval'],
-				"interval_count" => $args['interval_count'],
-				"currency"       => $args['currency'],
-				"id"             => $plan_id,
-				"product"        => $product->id
-			) );
+			$plan = \Stripe\Plan::create(
+				array(
+					'amount'         => $price,
+					'interval'       => $args['interval'],
+					'interval_count' => $args['interval_count'],
+					'currency'       => $args['currency'],
+					'id'             => $plan_id,
+					'product'        => $product->id,
+				)
+			);
 
 			// plan successfully created
 			return $plan->id;
@@ -1743,9 +1799,9 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 	}
 
 	/**
-	 * Creates a subscription for a membership
+	 * Creates a subscription for a membership.
 	 *
-	 * @param RCP_Membership $membership
+	 * @param RCP_Membership $membership The Membership object.
 	 *
 	 * @return true|WP_Error
 	 */
@@ -1758,12 +1814,14 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 		}
 
 		// Retrieve or create the plan.
-		$plan_id = $this->maybe_create_plan( array(
+		$plan_id = $this->maybe_create_plan(
+			array(
 				'name'           => $membership->get_membership_level_name(),
 				'price'          => $membership->get_recurring_amount(),
 				'interval'       => $membership_level->get_duration_unit(),
-				'interval_count' => $membership_level->get_duration()
-		) );
+				'interval_count' => $membership_level->get_duration(),
+			)
+		);
 
 		if ( is_wp_error( $plan_id ) ) {
 			return $plan_id;
@@ -1774,15 +1832,15 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 			$customer = \Stripe\Customer::retrieve( $membership->get_gateway_customer_id() );
 
 			$sub_args = array(
-					'customer' 				=> $customer->id,
-					'plan'     				=> $plan_id,
-					'proration_behavior'  	=> 'none',
-					'metadata' => array(
-							'rcp_subscription_level_id' => $membership->get_object_id(),
-							'rcp_member_id'             => $membership->get_user_id(),
-							'rcp_customer_id'           => $membership->get_customer_id(),
-							'rcp_membership_id'         => $membership->get_id(),
-					),
+				'customer'           => $customer->id,
+				'plan'               => $plan_id,
+				'proration_behavior' => 'none',
+				'metadata'           => array(
+					'rcp_subscription_level_id' => $membership->get_object_id(),
+					'rcp_member_id'             => $membership->get_user_id(),
+					'rcp_customer_id'           => $membership->get_customer_id(),
+					'rcp_membership_id'         => $membership->get_id(),
+				),
 			);
 
 			if ( ! empty( $customer->invoice_settings->default_payment_method ) ) {
@@ -1815,7 +1873,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 					rcp_log( sprintf( 'Stripe Gateway: Creating subscription with %s start date via trial_end.', $start_date ) );
 				} else {
 					$sub_args['billing_cycle_anchor'] = $start_date;
-					$sub_args['proration_behavior'] = 'none';
+					$sub_args['proration_behavior']   = 'none';
 					rcp_log( sprintf( 'Stripe Gateway: Creating subscription with %s start date via billing_cycle_anchor.', $start_date ) );
 				}
 			} else {
@@ -1823,7 +1881,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 			}
 
 			$sub_options = array(
-					'idempotency_key' => rcp_stripe_generate_idempotency_key( $sub_args )
+				'idempotency_key' => rcp_stripe_generate_idempotency_key( $sub_args ),
 			);
 
 			$stripe_connect_user_id = get_option( 'rcp_stripe_connect_account_id', false );
@@ -1848,8 +1906,8 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 	/**
 	 * Change the price of a membership's subscription in Stripe.
 	 *
-	 * @param RCP_Membership $membership
-	 * @param float          $new_price
+	 * @param RCP_Membership $membership The membership object.
+	 * @param float          $new_price The new price.
 	 *
 	 * @since 3.2
 	 * @return true|WP_Error True on success, WP_Error on failure.
@@ -1864,12 +1922,14 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 		}
 
 		// Create a plan in Stripe.
-		$plan_id = $this->maybe_create_plan( array(
-			'name'           => $membership_level->name,
-			'price'          => $new_price,
-			'interval'       => $membership_level->duration_unit,
-			'interval_count' => $membership_level->duration
-		) );
+		$plan_id = $this->maybe_create_plan(
+			array(
+				'name'           => $membership_level->name,
+				'price'          => $new_price,
+				'interval'       => $membership_level->duration_unit,
+				'interval_count' => $membership_level->duration,
+			)
+		);
 
 		if ( empty( $plan_id ) ) {
 			return new WP_Error( 'plan_creation_failed', __( 'Failed to create Stripe plan', 'rcp' ) );
@@ -1882,12 +1942,12 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 			$args = array(
 				'proration_behavior' => 'none',
-				'items'   => array(
+				'items'              => array(
 					array(
 						'id'   => $subscription->items->data[0]->id,
-						'plan' => $plan_id
-					)
-				)
+						'plan' => $plan_id,
+					),
+				),
 			);
 
 			return $this->update_subscription( $subscription_id, $args );
@@ -1906,11 +1966,11 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 	 * Create a Stripe subscription for a given membership object.
 	 *
 	 * If successful, the membership record is updated accordingly:
-	 * 		- Expiration date synced with next bill date in Stripe.
-	 * 		- Auto renew enabled.
-	 * 		- Gateway set to "stripe".
-	 * 		- Gateway customer ID is set to Stripe customer ID.
-	 * 		- Gateway subscription ID is set to Stripe subscription ID.
+	 *      - Expiration date synced with next bill date in Stripe.
+	 *      - Auto renew enabled.
+	 *      - Gateway set to "stripe".
+	 *      - Gateway customer ID is set to Stripe customer ID.
+	 *      - Gateway subscription ID is set to Stripe subscription ID.
 	 *
 	 * @param RCP_Membership $membership Membership object.
 	 * @param bool           $charge_now True if the customer should be charged immediately. False if the first payment should be
@@ -1939,16 +1999,21 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 				$next_bill_date->setTime( 0, 0, 0 );
 
 				$args['trial_end'] = $next_bill_date->format( 'U' );
-			} catch ( Exception $e ) { }
+			} catch ( Exception $e ) {
+				rcp_log( __( 'Error creating date for next billing date', 'rcp' ) );
+			}
 		}
 
 		$customer_id = $membership->get_gateway_customer_id();
 
 		if ( empty( $customer_id ) || false === strpos( $customer_id, 'cus_' ) ) {
-			$customer_id = rcp_get_customer_gateway_id( $membership->get_customer()->get_id(), array(
-				'stripe',
-				'stripe_checkout'
-			) );
+			$customer_id = rcp_get_customer_gateway_id(
+				$membership->get_customer()->get_id(),
+				array(
+					'stripe',
+					'stripe_checkout',
+				)
+			);
 		}
 
 		if ( empty( $customer_id ) || false === strpos( $customer_id, 'cus_' ) ) {
@@ -1965,38 +2030,43 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 			$customer = \Stripe\Customer::retrieve( $customer_id );
 
-			if( isset( $customer->deleted ) && $customer->deleted ) {
+			if ( isset( $customer->deleted ) && $customer->deleted ) {
 				// This customer was deleted
 				return new WP_Error( 'deleted_customer', __( 'Customer deleted in Stripe', 'rcp' ) );
 			}
 
-			$sub_args = wp_parse_args( $args, array(
-				'customer' => $customer->id,
-				'plan'     => $plan_id,
-				'proration_behavior'  => 'none',
-				'metadata' => array(
-					'rcp_subscription_level_id' => $membership->get_object_id(),
-					'rcp_member_id'             => $membership->get_customer()->get_user_id(),
-					'rcp_customer_id'           => $membership->get_customer()->get_id(),
-					'rcp_membership_id'         => $membership->get_id()
+			$sub_args = wp_parse_args(
+				$args,
+				array(
+					'customer'           => $customer->id,
+					'plan'               => $plan_id,
+					'proration_behavior' => 'none',
+					'metadata'           => array(
+						'rcp_subscription_level_id' => $membership->get_object_id(),
+						'rcp_member_id'             => $membership->get_customer()->get_user_id(),
+						'rcp_customer_id'           => $membership->get_customer()->get_id(),
+						'rcp_membership_id'         => $membership->get_id(),
+					),
 				)
-			) );
+			);
 
 			$sub_options            = array();
 			$stripe_connect_user_id = get_option( 'rcp_stripe_connect_account_id', false );
 
-			if( ! empty( $stripe_connect_user_id ) ) {
+			if ( ! empty( $stripe_connect_user_id ) ) {
 				$sub_options['stripe_account'] = $stripe_connect_user_id;
 			}
 
 			$subscription = \Stripe\Subscription::create( $sub_args, $sub_options );
 
-			$membership->update( array(
-				'expiration_date'         => date( 'Y-m-d 23:59:59', $subscription->current_period_end ),
-				'gateway'                 => 'stripe',
-				'gateway_customer_id'     => $customer_id,
-				'gateway_subscription_id' => $subscription->id
-			) );
+			$membership->update(
+				array(
+					'expiration_date'         => gmdate( 'Y-m-d 23:59:59', $subscription->current_period_end ),
+					'gateway'                 => 'stripe',
+					'gateway_customer_id'     => $customer_id,
+					'gateway_subscription_id' => $subscription->id,
+				)
+			);
 
 			return $subscription->id;
 
@@ -2032,9 +2102,12 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 			 */
 			$next_bill_date->setTime( 0, 0, 0 );
 
-			$result = $this->update_subscription( $membership->get_gateway_subscription_id(), array(
-				'trial_end' => $next_bill_date->format( 'U' )
-			) );
+			$result = $this->update_subscription(
+				$membership->get_gateway_subscription_id(),
+				array(
+					'trial_end' => $next_bill_date->format( 'U' ),
+				)
+			);
 
 			return $result;
 		} catch ( Exception $e ) {
