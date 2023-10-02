@@ -6,7 +6,7 @@ Tags: restrict pages, restrict posts, restrict access, membership, registration 
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.3
-Stable tag: 3.2.6
+Stable tag: 3.2.7
 
 Restrict Content is a powerful WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.
 
@@ -256,6 +256,11 @@ Go to the demo page to see examples:
 https://restrictcontentpro.com/tour/screenshots/
 
 == Changelog ==
+
+= 3.2.7 =
+* Fix: Stripe webhook error
+* Misc: Removed all remaining freemius code
+* Misc: Updated telemetry constant
 
 = 3.2.6 =
 * Fix: Error in the welcome page using PHP 8.1.x.
