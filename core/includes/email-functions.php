@@ -691,6 +691,17 @@ function rcp_get_email_templates() {
  * @return string $list HTML formated list
  */
 function rcp_get_emails_tags_list() {
+	$tags_needs_membership = array(
+		'expiration',
+		'subscription_name',
+		'subscription_key',
+		'amount',
+		'invoice_url',
+		'membership_renew_url',
+		'membership_change_url',
+		'update_billing_card_url',
+		'member_id',
+	);
 	// The list
 	$list = '<ul>';
 
@@ -701,7 +712,8 @@ function rcp_get_emails_tags_list() {
 	// Check
 	if( count( $email_tags ) > 0 ) {
 		foreach( $email_tags as $email_tag ) {
-			$list .= '<li><em>%' . $email_tag['tag'] . '%</em> - ' . $email_tag['description'] . '</li>';
+			$class = in_array( $email_tag['tag'], $tags_needs_membership ) ? ' class="rcp-template-tag-warning"' : '';
+			$list .= '<li' . $class . '><em>%' . $email_tag['tag'] . '%</em> - ' . $email_tag['description'] . '</li>';
 		}
 	}
 
@@ -1038,7 +1050,14 @@ function rcp_email_tag_discount_code( $user_id = 0, $payment_id = 0 ) {
  * @return string
  */
 function rcp_email_tag_email_verification( $user_id = 0, $payment_id = 0 ) {
-	return esc_url_raw( rcp_generate_verification_link( $user_id ) );
+	$verification_link = rcp_generate_verification_link( $user_id );
+
+	if ( $verification_link === false ) {
+		$verification_link = __( 'Not available', 'rcp' );
+	} else {
+		$verification_link = esc_url_raw( rcp_generate_verification_link( $user_id ) );
+	}
+	return $verification_link;
 }
 
 /**
@@ -1107,6 +1126,16 @@ function rcp_email_tag_update_billing_card_url( $user_id = 0, $payment_id = 0 ) 
 function rcp_email_tag_membership_renew_url( $user_id = 0, $payment_id = 0, $tag = '', $membership = false ) {
 
 	$url = '';
+	// In case the membership object is not provided.
+	if ( empty( $membership ) ) {
+		$customer = rcp_get_customer_by_user_id( $user_id );
+
+		if ( empty( $customer ) ) {
+			return '';
+		}
+
+		$membership = rcp_get_customer_single_membership( $customer->get_id() );
+	}
 
 	if ( $membership instanceof RCP_Membership ) {
 		$url = rcp_get_membership_renewal_url( $membership->get_id() );
@@ -1132,6 +1161,17 @@ function rcp_email_tag_membership_renew_url( $user_id = 0, $payment_id = 0, $tag
 function rcp_email_tag_membership_change_url( $user_id = 0, $payment_id = 0, $tag = '', $membership = false ) {
 
 	$url = '';
+
+	// In case the membership object is not provided.
+	if ( empty( $membership ) ) {
+		$customer = rcp_get_customer_by_user_id( $user_id );
+
+		if ( empty( $customer ) ) {
+			return '';
+		}
+
+		$membership = rcp_get_customer_single_membership( $customer->get_id() );
+	}
 
 	if ( $membership instanceof RCP_Membership ) {
 		$url = rcp_get_membership_upgrade_url( $membership->get_id() );

@@ -2424,3 +2424,19 @@ img.restrict-content-logo {
 .stellarwp-telemetry-modal__inner {
 	width: 900px !important;
 }
+
+.rcp-template-tag-warning-message:before {
+	content: '*';
+	color: red;
+	font-weight: bold;
+	font-size: 1.2em;
+	margin-right: 3px;
+}
+
+.rcp-template-tag-warning:after {
+	content: '*';
+	color: red;
+	font-weight: bold;
+	font-size: 1.2em;
+	margin-left: 3px;
+}

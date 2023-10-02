@@ -26,7 +26,7 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 	 * @since 3.0
 	 */
 	final class Restrict_Content_Pro {
-		const VERSION = '3.5.36';
+		const VERSION = '3.5.38';
 
 		/**
 		 * Stores the base slug for the extension.
@@ -279,6 +279,9 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 		 * @since  3.0
 		 */
 		private function include_files() {
+
+			// Core.
+			require_once RCP_PLUGIN_DIR . 'core/includes/class-rcp-helper-cast.php';
 
 			// Components
 			require_once RCP_PLUGIN_DIR . 'core/includes/class-rcp-base-object.php';
