@@ -74,42 +74,6 @@ function rcp_settings_menu() {
 add_action( 'admin_menu', 'rcp_settings_menu', 10, 2 );
 
 /**
- * Determines whether or not the current page is an RCP admin page.
- *
- * @since 3.3.7
- * @return bool
- */
-function rcp_is_rcp_admin_page() {
-
-	$screen = get_current_screen();
-
-	global $rcp_members_page, $rcp_customers_page, $rcp_subscriptions_page, $rcp_discounts_page, $rcp_payments_page, $rcp_reports_page, $rcp_settings_page, $rcp_help_page, $rcp_tools_page, $restrict_content_pro_welcome_page, $restrict_content_pro_help_page, $restrict_content_pro_addons;
-	$pages = array( $rcp_members_page, $rcp_customers_page, $rcp_subscriptions_page, $rcp_discounts_page, $rcp_payments_page, $rcp_reports_page, $rcp_settings_page, $rcp_tools_page, $rcp_help_page, $restrict_content_pro_welcome_page, $restrict_content_pro_help_page, $restrict_content_pro_addons );
-
-	// Include post types that support restrictions.
-	if ( 'post' === $screen->base && ! empty( $screen->post_type ) && in_array( $screen->post_type, rcp_get_metabox_post_types() ) ) {
-		$pages[] = $screen->id;
-	}
-
-	if( false !== strpos( $screen->id, 'rcp-restrict-post-type' ) ) {
-		$pages[] = $screen->id;
-	}
-
-	$is_admin = in_array( $screen->id, $pages );
-
-	/**
-	 * Filters whether or not the current page is an RCP admin page.
-	 *
-	 * @param bool      $is_admin
-	 * @param WP_Screen $screen
-	 *
-	 * @since 3.3.7
-	 */
-	return apply_filters( 'rcp_is_rcp_admin_page', $is_admin, $screen );
-
-}
-
-/**
  * Returns the URL to the memberships page.
  *
  * @param array $args Query args to add.

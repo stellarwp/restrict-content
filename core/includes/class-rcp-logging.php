@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Debug Logging class
  *
@@ -9,7 +8,30 @@
  * @license    http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since      2.9
  */
+
+/**
+ * Debug Logging class
+ *
+ * @since 2.9
+ */
 class RCP_Logging {
+	/**
+	 * Legacy log filename.
+	 *
+	 * @since 3.5.39
+	 *
+	 * @var string
+	 */
+	private const LEGACY_LOG_FILENAME = 'rcp-debug.log';
+
+	/**
+	 * Default log directory.
+	 *
+	 * @since 3.5.39
+	 *
+	 * @var string
+	 */
+	private const DEFAULT_LOG_DIR = 'rcp' . DIRECTORY_SEPARATOR . 'debug';
 
 	/**
 	 * Full path to the file
@@ -30,17 +52,35 @@ class RCP_Logging {
 	 * @return void
 	 */
 	public function __construct( $args = array() ) {
-
-		$upload_dir = wp_upload_dir();
-
 		$defaults = array(
-			'file' => trailingslashit( $upload_dir['basedir'] ) . 'rcp-debug.log'
+			'file' => $this->get_default_log_file_path(),
 		);
 
 		$args = wp_parse_args( $args, $defaults );
 
 		$this->file = $args['file'];
+	}
 
+	/**
+	 * Returns the default log file path.
+	 *
+	 * @since 3.5.39
+	 *
+	 * @return string
+	 */
+	private function get_default_log_file_path(): string {
+		$upload_dir = wp_upload_dir();
+
+		$filename = get_option( 'rcp_debug_log_filename' );
+		if ( empty( $filename ) ) {
+			$filename = uniqid() . '.log';
+			update_option( 'rcp_debug_log_filename', $filename );
+		}
+
+		$log_dir = trailingslashit( $upload_dir['basedir'] ) . self::DEFAULT_LOG_DIR;
+		rcp_create_protected_directory( $log_dir );
+
+		return $log_dir . DIRECTORY_SEPARATOR . $filename;
 	}
 
 	/**
@@ -111,9 +151,8 @@ class RCP_Logging {
 	 * @return void
 	 */
 	protected function write_to_log( $message = '' ) {
-
-		if ( ! @file_exists( $this->file ) ) {
-			@file_put_contents( $this->file, '' );
+		if ( ! file_exists( $this->file ) ) {
+			file_put_contents( $this->file, $this->migrate_legacy_log_content() ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents
 			@chmod( $this->file, 0664 );
 		}
 
@@ -121,10 +160,31 @@ class RCP_Logging {
 			return;
 		}
 
-		$file = $this->get_file();
+		$file  = $this->get_file();
 		$file .= $message;
 		@file_put_contents( $this->file, $file );
+	}
 
+	/**
+	 * Returns the legacy log content and deletes the file.
+	 *
+	 * @since 3.5.39
+	 *
+	 * @return string
+	 */
+	private function migrate_legacy_log_content(): string {
+		$upload_dir = wp_upload_dir();
+
+		$legacy_log_file = trailingslashit( $upload_dir['basedir'] ) . self::LEGACY_LOG_FILENAME;
+
+		if ( ! file_exists( $legacy_log_file ) ) {
+			return '';
+		}
+
+		$content = file_get_contents( $legacy_log_file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		@unlink( $legacy_log_file ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- legacy file.
+
+		return (string) $content;
 	}
 
 	/**
