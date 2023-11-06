@@ -1162,8 +1162,14 @@ function rcp_setup_registration( $level_id = null, $discount = null ) {
  * @return void
  */
 function rcp_setup_registration_init() {
-
-	if ( empty( $_POST['rcp_level'] ) ) {
+	// Then, check the value of $_POST['rcp_level'].
+	if (
+		empty( $_POST['rcp_level'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		|| (
+			isset( $_POST['rcp_level'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			&& 'undefined' === $_POST['rcp_level'] // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		)
+	) {
 		return;
 	}
 

@@ -10,7 +10,6 @@
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
-
 /**
  * Filter the content based upon the "Restrict this content" metabox configuration.
  *
@@ -21,15 +20,17 @@
 function rcp_filter_restricted_content( $content ) {
 	global $post, $rcp_options;
 
-	if ( ! rcp_user_can_access( get_current_user_id(), $post->ID ) ) {
-
+	if (
+		$post
+		&& ! rcp_user_can_access( get_current_user_id(), $post->ID )
+	) {
 		$message = rcp_get_restricted_content_message();
-
 		return rcp_format_teaser( $message );
 	}
 
 	return $content;
 }
+
 add_filter( 'the_content', 'rcp_filter_restricted_content' , 100 );
 
 /**
@@ -99,15 +100,15 @@ add_filter( 'rcp_restricted_message', 'rcp_restricted_message_filter', 10, 1 );
 /**
  * Display pending email verification message when trying to access restricted content
  *
- * @param string $message
+ * @param string $message The original message.
  *
- * @return string
+ * @return string Modified or original message based on verification status.
  */
 function rcp_restricted_message_pending_verification( $message ) {
 
 	global $rcp_load_css;
 
-	if( rcp_is_pending_verification() ) {
+	if ( rcp_is_pending_verification() ) {
 		$rcp_load_css = true;
 
 		$message = '<div class="rcp_message error"><p class="rcp_error rcp_pending_member"><span>' . __( 'Your account is pending email verification.', 'rcp' ) . '</span></p></div>';
@@ -129,7 +130,14 @@ add_filter( 'rcp_restricted_message', 'rcp_restricted_message_pending_verificati
  * @return bool
  */
 function rcp_post_password_required_rest_api( $required, $post ) {
-	if( DEFINED( 'REST_REQUEST' ) && REST_REQUEST && rcp_is_restricted_content( $post->ID ) && ! rcp_user_can_access( get_current_user_id(), $post->ID ) ) {
+
+	if (
+		$post !== null
+		&& DEFINED( 'REST_REQUEST' )
+		&& REST_REQUEST
+		&& rcp_is_restricted_content( $post->ID )
+		&& ! rcp_user_can_access( get_current_user_id(), $post->ID )
+	) {
 		$required = true;
 	}
 

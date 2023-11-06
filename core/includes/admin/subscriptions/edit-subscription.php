@@ -89,9 +89,9 @@ if ( ! $level instanceof Membership_Level ) {
 						<option value="specific" <?php selected( $level->get_maximum_renewals() > 0 ); ?>><?php _e( 'Specific Number', 'rcp' ); ?></option>
 					</select>
 					<label for="rcp-maximum-renewals" class="screen-reader-text"><?php _e( 'Enter the maximum number of renewals', 'rcp' ); ?></label>
-					<input type="number" id="rcp-maximum-renewals" name="maximum_renewals" value="<?php echo esc_attr( $level->get_maximum_renewals() ); ?>"<?php echo empty( $level->get_maximum_renewals() ) ? ' style="display: none;"' : ''; ?>/>
+					<input type="number" id="rcp-maximum-renewals" name="maximum_renewals" value="<?php echo esc_attr( $level->get_maximum_renewals() ); ?>"<?php echo empty( $level->get_maximum_renewals() ) ? ' style="display: none;"' : ''; ?> min="0" oninput="validatePositiveNumber(this)"/>
 					<p class="description">
-						<?php _e( 'Number of renewals to process after the first payment.', 'rcp' ); ?>
+						<?php _e( 'Number of renewals to process after the first payment. Must be greater than zero.', 'rcp' ); ?>
 						<span alt="f223" class="rcp-help-tip dashicons dashicons-editor-help" title="<?php esc_attr_e( '<strong>Until Cancelled</strong>: will continue billing the member indefinitely, or until they cancel their membership. <br/><br/><strong>Specific Number</strong> will allow you to enter the number of additional times you wish to bill the customer after their first payment. If you enter "3", the member will be billed once immediately when they sign up, then 3 more times after that. Then billing will stop automatically.', 'rcp' ); ?>"></span>
 					</p>
 				</td>
