@@ -1711,51 +1711,150 @@ function rcp_sanitize_request_field( $_text ) {
  */
 function rcp_get_addons_list(): array {
 	return [
-		'rcp-avatax' => 'Restrict Content Pro - AvaTax',
-		'rcp-functionality' => 'Restrict Content Pro - Custom Functionality',
-		'rcp-authorize-net' => 'Restrict Content Pro - Authorize.net',
-		'rcp-ultimate-member' => 'RCP Ultimate Member',
-		'rcp-group-accounts' => 'Restrict Content Pro - Group Accounts',
-		'rcp-drip-content' => 'Restrict Content Pro - Drip Content',
-		'rcp-mailchimp-pro' => 'Restrict Content Pro - MailChimp Pro',
-		'rcp-site-creation' => 'Restrict Content Pro - Site Creation',
-		'rcp-timelock' => 'Restrict Content Pro - Timelock',
-		'rcp-edd-member-downloads' => 'Restrict Content Pro - EDD Member Downloads',
-		'rcp-strong-passwords' => 'Restrict Content Pro - Enforce Strong Passwords',
-		'rcp-edd-wallet' => 'Restrict Content Pro - Easy Digital Downloads Wallet',
-		'rcp-restriction-timeouts' => 'Restrict Content Pro - Restriction Timeouts',
-		'rcp-limited-quantity-available' => 'Restrict Content Pro - Limited Quantity Available',
-		'rcp-mailchimp' => 'Restrict Content Pro - MailChimp',
-		'rcp-gravity-forms' => 'GF RCP connection',
+		'rcp-avatax'                       => 'Restrict Content Pro - AvaTax',
+		'rcp-functionality'                => 'Restrict Content Pro - Custom Functionality',
+		'rcp-authorize-net'                => 'Restrict Content Pro - Authorize.net',
+		'rcp-ultimate-member'              => 'RCP Ultimate Member',
+		'rcp-group-accounts'               => 'Restrict Content Pro - Group Accounts',
+		'rcp-drip-content'                 => 'Restrict Content Pro - Drip Content',
+		'rcp-mailchimp-pro'                => 'Restrict Content Pro - MailChimp Pro',
+		'rcp-site-creation'                => 'Restrict Content Pro - Site Creation',
+		'rcp-timelock'                     => 'Restrict Content Pro - Timelock',
+		'rcp-edd-member-downloads'         => 'Restrict Content Pro - EDD Member Downloads',
+		'rcp-strong-passwords'             => 'Restrict Content Pro - Enforce Strong Passwords',
+		'rcp-edd-wallet'                   => 'Restrict Content Pro - Easy Digital Downloads Wallet',
+		'rcp-restriction-timeouts'         => 'Restrict Content Pro - Restriction Timeouts',
+		'rcp-limited-quantity-available'   => 'Restrict Content Pro - Limited Quantity Available',
+		'rcp-mailchimp'                    => 'Restrict Content Pro - MailChimp',
+		'rcp-gravity-forms'                => 'GF RCP connection',
 		'rcp-woocommerce-member-discounts' => 'Restrict Content Pro - WooCommerce Member Discounts',
-		'rcp-woocommerce-checkout' => 'Restrict Content Pro - WooCommerce Checkout',
-		'rcp-usage-tracking' => 'Restrict Content Pro - Usage Tracking',
-		'rcp-stripe-connect-proxy' => 'Sandhills: Stripe Connect proxy for Restrict Content Pro',
-		'rcp-site-child' => 'RCP Site child theme',
-		'rcp-restrict-past-content' => 'Restrict Content Pro - Restrict Past Content',
-		'rcp-rest-api' => 'Restrict Content Pro - REST API',
-		'rcp-per-level-emails' => 'Restrict Content Pro - Per-Level Emails',
-		'rcp-math-verification' => 'Restrict Content Pro - Math Verification',
-		'rcp-mailerlite' => 'Restrict Content Pro - MailerLite',
-		'rcp-library' => 'Restrict Content Pro Code Snippet Library',
-		'rcp-ip-restriction' => 'Restrict Content Pro - IP Restriction',
-		'rcp-honeypot' => 'Restrict Content Pro - Honeypot',
-		'rcp-help-scout' => 'Restrict Content Pro - Help Scout',
-		'rcp-hardset-expiration-dates' => 'Restrict Content Pro - Hard-set Expiration Dates',
-		'rcp-gifts-through-edd' => 'Restrict Content Pro - Gift Memberships',
-		'rcp-getresponse' => 'Restrict Content Pro - GetResponse',
-		'rcp-forms' => 'Restrict Content Pro - Forms',
-		'rcp-fatwpl' => 'Restrict Content Pro - Force Admins to wp-login.php',
-		'rcp-dev-tools' => 'Restrict Content Pro - Dev Tools',
-		'rcp-custom-redirects' => 'Restrict Content Pro - Custom Redirects',
-		'rcp-convertkit' => 'Restrict Content Pro - ConvertKit',
-		'rcp-braintree' => 'Restrict Content Pro - Braintree Gateway',
-		'rcp-aweber-pro' => 'Restrict Content Pro - AWeber Pro',
-		'rcp-add-on-version-response' => 'RCP Add-On Version Response',
-		'rcp-activecampaign' => 'Restrict Content Pro - ActiveCampaign',
-		'rcp-view-limit' => 'Restrict Content Pro - View Limit',
-		'rcp-upgrade-paths' => 'RCP Upgrade Paths',
-		'rcp-custom-renew' => 'RCP Custom Renew',
-		'restrict-content-pro-buddypress' => 'Restrict Content Pro - BuddyPress',
+		'rcp-woocommerce-checkout'         => 'Restrict Content Pro - WooCommerce Checkout',
+		'rcp-usage-tracking'               => 'Restrict Content Pro - Usage Tracking',
+		'rcp-stripe-connect-proxy'         => 'Sandhills: Stripe Connect proxy for Restrict Content Pro',
+		'rcp-site-child'                   => 'RCP Site child theme',
+		'rcp-restrict-past-content'        => 'Restrict Content Pro - Restrict Past Content',
+		'rcp-rest-api'                     => 'Restrict Content Pro - REST API',
+		'rcp-per-level-emails'             => 'Restrict Content Pro - Per-Level Emails',
+		'rcp-math-verification'            => 'Restrict Content Pro - Math Verification',
+		'rcp-mailerlite'                   => 'Restrict Content Pro - MailerLite',
+		'rcp-library'                      => 'Restrict Content Pro Code Snippet Library',
+		'rcp-ip-restriction'               => 'Restrict Content Pro - IP Restriction',
+		'rcp-honeypot'                     => 'Restrict Content Pro - Honeypot',
+		'rcp-help-scout'                   => 'Restrict Content Pro - Help Scout',
+		'rcp-hardset-expiration-dates'     => 'Restrict Content Pro - Hard-set Expiration Dates',
+		'rcp-gifts-through-edd'            => 'Restrict Content Pro - Gift Memberships',
+		'rcp-getresponse'                  => 'Restrict Content Pro - GetResponse',
+		'rcp-forms'                        => 'Restrict Content Pro - Forms',
+		'rcp-fatwpl'                       => 'Restrict Content Pro - Force Admins to wp-login.php',
+		'rcp-dev-tools'                    => 'Restrict Content Pro - Dev Tools',
+		'rcp-custom-redirects'             => 'Restrict Content Pro - Custom Redirects',
+		'rcp-convertkit'                   => 'Restrict Content Pro - ConvertKit',
+		'rcp-braintree'                    => 'Restrict Content Pro - Braintree Gateway',
+		'rcp-aweber-pro'                   => 'Restrict Content Pro - AWeber Pro',
+		'rcp-add-on-version-response'      => 'RCP Add-On Version Response',
+		'rcp-activecampaign'               => 'Restrict Content Pro - ActiveCampaign',
+		'rcp-view-limit'                   => 'Restrict Content Pro - View Limit',
+		'rcp-upgrade-paths'                => 'RCP Upgrade Paths',
+		'rcp-custom-renew'                 => 'RCP Custom Renew',
+		'restrict-content-pro-buddypress'  => 'Restrict Content Pro - BuddyPress',
 	];
+}
+
+/**
+ * Determines whether or not the current page is an RCP admin page.
+ *
+ * @since 3.3.7
+ * @return bool
+ */
+function rcp_is_rcp_admin_page() {
+	$is_admin = false;
+	$screen   = get_current_screen();
+
+	if ( $screen ) {
+		global $rcp_members_page, $rcp_customers_page, $rcp_subscriptions_page, $rcp_discounts_page, $rcp_payments_page, $rcp_reports_page, $rcp_settings_page, $rcp_help_page, $rcp_tools_page, $restrict_content_pro_welcome_page, $restrict_content_pro_help_page, $restrict_content_pro_addons;
+		$pages = array( $rcp_members_page, $rcp_customers_page, $rcp_subscriptions_page, $rcp_discounts_page, $rcp_payments_page, $rcp_reports_page, $rcp_settings_page, $rcp_tools_page, $rcp_help_page, $restrict_content_pro_welcome_page, $restrict_content_pro_help_page, $restrict_content_pro_addons );
+
+		// Include post types that support restrictions.
+		if (
+			'post' === $screen->base
+			&& ! empty( $screen->post_type )
+			&& in_array( $screen->post_type, rcp_get_metabox_post_types(), true )
+		) {
+			$pages[] = $screen->id;
+		}
+
+		if ( false !== strpos( $screen->id, 'rcp-restrict-post-type' ) ) {
+			$pages[] = $screen->id;
+		}
+
+		$is_admin = in_array( $screen->id, $pages, true );
+	}
+
+	/**
+	 * Filters whether or not the current page is an RCP admin page.
+	 *
+	 * @param bool           $is_admin Whether or not the current page is an RCP admin page.
+	 * @param WP_Screen|null $screen   The current screen object.
+	 *
+	 * @since 3.3.7
+	 */
+	return apply_filters( 'rcp_is_rcp_admin_page', $is_admin, $screen );
+}
+
+/**
+ * Creates a protected directory to store plugin files.
+ *
+ * @since 3.5.39
+ *
+ * @param string $dir_path The path to the directory to create.
+ *
+ * @return bool True if the directory was created and protected, false otherwise.
+ */
+function rcp_create_protected_directory( string $dir_path ): bool {
+	try {
+		// create the directory if it doesn't exist.
+
+		if ( ! is_dir( $dir_path ) ) {
+			wp_mkdir_p( $dir_path );
+		}
+
+		if ( ! is_writable( $dir_path ) ) {
+			return false;
+		}
+
+		// create .htaccess file to protect the directory.
+
+		$htaccess_path = trailingslashit( $dir_path ) . '.htaccess';
+
+		if ( ! file_exists( $htaccess_path ) ) {
+			$result = file_put_contents( // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents
+				$htaccess_path,
+				'Order Allow,Deny' . PHP_EOL . 'Deny from all' . PHP_EOL
+			);
+
+			if ( ! $result ) {
+				return false;
+			}
+		}
+
+		// create the index.php file to prevent directory listing.
+
+		$index_path = trailingslashit( $dir_path ) . 'index.php';
+
+		if ( ! file_exists( $index_path ) ) {
+			$result = file_put_contents( // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents
+				$index_path,
+				'<?php' . PHP_EOL . '// Silence is golden.' . PHP_EOL
+			);
+
+			if ( ! $result ) {
+				return false;
+			}
+		}
+	} catch ( Throwable $th ) {
+		WP_DEBUG && error_log( $th->getMessage() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Only if debug is enabled.
+		return false;
+	}
+
+	return true;
 }

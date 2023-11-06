@@ -965,3 +965,9 @@ jQuery(document).ready(function($) {
 
 	$('body').addClass('restrict-content');
 });
+
+function validatePositiveNumber(input) {
+	if (input.value < 0) {
+		input.value = 0;
+	}
+}

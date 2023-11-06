@@ -309,71 +309,75 @@ class RCP_Telemetry {
 
 		$_info[ $rcp_slug ] = [
 			'label'       => $rcp_title,
-			// translators: %s: The RCP Title.
-			'description' => sprintf( esc_html__( 'These are %s fields that we use for analysis and to make the product better.', 'rcp' ), $rcp_title ),
+			'description' => sprintf(
+				// translators: %s: The RCP Title.
+				esc_html__( 'These are %s fields that we use for analysis and to make the product better.', 'rcp' ),
+				$rcp_title
+			),
 			'fields'      => [
-				[
+				'version'                           => [
 					'label' => esc_html__( 'Version', 'rcp' ),
 					'value' => $restrict_content_version,
 				],
-				[
+				'last_updated'                      => [
 					'label' => esc_html__( 'Last Updated', 'rcp' ),
 					'value' => $telemetry_info->rcp_last_updated(),
 				],
-				[
+				'total_membership_levels'           => [
 					'label' => esc_html__( 'Total Membership Levels', 'rcp' ),
 					'value' => $telemetry_info->total_membership_levels(),
 				],
-				[
+				'total_paid_membership_levels'      => [
 					'label' => esc_html__( 'Total Paid Membership Levels', 'rcp' ),
 					'value' => $telemetry_info->total_paid_membership_levels(),
 				],
-				[
+				'total_free_membership_levels'      => [
 					'label' => esc_html__( 'Total Free Membership Levels', 'rcp' ),
 					'value' => $telemetry_info->total_free_membership_levels(),
 				],
-				[
+				'total_one_time_membership_levels'  => [
 					'label' => esc_html__( 'Total One-Time Membership Levels', 'rcp' ),
 					'value' => $telemetry_info->total_one_time_membership_levels(),
 				],
-				[
+				'total_recurring_membership_levels' => [
 					'label' => esc_html__( 'Total Recurring Membership Levels', 'rcp' ),
 					'value' => $telemetry_info->total_recurring_membership_levels(),
 				],
-				[
+				'total_paying_customers'            => [
 					'label' => esc_html__( 'Total Paying Customers', 'rcp' ),
 					'value' => $telemetry_info->total_paying_customers(),
 				],
-				[
+				'total_free_customers'              => [
 					'label' => esc_html__( 'Total Free Customers', 'rcp' ),
 					'value' => $telemetry_info->total_free_customers(),
 				],
-				[
+				'total_no_membership_customers'     => [
 					'label' => esc_html__( 'Total No-Membership Customers', 'rcp' ),
 					'value' => $telemetry_info->total_no_membership_customers(),
 				],
-				[
+				'is_multiple_memberships'           => [
 					'label' => esc_html__( 'Is Multiple Memberships', 'rcp' ),
 					'value' => $telemetry_info->is_multiple_memberships(),
 				],
-				[
+				'total_revenue_this_month'          => [
 					'label' => esc_html__( 'Total Revenue This Month', 'rcp' ),
 					'value' => $telemetry_info->monthly_revenue(),
 				],
-				[
+				'payment_gateways'                  => [
 					'label' => esc_html__( 'Payment Gateways', 'rcp' ),
 					'value' => wp_json_encode( $telemetry_info->payment_gateways() ),
 				],
-				[
+				'active_add_ons'                    => [
 					'label' => esc_html__( 'Active Add-ons', 'rcp' ),
 					'value' => wp_json_encode( $telemetry_info->active_addons() ),
 				],
-				[
+				'deactivated_add_ons'               => [
 					'label' => esc_html__( 'Deactivated Add-ons', 'rcp' ),
 					'value' => wp_json_encode( $telemetry_info->deactivated_addons() ),
 				],
 			],
 		];
+
 
 		return $_info;
 	}
