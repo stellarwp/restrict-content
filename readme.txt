@@ -257,6 +257,14 @@ https://restrictcontentpro.com/tour/screenshots/
 
 == Changelog ==
 
+= 3.2.8 =
+* Fix: PayPal renew date
+* Fix: Extended compatibility with PHP 8.x
+* Fix: Prevent fatal error while trying to send emails using Event Tickets and The Events Calendar
+* Fix: Don't allow negative values for maximum renewals
+* Misc: Updated telemetry key names
+* Security: Fixed issues with log file
+
 = 3.2.7 =
 * Fix: Stripe webhook error
 * Misc: Removed all remaining freemius code
