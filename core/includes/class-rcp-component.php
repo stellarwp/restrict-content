@@ -26,6 +26,14 @@ class Component extends Base_Object {
 	private $interfaces = array();
 
 	/**
+	 * Array of dynamicKeys
+	 *
+	 * @since 3.4
+	 * @var array
+	 */
+	private $dynamicKeys = array();
+
+	/**
 	 * Returns an interface object
 	 *
 	 * @param string $key Interface key
@@ -35,7 +43,7 @@ class Component extends Base_Object {
 	 */
 	public function get_interface( $key ) {
 		return isset( $this->interfaces[ $key ] ) ? $this->interfaces[ $key ] : false;
-	}
+	} 
 
 	/**
 	 * Set up interfaces
@@ -59,11 +67,18 @@ class Component extends Base_Object {
 			if ( in_array( $key, $keys, true ) && class_exists( $value ) ) {
 				$this->interfaces[ $key ] = new $value;
 			} else {
-				$this->{$key} = $value;
+				$this->dynamicKeys[$key] = $value;
 			}
 
 		}
 
 	}
+
+	public function __get(string $name) {
+	        if(property_exists($this, $name))
+	            return $this->$name;
+	        else
+	            return $this->dynamicKeys[$name];
+        }
 
 }
