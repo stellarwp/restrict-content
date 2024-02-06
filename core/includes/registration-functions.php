@@ -571,7 +571,7 @@ add_action( 'init', 'rcp_send_registration_to_gateway', 100 );
  * Get all the registration information associated with a payment. This is used when sending the
  * payment to the gateway for processing.
  *
- * @param int $payment_id
+ * @param int $payment_id Payment ID.
  *
  * @since 3.2
  * @return array
@@ -632,20 +632,47 @@ function rcp_get_payment_registration_details( $payment_id ) {
 		$registration_data['fee'] = -1 * $registration_data['price'];
 	}
 
+	// Add prorate credit length to extend the subscription start date.
+	$prorate_credit_length = 0;
+	if ( 'upgrade' === rcp_get_registration()->get_registration_type() ) {
+		$previous_membership = rcp_get_registration()->get_membership();
+
+		$is_free = $membership_level instanceof Membership_Level ? $membership_level->is_free() : false;
+
+		if (
+			$previous_membership
+			&& ! $is_free
+			&& $membership_level instanceof Membership_Level
+		) {
+			// Get prorate credit in units based on the new membership level price.
+			$total_credits         = $previous_membership->get_prorate_credit_amount() - $membership_level->get_fee();
+			$prorate_credit_length = floor( $total_credits / $membership_level->get_price() );
+
+			// Make sure the prorate credit length is not negative.
+			if ( $prorate_credit_length <= 0 ) {
+				$prorate_credit_length = 0;
+			}
+		}
+	}
+
 	/*
 	 * Delay the subscription start date if this is a free trial OR the amount due today is $0,
 	 * the recurring amount is greater than $0, and auto renew is enabled.
 	 */
 	if ( $registration_data['trial_eligible'] && ! empty( $registration_data['trial_duration'] ) ) {
+		$duration = $registration_data['trial_duration'] + $prorate_credit_length;
+
 		// Subscription start date is the end of the trial.
-		$registration_data['subscription_start_date'] = date( 'Y-m-d H:i:s', strtotime( $registration_data['trial_duration'] . ' ' . $registration_data['trial_duration_unit'], current_time( 'timestamp' ) ) );
+		$registration_data['subscription_start_date'] = date( 'Y-m-d H:i:s', strtotime( $duration . ' ' . $registration_data['trial_duration_unit'], current_time( 'timestamp' ) ) ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 
 		// Set the amount due today to $0.
 		$registration_data['price'] = 0;
 		$registration_data['fee']   = 0;
 	} elseif ( empty( $registration_data['price'] + $registration_data['fee'] ) && ! empty( $registration_data['recurring_price'] ) && rcp_registration_is_recurring() ) {
+		$duration = $registration_data['length'] + $prorate_credit_length;
+
 		// Start date is delayed due to discounts, negative signup fees, or credits.
-		$registration_data['subscription_start_date'] = date( 'Y-m-d H:i:s', strtotime( $registration_data['length'] . ' ' . $registration_data['length_unit'], current_time( 'timestamp' ) ) );
+		$registration_data['subscription_start_date'] = date( 'Y-m-d H:i:s', strtotime( $duration . ' ' . $registration_data['length_unit'], current_time( 'timestamp' ) ) ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 	}
 
 	update_user_meta( $user->ID, 'rcp_pending_subscription_amount', round( $registration_data['price'] + $registration_data['fee'], 2 ) );
@@ -2015,7 +2042,14 @@ function rcp_add_membership_renewal_date_to_total_details() {
 			return;
 		}
 
-		$renewal_date = rcp_calculate_subscription_expiration( $membership_level_id, $registration->is_trial() );
+		// Get the previous membership ID if this is an upgrade.
+		$upgraded_from = 0;
+		if ( 'upgrade' === $registration->get_registration_type() ) {
+			$membership    = $registration->get_membership();
+			$upgraded_from = $membership ? $membership->get_id() : 0;
+		}
+
+		$renewal_date = rcp_calculate_subscription_expiration( $membership_level_id, $registration->is_trial(), $upgraded_from );
 	}
 
 	if ( empty( $renewal_date ) || 'none' == $renewal_date ) {

@@ -553,12 +553,15 @@ function _rcp_sanitize_duration_unit( $unit ) {
 /**
  * Gets the day of expiration of a membership from the current day
  *
- * @param int  $id        The ID of the membership level to retrieve
- * @param bool $set_trial Whether or not to use the trial duration for calculations.
+ * @since 3.5.40 Introduces the $upgraded_from parameter.
+ *
+ * @param int  $id            The ID of the membership level to retrieve.
+ * @param bool $set_trial     Whether or not to use the trial duration for calculations.
+ * @param int  $upgraded_from ID of the membership the user upgraded from.
  *
  * @return string MySQL formatted date of expiration.
  */
-function rcp_calculate_subscription_expiration( $id, $set_trial = false ) {
+function rcp_calculate_subscription_expiration( $id, $set_trial = false, $upgraded_from = 0 ) {
 	$membership_level = rcp_get_membership_level( $id );
 	$expiration_date  = 'none';
 
@@ -576,6 +579,25 @@ function rcp_calculate_subscription_expiration( $id, $set_trial = false ) {
 		} else {
 			$expiration_unit   = $membership_level->get_duration_unit();
 			$expiration_length = $membership_level->get_duration();
+		}
+
+		// If the user is upgrading from a different membership level, we need to account for proration.
+		if (
+			$upgraded_from > 0
+			&& ! $membership_level->is_free()
+		) {
+			$previous_membership = rcp_get_membership( $upgraded_from );
+
+			$prorate_credit = ! empty( $previous_membership ) ? $previous_membership->get_prorate_credit_amount() : 0;
+
+			// Get prorate credit in units based on the new membership level price.
+			$total_credits         = $prorate_credit - $membership_level->get_fee();
+			$prorate_credit_length = floor( $total_credits / $membership_level->get_price() );
+
+			// Add prorate credit to the expiration length.
+			if ( $prorate_credit_length > 0 ) {
+				$expiration_length = $expiration_length + $prorate_credit_length;
+			}
 		}
 
 		$expiration_timestamp = strtotime( '+' . $expiration_length . ' ' . $expiration_unit . ' 23:59:59', $current_time );

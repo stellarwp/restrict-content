@@ -4,7 +4,8 @@
  *
  * This template is used to display the registration form for a single
  * membership level with [register_form id="3"]
- * @link http://docs.restrictcontentpro.com/article/1597-registerform
+ *
+ * @link https://restrictcontentpro.com/knowledgebase/register_form
  *
  * For modifying this template, please see: http://docs.restrictcontentpro.com/article/1738-template-files
  *

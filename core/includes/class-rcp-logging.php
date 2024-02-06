@@ -71,10 +71,14 @@ class RCP_Logging {
 	private function get_default_log_file_path(): string {
 		$upload_dir = wp_upload_dir();
 
-		$filename = get_option( 'rcp_debug_log_filename' );
+		$option = RCP_Helper_Cast::to_string( get_option( 'rcp_debug_log_filename' ) );
+
+		$filename = basename( $option, '.log' );
 		if ( empty( $filename ) ) {
 			$filename = uniqid() . '.log';
 			update_option( 'rcp_debug_log_filename', $filename );
+		} else {
+			$filename .= '.log';
 		}
 
 		$log_dir = trailingslashit( $upload_dir['basedir'] ) . self::DEFAULT_LOG_DIR;

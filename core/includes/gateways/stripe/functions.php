@@ -1166,3 +1166,36 @@ function rcp_stripe_get_localized_error_messages() {
 	return apply_filters( 'rcp_stripe_error_messages', $messages );
 
 }
+
+/**
+ * Cancel Stripe subscriptions after deleting a Membership Level.
+ *
+ * @since 3.5.40
+ *
+ * @param int            $membership_id ID of the membership.
+ * @param RCP_Membership $membership    Membership object.
+ *
+ * @return void
+ */
+function rcp_stripe_cancel_subscriptions_after_deleting_level( $membership_id, $membership ): void {
+	$gateways = [
+		'stripe',
+		'stripe_checkout',
+	];
+
+	// Bail if this membership doesn't use Stripe.
+	if ( ! in_array( $membership->get_gateway(), $gateways, true ) ) {
+		return;
+	}
+
+	$id = $membership->get_gateway_subscription_id();
+
+	// Stop if this membership doesn't have a gateway subscription ID.
+	if ( empty( $id ) ) {
+		return;
+	}
+
+	rcp_stripe_cancel_membership( $id );
+}
+
+add_action( 'rcp_membership_pre_cancel', 'rcp_stripe_cancel_subscriptions_after_deleting_level', 10, 2 );

@@ -262,7 +262,8 @@ function rcp_add_membership( $data = array() ) {
 	$customer         = rcp_get_customer( $data['customer_id'] );
 	$has_trial        = $membership_level->has_trial() || ( $membership_level->is_free() && ! $membership_level->is_lifetime() );
 	$set_trial        = ( $has_trial && ! $customer->has_trialed() );
-	$expiration_date  = ! empty( $data['object_id'] ) ? rcp_calculate_subscription_expiration( $data['object_id'], $set_trial ) : '';
+	$upgraded_from    = ! empty( $data['upgraded_from'] ) ? $data['upgraded_from'] : 0;
+	$expiration_date  = ! empty( $data['object_id'] ) ? rcp_calculate_subscription_expiration( $data['object_id'], $set_trial, $upgraded_from ) : '';
 
 	// Populate user_id if not provided.
 	if ( empty( $data['user_id'] ) && $customer instanceof RCP_Customer ) {
