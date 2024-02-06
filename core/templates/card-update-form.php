@@ -3,7 +3,8 @@
  * Card Update Form
  *
  * This form is displayed with the [rcp_update_card] shortcode.
- * @link http://docs.restrictcontentpro.com/article/1608-rcpupdatecard
+ *
+ * @link https://restrictcontentpro.com/knowledgebase/rcp_update_card
  *
  * For modifying this template, please see: http://docs.restrictcontentpro.com/article/1738-template-files
  *

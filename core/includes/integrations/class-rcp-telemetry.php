@@ -115,6 +115,10 @@ class RCP_Telemetry {
 	 * @return array The additional plugin actions.
 	 */
 	public function add_opt_in_link( $plugin_actions, $plugin_file ) {
+		// Stop if current user can't manage RCP settings.
+		if ( ! current_user_can( 'rcp_manage_settings' ) ) {
+			return $plugin_actions;
+		}
 
 		$new_actions   = array();
 		$opt_in_status = $this->container->get( Status::class )->is_active();
@@ -125,7 +129,7 @@ class RCP_Telemetry {
 			// translators: %s: The admin URL.
 				__( '<a href="%1$s" alt="%2$s">Opt-Out</a>', 'rcp' ),
 				// translators: %s: The Opt-Out alt text.
-				esc_url( admin_url( 'plugins.php?opt-in-status=0' ) ),
+				esc_url( wp_nonce_url( admin_url( 'plugins.php?opt-in-status=0' ), 'telemetry' ) ),
 				__( 'Change to Opt Out Status', 'rcp' )
 			);
 		} elseif ( ( ! $opt_in_status && ( basename( RCP_ROOT ) . '/restrict-content-pro.php' === $plugin_file ) )
@@ -133,7 +137,7 @@ class RCP_Telemetry {
 			$new_actions['rcp_opt_in'] = sprintf(
 			// translators: %s: The admin URL.
 				__( '<a href="%1$s" alt="%2$s">Opt-In</a>', 'rcp' ),
-				esc_url( admin_url( 'plugins.php?opt-in-status=1' ) ),
+				esc_url( wp_nonce_url( admin_url( 'plugins.php?opt-in-status=1' ), 'telemetry' ) ),
 				// translators: %s: The Opt-Out alt text.
 				__( 'Change to Opt In Status', 'rcp' )
 			);
@@ -150,8 +154,22 @@ class RCP_Telemetry {
 	 */
 	public function update_opt_in_get_status() {
 		// Bail early if we're not saving the Opt-In Status field.
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! isset( $_GET['opt-in-status'] ) ) {
+			return;
+		}
+
+		// Stop if nonce is not set.
+		if ( empty( $_REQUEST['_wpnonce'] ) ) {
+			return;
+		}
+
+		// Stop if nonce is not valid.
+		if ( ! wp_verify_nonce( sanitize_key( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'telemetry' ) ) {
+			return;
+		}
+
+		// Stop if current user can't manage RCP settings.
+		if ( ! current_user_can( 'rcp_manage_settings' ) ) {
 			return;
 		}
 

@@ -4,7 +4,8 @@
  *
  * This template is loaded into register.php and register-single.php to display the total
  * membership cost, fees, and any recurring costs.
- * @link http://docs.restrictcontentpro.com/article/1597-registerform
+ *
+ * @link https://restrictcontentpro.com/knowledgebase/register_form
  *
  * For modifying this template, please see: http://docs.restrictcontentpro.com/article/1738-template-files
  *

@@ -3,7 +3,8 @@
  * Card Update Form Fields
  *
  * This form is displayed with the [rcp_update_card] shortcode.
- * @link http://docs.restrictcontentpro.com/article/1608-rcpupdatecard
+ *
+ * @link https://restrictcontentpro.com/knowledgebase/rcp_update_card
  *
  * The shortcode loads the `card-update-form.php` template, which then loads this template
  * for individual fields. Note that some gateways may not use these fields and may load
@@ -17,6 +18,7 @@
  * @copyright   Copyright (c) 2019, Restrict Content Pro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
+
 ?>
 <fieldset id="rcp-card-name-wrapper" class="rcp_card_fieldset">
 	<p id="rcp_card_name_wrap">

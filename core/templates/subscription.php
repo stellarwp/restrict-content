@@ -4,7 +4,7 @@
  *
  * This template displays the current user's membership details with [subscription_details]
  *
- * @link        http://docs.restrictcontentpro.com/article/1600-subscriptiondetails
+ * @link        https://restrictcontentpro.com/knowledgebase/subscription_details
  *
  * For modifying this template, please see: http://docs.restrictcontentpro.com/article/1738-template-files
  *
@@ -102,7 +102,7 @@ if ( ! empty( $memberships ) ) {
 											'membership-id' => urlencode( $membership->get_id() )
 									) ), 'rcp_toggle_auto_renew_off' );
 
-									echo '<a href="' . esc_url( $toggle_off_url ) . '" class="rcp-disable-auto-renew"><button>' . __( 'Disable auto renew', 'rcp' ) . '</button></a>';
+									echo '<a href="' . esc_url( $toggle_off_url ) . '" class="rcp-disable-auto-renew"><button type="button">' . esc_html__( 'Disable auto renew', 'rcp' ) . '</button></a>';
 								} else {
 									$toggle_on_url = wp_nonce_url( add_query_arg( array(
 											'rcp-action'    => 'enable_auto_renew',
@@ -141,19 +141,19 @@ if ( ! empty( $memberships ) ) {
 							$links = array();
 
 							if ( $membership->can_update_billing_card() ) {
-								$links[] = '<a href="' . esc_url( add_query_arg( 'membership_id', urlencode( $membership->get_id() ), get_permalink( $rcp_options['update_card'] ) ) ) . '" title="' . esc_attr__( 'Update payment method', 'rcp' ) . '" class="rcp_sub_details_update_card"><button>' . __( 'Update payment method', 'rcp' ) . '</button></a>';
+								$links[] = '<a href="' . esc_url( add_query_arg( 'membership_id', urlencode( $membership->get_id() ), get_permalink( $rcp_options['update_card'] ) ) ) . '" title="' . esc_attr__( 'Update payment method', 'rcp' ) . '" class="rcp_sub_details_update_card"><button type="button">' . __( 'Update payment method', 'rcp' ) . '</button></a>';
 							}
 
 							if ( $membership->can_renew() ) {
-								$links[] = apply_filters( 'rcp_subscription_details_action_renew', '<a href="' . esc_url( rcp_get_membership_renewal_url( $membership->get_id() ) ) . '" title="' . esc_attr__( 'Renew your membership', 'rcp' ) . '" class="rcp_sub_details_renew"><button>' . __( 'Renew your membership', 'rcp' ) . '</button></a>', $user_ID );
+								$links[] = apply_filters( 'rcp_subscription_details_action_renew', '<a href="' . esc_url( rcp_get_membership_renewal_url( $membership->get_id() ) ) . '" title="' . esc_attr__( 'Renew your membership', 'rcp' ) . '" class="rcp_sub_details_renew"><button type="button">' . __( 'Renew your membership', 'rcp' ) . '</button></a>', $user_ID );
 							}
 
 							if ( $membership->upgrade_possible() ) {
-								$links[] = apply_filters( 'rcp_subscription_details_action_upgrade', '<a href="' . esc_url( rcp_get_membership_upgrade_url( $membership->get_id() ) ) . '" title="' . esc_attr__( 'Upgrade or change your membership', 'rcp' ) . '" class="rcp_sub_details_change_membership"><button>' . __( 'Upgrade or change your membership', 'rcp' ) . '</button></a>', $user_ID );
+								$links[] = apply_filters( 'rcp_subscription_details_action_upgrade', '<a href="' . esc_url( rcp_get_membership_upgrade_url( $membership->get_id() ) ) . '" title="' . esc_attr__( 'Upgrade or change your membership', 'rcp' ) . '" class="rcp_sub_details_change_membership"><button type="button">' . __( 'Upgrade or change your membership', 'rcp' ) . '</button></a>', $user_ID );
 							}
 
 							if ( $membership->is_active() && $membership->can_cancel() && ! $membership->has_payment_plan() ) {
-								$links[] = apply_filters( 'rcp_subscription_details_action_cancel', '<a href="' . esc_url( rcp_get_membership_cancel_url( $membership->get_id() ) ) . '" title="' . esc_attr__( 'Cancel your membership', 'rcp' ) . '" class="rcp_sub_details_cancel" id="rcp_cancel_membership_' . esc_attr( $membership->get_id() ) . '"><button>' . __( 'Cancel your membership', 'rcp' ) . '</button></a>', $user_ID );
+								$links[] = apply_filters( 'rcp_subscription_details_action_cancel', '<a href="' . esc_url( rcp_get_membership_cancel_url( $membership->get_id() ) ) . '" title="' . esc_attr__( 'Cancel your membership', 'rcp' ) . '" class="rcp_sub_details_cancel" id="rcp_cancel_membership_' . esc_attr( $membership->get_id() ) . '"><button type="button">' . __( 'Cancel your membership', 'rcp' ) . '</button></a>', $user_ID );
 							}
 
 							/**
@@ -201,7 +201,7 @@ if ( ! empty( $memberships ) ) {
 							}
 							?>
 						</td>
-					</tr> 
+					</tr>
 
 				<?php endforeach; ?>
 
@@ -238,10 +238,10 @@ if ( ! empty( $memberships ) ) {
 						<td data-title="Actions" data-th="<?php esc_attr_e( 'Actions', 'rcp' ); ?>">
 							<?php if ( in_array( $payment->status, array( 'pending', 'abandoned', 'failed' ) ) && empty( $payment->transaction_id ) ) : ?>
 								<a href="<?php echo esc_url( rcp_get_payment_recovery_url( $payment->id ) ); ?>">
-									<button><?php echo 'failed' === $payment->status ? __( 'Retry Payment', 'rcp' ) : __( 'Complete Payment', 'rcp' ); ?></button>
+									<button type="button"><?php echo 'failed' === $payment->status ? esc_html__( 'Retry Payment', 'rcp' ) : esc_html__( 'Complete Payment', 'rcp' ); ?></button>
 								</a> <br/>
 							<?php endif; ?>
-							<a href="<?php echo esc_url( rcp_get_invoice_url( $payment->id ) ); ?>"><button><?php _e( 'View Receipt', 'rcp' ); ?></button></a>
+							<a href="<?php echo esc_url( rcp_get_invoice_url( $payment->id ) ); ?>"><button type="button"><?php _e( 'View Receipt', 'rcp' ); ?></button></a>
 						</td>
 					</tr>
 				<?php endforeach; ?>

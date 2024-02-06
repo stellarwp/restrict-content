@@ -1,3 +1,4 @@
+/* global rcp_processing, rcp_script_options */
 // Get bootstrapped data from the page.
 var rcpStripe = window.rcpStripe || {};
 
@@ -9,6 +10,18 @@ rcpStripe.Elements = rcpStripe.Stripe.elements();
 rcpStripe.elements = {
 	card: rcpStripe.Elements.create( 'card', rcpStripe.elementsConfig ),
 };
+
+/**
+ * Unblock the form, hide loading symbols, and enable registration button.
+ */
+function rcpStripeEnableForm() {
+	jQuery( '#rcp_registration_form #rcp_submit' ).attr( 'disabled', false );
+	jQuery( '#rcp_ajax_loading' ).hide();
+	jQuery( '#rcp_registration_form' ).unblock();
+	jQuery( '#rcp_submit' ).val( rcp_script_options.register );
+
+	rcp_processing = false;
+}
 
 /**
  *
