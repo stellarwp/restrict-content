@@ -12,6 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Customer class.
+ */
+#[\AllowDynamicProperties]
 class RCP_Customer {
 
 	/**

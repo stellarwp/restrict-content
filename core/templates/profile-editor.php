@@ -3,7 +3,8 @@
  * Profile Editor Form
  *
  * This template is used to display the profile editor with [rcp_profile_editor]
- * @link http://docs.restrictcontentpro.com/article/1602-rcpprofileeditor
+ *
+ * @link https://restrictcontentpro.com/knowledgebase/rcp_profile_editor
  *
  * For modifying this template, please see: http://docs.restrictcontentpro.com/article/1738-template-files
  *

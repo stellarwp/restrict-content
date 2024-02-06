@@ -722,8 +722,6 @@ function rc_welcome_page_redesign() {
 						<h2><?php _e( 'Collect Payments with Stripe', 'rcp' ); ?></h2>
 						<p class="restrict-content-how-to-message"><?php _e( "Install the free Restrict Content Stripe add-on to start accepting credit and debit card payments.", 'rcp' ); ?></p>
 						<p class="restrict-content-how-to-message"><?php _e( 'Stripe is an excellent payment gateway with a simple setup process and exceptional reliability.', 'rcp' ); ?></p>
-						<p class="restrict-content-how-to-message"><?php _e( "Placeholder text for Stripe add-on sign-up link.", 'rcp' ); ?></p>
-
 					</div>
 				</div>
 				<div class="restrict-content-welcome-body-container">

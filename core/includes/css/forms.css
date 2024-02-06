@@ -247,7 +247,7 @@ p.rcp_success {
     color: #333;
 }
 @media only screen and (max-width: 480px) {
-    
+
 }
 .StripeElement--focus {
     border-color: #aaa;
@@ -337,4 +337,44 @@ span.rcp-gateway-saved-card-brand {
 }
 #rcp_registration_form .rcp_gateway_braintree_fields .rcp_braintree_billing_info input[type="text"] {
     width: 30%;
+}
+/* group accounts styles */
+.group-members-section {
+	display: flex;
+	flex-direction: column;
+}
+.group-members-section ul {
+	margin: 0;
+	padding: 0;
+}
+.group-members-header {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	margin-block: 10px;
+}
+input#rcpga-members-search-input {
+	width: unset;
+}
+.group-accounts-table {
+	border: 2px solid #edf2f7;
+	text-align: left;
+	border-collapse: collapse;
+}
+.group-accounts-table thead {
+	background: #f7fafc;
+}
+.group-accounts-table th, .group-accounts-table td {
+	padding: 0.8em 1em;
+}
+@media screen and (max-width: 630px) {
+	.group-accounts-table th, .group-accounts-table td {
+		padding: .8em 0 .8em 1em;
+	}
+	.group-members-header {
+		flex-direction: column-reverse;
+		align-items: flex-start;
+		gap: 10px;
+	}
 }

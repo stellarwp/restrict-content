@@ -6,7 +6,7 @@ Tags: restrict pages, restrict posts, restrict access, membership, registration 
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.3
-Stable tag: 3.2.8
+Stable tag: 3.2.9
 
 Restrict Content is a powerful WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.
 
@@ -256,6 +256,19 @@ Go to the demo page to see examples:
 https://restrictcontentpro.com/tour/screenshots/
 
 == Changelog ==
+
+= 3.2.9 =
+* Fix: PHP 8.2+ warnings related to the creation of dynamic properties
+* Fix: PHP 8.2+ errors after deleting a membership level
+* Fix: Added type to button HTML elements
+* Fix: Stripe credit card form on the Account page
+* Fix: Proration Credits not working when changing membership level
+* Improvement: Cancels subscriptions on Stripe after a membership level gets deleted
+* Improvement: New styles for Group Accounts add-on
+* Improvement: Compatibility with Ultimate Members Add-on
+* Security: Improved validation for the default log file
+* Security: Tightened opt-in/opt-out links security
+* Misc: Updated links in the plugin's general settings page
 
 = 3.2.8 =
 * Fix: PayPal renew date

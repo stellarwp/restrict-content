@@ -7,6 +7,7 @@
  * @copyright   Copyright (c) 2017, Restrict Content Pro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
+
 use RCP\StellarWP\Telemetry\Core as Telemetry;
 use RCP\StellarWP\Telemetry\Opt_In\Status;
 /**
@@ -116,7 +117,12 @@ function rcp_settings_page() {
 									<a href="<?php echo esc_url( get_edit_post_link( $rcp_options['registration_page'] ) ); ?>" class="button-secondary"><?php _e( 'Edit Page', 'rcp' ); ?></a>
 									<a href="<?php echo esc_url( get_permalink( $rcp_options['registration_page'] ) ); ?>" class="button-secondary"><?php _e( 'View Page', 'rcp' ); ?></a>
 								<?php endif; ?>
-								<p class="description"><?php printf( __( 'Choose the primary registration page. This must contain the [register_form] short code. Additional registration forms may be added to other pages with [register_form id="x"]. <a href="%s" target="_blank">See documentation</a>.', 'rcp' ), 'http://docs.restrictcontentpro.com/article/1597-registerform' ); ?></p>
+								<p class="description">
+									<?php
+									/* translators: %s is the URL for the knowledge base article on the register_form shortcode. */
+									printf( wp_kses_post( __( 'Choose the primary registration page. This must contain the [register_form] short code. Additional registration forms may be added to other pages with [register_form id="x"]. <a href="%s" target="_blank">See documentation</a>.', 'rcp' ) ), esc_url( 'https://restrictcontentpro.com/knowledgebase/register_form' ) );
+									?>
+								</p>
 							</td>
 						</tr>
 						<tr valign="top">
@@ -171,7 +177,12 @@ function rcp_settings_page() {
 									<a href="<?php echo esc_url( get_edit_post_link( $rcp_options['account_page'] ) ); ?>" class="button-secondary"><?php _e( 'Edit Page', 'rcp' ); ?></a>
 									<a href="<?php echo esc_url( get_permalink( $rcp_options['account_page'] ) ); ?>" class="button-secondary"><?php _e( 'View Page', 'rcp' ); ?></a>
 								<?php endif; ?>
-								<p class="description"><?php printf( __( 'This page displays the account and membership information for members. Contains <a href="%s" target="_blank">[subscription_details] short code</a>.', 'rcp' ), 'http://docs.restrictcontentpro.com/article/1600-subscriptiondetails' ); ?></p>
+								<p class="description">
+									<?php
+									/* translators: %s is the URL for the knowledge base article on the subscription details feature. */
+									printf( wp_kses_post( __( 'This page displays the account and membership information for members. Contains <a href="%s" target="_blank">[subscription_details] short code</a>.', 'rcp' ) ), esc_url( 'https://restrictcontentpro.com/knowledgebase/subscription_details' ) );
+									?>
+								</p>
 							</td>
 						</tr>
 						<tr valign="top">
@@ -199,7 +210,12 @@ function rcp_settings_page() {
 									<a href="<?php echo esc_url( get_edit_post_link( $rcp_options['edit_profile'] ) ); ?>" class="button-secondary"><?php _e( 'Edit Page', 'rcp' ); ?></a>
 									<a href="<?php echo esc_url( get_permalink( $rcp_options['edit_profile'] ) ); ?>" class="button-secondary"><?php _e( 'View Page', 'rcp' ); ?></a>
 								<?php endif; ?>
-								<p class="description"><?php printf( __( 'This page displays a profile edit form for logged-in members. Contains <a href="%s" target="_blank">[rcp_profile_editor] shortcode.', 'rcp' ), 'http://docs.restrictcontentpro.com/article/1602-rcpprofileeditor' ); ?></p>
+								<p class="description">
+									<?php
+									/* translators: %s is the URL for the knowledge base article on the profile editor feature. */
+									printf( wp_kses_post( __( 'This page displays a profile edit form for logged-in members. Contains <a href="%s" target="_blank">[rcp_profile_editor] shortcode.', 'rcp' ) ), esc_url( 'https://restrictcontentpro.com/knowledgebase/rcp_profile_editor' ) );
+									?>
+								</p>
 							</td>
 						</tr>
 						<tr valign="top">
@@ -227,7 +243,12 @@ function rcp_settings_page() {
 									<a href="<?php echo esc_url( get_edit_post_link( $rcp_options['update_card'] ) ); ?>" class="button-secondary"><?php _e( 'Edit Page', 'rcp' ); ?></a>
 									<a href="<?php echo esc_url( get_permalink( $rcp_options['update_card'] ) ); ?>" class="button-secondary"><?php _e( 'View Page', 'rcp' ); ?></a>
 								<?php endif; ?>
-								<p class="description"><?php printf( __( 'This page displays an update billing card form for logged-in members with recurring subscriptions. Contains <a href="%s" target="_blank">[rcp_update_card] short code</a>.', 'rcp' ), 'http://docs.restrictcontentpro.com/article/1608-rcpupdatecard' ); ?></p>
+								<p class="description">
+									<?php
+									/* translators: %s is the URL for the knowledge base article on the update billing card feature. */
+									printf( wp_kses_post( __( 'This page displays an update billing card form for logged-in members with recurring subscriptions. Contains <a href="%s" target="_blank">[rcp_update_card] short code</a>.', 'rcp' ) ), esc_url( 'https://restrictcontentpro.com/knowledgebase/rcp_update_card' ) );
+									?>
+								</p>
 							</td>
 						</tr>
 						<tr valign="top">

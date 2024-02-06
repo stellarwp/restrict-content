@@ -1,18 +1,6 @@
 /* global rcpStripe, rcp_processing, rcp_script_options */
 
 /**
- * Unblock the form, hide loading symbols, and enable registration button.
- */
-function rcpStripeEnableForm() {
-	jQuery( '#rcp_registration_form #rcp_submit' ).attr( 'disabled', false );
-	jQuery( '#rcp_ajax_loading' ).hide();
-	jQuery( '#rcp_registration_form' ).unblock();
-	jQuery( '#rcp_submit' ).val( rcp_script_options.register );
-
-	rcp_processing = false;
-}
-
-/**
  * Handle a failed Stripe payment
  *
  * This does an ajax request to trigger `rcp_registration_failed`, which changes the payment

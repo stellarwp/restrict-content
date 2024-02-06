@@ -14,6 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Membership class.
+ */
+#[\AllowDynamicProperties]
 class RCP_Membership {
 
 	/**
@@ -620,6 +624,7 @@ class RCP_Membership {
 	 * @return string
 	 */
 	public function get_formatted_billing_cycle() {
+		$billing_cycle_string = '';
 
 		$membership_level = rcp_get_membership_level( $this->get_object_id() );
 
@@ -1057,7 +1062,12 @@ class RCP_Membership {
 		global $rcp_options;
 		$membership_level_id = $this->get_object_id();
 		$membership_level    = rcp_get_membership_level( $membership_level_id );
-		$trial_duration = $membership_level->get_trial_duration();
+		$trial_duration      = 0;
+
+		if ( $membership_level instanceof Membership_Level ) {
+			$trial_duration = $membership_level->get_trial_duration();
+		}
+
 		$free_subs_swap = isset($rcp_options['disable_trial_free_subs']) && (bool)$rcp_options['disable_trial_free_subs'];
 
 		// Using the $free_subs_swap option will prevent a trailed user to show/hide membership.

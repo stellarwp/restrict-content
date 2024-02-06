@@ -15,6 +15,7 @@ namespace RCP;
  *
  * @package RCP
  */
+#[\AllowDynamicProperties]
 class Component extends Base_Object {
 
 	/**
