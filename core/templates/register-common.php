@@ -8,7 +8,7 @@
  *
  * @link https://restrictcontentpro.com/knowledgebase/register_form
  *
- * For modifying this template, please see: http://docs.restrictcontentpro.com/article/1738-template-files
+ * For modifying this template, please see: https://restrictcontentpro.com/knowledgebase/editing-template-files/
  *
  * @package     Restrict Content Pro
  * @subpackage  Templates/Register/Single

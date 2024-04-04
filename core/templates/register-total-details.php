@@ -7,7 +7,7 @@
  *
  * @link https://restrictcontentpro.com/knowledgebase/register_form
  *
- * For modifying this template, please see: http://docs.restrictcontentpro.com/article/1738-template-files
+ * For modifying this template, please see: https://restrictcontentpro.com/knowledgebase/editing-template-files/
  *
  * @since 3.4 Show discount information below fees if "Discount Signup Fees" is enabled.
  *

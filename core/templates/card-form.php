@@ -5,7 +5,7 @@
  * This template is for displaying credit card form details. It's shown on the registration
  * form when selecting a gateway that supports taking credit/debit card details directly.
  *
- * For modifying this template, please see: http://docs.restrictcontentpro.com/article/1738-template-files
+ * For modifying this template, please see: https://restrictcontentpro.com/knowledgebase/editing-template-files/
  *
  * @package     Restrict Content Pro
  * @subpackage  Templates/Card Form

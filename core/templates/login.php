@@ -5,7 +5,7 @@
  * Template for displaying the login form. This is used in the [login_form] shortcode.
  * @link http://docs.restrictcontentpro.com/article/1598-loginform
  *
- * For modifying this template, please see: http://docs.restrictcontentpro.com/article/1738-template-files
+ * For modifying this template, please see: https://restrictcontentpro.com/knowledgebase/editing-template-files/
  *
  * @package     Restrict Content Pro
  * @subpackage  Templates/Login

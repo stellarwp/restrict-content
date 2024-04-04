@@ -486,7 +486,7 @@ function rcp_settings_page() {
 									<th class="rcp_stripe_help_box" colspan=2>
 										<div class="rcp_stripe_help_box_inner_container">
 											<div class="rcp_stripe_help_box_content">
-												<p><?php printf( __( 'Have questions about connecting with Stripe? <a href="%s" target="_blank" rel="noopener noreferrer">See the documentation</a>.', 'rcp' ), 'https://docs.restrictcontentpro.com/article/2033-how-does-stripe-connect-affect-me' ); ?></p>
+												<p><?php printf( __( 'Have questions about connecting with Stripe? <a href="%s" target="_blank" rel="noopener noreferrer">See the documentation</a>.', 'rcp' ), 'https://restrictcontentpro.com/knowledgebase/stripe/' ); ?></p>
 												<p><strong><?php _e('Note', 'rcp'); ?></strong>: <?php _e('in order for membership payments made through Stripe to be tracked, you must enter the following URL to your <a href="https://dashboard.stripe.com/account/webhooks" target="_blank">Stripe Webhooks</a> under Account Settings:', 'rcp'); ?></p>
 												<p style="text-decoration: underline; color: #646FDE;"><?php echo esc_url( add_query_arg( 'listener', 'stripe', home_url() . '/' ) ); ?></p>
 
