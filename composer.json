@@ -38,7 +38,7 @@
 		"stellarwp/container-contract": "^1.0",
 		"stellarwp/telemetry": "^1.0.5"
 	},
-        "autoload": {
+		"autoload": {
 		"psr-4": {
 			"RCP\\": "core/includes/"
 		}
@@ -61,13 +61,15 @@
 			"target_directory": "vendor/strauss",
 			"classmap_prefix": "RCP",
 			"constant_prefix": "RCP",
+			"namespace_prefix": "RCP",
 			"delete_vendor_files": true,
 			"include_modified_date": false,
 			"include_author": false,
 			"packages": [
+				"lucatume/di52",
+				"psr/container",
 				"stellarwp/container-contract",
-				"stellarwp/telemetry",
-				"lucatume/di52"
+				"stellarwp/telemetry"
 			]
 		}
 	}
