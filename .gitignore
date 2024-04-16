@@ -6,7 +6,6 @@ composer.lock
 # Vendor Dev dependencies.
 vendor/bin/
 vendor/composer/autoload_files.php
-vendor/composer/platform_check.php
 vendor/dealerdirect/
 vendor/doctrine/
 vendor/myclabs/
