@@ -30,7 +30,8 @@ function rcp_get_csv_importers() {
 			// Unique identifier. Same as the array key above.
 			'key'           => 'memberships',
 			// Description printed on the import page.
-			'description'   => sprintf( __( 'Use this tool to import user memberships into Restrict Content Pro. See <a href="%s">this article</a> for further instructions and a sample CSV file.', 'rcp' ), 'https://docs.restrictcontentpro.com/article/1579-import-members-from-a-csv-file' ),
+			// translators: %s: URL to the documentation.
+			'description'   => sprintf( __( 'Use this tool to import user memberships into Restrict Content Pro. See <a href="%s">this article</a> for further instructions and a sample CSV file.', 'rcp' ), 'https://restrictcontentpro.com/knowledgebase/can-i-import-members-from-a-csv-file/' ),
 			// Batch processor callback class name.
 			'callback'      => 'RCP_Batch_Callback_Import_Memberships',
 			// Path to the above class file.
@@ -64,7 +65,8 @@ function rcp_get_csv_importers() {
 		'payments'    => array(
 			'name'          => __( 'Payments', 'rcp' ),
 			'key'           => 'payments',
-			'description'   => sprintf( __( 'Use this tool to import user payments into Restrict Content Pro. See <a href="%s">this article</a> for further instructions and a sample CSV file.', 'rcp' ), 'https://docs.restrictcontentpro.com/article/2265-importing-payments' ),
+			// translators: %s: URL to the documentation.
+			'description'   => sprintf( __( 'Use this tool to import user payments into Restrict Content Pro. See <a href="%s">this article</a> for further instructions and a sample CSV file.', 'rcp' ), 'https://restrictcontentpro.com/knowledgebase/exporting-payments/' ),
 			'callback'      => 'RCP_Batch_Callback_Import_Payments',
 			'callback_file' => RCP_PLUGIN_DIR . 'core/includes/batch/csv-imports/class-import-payments.php',
 			'columns'       => array(

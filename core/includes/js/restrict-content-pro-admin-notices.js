@@ -36,7 +36,7 @@ jQuery(document).ready(function($) {
 			}
 		});
 	});
-	
+
 	$( document ).on( 'click', '.restrict-content-bfcm-notice .notice-dismiss', function() {
 		$.ajax({
 			url: ajaxurl,
@@ -51,6 +51,18 @@ jQuery(document).ready(function($) {
 			},
 			error: function ( error ) {
 				console.log( error );
+			}
+		});
+	});
+
+	$( document ).on( 'click', '.restrict-content-stellar-sale-notice .notice-dismiss', function() {
+		$.ajax({
+			url: ajaxurl,
+			method: 'POST',
+			data: {
+				action: 'rcp_ajax_dismissed_notice_handler',
+				name: 'restrict-content-stellar-sale-notice',
+				rcp_nonce: rcp_admin_notices_vars.rcp_dismissed_nonce
 			}
 		});
 	});

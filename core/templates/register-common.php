@@ -8,7 +8,7 @@
  *
  * @link https://restrictcontentpro.com/knowledgebase/register_form
  *
- * For modifying this template, please see: http://docs.restrictcontentpro.com/article/1738-template-files
+ * For modifying this template, please see: https://restrictcontentpro.com/knowledgebase/editing-template-files/
  *
  * @package     Restrict Content Pro
  * @subpackage  Templates/Register/Single
@@ -157,7 +157,7 @@ rcp_show_error_messages( 'register' ); ?>
 	// checking if $levels is a thing, so it can be passed along to add_actions
 	$do_we_have_levels = isset( $levels );
 
-	if ( $do_we_have_levels ) { 
+	if ( $do_we_have_levels ) {
 		do_action( 'rcp_after_register_form_fields', $levels );
 	} else {
 		do_action( 'rcp_after_register_form_fields' );
@@ -272,7 +272,7 @@ rcp_show_error_messages( 'register' ); ?>
 	<?php endif; ?>
 
 	<?php
-	if ( $do_we_have_levels ) { 
+	if ( $do_we_have_levels ) {
 		do_action( 'rcp_before_registration_submit_field', $levels );
 	} else {
 		do_action( 'rcp_before_registration_submit_field' );

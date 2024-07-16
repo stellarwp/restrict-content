@@ -5,7 +5,7 @@
  * This template is loaded while processing a PayPal Express payment. The customer is
  * asked to confirm the subscription details.
  *
- * For modifying this template, please see: http://docs.restrictcontentpro.com/article/1738-template-files
+ * For modifying this template, please see: https://restrictcontentpro.com/knowledgebase/editing-template-files/
  *
  * @package     Restrict Content Pro
  * @subpackage  Templates/PayPal Express Confirmation
