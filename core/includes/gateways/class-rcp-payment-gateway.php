@@ -3,7 +3,8 @@
  * Payment Gateway Base Class
  *
  * You can extend this class to add support for a custom gateway.
- * @link http://docs.restrictcontentpro.com/article/1695-payment-gateway-api
+ *
+ * @link https://restrictcontentpro.com/knowledgebase/payment-gateway-api/
  *
  * @package     Restrict Content Pro
  * @subpackage  Classes/Gateway
@@ -12,6 +13,11 @@
  * @since       2.1
 */
 
+/**
+ * Payment Gateway Base Class.
+ *
+ * @since 2.1
+ */
 class RCP_Payment_Gateway {
 
 	/**

@@ -6,7 +6,7 @@
  * By loading a blank template, we ensure that unauthorized users are not able
  * to read comments on restricted posts.
  *
- * For modifying this template, please see: http://docs.restrictcontentpro.com/article/1738-template-files
+ * For modifying this template, please see: https://restrictcontentpro.com/knowledgebase/editing-template-files/
  *
  * @package     Restrict Content Pro
  * @subpackage  Templates/Comments No Access

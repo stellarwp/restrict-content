@@ -144,7 +144,7 @@ if ( ! $level instanceof Membership_Level ) {
 						printf(
 							__('Inactive membership levels do not appear on the %s shortcode page. Learn more about membership level statuses in <a href="%s" target="_blank">our documentation article</a>.', 'rcp'),
 							'[register_form]',
-							esc_url( 'https://docs.restrictcontentpro.com/article/2257-active-vs-inactive-membership-levels' )
+							esc_url( 'https://restrictcontentpro.com/knowledgebase/active-vs-inactive-membership-levels/' )
 						);
 						?>
 					</p>

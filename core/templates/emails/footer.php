@@ -2,7 +2,7 @@
 /**
  * Email Footer for the Default Template
  *
- * For modifying this template, please see: http://docs.restrictcontentpro.com/article/1738-template-files
+ * For modifying this template, please see: https://restrictcontentpro.com/knowledgebase/editing-template-files/
  *
  * @package     Restrict Content Pro
  * @subpackage  Templates/Emails/Footer
@@ -11,10 +11,8 @@
  * @since       2.7
  */
 
-
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
-
 
 // For gmail compatibility, including CSS styles in head/body are stripped out therefore styles need to be inline. These variables contain rules which are added to the template inline.
 $template_footer = "
