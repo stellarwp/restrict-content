@@ -80,17 +80,38 @@ function rcp_admin_notices() {
 		// Show notice about installing new Authorize.net add-on.
 		if ( rcp_is_gateway_enabled( 'authorizenet' ) && ! defined( 'RCP_ANET_VERSION' ) ) {
 			echo '<div class="error">';
-			echo '<p><strong>' . __( 'ACTION REQUIRED: You need to update your Authorize.net payment gateway for Restrict Content Pro' ) . '</strong></p>';
-			echo '<p>' . sprintf( __( 'The Authorize.net payment gateway has been removed from the main Restrict Content Pro plugin. To continue processing payments with this gateway you need to install the new Authorize.net add-on. Once installed, please follow the instructions to <a href="%s" target="_blank">enter your signature key</a> and <a href="%s" target="_blank">set up a webhook</a>.' ), 'https://docs.restrictcontentpro.com/article/1765-authorize-net#api-credentials', 'https://docs.restrictcontentpro.com/article/1765-authorize-net#webhook' ) . '</p>';
-			echo '<p><a href="' . esc_url( wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=rcp-authorize-net' ), 'install-plugin_rcp-authorize-net' ) ) . '" class="button button-primary">' . __( 'Install', 'rcp' ) . '</a></p>';
+			echo '<p><strong>' . esc_html__( 'ACTION REQUIRED: You need to update your Authorize.net payment gateway for Restrict Content Pro', 'rcp' ) . '</strong></p>';
+			echo '<p>' . wp_kses(
+				// translators: 1: URL to the Authorize.net documentation.
+				sprintf( __( 'The Authorize.net payment gateway has been removed from the main Restrict Content Pro plugin. To continue processing payments with this gateway you need to install the new Authorize.net add-on. Once installed, please follow the instructions to <a href="%1$s" target="_blank">enter your signature key</a> and <a href="%1$s" target="_blank">set up a webhook</a>.', 'rcp' ), 'https://restrictcontentpro.com/knowledgebase/authorize-net/#webhook' ),
+				[
+					'a' => [
+						'href'   => [],
+						'target' => [],
+					],
+				]
+			) . '</p>';
+			echo '<p><a href="' . esc_url( wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=rcp-authorize-net' ), 'install-plugin_rcp-authorize-net' ) ) . '" class="button button-primary">' . esc_html__( 'Install', 'rcp' ) . '</a></p>';
 			echo '</div>';
 		}
 
 		// Show notice about ending support for Stripe Checkout.
 		if ( rcp_is_gateway_enabled( 'stripe_checkout' ) ) {
 			echo '<div class="error">';
-			echo '<p><strong>' . __( 'Restrict Content Pro: Support for Stripe Checkout is ending in version 3.2' ) . '</strong></p>';
-			echo '<p>' . sprintf( __( 'Stripe will not be updating the Stripe Checkout modal to comply with Strong Customer Authentication (SCA) and as a result, the Stripe Checkout gateway will be removed from Restrict Content Pro in version 3.2. You will automatically be switched over to our Stripe Elements gateway instead. This will affect the appearance of your registration form, but will not impact payment processing or renewals. <a href="%s" target="_blank">Click here to learn more.</a>' ), 'https://docs.restrictcontentpro.com/article/1552-stripe-checkout' ) . '</p>';
+			echo '<p><strong>' . esc_html__( 'Restrict Content Pro: Support for Stripe Checkout is ending in version 3.2', 'rcp' ) . '</strong></p>';
+			echo '<p>' . wp_kses(
+				sprintf(
+					// translators: %s URL to the Stripe documentation.
+					__( 'Stripe will not be updating the Stripe Checkout modal to comply with Strong Customer Authentication (SCA) and as a result, the Stripe Checkout gateway will be removed from Restrict Content Pro in version 3.2. You will automatically be switched over to our Stripe Elements gateway instead. This will affect the appearance of your registration form, but will not impact payment processing or renewals. <a href="%s" target="_blank">Click here to learn more.</a>', 'rcp' ),
+					'https://restrictcontentpro.com/knowledgebase/stripe/'
+				),
+				[
+					'a' => [
+						'href'   => [],
+						'target' => [],
+					],
+				]
+			) . '</p>';
 			echo '</div>';
 		}
 	}
@@ -295,7 +316,8 @@ function rcp_admin_notices() {
 
 			case 'invalid_level_trial' :
 
-				$text = sprintf( __( 'Invalid trial: a membership level with a trial must have a price and duration greater than zero. Please see <a href="%s">the documentation article on creating trials</a> for further instructions.', 'rcp' ), 'http://docs.restrictcontentpro.com/article/1764-creating-free-trials' );
+				// translators: %s Link to the documentation.
+				$text = sprintf( __( 'Invalid trial: a membership level with a trial must have a price and duration greater than zero. Please see <a href="%s">the documentation article on creating trials</a> for further instructions.', 'rcp' ), 'https://restrictcontentpro.com/knowledgebase/creating-memberships-with-a-free-trial/' );
 				$class = 'error';
 				break;
 

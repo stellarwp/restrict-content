@@ -126,7 +126,7 @@ if ( empty( $sub_levels ) && empty( $set_level ) ) {
 		<p>
 			<?php printf(
 				__( 'Optionally use [restrict paid="true"] ... [/restrict] shortcode to restrict partial content. %sView documentation for additional options%s.', 'rcp' ),
-				'<a href="' . esc_url( 'http://docs.restrictcontentpro.com/article/1593-restricting-post-and-page-content' ) . '" target="_blank">',
+				'<a href="' . esc_url( 'https://restrictcontentpro.com/knowledgebase/restricting-post-and-page-content/' ) . '" target="_blank">',
 				'</a>'
 			); ?>
 		</p>

@@ -112,41 +112,31 @@ function rcp_admin_scripts( $hook ) {
 	}
 
 	// RCP Admin Notices Script Inclusion and Localization - Notice Dismissal
-	if ( ! get_option( 'dismissed-rcp-plugin-migration-notice', false ) ) {
-		wp_enqueue_script( 'restrict-content-pro-admin-notices', RCP_PLUGIN_URL . 'core/includes/js/restrict-content-pro-admin-notices' . $suffix . '.js', array( 'jquery' ), RCP_PLUGIN_VERSION );
-		wp_localize_script(
-			'restrict-content-pro-admin-notices',
-			'rcp_admin_notices_vars',
-			array(
-				'rcp_dismissed_nonce' => wp_create_nonce( 'rcp_dismissed_nonce' ),
-			)
-		);
+	if (
+		get_option( 'dismissed-rcp-plugin-migration-notice', false )
+		&& get_option( 'dismissed-restrict-content-upgrade-notice', false )
+		&& get_option( 'dismissed-restrict-content-bfcm-notice', false )
+		&& get_option( 'dismissed-restrict-content-stellar-sale-notice', false )
+	) {
+		return;
 	}
 
-	// RCP Admin Notices Script Inclusion and Localization - Notice Dismissal
-	if ( ! get_option( 'dismissed-restrict-content-upgrade-notice', false ) ) {
-		wp_enqueue_script( 'restrict-content-pro-admin-notices', RCP_PLUGIN_URL . 'core/includes/js/restrict-content-pro-admin-notices.js', array( 'jquery' ), RCP_PLUGIN_VERSION );
-		wp_localize_script(
-			'restrict-content-pro-admin-notices',
-			'rcp_admin_notices_vars',
-			array(
-				'rcp_dismissed_nonce' => wp_create_nonce( 'rcp_dismissed_nonce' ),
-			)
-		);
-	}
+	wp_enqueue_script(
+		'restrict-content-pro-admin-notices',
+		RCP_PLUGIN_URL . 'core/includes/js/restrict-content-pro-admin-notices' . $suffix . '.js',
+		[
+			'jquery',
+		],
+		RCP_PLUGIN_VERSION
+	);
 
-	// RCP Black Friday Notice Script Inclusion and Localization - Notice Dismissal
-	if ( ! get_option( 'dismissed-restrict-content-bfcm-notice', false ) ) {
-		wp_enqueue_script( 'restrict-content-pro-admin-notices', RCP_PLUGIN_URL . 'core/includes/js/restrict-content-pro-admin-notices.js', array( 'jquery' ), RCP_PLUGIN_VERSION );
-		wp_localize_script(
-			'restrict-content-pro-admin-notices',
-			'rcp_admin_notices_vars',
-			array(
-				'rcp_dismissed_nonce' => wp_create_nonce( 'rcp_dismissed_nonce' ),
-			)
-		);
-	}
-
+	wp_localize_script(
+		'restrict-content-pro-admin-notices',
+		'rcp_admin_notices_vars',
+		[
+			'rcp_dismissed_nonce' => wp_create_nonce( 'rcp_dismissed_nonce' ),
+		]
+	);
 }
 add_action( 'admin_enqueue_scripts', 'rcp_admin_scripts' );
 
@@ -182,6 +172,8 @@ function rcp_admin_styles( $hook ) {
 		wp_enqueue_style( 'datepicker', RCP_PLUGIN_URL . 'core/includes/libraries/css/datepicker' . $suffix . '.css', array(), '1.4.2' );
 		wp_enqueue_style( 'rcp-admin', RCP_PLUGIN_URL . 'core/includes/css/admin-styles' . $suffix . '.css', array(), RCP_PLUGIN_VERSION );
 	}
+
+	wp_enqueue_style( 'rcp-global-admin', RCP_PLUGIN_URL . 'core/includes/css/rcp-global-admin' . $suffix . '.css', [], RCP_PLUGIN_VERSION );
 }
 add_action( 'admin_enqueue_scripts', 'rcp_admin_styles' );
 
@@ -344,13 +336,20 @@ function rcp_ajax_dismissed_notice_handler() {
 
 	$name = sanitize_text_field( $_POST['name'] );
 
-	if ( $name === 'rcp-plugin-migration-notice' ) {
-		update_option( 'dismissed-' . $name, true );
-	} elseif ( $name === 'restrict-content-upgrade-notice' ) {
-		update_option( 'dismissed-' . $name, true );
-	} elseif ( $name === 'restrict-content-bfcm-notice' ) {
-		update_option( 'dismissed-' . $name, true );
+	// Only dismiss certain notices.
+	$notices = [
+		'rcp-plugin-migration-notice',
+		'restrict-content-upgrade-notice',
+		'restrict-content-bfcm-notice',
+		'restrict-content-stellar-sale-notice',
+	];
+
+	if ( ! in_array( $name, $notices, true ) ) {
+		return;
 	}
+
+	// Dismiss the notice.
+	update_option( 'dismissed-' . $name, true );
 }
 
 add_action( 'wp_ajax_rcp_ajax_dismissed_notice_handler', 'rcp_ajax_dismissed_notice_handler' );

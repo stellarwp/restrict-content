@@ -6,13 +6,14 @@
  * form when selecting a gateway that supports taking credit/debit card details directly and
  * requires a full billing address.
  *
- * For modifying this template, please see: http://docs.restrictcontentpro.com/article/1738-template-files
+ * For modifying this template, please see: https://restrictcontentpro.com/knowledgebase/editing-template-files/
  *
  * @package     Restrict Content Pro
  * @subpackage  Templates/Card Form Full
  * @copyright   Copyright (c) 2017, Restrict Content Pro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
+
 ?>
 
 <fieldset class="rcp_card_fieldset">

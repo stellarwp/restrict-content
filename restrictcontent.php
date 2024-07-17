@@ -3,7 +3,7 @@
  * Plugin Name: Restrict Content
  * Plugin URI: https://restrictcontentpro.com
  * Description: Set up a complete membership system for your WordPress site and deliver premium content to your members. Unlimited membership packages, membership management, discount codes, registration / login forms, and more.
- * Version: 3.2.10
+ * Version: 3.2.11
  * Author: StellarWP
  * Author URI: https://stellarwp.com/
  * Requires at least: 6.0
@@ -18,7 +18,7 @@ defined('ABSPATH') || exit;
 define('RCP_PLUGIN_FILE', __FILE__);
 define('RCP_ROOT', plugin_dir_path(__FILE__));
 define('RCP_WEB_ROOT', plugin_dir_url(__FILE__));
-define('RCF_VERSION', '3.2.10');
+define('RCF_VERSION', '3.2.11');
 
 // Load Strauss autoload.
 require_once plugin_dir_path( __FILE__ ) . 'vendor/strauss/autoload.php';
@@ -992,3 +992,71 @@ function restrict_content_bfcm_notice()
 add_action('admin_notices', 'restrict_content_3_update_notification');
 add_action('admin_notices', 'restrict_content_bfcm_notice');
 
+// Stellar Sale Banner.
+add_action(
+	'admin_notices',
+	function () {
+		// Stop if isn't a RCP page.
+		if ( ! rcp_is_rcp_admin_page() ) {
+			return;
+		}
+
+		// Bail if dismissed.
+		if ( get_option( 'dismissed-restrict-content-stellar-sale-notice', false ) ) {
+			return;
+		}
+
+		$date  = gmdate( 'Ymd' );
+		$start = 20240723;
+		$end   = 20240730;
+
+		if (
+			$date < $start
+			|| $date > $end
+		) {
+			return;
+		}
+
+		?>
+		<div class="notice is-dismissible restrict-content-stellar-sale-notice">
+			<div class="rcp-notice-header">
+				<h3>
+					<strong>
+						<?php esc_html_e( 'Make it yours.', 'rcp' ); ?>
+					</strong>
+					<span>
+						<?php esc_html_e( 'Save 40% on Restrict Content Pro.', 'rcp' ); ?>
+					</span>
+				</h3>
+			</div>
+			<div class="rcp-notice-button">
+				<a href="https://go.learndash.com/rcpstellarsale" target="_blank" rel="noopener noreferrer">
+					<?php esc_html_e( 'Shop Now', 'rcp' ); ?>
+				</a>
+			</div>
+
+			<div class="rcp-notice-content">
+				<p>
+					<?php
+					echo wp_kses(
+						sprintf(
+							// translators: %s: Discount percentage.
+							__( 'Take %s off all StellarWP brands during the annual Stellar Sale. <br />Now through July 30.', 'rcp' ),
+							'<strong>40%</strong>'
+						),
+						[
+							'strong' => [],
+							'br'     => [],
+						]
+					);
+					?>
+				</p>
+
+				<a href="https://go.learndash.com/rcpstellarsale" target="_blank" rel="noopener noreferrer">
+					<?php esc_html_e( 'View all StellarWP Deals', 'rcp' ); ?>
+				</a>
+			</div>
+		</div>
+		<?php
+	}
+);

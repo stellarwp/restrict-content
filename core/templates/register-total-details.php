@@ -7,7 +7,7 @@
  *
  * @link https://restrictcontentpro.com/knowledgebase/register_form
  *
- * For modifying this template, please see: http://docs.restrictcontentpro.com/article/1738-template-files
+ * For modifying this template, please see: https://restrictcontentpro.com/knowledgebase/editing-template-files/
  *
  * @since 3.4 Show discount information below fees if "Discount Signup Fees" is enabled.
  *
@@ -38,16 +38,16 @@ global $rcp_options;
 		<tr>
 			<th>Membership Details</th>
 		</tr>
-		
+
 		</thead>
 
 	<tbody style="vertical-align: top;">
 		<tr>
 			<td><?php _e( 'Membership', 'rcp' ); ?></td>
 			<td data-title="Membership" data-th="<?php esc_attr_e( 'Membership', 'rcp' ); ?>"><?php echo esc_html( $membership_level->get_name() ); ?></td>
-			
+
 		</tr>
-		
+
 		<tr class="membership-level-price">
 			<td><?php _e( 'Amount', 'rcp' ); ?></td>
 			<td data-th="<?php esc_attr_e( 'Amount', 'rcp' ); ?>"><?php echo ! $membership_level->is_free() ? rcp_currency_filter( $membership_level->get_price() ) : __( 'free', 'rcp' ); ?></td>

@@ -19,3 +19,165 @@ margin-right: 10px;
 .notice.restrict-content-bfcm-notice a {
     color: #F9E26E;
 }
+
+/* Stellar Sale Banner
+---------------------------------------------------------------*/
+@font-face {
+	font-family: 'Neurial Grotesk';
+	font-weight: 400;
+	src: url(../fonts/neurial-grotesk-regular.otf) format('opentype');
+}
+
+@font-face {
+	font-family: 'Neurial Grotesk';
+	font-weight: 700;
+	src: url(../fonts/neurial-grotesk-bold.otf) format('opentype');
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap');
+
+.notice.restrict-content-stellar-sale-notice {
+	background: #1D202F url(../images/stellar-sale23-in-app-graphic.png) no-repeat right bottom;
+	border: none;
+	color: #F9FAF9;
+	display: grid;
+	font-family: 'Neurial Grotesk', sans-serif;
+	grid-template-areas:
+		'header content content'
+		'button content content';
+	min-height: 180px;
+}
+
+.notice.restrict-content-stellar-sale-notice .rcp-notice-header {
+	grid-area: header;
+	padding: 20px 0 0 40px;
+}
+
+.notice.restrict-content-stellar-sale-notice .rcp-notice-header h3 {
+	color: #F9FAF9;
+	line-height: 23px;
+}
+.notice.restrict-content-stellar-sale-notice .rcp-notice-header strong {
+	display: block;
+	font-size: 24px;
+	font-weight: 700;
+	margin-bottom: 13px;
+}
+.notice.restrict-content-stellar-sale-notice .rcp-notice-header span {
+	font-size: 22px;
+	font-weight: 400;
+}
+
+.notice.restrict-content-stellar-sale-notice .rcp-notice-button {
+	grid-area: button;
+	margin-top: -25px;
+	padding: 0 0 0 40px;
+}
+
+.notice.restrict-content-stellar-sale-notice .rcp-notice-button a {
+	background: #640AF8;
+	border-radius: 125px;
+	border: none;
+	color: #F9FAF9;
+	display: inline-block;
+	font-family: Inconsolata, monospace;
+	font-size: 13px;
+	letter-spacing: 1.337px;
+	margin-top: 2px;
+	padding: 12px 26px;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+.notice.restrict-content-stellar-sale-notice .rcp-notice-content {
+	padding: 37px 0 0 40px;
+	grid-area: content;
+}
+
+.notice.restrict-content-stellar-sale-notice .rcp-notice-content p {
+	font-size: 14px;
+	line-height: 22px;
+	margin-bottom: 15px;
+}
+
+.notice.restrict-content-stellar-sale-notice .rcp-notice-content a {
+	color: #F9FAF9;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 22px;
+	text-decoration: underline;
+}
+
+.notice.restrict-content-stellar-sale-notice .rcp-notice-content a:hover {
+	text-decoration: none;
+}
+
+.notice.restrict-content-stellar-sale-notice .notice-dismiss::before {
+	background: url(../images/close.svg) no-repeat;
+	content: "";
+	height: 20px;
+	margin: 10px 10px 0 0;
+	width: 20px;
+}
+
+@media (max-width: 1430px) {
+	.notice.restrict-content-stellar-sale-notice {
+		background-position: right 0 bottom -45px;
+	}
+}
+
+@media (max-width: 1100px) {
+	.notice.restrict-content-stellar-sale-notice {
+		background-position: right -20px bottom -45px;
+	}
+
+	.notice.restrict-content-stellar-sale-notice .rcp-notice-button {
+		margin-top: 0;
+		padding-bottom: 25px;
+	}
+}
+
+@media (max-width: 782px) {
+	.notice.restrict-content-stellar-sale-notice {
+		background-position: right -160px bottom 0;
+		grid-template-areas:
+			'header header header header'
+			'button content content content';
+	}
+
+	.notice.restrict-content-stellar-sale-notice .rcp-notice-button {
+		max-width: 150px;
+	}
+
+	.notice.restrict-content-stellar-sale-notice .rcp-notice-content {
+		padding: 0;
+		margin: 10px 0 0;
+	}
+
+	.notice.restrict-content-stellar-sale-notice .rcp-notice-content p {
+		display: none;
+	}
+}
+
+@media (max-width: 530px) {
+	.notice.restrict-content-stellar-sale-notice {
+		background-position: right -190px bottom 0;
+	}
+}
+
+@media (max-width: 460px) {
+	.notice.restrict-content-stellar-sale-notice {
+		background-position: right -210px bottom -70px;
+		grid-template-areas:
+			'header'
+			'button';
+	}
+
+	.notice.restrict-content-stellar-sale-notice .rcp-notice-content {
+		display: none;
+	}
+
+	.notice.restrict-content-stellar-sale-notice .rcp-notice-button {
+		max-width: 100%;
+	}
+}
