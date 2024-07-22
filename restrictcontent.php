@@ -996,6 +996,10 @@ add_action('admin_notices', 'restrict_content_bfcm_notice');
 add_action(
 	'admin_notices',
 	function () {
+		if ( ! function_exists( 'rcp_is_rcp_admin_page' ) ) {
+			require_once plugin_dir_path( __FILE__ ) . 'core/includes/misc-functions.php';
+		}
+
 		// Stop if isn't a RCP page.
 		if ( ! rcp_is_rcp_admin_page() ) {
 			return;
