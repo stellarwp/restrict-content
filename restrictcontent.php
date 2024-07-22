@@ -996,6 +996,11 @@ add_action('admin_notices', 'restrict_content_bfcm_notice');
 add_action(
 	'admin_notices',
 	function () {
+		// Stop if restrict_content_chosen_version is legacy.
+		if ( ! function_exists( 'rcp_is_rcp_admin_page' ) ) {
+			return;
+		}
+
 		// Stop if isn't a RCP page.
 		if ( ! rcp_is_rcp_admin_page() ) {
 			return;
