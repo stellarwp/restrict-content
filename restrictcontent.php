@@ -3,7 +3,7 @@
  * Plugin Name: Restrict Content
  * Plugin URI: https://restrictcontentpro.com
  * Description: Set up a complete membership system for your WordPress site and deliver premium content to your members. Unlimited membership packages, membership management, discount codes, registration / login forms, and more.
- * Version: 3.2.11
+ * Version: 3.2.12
  * Author: StellarWP
  * Author URI: https://stellarwp.com/
  * Requires at least: 6.0
@@ -18,7 +18,7 @@ defined('ABSPATH') || exit;
 define('RCP_PLUGIN_FILE', __FILE__);
 define('RCP_ROOT', plugin_dir_path(__FILE__));
 define('RCP_WEB_ROOT', plugin_dir_url(__FILE__));
-define('RCF_VERSION', '3.2.11');
+define('RCF_VERSION', '3.2.12');
 
 // Load Strauss autoload.
 require_once plugin_dir_path( __FILE__ ) . 'vendor/strauss/autoload.php';
@@ -996,6 +996,11 @@ add_action('admin_notices', 'restrict_content_bfcm_notice');
 add_action(
 	'admin_notices',
 	function () {
+		// Stop if restrict_content_chosen_version is legacy.
+		if ( ! function_exists( 'rcp_is_rcp_admin_page' ) ) {
+			return;
+		}
+
 		// Stop if isn't a RCP page.
 		if ( ! rcp_is_rcp_admin_page() ) {
 			return;
