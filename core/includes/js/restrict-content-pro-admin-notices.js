@@ -55,15 +55,17 @@ jQuery(document).ready(function($) {
 		});
 	});
 
-	$( document ).on( 'click', '.restrict-content-stellar-sale-notice .notice-dismiss', function() {
+	$( document ).on( 'click', '.restrict-content-bf-2024-banner .notice-dismiss', function() {
 		$.ajax({
 			url: ajaxurl,
 			method: 'POST',
 			data: {
 				action: 'rcp_ajax_dismissed_notice_handler',
-				name: 'restrict-content-stellar-sale-notice',
+				name: 'restrict-content-bf-2024-banner',
 				rcp_nonce: rcp_admin_notices_vars.rcp_dismissed_nonce
 			}
+		}).done( function() {
+			$( '.restrict-content-bf-2024-banner' ).fadeOut();
 		});
 	});
 });

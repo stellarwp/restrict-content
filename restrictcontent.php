@@ -996,24 +996,19 @@ add_action('admin_notices', 'restrict_content_bfcm_notice');
 add_action(
 	'admin_notices',
 	function () {
-		// Stop if restrict_content_chosen_version is legacy.
-		if ( ! function_exists( 'rcp_is_rcp_admin_page' ) ) {
-			return;
-		}
-
 		// Stop if isn't a RCP page.
 		if ( ! rcp_is_rcp_admin_page() ) {
 			return;
 		}
 
 		// Bail if dismissed.
-		if ( get_option( 'dismissed-restrict-content-stellar-sale-notice', false ) ) {
+		if ( get_option( 'dismissed-restrict-content-bf-2024-banner', false ) ) {
 			return;
 		}
 
 		$date  = gmdate( 'Ymd' );
-		$start = 20240723;
-		$end   = 20240730;
+		$start = 20241127;
+		$end   = 20241205;
 
 		if (
 			$date < $start
@@ -1023,44 +1018,44 @@ add_action(
 		}
 
 		?>
-		<div class="notice is-dismissible restrict-content-stellar-sale-notice">
-			<div class="rcp-notice-header">
-				<h3>
-					<strong>
-						<?php esc_html_e( 'Make it yours.', 'rcp' ); ?>
-					</strong>
-					<span>
-						<?php esc_html_e( 'Save 40% on Restrict Content Pro.', 'rcp' ); ?>
-					</span>
-				</h3>
-			</div>
-			<div class="rcp-notice-button">
-				<a href="https://go.learndash.com/rcpstellarsale" target="_blank" rel="noopener noreferrer">
-					<?php esc_html_e( 'Shop Now', 'rcp' ); ?>
-				</a>
-			</div>
-
-			<div class="rcp-notice-content">
-				<p>
-					<?php
-					echo wp_kses(
-						sprintf(
-							// translators: %s: Discount percentage.
-							__( 'Take %s off all StellarWP brands during the annual Stellar Sale. <br />Now through July 30.', 'rcp' ),
-							'<strong>40%</strong>'
-						),
-						[
-							'strong' => [],
-							'br'     => [],
-						]
-					);
-					?>
-				</p>
-
-				<a href="https://go.learndash.com/rcpstellarsale" target="_blank" rel="noopener noreferrer">
-					<?php esc_html_e( 'View all StellarWP Deals', 'rcp' ); ?>
-				</a>
-			</div>
+		<div
+			class="restrict-content-bf-2024-banner"
+		>
+			<a
+				href="https://restrictcontentpro.com/black-friday/ "
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				<picture>
+					<source
+						srcset="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/banners/bf2024/full.svg' ); ?>"
+						media="(min-width: 1200px)"
+					>
+					<source
+						srcset="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/banners/bf2024/regular.svg' ); ?>"
+						media="(min-width: 1100px)"
+					>
+					<source
+						srcset="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/banners/bf2024/mobile.svg' ); ?>"
+						media="(min-width: 450px)"
+					>
+					<img
+						class="restrict-content-bf-2024-banner-image"
+						src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/banners/bf2024/full.svg' ); ?>"
+						alt="<?php esc_html_e( 'Black Friday Sale: Save 40% on Restrict Content Pro. Make your purchase before 12/3/24', 'rcp' ); ?>"
+					>
+				</picture>
+			</a>
+			<button
+				class="restrict-content-bf-2024-banner-close notice-dismiss"
+				data-notice-id="restrict-content-bf-2024-notice"
+				aria-label="<?php esc_attr_e( 'Close', 'rcp' ); ?>"
+			>
+				<img
+					src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/banners/bf2024/close.svg' ); ?>"
+					alt="<?php esc_html_e( 'Close button', 'rcp' ); ?>"
+				>
+			</button>
 		</div>
 		<?php
 	}

@@ -116,7 +116,7 @@ function rcp_admin_scripts( $hook ) {
 		get_option( 'dismissed-rcp-plugin-migration-notice', false )
 		&& get_option( 'dismissed-restrict-content-upgrade-notice', false )
 		&& get_option( 'dismissed-restrict-content-bfcm-notice', false )
-		&& get_option( 'dismissed-restrict-content-stellar-sale-notice', false )
+		&& get_option( 'dismissed-restrict-content-bf-2024-banner', false )
 	) {
 		return;
 	}
@@ -341,7 +341,7 @@ function rcp_ajax_dismissed_notice_handler() {
 		'rcp-plugin-migration-notice',
 		'restrict-content-upgrade-notice',
 		'restrict-content-bfcm-notice',
-		'restrict-content-stellar-sale-notice',
+		'restrict-content-bf-2024-banner',
 	];
 
 	if ( ! in_array( $name, $notices, true ) ) {
