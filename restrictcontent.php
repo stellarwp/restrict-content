@@ -3,7 +3,7 @@
  * Plugin Name: Restrict Content
  * Plugin URI: https://restrictcontentpro.com
  * Description: Set up a complete membership system for your WordPress site and deliver premium content to your members. Unlimited membership packages, membership management, discount codes, registration / login forms, and more.
- * Version: 3.2.12
+ * Version: 3.2.14
  * Author: StellarWP
  * Author URI: https://stellarwp.com/
  * Requires at least: 6.0
@@ -18,7 +18,7 @@ defined('ABSPATH') || exit;
 define('RCP_PLUGIN_FILE', __FILE__);
 define('RCP_ROOT', plugin_dir_path(__FILE__));
 define('RCP_WEB_ROOT', plugin_dir_url(__FILE__));
-define('RCF_VERSION', '3.2.12');
+define('RCF_VERSION', '3.2.14');
 
 // Load Strauss autoload.
 require_once plugin_dir_path( __FILE__ ) . 'vendor/strauss/autoload.php';
@@ -144,7 +144,7 @@ final class RC_Requirements_Check
     }
 
     /**
-     * Specific Methods 
+     * Specific Methods
      ******************************************************/
 
     /**
@@ -169,9 +169,9 @@ final class RC_Requirements_Check
         } // Else choose a version to load.
         else {
             // Does the rc_settings option exist? Load legacy if true else load 3.0
-            if (get_option('rc_settings') 
-                || $this->restrict_content_check_posts_for_meta() 
-                || $this->restrict_content_check_posts_for_shortcode() 
+            if (get_option('rc_settings')
+                || $this->restrict_content_check_posts_for_meta()
+                || $this->restrict_content_check_posts_for_shortcode()
             ) {
                 // Set chosen version
                 update_option('restrict_content_chosen_version', 'legacy');
@@ -217,12 +217,12 @@ final class RC_Requirements_Check
         $post_table = $wpdb->posts;
 
         $postsQuery = $wpdb->get_results(
-            "SELECT * FROM {$post_table} WHERE 
-                          post_content CONTAINS '[restrict]' OR 
+            "SELECT * FROM {$post_table} WHERE
+                          post_content CONTAINS '[restrict]' OR
                           post_content CONTAINS '[not_logged_in]' OR
                           post_content CONTAINS '[login_form]' OR
                           post_content CONTAINS '[register_form]' OR
-                          LIMIT 1" 
+                          LIMIT 1"
         );
 
         if (count($postsQuery) > 0 ) {
@@ -369,7 +369,7 @@ final class RC_Requirements_Check
     }
 
     /**
-     * Agnostic Methods 
+     * Agnostic Methods
      ******************************************************/
 
     /**
@@ -506,7 +506,7 @@ final class RC_Requirements_Check
     }
 
     /**
-     * Checkers 
+     * Checkers
      **************************************************************/
 
     /**
@@ -546,7 +546,7 @@ final class RC_Requirements_Check
                     'current' => $version,
                     'checked' => true,
                     'met'     => version_compare($version, $properties['minimum'], '>=')
-                    ) 
+                    )
                 );
             }
         }
@@ -581,7 +581,7 @@ final class RC_Requirements_Check
     }
 
     /**
-     * Translations 
+     * Translations
      **********************************************************/
 
     /**
@@ -653,7 +653,7 @@ function rc_process_legacy_switch()
                 array(
                 'success' => false,
                 'errors'  => 'invalid nonce',
-                ) 
+                )
             );
 
             return;
@@ -669,7 +669,7 @@ function rc_process_legacy_switch()
                     'data'    => array(
                     'redirect' => $redirectUrl
                     ),
-                    ) 
+                    )
                 );
             } else {
                 $redirectUrl = admin_url('admin.php?page=rcp-members');
@@ -680,7 +680,7 @@ function rc_process_legacy_switch()
                     'data'    => array(
                     'redirect' => $redirectUrl
                     )
-                    ) 
+                    )
                 );
             }
         } else {
@@ -692,7 +692,7 @@ function rc_process_legacy_switch()
                 'data'    => array(
                 'redirect' => $redirectUrl
                 )
-                ) 
+                )
             );
         }
     }
@@ -737,7 +737,7 @@ function rc_admin_styles_primary( $hook_suffix )
 
     if (get_option('restrict_content_chosen_version') == '3.0' ) {
         // Only load admin CSS on Restrict Content Settings page
-        if ('toplevel_page_restrict-content-settings' == $hook_suffix 
+        if ('toplevel_page_restrict-content-settings' == $hook_suffix
             || 'restrict_page_rcp-why-go-pro' == $hook_suffix
         ) {
             wp_enqueue_style('rcp-settings', trailingslashit(plugins_url()) . 'restrict-content/legacy/includes/assets/css/rc-settings.css', array(), RCP_PLUGIN_VERSION);
@@ -814,7 +814,7 @@ register_activation_hook(
         if (current_user_can('manage_options') ) {
             add_option('Restrict_Content_Plugin_Activated', 'restrict-content');
         }
-    } 
+    }
 );
 
 function restrict_content_plugin_activation_redirect()
@@ -968,11 +968,11 @@ function restrict_content_bfcm_notice()
         $saleDate = date('Ymd');
         $saleBegin = 20221121;
         $saleEnd = 20221129;
-        
+
         if ($saleDate >= $saleBegin && $saleDate <= $saleEnd ) {
             ?>
         <div class="notice restrict-content-bfcm-notice notice-info is-dismissible">
-            
+
             <?php
 
             printf(
@@ -980,10 +980,10 @@ function restrict_content_bfcm_notice()
                 trailingslashit(plugins_url()) . 'restrict-content/core/includes/images/sale_burst.png',
                 'https://restrictcontentpro.com/black-friday/?utm_source=restrictcontentpro&utm_medium=plugin&utm_campaign=bfcm22'
             );
-                
+
             ?>
-            
-        </div> 
+
+        </div>
             <?php
         }
     }
@@ -996,24 +996,19 @@ add_action('admin_notices', 'restrict_content_bfcm_notice');
 add_action(
 	'admin_notices',
 	function () {
-		// Stop if restrict_content_chosen_version is legacy.
-		if ( ! function_exists( 'rcp_is_rcp_admin_page' ) ) {
-			return;
-		}
-
 		// Stop if isn't a RCP page.
-		if ( ! rcp_is_rcp_admin_page() ) {
+		if ( function_exists( 'rcp_is_rcp_admin_page' ) && ! rcp_is_rcp_admin_page() ) {
 			return;
 		}
 
 		// Bail if dismissed.
-		if ( get_option( 'dismissed-restrict-content-stellar-sale-notice', false ) ) {
+		if ( get_option( 'dismissed-restrict-content-bf-2024-banner', false ) ) {
 			return;
 		}
 
 		$date  = gmdate( 'Ymd' );
-		$start = 20240723;
-		$end   = 20240730;
+		$start = 20241127;
+		$end   = 20241205;
 
 		if (
 			$date < $start
@@ -1023,44 +1018,44 @@ add_action(
 		}
 
 		?>
-		<div class="notice is-dismissible restrict-content-stellar-sale-notice">
-			<div class="rcp-notice-header">
-				<h3>
-					<strong>
-						<?php esc_html_e( 'Make it yours.', 'rcp' ); ?>
-					</strong>
-					<span>
-						<?php esc_html_e( 'Save 40% on Restrict Content Pro.', 'rcp' ); ?>
-					</span>
-				</h3>
-			</div>
-			<div class="rcp-notice-button">
-				<a href="https://go.learndash.com/rcpstellarsale" target="_blank" rel="noopener noreferrer">
-					<?php esc_html_e( 'Shop Now', 'rcp' ); ?>
-				</a>
-			</div>
-
-			<div class="rcp-notice-content">
-				<p>
-					<?php
-					echo wp_kses(
-						sprintf(
-							// translators: %s: Discount percentage.
-							__( 'Take %s off all StellarWP brands during the annual Stellar Sale. <br />Now through July 30.', 'rcp' ),
-							'<strong>40%</strong>'
-						),
-						[
-							'strong' => [],
-							'br'     => [],
-						]
-					);
-					?>
-				</p>
-
-				<a href="https://go.learndash.com/rcpstellarsale" target="_blank" rel="noopener noreferrer">
-					<?php esc_html_e( 'View all StellarWP Deals', 'rcp' ); ?>
-				</a>
-			</div>
+		<div
+			class="restrict-content-bf-2024-banner"
+		>
+			<a
+				href="https://restrictcontentpro.com/black-friday/ "
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				<picture>
+					<source
+						srcset="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/banners/bf2024/full.svg' ); ?>"
+						media="(min-width: 1200px)"
+					>
+					<source
+						srcset="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/banners/bf2024/regular.svg' ); ?>"
+						media="(min-width: 1100px)"
+					>
+					<source
+						srcset="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/banners/bf2024/mobile.svg' ); ?>"
+						media="(min-width: 450px)"
+					>
+					<img
+						class="restrict-content-bf-2024-banner-image"
+						src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/banners/bf2024/full.svg' ); ?>"
+						alt="<?php esc_html_e( 'Black Friday Sale: Save 40% on Restrict Content Pro. Make your purchase before 12/3/24', 'rcp' ); ?>"
+					>
+				</picture>
+			</a>
+			<button
+				class="restrict-content-bf-2024-banner-close notice-dismiss"
+				data-notice-id="restrict-content-bf-2024-notice"
+				aria-label="<?php esc_attr_e( 'Close', 'rcp' ); ?>"
+			>
+				<img
+					src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/banners/bf2024/close.svg' ); ?>"
+					alt="<?php esc_html_e( 'Close button', 'rcp' ); ?>"
+				>
+			</button>
 		</div>
 		<?php
 	}

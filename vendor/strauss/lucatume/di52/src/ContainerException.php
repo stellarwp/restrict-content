@@ -12,7 +12,7 @@
 namespace RCP\lucatume\DI52;
 
 use Exception;
-use Psr\Container\ContainerExceptionInterface;
+use RCP\Psr\Container\ContainerExceptionInterface;
 use ReflectionClass;
 use Throwable;
 

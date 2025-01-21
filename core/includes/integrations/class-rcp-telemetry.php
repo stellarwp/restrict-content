@@ -90,7 +90,7 @@ class RCP_Telemetry {
 		if ( ! $this->check_freemius_status() ) {
 			$_args['intro'] = sprintf(
 				// translators:%1\$s: The user name.
-				__( "Hi, %1\$s! This is an invitation to help our %2\$s community. If you opt-in, some data about your usage of %3\$s will be shared with our teams (so they can work their butts off to improve). We will also share some helpful info on membership site management, WordPress, and our products from time to time. And if you skip this, that's okay! %4\$s will still work just fine.", 'rcp' ),
+				__( "Hi, %1\$s! This is an invitation to help our %2\$s community. If you opt in, some data about your usage of %3\$s will be shared with our teams. We will also share some helpful info on membership site management, WordPress, and our products from time to time. And if you skip this, that's okay! %4\$s will still work just fine.", 'rcp' ),
 				wp_get_current_user()->display_name,
 				$rcp_title,
 				$rcp_title,
@@ -136,7 +136,7 @@ class RCP_Telemetry {
 			|| ( ! $opt_in_status && ( basename( RCP_ROOT ) . '/restrictcontent.php' === $plugin_file ) ) ) {
 			$new_actions['rcp_opt_in'] = sprintf(
 			// translators: %s: The admin URL.
-				__( '<a href="%1$s" alt="%2$s">Opt-In</a>', 'rcp' ),
+				__( '<a href="%1$s" alt="%2$s">Opt In</a>', 'rcp' ),
 				esc_url( wp_nonce_url( admin_url( 'plugins.php?opt-in-status=1' ), 'telemetry' ) ),
 				// translators: %s: The Opt-Out alt text.
 				__( 'Change to Opt In Status', 'rcp' )

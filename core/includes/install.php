@@ -19,7 +19,7 @@ function rcp_options_install( $network_wide = false ) {
 	global $wpdb, $rcp_db_name, $rcp_db_version, $rcp_discounts_db_name, $rcp_discounts_db_version,
 		   $rcp_payments_db_name, $rcp_payments_db_version;
 
-	$rcp_options = get_option( 'rcp_settings', array() );
+	$rcp_options = (array) get_option( 'rcp_settings', array() );
 
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
@@ -58,6 +58,14 @@ function rcp_options_install( $network_wide = false ) {
 	if ( empty( $rcp_options ) ) {
 		$rcp_options = rcp_create_default_email_templates();
 	}
+
+	// Hide premium content by default.
+	$rcp_options = wp_parse_args(
+		$rcp_options,
+		[
+			'hide_premium' => '1',
+		]
+	);
 
 	update_option( 'rcp_settings', $rcp_options );
 
