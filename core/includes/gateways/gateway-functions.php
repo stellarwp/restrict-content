@@ -16,12 +16,12 @@
  * @access private
  * @since  2.1
  * @return void
-*/
+ */
 function rcp_load_gateway_files() {
-	foreach( rcp_get_payment_gateways() as $key => $gateway ) {
-		if( file_exists( RCP_PLUGIN_DIR . 'pro/includes/gateways/' . $key . '/functions.php' ) ) {
+	foreach ( rcp_get_payment_gateways() as $key => $gateway ) {
+		if ( file_exists( RCP_PLUGIN_DIR . 'pro/includes/gateways/' . $key . '/functions.php' ) ) {
 			require_once RCP_PLUGIN_DIR . 'pro/includes/gateways/' . $key . '/functions.php';
-		} else if( file_exists( RCP_PLUGIN_DIR . 'core/includes/gateways/' . $key . '/functions.php' ) ) {
+		} elseif ( file_exists( RCP_PLUGIN_DIR . 'core/includes/gateways/' . $key . '/functions.php' ) ) {
 			require_once RCP_PLUGIN_DIR . 'core/includes/gateways/' . $key . '/functions.php';
 		}
 	}
@@ -32,9 +32,9 @@ function rcp_load_gateway_files() {
  *
  * @access      private
  * @return      array
-*/
+ */
 function rcp_get_payment_gateways() {
-	$gateways = new RCP_Payment_Gateways;
+	$gateways = new RCP_Payment_Gateways();
 	return $gateways->available_gateways;
 }
 
@@ -77,19 +77,18 @@ function rcp_get_payment_gateway_details( $slug, $key = '' ) {
  *
  * @access      private
  * @return      array
-*/
+ */
 function rcp_get_enabled_payment_gateways() {
 
-	$gateways = new RCP_Payment_Gateways;
+	$gateways = new RCP_Payment_Gateways();
 
-	foreach( $gateways->enabled_gateways  as $key => $gateway ) {
+	foreach ( $gateways->enabled_gateways  as $key => $gateway ) {
 
-		if( is_array( $gateway ) ) {
+		if ( is_array( $gateway ) ) {
 
 			$gateways->enabled_gateways[ $key ] = $gateway['label'];
 
 		}
-
 	}
 
 	return $gateways->enabled_gateways;
@@ -104,7 +103,7 @@ function rcp_get_enabled_payment_gateways() {
  * @return bool
  */
 function rcp_is_gateway_enabled( $id = '' ) {
-	$gateways = new RCP_Payment_Gateways;
+	$gateways = new RCP_Payment_Gateways();
 	return $gateways->is_gateway_enabled( $id );
 }
 
@@ -119,13 +118,13 @@ function rcp_is_gateway_enabled( $id = '' ) {
  */
 function rcp_send_to_gateway( $gateway, $subscription_data ) {
 
-	if( has_action( 'rcp_gateway_' . $gateway ) ) {
+	if ( has_action( 'rcp_gateway_' . $gateway ) ) {
 
 		do_action( 'rcp_gateway_' . $gateway, $subscription_data );
 
 	} else {
 
-		$gateways = new RCP_Payment_Gateways;
+		$gateways = new RCP_Payment_Gateways();
 		$gateway  = $gateways->get_gateway( $gateway );
 		$gateway  = new $gateway['class']( $subscription_data );
 
@@ -154,7 +153,7 @@ function rcp_handle_gateway_ajax_processing( $gateway, $subscription_data ) {
 		return new WP_Error( 'ajax_unsupported', __( 'Ajax payment is not supported by this payment method.', 'rcp' ) );
 	}
 
-	$gateways = new RCP_Payment_Gateways;
+	$gateways = new RCP_Payment_Gateways();
 	$gateway  = $gateways->get_gateway( $gateway );
 	$gateway  = new $gateway['class']( $subscription_data );
 
@@ -179,12 +178,12 @@ function rcp_handle_gateway_ajax_processing( $gateway, $subscription_data ) {
 function rcp_gateway_supports( $gateway = 'paypal', $item = 'recurring' ) {
 
 	$ret      = true;
-	$gateways = new RCP_Payment_Gateways;
+	$gateways = new RCP_Payment_Gateways();
 	$gateway  = $gateways->get_gateway( $gateway );
 
-	if( is_array( $gateway ) && isset( $gateway['class'] ) ) {
+	if ( is_array( $gateway ) && isset( $gateway['class'] ) ) {
 
-		$gateway = new $gateway['class'];
+		$gateway = new $gateway['class']();
 		$ret     = $gateway->supports( sanitize_text_field( $item ) );
 
 	}
@@ -205,7 +204,7 @@ function rcp_gateway_supports( $gateway = 'paypal', $item = 'recurring' ) {
 function rcp_get_gateway_class( $gateway_slug, $args = array() ) {
 
 	$class    = false;
-	$gateways = new RCP_Payment_Gateways;
+	$gateways = new RCP_Payment_Gateways();
 	$gateway  = $gateways->get_gateway( $gateway_slug );
 
 	if ( is_array( $gateway ) && isset( $gateway['class'] ) && class_exists( $gateway['class'] ) ) {
@@ -217,9 +216,9 @@ function rcp_get_gateway_class( $gateway_slug, $args = array() ) {
 }
 
 /**
- * Retrieve the full HTML link for the transaction ID on the merchant site
+ * Retrieve the full HTML link for the transaction ID on the merchant site.
  *
- * @param object  $payment Payment object
+ * @param object $payment Payment object.
  *
  * @access public
  * @since  2.6
@@ -233,7 +232,7 @@ function rcp_get_merchant_transaction_id_link( $payment ) {
 	$link = $payment->transaction_id;
 	$test = rcp_is_sandbox();
 
-	if( ! empty( $payment->transaction_id ) ) {
+	if ( ! empty( $payment->transaction_id ) ) {
 
 		$gateway = strtolower( $payment->gateway );
 		$type    = strtolower( $payment->payment_type );
@@ -242,59 +241,55 @@ function rcp_get_merchant_transaction_id_link( $payment ) {
 
 			switch ( $type ) {
 
-				case 'web_accept' :
-				case 'paypal express one time' :
-				case 'recurring_payment' :
-				case 'subscr_payment' :
-				case 'recurring_payment_profile_created' :
+				case 'web_accept':
+				case 'paypal express one time':
+				case 'recurring_payment':
+				case 'subscr_payment':
+				case 'recurring_payment_profile_created':
 					$gateway = 'paypal';
 					break;
 
-				case 'credit card' :
-				case 'credit card one time' :
+				case 'credit card':
+				case 'credit card one time':
 					if ( false !== strpos( $payment->transaction_id, 'ch_' ) ) {
 						$gateway = 'stripe';
-					} elseif( false !== strpos( $payment->transaction_id, 'anet_' ) ) {
+					} elseif ( false !== strpos( $payment->transaction_id, 'anet_' ) ) {
 						$gateway = 'authorizenet';
 					} elseif ( is_numeric( $payment->transaction_id ) ) {
 						$gateway = 'twocheckout';
 					}
 					break;
 
-				case 'braintree credit card one time' :
-				case 'braintree credit card initial payment' :
-				case 'braintree credit card' :
+				case 'braintree credit card one time':
+				case 'braintree credit card initial payment':
+				case 'braintree credit card':
 					$gateway = 'braintree';
 					break;
 
 			}
-
 		}
 
-		switch( $gateway ) {
+		switch ( $gateway ) {
 
 			// PayPal
-			case 'paypal' :
-			case 'paypal_express' :
-			case 'paypal_pro' :
-
+			case 'paypal':
+			case 'paypal_express':
+			case 'paypal_pro':
 				$mode = $test ? 'sandbox.' : '';
-				$url  = 'https://www.' . $mode . 'paypal.com/webscr?cmd=_history-details-from-hub&id=' . $payment->transaction_id;
+				$url  = 'https://www.' . $mode . 'paypal.com/unifiedtransactions/details/payment/' . $payment->transaction_id;
 
 				break;
 
 			// 2Checkout
-			case 'twocheckout' :
-
+			case 'twocheckout':
 				$mode = $test ? 'sandbox.' : '';
 				$url  = 'https://' . $mode . '2checkout.com/sandbox/sales/detail?sale_id=' . $payment->transaction_id;
 
 				break;
 
 			// Stripe
-			case 'stripe' :
-			case 'stripe_checkout' :
-
+			case 'stripe':
+			case 'stripe_checkout':
 				$mode = $test ? 'test/' : '';
 				$dir  = false !== strpos( $payment->transaction_id, 'sub_' ) ? 'subscriptions/' : 'payments/';
 				$url  = 'https://dashboard.stripe.com/' . $mode . $dir . $payment->transaction_id;
@@ -302,22 +297,20 @@ function rcp_get_merchant_transaction_id_link( $payment ) {
 				break;
 
 			// Braintree
-			case 'braintree' :
-
+			case 'braintree':
 				$mode        = $test ? 'sandbox.' : '';
 				$merchant_id = $test ? $rcp_options['braintree_sandbox_merchantId'] : $rcp_options['braintree_live_merchantId'];
 
-				$url         = 'https://' . $mode . 'braintreegateway.com/merchants/' . $merchant_id . '/transactions/' . $payment->transaction_id;
+				$url = 'https://' . $mode . 'braintreegateway.com/merchants/' . $merchant_id . '/transactions/' . $payment->transaction_id;
 
 				break;
 		}
 
-		if( ! empty( $url ) ) {
+		if ( ! empty( $url ) ) {
 
 			$link = '<a href="' . esc_url( $url ) . '" class="rcp-payment-txn-id-link" target="_blank">' . $payment->transaction_id . '</a>';
 
 		}
-
 	}
 
 	return apply_filters( 'rcp_merchant_transaction_id_link', $link, $payment );
@@ -370,7 +363,7 @@ function rcp_get_gateway_customer_id_url( $gateway, $customer_id ) {
 		/**
 		 * Braintree
 		 */
-		$subdomain = $sandbox ? 'sandbox.' : '';
+		$subdomain   = $sandbox ? 'sandbox.' : '';
 		$merchant_id = '';
 
 		if ( $sandbox && ! empty( $rcp_options['braintree_sandbox_merchantId'] ) ) {
@@ -382,7 +375,6 @@ function rcp_get_gateway_customer_id_url( $gateway, $customer_id ) {
 		if ( ! empty( $merchant_id ) ) {
 			$url = sprintf( 'https://%sbraintreegateway.com/merchants/%s/customers/%s', $subdomain, urlencode( $merchant_id ), urlencode( $customer_id ) );
 		}
-
 	}
 
 	/**
@@ -422,13 +414,13 @@ function rcp_get_gateway_subscription_id_url( $gateway, $subscription_id ) {
 		$base_url = $sandbox ? 'https://dashboard.stripe.com/test/' : 'https://dashboard.stripe.com/';
 		$url      = $base_url . 'subscriptions/' . urlencode( $subscription_id );
 
-	} elseif( false !== strpos( $gateway, 'paypal' ) ) {
+	} elseif ( false !== strpos( $gateway, 'paypal' ) ) {
 
 		/**
 		 * PayPal Standard, PayPal Express, PayPal Pro
 		 */
 		$base_url = $sandbox ? 'https://www.sandbox.paypal.com' : 'https://www.paypal.com';
-		$url      = $base_url . '/cgi-bin/webscr?cmd=_profile-recurring-payments&encrypted_profile_id=' . urlencode( $subscription_id );
+		$url      = $base_url . '/billing/subscriptions/' . urlencode( $subscription_id );
 
 	} elseif ( 'twocheckout' == $gateway ) {
 
@@ -449,7 +441,7 @@ function rcp_get_gateway_subscription_id_url( $gateway, $subscription_id ) {
 		/**
 		 * Braintree
 		 */
-		$subdomain = $sandbox ? 'sandbox.' : '';
+		$subdomain   = $sandbox ? 'sandbox.' : '';
 		$merchant_id = '';
 
 		if ( $sandbox && ! empty( $rcp_options['braintree_sandbox_merchantId'] ) ) {
@@ -461,7 +453,6 @@ function rcp_get_gateway_subscription_id_url( $gateway, $subscription_id ) {
 		if ( ! empty( $merchant_id ) ) {
 			$url = sprintf( 'https://%sbraintreegateway.com/merchants/%s/subscriptions/%s', $subdomain, urlencode( $merchant_id ), urlencode( $subscription_id ) );
 		}
-
 	}
 
 	/**

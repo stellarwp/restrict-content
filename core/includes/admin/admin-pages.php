@@ -627,13 +627,13 @@ function rcp_welcome_page_redesign() {
 					<div class="restrict-content-welcome-body restrict-content-container-section">
 						<h2 class="restrict-content-thanks-header"><?php _e( 'Thanks for installing Restrict Content Pro!', 'rcp' ); ?></h2>
 						<p class="restrict-content-thanks-message"><?php _e( 'Restrict Content Pro is a simple, yet powerful WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.', 'rcp' ); ?></p>
-						<p class="restrict-content-thanks-message"><?php _e( 'Start your membership site and create multiple Membership Levels and collect payments with Stripe, PayPal, Braintree or Authorize.net.', 'rcp' ); ?></p>
+						<p class="restrict-content-thanks-message"><?php _e( 'Start your membership site and create multiple Membership Levels and collect payments with Stripe, PayPal or Braintree.', 'rcp' ); ?></p>
 					</div>
 
 				</div>
 				<div class="restrict-content-welcome-body-container">
 					<div class="restrict-content-how-to-body restrict-content-container-section">
-						<h2><?php _e( 'Collect Payments with Stripe, PayPal, Braintree or Authorize.net', 'rcp' ); ?></h2>
+						<h2><?php _e( 'Collect Payments with Stripe, PayPal or Braintree', 'rcp' ); ?></h2>
 
 						<p class="restrict-content-how-to-message">
 							<?php

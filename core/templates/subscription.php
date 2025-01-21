@@ -63,7 +63,7 @@ if ( ! empty( $memberships ) ) {
 ?>
 
 <div class="rcp-table-wrapper" id="rcp-table-wrapper">
-<h3>Account Overview</h3>
+<h3><?php esc_html_e( 'Account Overview', 'rcp' ); ?></h3>
 	<table class="rcp-table subscription" id="rcp-account-overview">
 		<thead class="hide-mobile">
 			<tr>
@@ -212,7 +212,7 @@ if ( ! empty( $memberships ) ) {
 			<?php endif; ?>
 		</tbody>
 		</table> <!-- rcp-table -->
-<h3>Payment History</h3>
+<h3><?php esc_html_e( 'Payment History', 'rcp' ); ?></h3>
 	<table class="rcp-table subscription" id="rcp-payment-history">
 		<thead class="hide-mobile">
 			<tr>
