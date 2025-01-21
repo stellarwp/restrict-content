@@ -36,7 +36,7 @@ global $rcp_options;
 	<table class="rcp_registration_total_details rcp-table">
 		<thead class="membership-amount">
 		<tr>
-			<th>Membership Details</th>
+			<th><?php _e( 'Membership Details', 'rcp' ); ?></th>
 		</tr>
 
 		</thead>

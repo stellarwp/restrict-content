@@ -41,7 +41,7 @@ return array(
    'RCP\lucatume\DI52\Builders\ReinitializableBuilderInterface' => $strauss_src . '/lucatume/di52/src/Builders/ReinitializableBuilderInterface.php',
    'RCP\lucatume\DI52\Builders\ValueBuilder' => $strauss_src . '/lucatume/di52/src/Builders/ValueBuilder.php',
    'RCP\lucatume\DI52\NestedParseError' => $strauss_src . '/lucatume/di52/src/NestedParseError.php',
-   'Psr\Container\NotFoundExceptionInterface' => $strauss_src . '/psr/container/src/NotFoundExceptionInterface.php',
-   'Psr\Container\ContainerExceptionInterface' => $strauss_src . '/psr/container/src/ContainerExceptionInterface.php',
-   'Psr\Container\ContainerInterface' => $strauss_src . '/psr/container/src/ContainerInterface.php',
+   'RCP\Psr\Container\NotFoundExceptionInterface' => $strauss_src . '/psr/container/src/NotFoundExceptionInterface.php',
+   'RCP\Psr\Container\ContainerExceptionInterface' => $strauss_src . '/psr/container/src/ContainerExceptionInterface.php',
+   'RCP\Psr\Container\ContainerInterface' => $strauss_src . '/psr/container/src/ContainerInterface.php',
 );

@@ -1,6 +1,6 @@
 {
 	"name": "restrictcontent/restrict-content",
-	"version": "3.2.13",
+	"version": "3.2.14",
 	"type": "wordpress-plugin",
 	"description": "A simple, yet powerful membership solution for WordPress.",
 	"keywords": [ "rcp", "pippin", "membership"],
@@ -34,11 +34,13 @@
 		]
 	},
 	"require": {
+		"php": ">=7.4",
 		"lucatume/di52": "^3.0",
+		"psr/container": "^1.0",
 		"stellarwp/container-contract": "^1.0",
 		"stellarwp/telemetry": "^1.0.5"
 	},
-		"autoload": {
+	"autoload": {
 		"psr-4": {
 			"RCP\\": "core/includes/"
 		}
@@ -70,7 +72,13 @@
 				"psr/container",
 				"stellarwp/container-contract",
 				"stellarwp/telemetry"
-			]
+			],
+			"exclude_from_copy": {
+				"packages": []
+			},
+			"exclude_from_prefix": {
+				"file_patterns": []
+			}
 		}
 	}
 }

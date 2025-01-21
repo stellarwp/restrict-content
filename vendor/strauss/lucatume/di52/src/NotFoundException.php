@@ -11,7 +11,7 @@
 
 namespace RCP\lucatume\DI52;
 
-use Psr\Container\NotFoundExceptionInterface;
+use RCP\Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Class NotFoundException

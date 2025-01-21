@@ -1,8 +1,14 @@
 <?php
+/**
+ * @license MIT
+ *
+ * Modified using Strauss.
+ * @see https://github.com/BrianHenryIE/strauss
+ */
 
 declare(strict_types=1);
 
-namespace Psr\Container;
+namespace RCP\Psr\Container;
 
 /**
  * Describes the interface of a container that exposes methods to read its entries.

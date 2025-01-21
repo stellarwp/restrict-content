@@ -64,8 +64,6 @@ jQuery(document).ready(function($) {
 				name: 'restrict-content-bf-2024-banner',
 				rcp_nonce: rcp_admin_notices_vars.rcp_dismissed_nonce
 			}
-		}).done( function() {
-			$( '.restrict-content-bf-2024-banner' ).fadeOut();
 		});
 	});
 });
