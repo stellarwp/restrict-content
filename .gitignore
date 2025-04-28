@@ -6,7 +6,9 @@ composer.lock
 # Vendor Dev dependencies.
 vendor/bin/
 vendor/composer/autoload_files.php
-vendor/composer/platform_check.php
+vendor/composer/InstalledVersions.php
+vendor/composer/installed.json
+vendor/composer/installed.php
 vendor/dealerdirect/
 vendor/doctrine/
 vendor/myclabs/
@@ -23,3 +25,6 @@ vendor/szepeviktor/
 vendor/theseer/
 vendor/webmozart/
 vendor/wp-coding-standards/
+vendor/lucatume/
+vendor/psr/
+vendor/stellarwp/

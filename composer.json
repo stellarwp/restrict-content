@@ -38,7 +38,7 @@
 		"lucatume/di52": "^3.0",
 		"psr/container": "^1.0",
 		"stellarwp/container-contract": "^1.0",
-		"stellarwp/telemetry": "^1.0.5"
+		"stellarwp/telemetry": "2.3.4"
 	},
 	"autoload": {
 		"psr-4": {
@@ -69,7 +69,6 @@
 			"include_author": false,
 			"packages": [
 				"lucatume/di52",
-				"psr/container",
 				"stellarwp/container-contract",
 				"stellarwp/telemetry"
 			],
