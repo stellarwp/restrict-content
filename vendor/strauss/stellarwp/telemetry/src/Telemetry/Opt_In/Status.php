@@ -24,10 +24,10 @@ use RCP\StellarWP\Telemetry\Core;
  * @package StellarWP\Telemetry
  */
 class Status {
-	public const OPTION_NAME     = 'stellarwp_telemetry';
-	public const STATUS_ACTIVE   = 1;
-	public const STATUS_INACTIVE = 2;
-	public const STATUS_MIXED    = 3;
+	public const OPTION_NAME           = 'stellarwp_telemetry';
+	public const OPTION_NAME_USER_INFO = 'stellarwp_telemetry_user_info';
+	public const STATUS_ACTIVE         = 1;
+	public const STATUS_INACTIVE       = 2;
 
 	/**
 	 * Gets the option name used to store the opt-in status.
@@ -55,7 +55,9 @@ class Status {
 	 * @return array
 	 */
 	public function get_option() {
-		return get_option( $this->get_option_name(), [] );
+		$option = get_option( $this->get_option_name(), [] );
+
+		return is_array( $option ) ? $option : [];
 	}
 
 	/**
@@ -64,34 +66,32 @@ class Status {
 	 * The status is stored as an integer because there are multiple possible statuses:
 	 * 1 = Active
 	 * 2 = Inactive
-	 * 3 = Mixed
 	 *
 	 * @since 1.0.0
+	 * @since 2.0.1 Correct logic so it is not subject to the order of the plugins.
+	 * @since 2.2.0 Update to remove unnecessary "mixed" status.
 	 *
 	 * @return integer The status value.
 	 */
 	public function get() {
-		$status = self::STATUS_ACTIVE;
-		$option = $this->get_option();
 
-		// If the status option is not an option, default to inactive.
-		if ( ! isset( $option['plugins'] ) ) {
-			return self::STATUS_INACTIVE;
+		$status  = self::STATUS_INACTIVE;
+		$option  = $this->get_option();
+		$plugins = $option['plugins'] ?? [];
+
+		if ( count( $plugins ) === 0 ) {
+			$status = self::STATUS_INACTIVE;
 		}
 
-		foreach ( $option['plugins'] as $plugin ) {
+		foreach ( $plugins as $plugin ) {
 
-			// If a plugin's status is false, we set the status as inactive.
-			if ( false === (bool) $plugin['optin'] ) {
+			// If any plugins are missing an optin status or at least one is false, set status to false.
+			if ( ! isset( $plugin['optin'] ) || false === $plugin['optin'] ) {
 				$status = self::STATUS_INACTIVE;
-				continue;
-			}
-
-			// If another plugin's status is true and the status is already inactive, we set the status as mixed.
-			if ( true === $plugin['optin'] && self::STATUS_INACTIVE === $status ) {
-				$status = self::STATUS_MIXED;
 				break;
 			}
+
+			$status = self::STATUS_ACTIVE;
 		}
 
 		/**
@@ -145,16 +145,21 @@ class Status {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string  $stellar_slug The unique slug identifier for the plugin.
-	 * @param boolean $status       The opt-in status for the plugin.
+	 * @param string  $stellar_slug    The unique slug identifier for the plugin.
+	 * @param boolean $status          The opt-in status for the plugin.
+	 * @param string  $plugin_basename The specific basename for the plugin.
 	 *
 	 * @return boolean
 	 */
-	public function add_plugin( string $stellar_slug, bool $status = false ) {
+	public function add_plugin( string $stellar_slug, bool $status = false, string $plugin_basename = '' ) {
 		$option = $this->get_option();
 
+		if ( '' === $plugin_basename ) {
+			$plugin_basename = Config::get_container()->get( Core::PLUGIN_BASENAME );
+		}
+
 		$option['plugins'][ $stellar_slug ] = [
-			'wp_slug' => Config::get_container()->get( Core::PLUGIN_BASENAME ),
+			'wp_slug' => $plugin_basename,
 			'optin'   => $status,
 		];
 
@@ -201,9 +206,13 @@ class Status {
 		}
 
 		foreach ( $option['plugins'] as $stellar_slug => $plugin ) {
+			if ( ! isset( $plugin['wp_slug'] ) ) {
+				continue;
+			}
+
 			$plugin_data = get_plugin_data( trailingslashit( $site_plugins_dir ) . $plugin['wp_slug'] );
 
-			if ( true === $plugin['optin'] ) {
+			if ( isset( $plugin['optin'] ) && true === $plugin['optin'] ) {
 				$opted_in_plugins[] = [
 					'slug'    => $stellar_slug,
 					'version' => $plugin_data['Version'],
@@ -218,15 +227,22 @@ class Status {
 	 * Sets the opt-in status option for the site.
 	 *
 	 * @since 1.0.0
+	 * @since 2.0.0 - Updated to allow defined stellar_slug.
 	 *
-	 * @param boolean $status The status to set (Active = 1, Inactive = 2, Mixed = 3).
+	 * @param boolean $status       The status to set.
+	 * @param string  $stellar_slug The stellar_slug to set the status of.
 	 *
 	 * @return boolean
 	 */
-	public function set_status( bool $status ) {
+	public function set_status( bool $status, string $stellar_slug = '' ) {
+		// If no stellar slug is passed, use the singular value.
+		if ( '' === $stellar_slug ) {
+			$stellar_slug = Config::get_stellar_slug();
+		}
+
 		$option = $this->get_option();
 
-		$option['plugins'][ Config::get_stellar_slug() ]['optin'] = $status;
+		$option['plugins'][ $stellar_slug ]['optin'] = $status;
 
 		return update_option( $this->get_option_name(), $option );
 	}
@@ -239,17 +255,15 @@ class Status {
 	 * @return string
 	 */
 	public function get_status() {
+
 		$optin_label = '';
 
 		switch ( $this->get() ) {
-			case self::STATUS_ACTIVE:
-				$optin_label = __( 'Active', 'stellarwp-telemetry-starter' );
+			case 1:
+				$optin_label = esc_html__( 'Active', 'stellarwp-telemetry' );
 				break;
-			case self::STATUS_INACTIVE:
-				$optin_label = __( 'Inactive', 'stellarwp-telemetry-starter' );
-				break;
-			case self::STATUS_MIXED:
-				$optin_label = __( 'Mixed', 'stellarwp-telemetry-starter' );
+			case 2:
+				$optin_label = esc_html__( 'Inactive', 'stellarwp-telemetry' );
 				break;
 		}
 

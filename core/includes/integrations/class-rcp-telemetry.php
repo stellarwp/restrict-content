@@ -120,8 +120,17 @@ class RCP_Telemetry {
 			return $plugin_actions;
 		}
 
-		$new_actions   = array();
-		$opt_in_status = $this->container->get( Status::class )->is_active();
+		$new_actions   = [];
+		$options       = $this->container->get( Status::class )->get_option();
+		$plugins       = isset( $options['plugins'] ) ? (array) $options['plugins'] : [];
+		$opt_in_status = false; // Inactive.
+
+		foreach ( $plugins as $plugin ) {
+			if ( $plugin['wp_slug'] === $plugin_file ) {
+				$opt_in_status = RCP_Helper_Cast::to_bool( $plugin['optin'] );
+				break;
+			}
+		}
 
 		if ( ( $opt_in_status && ( basename( RCP_ROOT ) . '/restrict-content-pro.php' === $plugin_file ) )
 			|| ( $opt_in_status && ( basename( RCP_ROOT ) . '/restrictcontent.php' === $plugin_file ) ) ) {
@@ -182,7 +191,7 @@ class RCP_Telemetry {
 			update_option( $this->container->get( Opt_In_Template::class )->get_option_name( $stellar_slug ), '1' );
 			$redirect = add_query_arg( 'rcp_message', '', esc_url( admin_url( 'admin.php?page=rcp-settings' ) ) );
 		} else {
-			$this->container->get( Status::class )->set_status( $value );
+			$this->container->get( Status::class )->set_status( false, $stellar_slug );
 			$redirect = add_query_arg( 'rcp_message', 'opt_out_message', esc_url( admin_url( 'admin.php?page=rcp-settings' ) ) );
 		}
 		wp_safe_redirect( $redirect );

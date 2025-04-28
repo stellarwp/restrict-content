@@ -18,8 +18,10 @@ use RCP\StellarWP\Telemetry\Admin\Admin_Subscriber;
 use RCP\StellarWP\Telemetry\Admin\Resources;
 use RCP\StellarWP\Telemetry\Contracts\Data_Provider;
 use RCP\StellarWP\Telemetry\Data_Providers\Debug_Data;
+use RCP\StellarWP\Telemetry\Events\Event_Subscriber;
 use RCP\StellarWP\Telemetry\Exit_Interview\Exit_Interview_Subscriber;
 use RCP\StellarWP\Telemetry\Exit_Interview\Template;
+use RCP\StellarWP\Telemetry\Last_Send\Last_Send;
 use RCP\StellarWP\Telemetry\Last_Send\Last_Send_Subscriber;
 use RCP\StellarWP\Telemetry\Opt_In\Opt_In_Subscriber;
 use RCP\StellarWP\Telemetry\Opt_In\Opt_In_Template;
@@ -49,6 +51,7 @@ class Core {
 	private $subscribers = [
 		Admin_Subscriber::class,
 		Exit_Interview_Subscriber::class,
+		Event_Subscriber::class,
 		Last_Send_Subscriber::class,
 		Opt_In_Subscriber::class,
 		Telemetry_Subscriber::class,
@@ -129,10 +132,21 @@ class Core {
 	private function init_container( string $plugin_path ) {
 		$container = Config::get_container();
 
+		// For all registered stellar slugs, use the plugin basename for those that do not have a wp_slug set.
+		foreach ( Config::get_all_stellar_slugs() as $stellar_slug => $wp_slug ) {
+			if ( '' !== $wp_slug ) {
+				continue;
+			}
+
+			Config::add_stellar_slug( $stellar_slug, plugin_basename( $plugin_path ) );
+		}
+
 		$container->bind( self::PLUGIN_BASENAME, plugin_basename( $plugin_path ) );
 		$container->bind( self::PLUGIN_FILE, $plugin_path );
 		$container->bind( self::SITE_PLUGIN_DIR, dirname( plugin_dir_path( $plugin_path ) ) );
 		$container->bind( Data_Provider::class, Debug_Data::class );
+		$container->bind( Status::class, Status::class );
+		$container->bind( Last_Send::class, Last_Send::class );
 		$container->bind(
 			Opt_In_Template::class,
 			static function () use ( $container ) {
