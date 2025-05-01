@@ -15,7 +15,6 @@ namespace RCP\StellarWP\Telemetry\Exit_Interview;
 
 use RCP\StellarWP\Telemetry\Contracts\Abstract_Subscriber;
 use RCP\StellarWP\Telemetry\Config;
-use RCP\StellarWP\Telemetry\Core;
 use RCP\StellarWP\Telemetry\Opt_In\Status;
 use RCP\StellarWP\Telemetry\Telemetry\Telemetry;
 
@@ -47,8 +46,11 @@ class Exit_Interview_Subscriber extends Abstract_Subscriber {
 		add_action( 'admin_footer', [ $this, 'render_exit_interview' ] );
 		add_action( 'wp_ajax_' . self::AJAX_ACTION, [ $this, 'ajax_exit_interview' ] );
 
-		add_filter( 'network_admin_plugin_action_links_' . $this->container->get( Core::PLUGIN_BASENAME ), [ $this, 'plugin_action_links' ], 10, 1 );
-		add_filter( 'plugin_action_links_' . $this->container->get( Core::PLUGIN_BASENAME ), [ $this, 'plugin_action_links' ], 10, 1 );
+		// Implement the exit interview trigger for each registerred plugin.
+		foreach ( Config::get_all_stellar_slugs() as $basename ) {
+			add_filter( 'network_admin_plugin_action_links_' . $basename, [ $this, 'plugin_action_links' ], 10, 2 );
+			add_filter( 'plugin_action_links_' . $basename, [ $this, 'plugin_action_links' ], 10, 2 );
+		}
 	}
 
 	/**
@@ -62,7 +64,14 @@ class Exit_Interview_Subscriber extends Abstract_Subscriber {
 		global $pagenow;
 
 		if ( 'plugins.php' === $pagenow ) {
-			$this->container->get( Template::class )->maybe_render();
+			// Swap key/values since we need to map stellar slugs by plugin basename.
+			$stellar_slugs = array_flip( Config::get_all_stellar_slugs() );
+			$plugins       = get_plugins();
+			foreach ( $plugins as $slug => $data ) {
+				if ( key_exists( $slug, $stellar_slugs ) ) {
+					$this->container->get( Template::class )->maybe_render( $stellar_slugs[ $slug ] );
+				}
+			}
 		}
 	}
 
@@ -70,32 +79,41 @@ class Exit_Interview_Subscriber extends Abstract_Subscriber {
 	 * Handles the ajax request for submitting "Exit Interivew" form data.
 	 *
 	 * @since 1.0.0
+	 * @since 2.3.4 - Added user capability check.
 	 *
 	 * @return void
 	 */
 	public function ajax_exit_interview() {
-		$uninstall_reason_id = filter_input( INPUT_POST, 'uninstall_reason_id', FILTER_SANITIZE_STRING );
+
+		// Check sent data before we do any database checks for faster failures.
+		$uninstall_reason_id = filter_input( INPUT_POST, 'uninstall_reason_id', FILTER_SANITIZE_SPECIAL_CHARS );
 		$uninstall_reason_id = ! empty( $uninstall_reason_id ) ? $uninstall_reason_id : false;
 		if ( ! $uninstall_reason_id ) {
 			wp_send_json_error( 'No reason id provided' );
 		}
 
-		$uninstall_reason = filter_input( INPUT_POST, 'uninstall_reason', FILTER_SANITIZE_STRING );
+		$uninstall_reason = filter_input( INPUT_POST, 'uninstall_reason', FILTER_SANITIZE_SPECIAL_CHARS );
 		$uninstall_reason = ! empty( $uninstall_reason ) ? $uninstall_reason : false;
 		if ( ! $uninstall_reason ) {
 			wp_send_json_error( 'No reason provided' );
 		}
 
-		$plugin_slug = filter_input( INPUT_POST, 'plugin_slug', FILTER_SANITIZE_STRING );
+		$plugin_slug = filter_input( INPUT_POST, 'plugin_slug', FILTER_SANITIZE_SPECIAL_CHARS );
 
-		$comment = filter_input( INPUT_POST, 'comment', FILTER_SANITIZE_STRING );
+		$comment = filter_input( INPUT_POST, 'comment', FILTER_SANITIZE_SPECIAL_CHARS );
 		$comment = ! empty( $comment ) ? $comment : '';
 
-		$nonce = filter_input( INPUT_POST, 'nonce', FILTER_SANITIZE_STRING );
+		// Validate nonce.
+		$nonce = filter_input( INPUT_POST, 'nonce', FILTER_SANITIZE_SPECIAL_CHARS );
 		$nonce = ! empty( $nonce ) ? $nonce : '';
 
 		if ( ! wp_verify_nonce( $nonce, self::AJAX_ACTION ) ) {
 			wp_send_json_error( 'Invalid nonce' );
+		}
+
+		// Sent data validated, check if the user has the necessary permissions.
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( 'User does not have proper permissions to modify plugins' );
 		}
 
 		$telemetry = $this->container->get( Telemetry::class );
@@ -109,13 +127,24 @@ class Exit_Interview_Subscriber extends Abstract_Subscriber {
 	 *
 	 * The deactivation is deferred to the modal displayed.
 	 *
-	 * @param array $links The links of the plugin in the plugin list.
+	 * @param array  $links        The links of the plugin in the plugin list.
+	 * @param string $plugin_file The plugin file of the current plugin in the list.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return array
 	 */
-	public function plugin_action_links( $links ) {
+	public function plugin_action_links( $links, $plugin_file ) {
+
+		$stellar_slug = '';
+
+		foreach ( Config::get_all_stellar_slugs() as $slug => $basename ) {
+			if ( plugin_basename( $plugin_file ) === $basename ) {
+				$stellar_slug = $slug;
+				continue;
+			}
+		}
+
 		$passed_deactivate = false;
 		$deactivate_link   = '';
 		$before_deactivate = [];
@@ -136,7 +165,7 @@ class Exit_Interview_Subscriber extends Abstract_Subscriber {
 		}
 
 		if ( ! empty( $deactivate_link ) ) {
-			$deactivate_link .= '<i class="telemetry-plugin-slug" data-plugin-slug="' . Config::get_stellar_slug() . '"></i>';
+			$deactivate_link .= '<i class="telemetry-plugin-slug" data-plugin-slug="' . $stellar_slug . '"></i>';
 
 			// Append deactivation link.
 			$before_deactivate['deactivate'] = $deactivate_link;
@@ -144,5 +173,4 @@ class Exit_Interview_Subscriber extends Abstract_Subscriber {
 
 		return array_merge( $before_deactivate, $after_deactivate );
 	}
-
 }
