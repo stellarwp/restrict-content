@@ -1342,44 +1342,31 @@ function rcp_get_post_ids_assigned_to_restricted_terms() {
  * @return array An array of post IDs.
  */
 function rcp_get_restricted_post_ids() {
+  global $wpdb;
 
-	if ( false === ( $post_ids = get_transient( 'rcp_restricted_post_ids' ) ) ) {
+  if ( false === ( $post_ids = get_transient( 'rcp_restricted_post_ids' ) ) ) {
 
-		$post_ids = get_posts(
-			array(
-				'post_status'    => 'publish',
-				'posts_per_page' => -1,
-				'post_type'      => 'any',
-				'fields'         => 'ids',
-				'meta_query'     => array(
-					'relation' => 'OR',
-					array(
-						'key'   => '_is_paid',
-						'value' => 1,
-					),
-					array(
-						'key' => 'rcp_subscription_level',
-					),
-					array(
-						'key'     => 'rcp_user_level',
-						'value'   => 'All',
-						'compare' => '!=',
-					),
-					array(
-						'key'     => 'rcp_access_level',
-						'value'   => 'None',
-						'compare' => '!=',
-					),
-				),
-			)
-		);
+    $fast_post_ids = $wpdb->get_col( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta
+			WHERE (meta_key = '_is_paid' AND meta_value = '1')
+			OR meta_key = 'rcp_subscription_level'
+			OR (meta_key = 'rcp_user_level' AND meta_value != 'All')
+			OR (meta_key = 'rcp_access_level' AND meta_value != 'None')" ) );
 
-		set_transient( 'rcp_restricted_post_ids', $post_ids, DAY_IN_SECONDS );
-	}
+    $post_ids = get_posts(
+      array(
+        'post_status'    => 'publish',
+        'posts_per_page' => -1,
+        'post_type'      => 'any',
+        'fields'         => 'ids',
+        'post__in'       => $fast_post_ids,
+      )
+    );
 
-	return $post_ids;
+    set_transient( 'rcp_restricted_post_ids', $post_ids, DAY_IN_SECONDS );
+  }
+
+  return $post_ids;
 }
-
 /**
  * Clears the transient that holds the post IDs with post-level restrictions defined.
  *
