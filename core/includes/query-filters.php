@@ -65,19 +65,84 @@ function rcp_hide_premium_posts( $query ) {
 	// If this customer doesn't have any active memberships - hide it.
 
 	if ( $hide_restricted_content ) {
-		$premium_ids              = rcp_get_restricted_post_ids();
-		$term_restricted_post_ids = rcp_get_post_ids_assigned_to_restricted_terms();
-		$post_ids                 = array_unique( array_merge( $premium_ids, $term_restricted_post_ids ) );
-
-		if ( $post_ids ) {
-			$existing_not_in = is_array( $query->get( 'post__not_in' ) ) ? $query->get( 'post__not_in' ) : array();
-			$post_ids        = array_unique( array_merge( $post_ids, $existing_not_in ) );
-
-			$query->set( 'post__not_in', $post_ids );
-		}
+		// Use database-level filtering instead of post__not_in for better performance.
+		add_filter( 'posts_where', 'rcp_filter_premium_posts_where', 10, 2 );
 	}
 }
 add_action( 'pre_get_posts', 'rcp_hide_premium_posts', 99999 );
+
+/**
+ * Filters the WHERE clause to exclude premium posts at the database level.
+ * This is more efficient than using post__not_in for sites with many posts.
+ *
+ * @since 3.5.47
+ *
+ * @param string   $where The WHERE clause of the query.
+ * @param WP_Query $query The WP_Query instance.
+ *
+ * @return string Modified WHERE clause.
+ */
+function rcp_filter_premium_posts_where( $where, $query ) {
+	global $wpdb;
+
+	// Add JOIN for meta tables if not already present.
+	if (
+		! strpos( $where, 'INNER JOIN' )
+		&& ! strpos( $where, 'LEFT JOIN' )
+	) {
+		$query->set(
+			'meta_query',
+			[
+				'relation' => 'OR',
+				[
+					'key'   => '_is_paid',
+					'value' => '1',
+				],
+				[
+					'key' => 'rcp_subscription_level',
+				],
+				[
+					'key'     => 'rcp_user_level',
+					'value'   => 'All',
+					'compare' => '!=',
+				],
+				[
+					'key'     => 'rcp_access_level',
+					'value'   => 'None',
+					'compare' => '!=',
+				],
+			]
+		);
+	}
+
+	// Add WHERE clause to exclude posts with premium restrictions.
+	$where .= " AND NOT EXISTS (
+		SELECT 1 FROM {$wpdb->postmeta} pm
+		WHERE pm.post_id = {$wpdb->posts}.ID
+		AND (
+			(pm.meta_key = '_is_paid' AND pm.meta_value = '1') OR
+			(pm.meta_key = 'rcp_subscription_level' AND pm.meta_value != '') OR
+			(pm.meta_key = 'rcp_user_level' AND pm.meta_value != 'All') OR
+			(pm.meta_key = 'rcp_access_level' AND pm.meta_value != 'None')
+		)
+	)";
+
+	// Also exclude posts that are assigned to restricted taxonomy terms.
+	$where .= " AND NOT EXISTS (
+		SELECT 1 FROM {$wpdb->term_relationships} tr
+		INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+		INNER JOIN {$wpdb->termmeta} tm ON tt.term_id = tm.term_id
+		WHERE tr.object_id = {$wpdb->posts}.ID
+		AND tm.meta_key = 'rcp_restricted_meta'
+		AND tm.meta_value != ''
+		AND tm.meta_value NOT LIKE '%s:13:\"access_level\";s:4:\"None\"%'
+	)";
+
+	// Remove this filter to prevent it from affecting other queries.
+	remove_filter( 'posts_where', 'rcp_filter_premium_posts_where', 10 );
+
+	return $where;
+}
 
 /**
  * Hides all premium posts from non active subscribers in REST API.
@@ -116,16 +181,106 @@ function rcp_hide_premium_posts_from_rest_api( $args ) {
 		return $args;
 	}
 
-	if ( ! isset( $args['post__not_in'] ) ) {
-		$args['post__not_in'] = [];
+	// Use database-level filtering instead of post__not_in for better performance.
+	// Handle both post-level meta restrictions and term-based restrictions.
+	$args['meta_query'] = [
+		'relation' => 'AND',
+		[
+			'relation' => 'OR',
+			[
+				'key'     => '_is_paid',
+				'value'   => '1',
+				'compare' => '!=',
+			],
+			[
+				'key'     => '_is_paid',
+				'compare' => 'NOT EXISTS',
+			],
+		],
+		[
+			'relation' => 'OR',
+			[
+				'key'     => 'rcp_subscription_level',
+				'compare' => 'NOT EXISTS',
+			],
+			[
+				'key'     => 'rcp_subscription_level',
+				'value'   => '',
+				'compare' => '=',
+			],
+		],
+		[
+			'relation' => 'OR',
+			[
+				'key'     => 'rcp_user_level',
+				'compare' => 'NOT EXISTS',
+			],
+			[
+				'key'     => 'rcp_user_level',
+				'value'   => 'All',
+				'compare' => '=',
+			],
+		],
+		[
+			'relation' => 'OR',
+			[
+				'key'     => 'rcp_access_level',
+				'compare' => 'NOT EXISTS',
+			],
+			[
+				'key'     => 'rcp_access_level',
+				'value'   => 'None',
+				'compare' => '=',
+			],
+		],
+	];
+
+	// For REST API, we need to handle term-based restrictions differently since meta_query
+	// doesn't support term relationships. We'll use a custom filter approach.
+	add_filter( 'rest_post_query', 'rcp_filter_rest_api_restricted_posts', 10, 2 );
+
+	return $args;
+}
+
+/**
+ * Filters REST API queries to exclude posts assigned to restricted taxonomy terms.
+ * This handles the term-based restrictions that can't be handled by meta_query alone.
+ *
+ * @since 3.5.47
+ *
+ * @param array<string, mixed> $args    The query arguments.
+ * @param WP_REST_Request      $request The REST request object.
+ *
+ * @return array<string,mixed> Modified query arguments.
+ */
+function rcp_filter_rest_api_restricted_posts( $args, $request ) {
+	global $wpdb;
+
+	// Get posts that are assigned to restricted terms.
+	$restricted_term_post_ids = $wpdb->get_col(
+		"SELECT DISTINCT tr.object_id
+		FROM {$wpdb->term_relationships} tr
+		INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+		INNER JOIN {$wpdb->termmeta} tm ON tt.term_id = tm.term_id
+		WHERE tm.meta_key = 'rcp_restricted_meta'
+		AND tm.meta_value != ''
+		AND tm.meta_value NOT LIKE '%s:13:\"access_level\";s:4:\"None\"%'"
+	);
+
+	if ( ! empty( $restricted_term_post_ids ) ) {
+		// Initialize post__not_in if it doesn't exist.
+		if ( ! isset( $args['post__not_in'] ) ) {
+			$args['post__not_in'] = [];
+		} elseif ( is_array( $args['post__not_in'] ) ) {
+			// Add term-restricted post IDs to the exclusion list.
+			$args['post__not_in'] = array_unique(
+				array_merge( $args['post__not_in'], $restricted_term_post_ids )
+			);
+		}
 	}
 
-	$args['post__not_in'] = array_unique(
-		array_merge(
-			(array) $args['post__not_in'],
-			rcp_get_restricted_post_ids()
-		)
-	);
+	// Remove this filter to prevent it from affecting other queries.
+	remove_filter( 'rest_post_query', 'rcp_filter_rest_api_restricted_posts', 10 );
 
 	return $args;
 }
