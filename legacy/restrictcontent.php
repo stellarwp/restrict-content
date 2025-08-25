@@ -21,7 +21,7 @@ if( false === $rc_options ) {
 }
 
 if ( ! defined( 'RC_PLUGIN_VERSION' ) ) {
-	define( 'RC_PLUGIN_VERSION', '3.2.14.1' );
+	define( 'RC_PLUGIN_VERSION', '3.2.15' );
 }
 
 if ( ! defined( 'RC_PLUGIN_DIR' ) ) {
