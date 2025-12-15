@@ -123,7 +123,7 @@ function rcp_registration_form_fields( $id = null, $atts = array() ) {
 
 		} else {
 
-			echo $rcp_register_form_atts['registered_message'];
+			echo wp_kses_post( $rcp_register_form_atts['registered_message'] );
 
 		}
 
