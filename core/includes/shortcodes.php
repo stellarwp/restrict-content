@@ -37,6 +37,10 @@ function rcp_restrict_shortcode( $atts, $content = null ) {
 		'restrict'
 	);
 
+	$atts['userlevel']    = sanitize_text_field( $atts['userlevel'] );
+	$atts['subscription'] = sanitize_text_field( $atts['subscription'] );
+	$atts['message']      = wp_kses_post( $atts['message'] );
+
 	global $rcp_options, $user_ID;
 
 	if ( strlen( $atts['message'] ) > 0 ) {
@@ -355,6 +359,11 @@ function rcp_registration_form( $atts, $content = null ) {
 		'register_form'
 	);
 
+	$atts['id']                 = isset( $atts['id'] ) ? absint( $atts['id'] ) : null;
+	$atts['ids']                = isset( $atts['ids'] ) ? implode( ',', array_filter( array_map( 'absint', array_map( 'trim', explode( ',', $atts['ids'] ) ) ) ) ) : null;
+	$atts['logged_out_header']  = wp_kses_post( $atts['logged_out_header'] );
+	$atts['logged_in_header']   = wp_kses_post( $atts['logged_in_header'] );
+
 	global $user_ID;
 
 	/*
@@ -376,7 +385,7 @@ function rcp_registration_form( $atts, $content = null ) {
 		$output = rcp_registration_form_fields( $atts['id'], $atts );
 
 	} else {
-		$output = $atts['registered_message'];
+		$output = wp_kses_post( $atts['registered_message'] );
 	}
 	return $output;
 }
@@ -492,7 +501,7 @@ function rcp_register_form_stripe_checkout( $atts, $content = '' ) {
 		$stripe_gateway = new RCP_Payment_Gateway_Stripe();
 		$stripe_gateway->scripts();
 		?>
-		<div class="rcp-stripe-register" 
+		<div class="rcp-stripe-register"
 		<?php
 		foreach ( $data as $label => $value ) {
 			printf( ' %s="%s" ', esc_attr( sanitize_html_class( $label ) ), esc_attr( $value ) ); }
