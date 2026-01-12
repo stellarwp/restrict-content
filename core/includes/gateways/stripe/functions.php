@@ -148,6 +148,7 @@ function rcp_stripe_update_card_form_js() {
 		'confirm_delete_card' => esc_html__( 'Are you sure you want to delete this payment method?', 'rcp' ),
 		'enter_card_name'     => __( 'Please enter a card holder name', 'rcp' ),
 		'pleasewait'          => __( 'Please Wait . . . ', 'rcp' ),
+		'nonce'                => wp_create_nonce( 'rcp_stripe_create_setup_intent_for_saved_card' ),
 	) );
 
 	try {
@@ -846,6 +847,12 @@ add_action( 'wp_ajax_nopriv_rcp_stripe_handle_initial_payment_failure', 'rcp_str
  * @return void
  */
 function rcp_stripe_create_setup_intent_for_saved_card() {
+	check_ajax_referer( 'rcp_stripe_create_setup_intent_for_saved_card', 'nonce' );
+
+	// Check if the user is at least a registered user.
+	if ( ! current_user_can( 'read' ) ) {
+		wp_send_json_error( __( 'You are not authorized to perform this action.', 'rcp' ) );
+	}
 
 	global $rcp_options;
 
