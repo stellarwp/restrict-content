@@ -162,7 +162,8 @@ function rcpStripeSubmitBillingCardUpdate( e ) {
 		data: {
 			action: 'rcp_stripe_create_setup_intent_for_saved_card',
 			membership_id: jQuery( 'input[name="rcp_membership_id"]' ).val(),
-			payment_method_id: paymentMethodID ? paymentMethodID : 'new'
+			payment_method_id: paymentMethodID ? paymentMethodID : 'new',
+			nonce: rcp_stripe_script_options.nonce
 		},
 		success: function ( response ) {
 			if ( response.success ) {

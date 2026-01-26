@@ -1,6 +1,6 @@
 {
 	"name": "restrictcontent/restrict-content",
-	"version": "3.2.16",
+	"version": "3.2.17",
 	"type": "wordpress-plugin",
 	"description": "A simple, yet powerful membership solution for WordPress.",
 	"keywords": [ "rcp", "pippin", "membership"],
