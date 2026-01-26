@@ -44,6 +44,20 @@ function rcp_process_registration() {
 	global $rcp_options;
 
 	$membership_level = rcp_get_membership_level( rcp_get_registration()->get_membership_level_id() );
+
+	// Ensure membership level exists and is valid.
+	if ( ! $membership_level ) {
+		rcp_errors()->add( 'invalid_level', __( 'The selected membership level is not available.', 'rcp' ), 'register' );
+
+		wp_send_json_error(
+			array(
+				'success' => false,
+				'errors'  => rcp_get_error_messages_html( 'register' ),
+				'nonce'   => wp_create_nonce( 'rcp-register-nonce' ),
+			)
+		);
+	}
+
 		// We are already sanitizing, but PHPCS keep complaining about the isset function.
 	// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 	$discount       = isset( $_POST['rcp_discount'] ) ? sanitize_text_field( strtolower( wp_unslash( $_POST['rcp_discount'] ) ) ) : '';
@@ -85,6 +99,11 @@ function rcp_process_registration() {
 	if ( ! rcp_is_registration() ) {
 		// no membership level was chosen
 		rcp_errors()->add( 'no_level', __( 'Please choose a membership level', 'rcp' ), 'register' );
+	}
+
+	// Validate membership level is active.
+	if ( 'active' !== $membership_level->get_status() ) {
+		rcp_errors()->add( 'invalid_level', __( 'The selected membership level is not available for registration.', 'rcp' ), 'register' );
 	}
 
 	if ( $membership_level->is_free() && ! $membership_level->is_lifetime() && $has_trialed ) {
@@ -1200,9 +1219,40 @@ function rcp_setup_registration_init() {
 		return;
 	}
 
-	$level_id = abs( sanitize_text_field( wp_unslash( $_POST['rcp_level'] ) ) );
-	$discount = ! empty( $_REQUEST['discount'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['discount'] ) ) : null;
-	$discount = ! empty( $_POST['rcp_discount'] ) ? sanitize_text_field( wp_unslash( $_POST['rcp_discount'] ) ) : $discount;
+	$level_id = (int) abs( sanitize_text_field( wp_unslash( $_POST['rcp_level'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+
+	// Validate membership level is active.
+	$membership_level = rcp_get_membership_level( $level_id );
+	if ( ! $membership_level instanceof Membership_Level || 'active' !== $membership_level->get_status() ) {
+		rcp_errors()->add( 'invalid_level', __( 'Invalid membership level selected.', 'rcp' ), 'register' );
+		return;
+	}
+
+	// Validate that paid levels (price > 0 or fee > 0) cannot use the free gateway.
+	$gateway = isset( $_POST['rcp_gateway'] ) ? sanitize_text_field( wp_unslash( $_POST['rcp_gateway'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+	$requires_payment = $membership_level->get_price() > 0 || $membership_level->get_fee() > 0;
+	if ( $requires_payment && 'free' === $gateway ) {
+		rcp_errors()->add( 'invalid_gateway', __( 'A payment method is required for this membership level.', 'rcp' ), 'register' );
+		return;
+	}
+
+	// Additional validation: Check if this is an upgrade/renewal and user has permission.
+	if ( ! empty( $_REQUEST['registration_type'] ) && in_array( $_REQUEST['registration_type'], array( 'renewal', 'upgrade', 'downgrade' ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// For renewals/upgrades, verify the user owns the membership they're trying to modify.
+		if ( ! is_user_logged_in() ) {
+			return;
+		}
+
+		if ( ! empty( $_REQUEST['membership_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$membership = rcp_get_membership( absint( $_REQUEST['membership_id'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if ( empty( $membership ) || $membership->get_user_id() !== get_current_user_id() ) {
+				return;
+			}
+		}
+	}
+
+	$discount = ! empty( $_REQUEST['discount'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['discount'] ) ) : null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$discount = ! empty( $_POST['rcp_discount'] ) ? sanitize_text_field( wp_unslash( $_POST['rcp_discount'] ) ) : $discount; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 	rcp_setup_registration( $level_id, $discount );
 }
