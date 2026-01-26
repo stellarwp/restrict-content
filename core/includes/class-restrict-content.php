@@ -26,7 +26,7 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 	 * @since 3.0
 	 */
 	final class Restrict_Content_Pro {
-		const VERSION = '3.5.49';
+		const VERSION = '3.5.50';
 
 		/**
 		 * Stores the base slug for the extension.
