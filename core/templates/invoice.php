@@ -16,12 +16,17 @@ global $rcp_options, $rcp_payment, $rcp_member; ?>
 <!DOCTYPE html>
 <html lang="en-US" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
 <head>
-    <!-- Metadata -->
-    <meta charset="UTF-8">
-    <meta name="HandheldFriendly" content="true" />
+	<!-- Metadata -->
+	<meta charset="UTF-8">
+	<meta name="HandheldFriendly" content="true" />
 
 	<!-- Title -->
-	<title><?php printf( __( 'Invoice %s', 'rcp' ), $rcp_payment->id ); ?></title>
+	<title>
+	<?php
+	// translators: %s: Invoice ID.
+	printf( esc_html__( 'Invoice %s', 'rcp' ), esc_html( $rcp_payment->id ) );
+	?>
+	</title>
 
 	<!-- CSS -->
 	<style>
@@ -209,7 +214,7 @@ global $rcp_options, $rcp_payment, $rcp_member; ?>
 
 	<?php
 	/**
-	* RTL styles
+	 * RTL styles
 	 */
 	if ( is_rtl() ) {
 		?>
@@ -248,7 +253,7 @@ global $rcp_options, $rcp_payment, $rcp_member; ?>
 		}
 		<?php
 	}
-	 ?>
+	?>
 	</style>
 </head>
 
@@ -264,36 +269,46 @@ global $rcp_options, $rcp_payment, $rcp_member; ?>
 
 			<!-- Invoice Details -->
 			<div class="alignright">
-				<h1><?php printf( __( 'Invoice %s', 'rcp' ), $rcp_payment->id ); ?></h1>
+				<h1>
+				<?php
+				// translators: %s: Invoice ID.
+				printf( esc_html__( 'Invoice %s', 'rcp' ), esc_html( $rcp_payment->id ) );
+				?>
+				</h1>
 			</div>
 
-			<?php if( ! empty( $rcp_options['invoice_header'] ) ) : ?>
-				<p><?php echo $rcp_options['invoice_header']; ?></p>
+			<?php if ( ! empty( $rcp_options['invoice_header'] ) ) : ?>
+				<p><?php echo esc_html( $rcp_options['invoice_header'] ); ?></p>
 			<?php endif; ?>
 		</header>
 
 		<section id="contacts">
 			<div class="alignleft">
-				<header><?php printf( __( 'Invoice %s', 'rcp' ), $rcp_payment->id ); ?></header>
+				<header>
+				<?php
+				// translators: %s: Invoice ID.
+				printf( esc_html__( 'Invoice %s', 'rcp' ), esc_html( $rcp_payment->id ) );
+				?>
+				</header>
 
 				<article>
 					<?php if ( ! empty( $rcp_options['invoice_company'] ) ) : ?>
-						<p><strong><?php echo $rcp_options['invoice_company']; ?></strong></p>
+						<p><strong><?php echo esc_html( $rcp_options['invoice_company'] ); ?></strong></p>
 					<?php endif; ?>
 					<?php if ( ! empty( $rcp_options['invoice_name'] ) ) : ?>
-						<p><strong><?php echo $rcp_options['invoice_name']; ?></strong></p>
+						<p><strong><?php echo esc_html( $rcp_options['invoice_name'] ); ?></strong></p>
 					<?php endif; ?>
 					<?php if ( ! empty( $rcp_options['invoice_address'] ) ) : ?>
-						<p><strong><?php echo $rcp_options['invoice_address']; ?></strong></p>
+						<p><strong><?php echo esc_html( $rcp_options['invoice_address'] ); ?></strong></p>
 					<?php endif; ?>
 					<?php if ( ! empty( $rcp_options['invoice_address_2'] ) ) : ?>
-						<p><strong><?php echo $rcp_options['invoice_address_2']; ?></strong></p>
+						<p><strong><?php echo esc_html( $rcp_options['invoice_address_2'] ); ?></strong></p>
 					<?php endif; ?>
 					<?php if ( ! empty( $rcp_options['invoice_city_state_zip'] ) ) : ?>
-						<p><strong><?php echo $rcp_options['invoice_city_state_zip']; ?></strong></p>
+						<p><strong><?php echo esc_html( $rcp_options['invoice_city_state_zip'] ); ?></strong></p>
 					<?php endif; ?>
 					<?php if ( ! empty( $rcp_options['invoice_email'] ) ) : ?>
-						<p><strong><?php echo $rcp_options['invoice_email']; ?></strong></p>
+						<p><strong><?php echo esc_html( $rcp_options['invoice_email'] ); ?></strong></p>
 					<?php endif; ?>
 
 				</article>
@@ -301,11 +316,11 @@ global $rcp_options, $rcp_payment, $rcp_member; ?>
 
 			<div class="alignright">
 
-				<header><?php _e( 'Bill To:', 'rcp' ); ?></header>
+				<header><?php esc_html_e( 'Bill To:', 'rcp' ); ?></header>
 
 				<article>
-					<p><strong><?php echo $rcp_member->first_name . ' ' . $rcp_member->last_name; ?></strong></p>
-					<p><strong><?php echo $rcp_member->user_email; ?></strong></p>
+					<p><strong><?php echo esc_html( $rcp_member->first_name . ' ' . $rcp_member->last_name ); ?></strong></p>
+					<p><strong><?php echo esc_html( $rcp_member->user_email ); ?></strong></p>
 					<?php
 					/**
 					 * Insert content after the member's name and email.
@@ -326,14 +341,14 @@ global $rcp_options, $rcp_payment, $rcp_member; ?>
 			<table>
 				<thead>
 					<tr>
-						<th><?php _e( 'Description', 'rcp' ); ?></th>
-						<th><?php _e( 'Amount', 'rcp' ); ?></th>
+						<th><?php esc_html_e( 'Description', 'rcp' ); ?></th>
+						<th><?php esc_html_e( 'Amount', 'rcp' ); ?></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td class="name"><?php echo $rcp_payment->subscription; ?></td>
-						<td class="price"><?php echo rcp_currency_filter( $rcp_payment->subtotal ); ?></td>
+						<td class="name"><?php echo esc_html( $rcp_payment->subscription ); ?></td>
+						<td class="price"><?php echo esc_html( rcp_currency_filter( $rcp_payment->subtotal ) ); ?></td>
 					</tr>
 					<?php do_action( 'rcp_invoice_items', $rcp_payment ); ?>
 				</tbody>
@@ -341,45 +356,45 @@ global $rcp_options, $rcp_payment, $rcp_member; ?>
 					<?php do_action( 'rcp_invoice_items_before_total_price', $rcp_payment ); ?>
 
 					<!-- Fees -->
-					<?php if ( $rcp_payment->fees != 0 ) : ?>
+					<?php if ( $rcp_payment->fees !== 0 ) : ?>
 					<tr>
-						<td class="name"><?php _e( 'Fees:', 'rcp' ); ?></td>
-						<td class="price"><?php echo rcp_currency_filter( $rcp_payment->fees ); ?></td>
+						<td class="name"><?php esc_html_e( 'Fees:', 'rcp' ); ?></td>
+						<td class="price"><?php echo esc_html( rcp_currency_filter( $rcp_payment->fees ) ); ?></td>
 					</tr>
 					<?php endif; ?>
 
 					<!-- Subtotal -->
 					<tr>
-						<td class="name"><?php _e( 'Subtotal:', 'rcp' ); ?></td>
-						<td class="price"><?php echo rcp_currency_filter( $rcp_payment->subtotal + $rcp_payment->fees ); ?></td>
+						<td class="name"><?php esc_html_e( 'Subtotal:', 'rcp' ); ?></td>
+						<td class="price"><?php echo esc_html( rcp_currency_filter( $rcp_payment->subtotal + $rcp_payment->fees ) ); ?></td>
 					</tr>
 
 					<!-- Credits -->
-					<?php if ( $rcp_payment->credits != 0 ) : ?>
+					<?php if ( $rcp_payment->credits !== 0 ) : ?>
 					<tr>
-						<td class="name"><?php _e( 'Credits:', 'rcp' ); ?></td>
-						<td class="price"><?php echo rcp_currency_filter( -1 * abs( $rcp_payment->credits ) ); ?></td>
+						<td class="name"><?php esc_html_e( 'Credits:', 'rcp' ); ?></td>
+						<td class="price"><?php echo esc_html( rcp_currency_filter( -1 * abs( $rcp_payment->credits ) ) ); ?></td>
 					</tr>
 					<?php endif; ?>
 
 					<!-- Discount -->
-					<?php if ( $rcp_payment->discount_amount != 0 ) : ?>
+					<?php if ( $rcp_payment->discount_amount !== 0 ) : ?>
 					<tr>
-						<td class="name"><?php _e( 'Discount:', 'rcp' ); ?></td>
-						<td class="price"><?php echo rcp_currency_filter( -1 * abs( $rcp_payment->discount_amount ) ); ?></td>
+						<td class="name"><?php esc_html_e( 'Discount:', 'rcp' ); ?></td>
+						<td class="price"><?php echo esc_html( rcp_currency_filter( -1 * abs( $rcp_payment->discount_amount ) ) ); ?></td>
 					</tr>
 					<?php endif; ?>
 
 					<!-- Total -->
 					<tr>
-						<td class="name"><strong><?php _e( 'Total Price:', 'rcp' ); ?></strong></td>
-						<td class="price"><strong><?php echo rcp_currency_filter( $rcp_payment->amount ); ?></strong></td>
+						<td class="name"><strong><?php esc_html_e( 'Total Price:', 'rcp' ); ?></strong></td>
+						<td class="price"><strong><?php echo esc_html( rcp_currency_filter( $rcp_payment->amount ) ); ?></strong></td>
 					</tr>
 
 					<!-- Paid -->
 					<tr>
-						<td class="name"><?php _e( 'Payment Status:', 'rcp' ); ?></td>
-						<td class="price"><?php echo rcp_get_payment_status_label( $rcp_payment ); ?></td>
+						<td class="name"><?php esc_html_e( 'Payment Status:', 'rcp' ); ?></td>
+						<td class="price"><?php echo esc_html( rcp_get_payment_status_label( $rcp_payment ) ); ?></td>
 					</tr>
 				</tfoot>
 			</table>
@@ -388,17 +403,28 @@ global $rcp_options, $rcp_payment, $rcp_member; ?>
 		<!-- Additional Info -->
 		<section id="additional-info">
 			<div class="alignleft">
-				<header><?php _e( 'Additional Info:', 'rcp' ); ?></header>
+				<header><?php esc_html_e( 'Additional Info:', 'rcp' ); ?></header>
 
-				<?php if ( in_array( $rcp_payment->status, array( 'complete', 'refunded' ) ) ) : ?>
+				<?php if ( in_array( $rcp_payment->status, array( 'complete', 'refunded' ), true ) ) : ?>
 					<article>
-						<p><?php echo __( 'Payment Date:', 'rcp' ) . ' ' . date_i18n( get_option( 'date_format' ), strtotime( $rcp_payment->date, current_time( 'timestamp' ) ) ); ?></p>
+						<?php
+						$payment_date = date_i18n( get_option( 'date_format' ), strtotime( $rcp_payment->date ) );
+						?>
+						<p>
+						<?php
+						// translators: %s: Payment date.
+						printf( esc_html__( 'Payment Date: %s', 'rcp' ), esc_html( $payment_date ) );
+						?>
+						</p>
 					</article>
 				<?php endif; ?>
 
-				<?php if( ! empty( $rcp_options['invoice_notes'] ) ) : ?>
+				<?php if ( ! empty( $rcp_options['invoice_notes'] ) ) : ?>
 					<article>
-						<?php echo wpautop( wp_kses_post( $rcp_options['invoice_notes'] ) ); ?>
+						<?php
+						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo wpautop( wp_kses_post( $rcp_options['invoice_notes'] ) );
+						?>
 					</article>
 				<?php endif; ?>
 
@@ -409,10 +435,10 @@ global $rcp_options, $rcp_payment, $rcp_member; ?>
 		<?php do_action( 'rcp_invoice_after_additional_info', $rcp_payment ); ?>
 
 		<footer id="footer">
-			<?php if( ! empty( $rcp_options['invoice_footer'] ) ) : ?>
-				<p><?php echo $rcp_options['invoice_footer']; ?></p>
+			<?php if ( ! empty( $rcp_options['invoice_footer'] ) ) : ?>
+				<p><?php echo esc_html( $rcp_options['invoice_footer'] ); ?></p>
 			<?php endif; ?>
-			<p class="print alignright"><a href="#" onclick="window.print()"><?php _e( 'Print', 'rcp' ); ?></a></p>
+			<p class="print alignright"><a href="#" onclick="window.print()"><?php esc_html_e( 'Print', 'rcp' ); ?></a></p>
 		</footer>
 	</div>
 </body>
