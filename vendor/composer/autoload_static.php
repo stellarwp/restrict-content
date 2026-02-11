@@ -7,53 +7,53 @@ namespace Composer\Autoload;
 class ComposerStaticInitc0eb550f43e123288eb31addcf85e62e
 {
     public static $prefixLengthsPsr4 = array (
-        'l' => 
+        'l' =>
         array (
             'lucatume\\DI52\\' => 14,
         ),
-        'S' => 
+        'S' =>
         array (
             'StellarWP\\Telemetry\\Views_Dir\\' => 30,
             'StellarWP\\Telemetry\\Assets_Dir\\' => 31,
             'StellarWP\\Telemetry\\' => 20,
             'StellarWP\\ContainerContract\\' => 28,
         ),
-        'R' => 
+        'R' =>
         array (
             'RCP\\' => 4,
         ),
-        'P' => 
+        'P' =>
         array (
             'Psr\\Container\\' => 14,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'lucatume\\DI52\\' => 
+        'lucatume\\DI52\\' =>
         array (
             0 => __DIR__ . '/..' . '/lucatume/di52/src',
         ),
-        'StellarWP\\Telemetry\\Views_Dir\\' => 
+        'StellarWP\\Telemetry\\Views_Dir\\' =>
         array (
             0 => __DIR__ . '/..' . '/stellarwp/telemetry/src/views',
         ),
-        'StellarWP\\Telemetry\\Assets_Dir\\' => 
+        'StellarWP\\Telemetry\\Assets_Dir\\' =>
         array (
             0 => __DIR__ . '/..' . '/stellarwp/telemetry/src/resources',
         ),
-        'StellarWP\\Telemetry\\' => 
+        'StellarWP\\Telemetry\\' =>
         array (
             0 => __DIR__ . '/..' . '/stellarwp/telemetry/src/Telemetry',
         ),
-        'StellarWP\\ContainerContract\\' => 
+        'StellarWP\\ContainerContract\\' =>
         array (
             0 => __DIR__ . '/..' . '/stellarwp/container-contract/src',
         ),
-        'RCP\\' => 
+        'RCP\\' =>
         array (
             0 => __DIR__ . '/../..' . '/core/includes',
         ),
-        'Psr\\Container\\' => 
+        'Psr\\Container\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
         ),
