@@ -101,11 +101,6 @@ function rcp_process_registration() {
 		rcp_errors()->add( 'no_level', __( 'Please choose a membership level', 'rcp' ), 'register' );
 	}
 
-	// Validate membership level is active.
-	if ( 'active' !== $membership_level->get_status() ) {
-		rcp_errors()->add( 'invalid_level', __( 'The selected membership level is not available for registration.', 'rcp' ), 'register' );
-	}
-
 	if ( $membership_level->is_free() && ! $membership_level->is_lifetime() && $has_trialed ) {
 		// this ensures that users only sign up for a free trial once
 		rcp_errors()->add( 'free_trial_used', __( 'You may only sign up for a free trial once', 'rcp' ), 'register' );
@@ -1223,7 +1218,23 @@ function rcp_setup_registration_init() {
 
 	// Validate membership level is active.
 	$membership_level = rcp_get_membership_level( $level_id );
-	if ( ! $membership_level instanceof Membership_Level || 'active' !== $membership_level->get_status() ) {
+
+	/**
+	 * Filters whether or not to allow registration to inactive membership levels.
+	 *
+	 * @since 3.5.52
+	 *
+	 * @param bool                       $can_register_inactive_levels Whether or not to allow registration to inactive membership levels.
+	 * @param RCP\Membership_Level|false $membership_level             Membership level object.
+	 *
+	 * @return bool
+	 */
+	$can_register_inactive_levels = apply_filters( 'rcp_can_register_to_inactive_membership_levels', true, $membership_level );
+
+	if (
+		! $membership_level instanceof Membership_Level
+		|| ( ! $can_register_inactive_levels && 'active' !== $membership_level->get_status() )
+	) {
 		rcp_errors()->add( 'invalid_level', __( 'Invalid membership level selected.', 'rcp' ), 'register' );
 		return;
 	}
