@@ -235,10 +235,6 @@ function rcp_hide_premium_posts_from_rest_api( $args ) {
 		],
 	];
 
-	// For REST API, we need to handle term-based restrictions differently since meta_query
-	// doesn't support term relationships. We'll use a custom filter approach.
-	add_filter( 'rest_post_query', 'rcp_filter_rest_api_restricted_posts', 10, 2 );
-
 	return $args;
 }
 
@@ -247,6 +243,7 @@ function rcp_hide_premium_posts_from_rest_api( $args ) {
  * This handles the term-based restrictions that can't be handled by meta_query alone.
  *
  * @since 3.5.47
+ * @deprecated 3.5.52
  *
  * @param array<string, mixed> $args    The query arguments.
  * @param WP_REST_Request      $request The REST request object.
@@ -254,33 +251,7 @@ function rcp_hide_premium_posts_from_rest_api( $args ) {
  * @return array<string,mixed> Modified query arguments.
  */
 function rcp_filter_rest_api_restricted_posts( $args, $request ) {
-	global $wpdb;
-
-	// Get posts that are assigned to restricted terms.
-	$restricted_term_post_ids = $wpdb->get_col(
-		"SELECT DISTINCT tr.object_id
-		FROM {$wpdb->term_relationships} tr
-		INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
-		INNER JOIN {$wpdb->termmeta} tm ON tt.term_id = tm.term_id
-		WHERE tm.meta_key = 'rcp_restricted_meta'
-		AND tm.meta_value != ''
-		AND tm.meta_value NOT LIKE '%s:13:\"access_level\";s:4:\"None\"%'"
-	);
-
-	if ( ! empty( $restricted_term_post_ids ) ) {
-		// Initialize post__not_in if it doesn't exist.
-		if ( ! isset( $args['post__not_in'] ) ) {
-			$args['post__not_in'] = [];
-		} elseif ( is_array( $args['post__not_in'] ) ) {
-			// Add term-restricted post IDs to the exclusion list.
-			$args['post__not_in'] = array_unique(
-				array_merge( $args['post__not_in'], $restricted_term_post_ids )
-			);
-		}
-	}
-
-	// Remove this filter to prevent it from affecting other queries.
-	remove_filter( 'rest_post_query', 'rcp_filter_rest_api_restricted_posts', 10 );
+	_deprecated_function( __FUNCTION__, '3.5.52' );
 
 	return $args;
 }
