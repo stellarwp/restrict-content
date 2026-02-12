@@ -58,14 +58,14 @@ function rcp_process_registration() {
 		);
 	}
 
-		// We are already sanitizing, but PHPCS keep complaining about the isset function.
+	// We are already sanitizing, but PHPCS keep complaining about the isset function.
 	// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 	$discount       = isset( $_POST['rcp_discount'] ) ? sanitize_text_field( strtolower( wp_unslash( $_POST['rcp_discount'] ) ) ) : '';
 	$price          = number_format( $membership_level->get_price(), 2, '.', '' );
-	$initial_amount = rcp_get_registration()->get_total();
+	$initial_amount = rcp_get_registration()->get_total() + rcp_get_registration()->get_signup_fees();
 	$auto_renew     = rcp_registration_is_recurring();
-	// if both today's total and the recurring total are 0, the there is a full discount
-	// if this is not a recurring membership only check today's total
+	// If both today's total and the recurring total are 0, the there is a full discount.
+	// If this is not a recurring membership only check today's total.
 	$full_discount     = ( $auto_renew ) ? ( rcp_get_registration()->get_total() == 0 && rcp_get_registration()->get_recurring_total() == 0 ) : ( rcp_get_registration()->get_total() == 0 );
 	$customer          = rcp_get_customer_by_user_id();
 	$has_trialed       = ! empty( $customer ) ? $customer->has_trialed() : false;
@@ -97,12 +97,33 @@ function rcp_process_registration() {
 	$user_data = rcp_validate_user_data();
 
 	if ( ! rcp_is_registration() ) {
-		// no membership level was chosen
+		// No membership level was chosen.
 		rcp_errors()->add( 'no_level', __( 'Please choose a membership level', 'rcp' ), 'register' );
 	}
 
+	/**
+	 * Filters whether or not to allow processing a registration to an inactive membership level.
+	 *
+	 * @since 3.5.53
+	 *
+	 * @param bool                       $can_process_registration_to_inactive_levels Whether or not to allow processing a registration to an inactive membership level. Default is true if the registration type is renewal, otherwise false.
+	 * @param RCP\Membership_Level|false $membership_level                            Membership level object.
+	 *
+	 * @return bool
+	 */
+	$can_process_registration_to_inactive_levels = apply_filters(
+		'rcp_can_register_to_inactive_membership_levels',
+		'renewal' === $registration_type,
+		$membership_level,
+	);
+
+	// If the membership level is inactive and the registration type is not renewal, upgrade, or downgrade, show an error.
+	if ( ! $can_process_registration_to_inactive_levels && 'active' !== $membership_level->get_status() ) {
+		rcp_errors()->add( 'inactive_level', __( 'Invalid membership level selected', 'rcp' ), 'register' );
+	}
+
 	if ( $membership_level->is_free() && ! $membership_level->is_lifetime() && $has_trialed ) {
-		// this ensures that users only sign up for a free trial once
+		// This ensures that users only sign up for a free trial once.
 		rcp_errors()->add( 'free_trial_used', __( 'You may only sign up for a free trial once', 'rcp' ), 'register' );
 	}
 
@@ -1214,41 +1235,45 @@ function rcp_setup_registration_init() {
 		return;
 	}
 
-	$level_id = (int) abs( sanitize_text_field( wp_unslash( $_POST['rcp_level'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+	$level_id = absint( wp_unslash( $_POST['rcp_level'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 	// Validate membership level is active.
 	$membership_level = rcp_get_membership_level( $level_id );
+
+	$registration_type = ! empty( $_REQUEST['registration_type'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['registration_type'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 	/**
 	 * Filters whether or not to allow registration to inactive membership levels.
 	 *
 	 * @since 3.5.52
 	 *
-	 * @param bool                       $can_register_inactive_levels Whether or not to allow registration to inactive membership levels.
+	 * @param bool                       $can_register_inactive_levels Whether or not to allow registration to inactive membership levels. Default is true if the registration type is renewal, otherwise false.
 	 * @param RCP\Membership_Level|false $membership_level             Membership level object.
 	 *
 	 * @return bool
 	 */
-	$can_register_inactive_levels = apply_filters( 'rcp_can_register_to_inactive_membership_levels', true, $membership_level );
+	$can_register_inactive_levels = apply_filters(
+		'rcp_can_register_to_inactive_membership_levels',
+		'renewal' === $registration_type,
+		$membership_level,
+	);
 
-	if (
-		! $membership_level instanceof Membership_Level
-		|| ( ! $can_register_inactive_levels && 'active' !== $membership_level->get_status() )
-	) {
+	if ( ! $membership_level instanceof Membership_Level ) {
 		rcp_errors()->add( 'invalid_level', __( 'Invalid membership level selected.', 'rcp' ), 'register' );
 		return;
 	}
 
 	// Validate that paid levels (price > 0 or fee > 0) cannot use the free gateway.
-	$gateway = isset( $_POST['rcp_gateway'] ) ? sanitize_text_field( wp_unslash( $_POST['rcp_gateway'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+	$gateway          = isset( $_POST['rcp_gateway'] ) ? sanitize_text_field( wp_unslash( $_POST['rcp_gateway'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 	$requires_payment = $membership_level->get_price() > 0 || $membership_level->get_fee() > 0;
+
 	if ( $requires_payment && 'free' === $gateway ) {
 		rcp_errors()->add( 'invalid_gateway', __( 'A payment method is required for this membership level.', 'rcp' ), 'register' );
 		return;
 	}
 
 	// Additional validation: Check if this is an upgrade/renewal and user has permission.
-	if ( ! empty( $_REQUEST['registration_type'] ) && in_array( $_REQUEST['registration_type'], array( 'renewal', 'upgrade', 'downgrade' ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	if ( in_array( $registration_type, [ 'renewal', 'upgrade', 'downgrade' ], true ) ) {
 		// For renewals/upgrades, verify the user owns the membership they're trying to modify.
 		if ( ! is_user_logged_in() ) {
 			return;
@@ -1260,6 +1285,12 @@ function rcp_setup_registration_init() {
 				return;
 			}
 		}
+	}
+
+	// If the membership level is inactive and the registration type is not renewal, upgrade, or downgrade, show an error.
+	if ( ! $can_register_inactive_levels && 'active' !== $membership_level->get_status() ) {
+		rcp_errors()->add( 'inactive_level', __( 'Invalid membership level selected', 'rcp' ), 'register' );
+		return;
 	}
 
 	$discount = ! empty( $_REQUEST['discount'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['discount'] ) ) : null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
