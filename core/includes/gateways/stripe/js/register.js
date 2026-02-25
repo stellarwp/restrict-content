@@ -22,7 +22,8 @@ function rcpStripeHandlePaymentFailure( payment_id, message ) {
 		data: {
 			action: 'rcp_stripe_handle_initial_payment_failure',
 			payment_id: payment_id,
-			message: message
+			message: message,
+			nonce: rcp_script_options.stripe_payment_nonce
 		},
 		success: function ( response ) { }
 	} );

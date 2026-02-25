@@ -179,7 +179,7 @@ add_action( 'rcp_before_update_billing_card_form', 'rcp_stripe_update_card_form_
 /**
  * Update the billing card for a given membership.
  *
- * @param RCP_Membership $membership
+ * @param RCP_Membership $membership Membership object.
  *
  * @since 3.0
  * @return void
@@ -298,7 +298,7 @@ function rcp_stripe_update_membership_billing_card( $membership ) {
 
 		wp_die( $error, __( 'Error', 'rcp' ), array( 'response' => '401' ) );
 
-		exit;
+		return;
 
 	} catch (\Stripe\Error\InvalidRequest $e) {
 
@@ -375,8 +375,8 @@ function rcp_stripe_update_membership_billing_card( $membership ) {
 
 	}
 
-	wp_redirect( add_query_arg( 'card', 'updated' ) ); exit;
-
+	wp_redirect( add_query_arg( 'card', 'updated' ) );
+	return;
 }
 add_action( 'rcp_update_membership_billing_card', 'rcp_stripe_update_membership_billing_card' );
 
@@ -791,11 +791,16 @@ function rcp_stripe_enqueue_scripts( $localize = array() ) {
  */
 function rcp_stripe_handle_initial_payment_failure() {
 
-	$payment_id = ! empty( $_POST['payment_id'] ) ? absint( $_POST['payment_id'] ) : 0;
+	// Verify nonce for CSRF protection.
+	$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+	if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'rcp_process_stripe_payment' ) ) {
+		wp_send_json_error( __( 'Security verification failed.', 'rcp' ) );
+	}
+
+	$payment_id = ! empty( $_POST['payment_id'] ) ? absint( wp_unslash( $_POST['payment_id'] ) ) : 0;
 
 	if ( empty( $payment_id ) ) {
 		wp_send_json_error( __( 'Missing payment ID.', 'rcp' ) );
-		exit;
 	}
 
 	/**
@@ -805,10 +810,40 @@ function rcp_stripe_handle_initial_payment_failure() {
 
 	$payment = $rcp_payments_db->get_payment( $payment_id );
 
-	if ( empty( $payment ) ) {
+	if ( empty( $payment ) || ! is_object( $payment ) ) {
 		wp_send_json_error( __( 'Invalid payment.', 'rcp' ) );
-		exit;
 	}
+
+	// Security check: Verify user ownership of the payment.
+	$current_user_id = get_current_user_id();
+	if ( empty( $current_user_id ) || absint( $payment->user_id ) !== $current_user_id ) {
+		wp_send_json_error( __( 'You do not have permission to perform this action.', 'rcp' ) );
+	}
+
+	// Only allow marking payments as failed if they are in pending status.
+	if ( 'pending' !== strtolower( $payment->status ) ) {
+		wp_send_json_error( __( 'This payment cannot be marked as failed.', 'rcp' ) );
+	}
+
+	// Verify the membership belongs to the current user.
+	if ( ! empty( $payment->membership_id ) ) {
+		$membership = rcp_get_membership( absint( $payment->membership_id ) );
+		if ( empty( $membership ) || absint( $membership->get_customer()->get_user_id() ) !== $current_user_id ) {
+			wp_send_json_error( __( 'You do not have permission to perform this action.', 'rcp' ) );
+		}
+	}
+
+	/**
+	 * Fires before processing a payment failure.
+	 *
+	 * Can be used to implement additional security checks like rate limiting.
+	 *
+	 * @since 3.5.55
+	 *
+	 * @param object $payment Payment object.
+	 * @param int    $user_id Current user ID.
+	 */
+	do_action( 'rcp_before_stripe_handle_payment_failure', $payment, $current_user_id );
 
 	$gateway = new RCP_Payment_Gateway_Stripe();
 
@@ -816,7 +851,7 @@ function rcp_stripe_handle_initial_payment_failure() {
 	$gateway->payment       = $payment;
 	$gateway->user_id       = $payment->user_id;
 	$gateway->membership    = rcp_get_membership( absint( $payment->membership_id ) );
-	$gateway->error_message = ! empty( $_POST['message'] ) ? sanitize_text_field( $_POST['message'] ) : __( 'Unknown error', 'rcp' );
+	$gateway->error_message = ! empty( $_POST['message'] ) ? sanitize_text_field( wp_unslash( $_POST['message'] ) ) : __( 'Unknown error', 'rcp' );
 
 	do_action( 'rcp_registration_failed', $gateway );
 
@@ -830,7 +865,6 @@ function rcp_stripe_handle_initial_payment_failure() {
 	do_action( 'rcp_stripe_signup_payment_failed', $error, $gateway );
 
 	wp_send_json_success();
-	exit;
 
 }
 
@@ -986,7 +1020,6 @@ function rcp_stripe_create_setup_intent_for_saved_card() {
 	}
 
 	wp_send_json_error( __( 'Error creating setup intent.', 'rcp' ) );
-	exit;
 
 }
 
@@ -1094,8 +1127,7 @@ function rcp_stripe_delete_saved_payment_method() {
 		wp_send_json_error( __( 'An unknown error occurred.', 'rcp' ) );
 	}
 
-	exit;
-
+	return;
 }
 add_action( 'wp_ajax_rcp_stripe_delete_saved_payment_method', 'rcp_stripe_delete_saved_payment_method' );
 
