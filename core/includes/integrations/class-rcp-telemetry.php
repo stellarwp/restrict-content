@@ -334,6 +334,23 @@ class RCP_Telemetry {
 			$rcp_slug  = 'restrict-content';
 		}
 
+		// We need to format the list values, so they can display properly in the WordPress Site Health section.
+		// A ordered list display better that a comma separated list, especially when there are multiple values.
+
+		$formatted_payment_gateways = array_combine(
+			range(
+				1,
+				count( $telemetry_info->payment_gateways()['enabled_gateways'] )
+			),
+			array_values( $telemetry_info->payment_gateways()['enabled_gateways'] )
+		);
+
+		$active_add_ons           = wp_list_pluck( $telemetry_info->active_addons(), 'name' );
+		$formatted_active_add_ons = $active_add_ons ? array_combine( range( 1, count( $active_add_ons ) ), array_values( $active_add_ons ) ) : [];
+
+		$deactivated_addons            = wp_list_pluck( $telemetry_info->deactivated_addons(), 'name' );
+		$formatted_deactivated_add_ons = $deactivated_addons ? array_combine( range( 1, count( $deactivated_addons ) ), array_values( $deactivated_addons ) ) : [];
+
 		$_info[ $rcp_slug ] = [
 			'label'       => $rcp_title,
 			'description' => sprintf(
@@ -392,19 +409,18 @@ class RCP_Telemetry {
 				],
 				'payment_gateways'                  => [
 					'label' => esc_html__( 'Payment Gateways', 'rcp' ),
-					'value' => wp_json_encode( $telemetry_info->payment_gateways() ),
+					'value' => $formatted_payment_gateways,
 				],
 				'active_add_ons'                    => [
 					'label' => esc_html__( 'Active Add-ons', 'rcp' ),
-					'value' => wp_json_encode( $telemetry_info->active_addons() ),
+					'value' => $formatted_active_add_ons,
 				],
 				'deactivated_add_ons'               => [
 					'label' => esc_html__( 'Deactivated Add-ons', 'rcp' ),
-					'value' => wp_json_encode( $telemetry_info->deactivated_addons() ),
+					'value' => $formatted_deactivated_add_ons,
 				],
 			],
 		];
-
 
 		return $_info;
 	}
