@@ -299,6 +299,7 @@ function rcp_print_scripts() {
 			'error_occurred'     => esc_html__( 'An unexpected error has occurred. Please try again or contact support if the issue persists.', 'rcp' ),
 			'enter_card_details' => esc_html__( 'Please enter your card details.', 'rcp' ),
 			'invalid_cardholder' => esc_html__( 'The card holder name you have entered is invalid', 'rcp' ),
+			'stripe_payment_nonce' => wp_create_nonce( 'rcp_process_stripe_payment' ),
 		)
 	);
 
