@@ -150,9 +150,10 @@ class RCP_Batch_Callback_Import_Payments extends RCP_Batch_Callback_CSV_Import_B
 	/**
 	 * Get payment data from the row
 	 *
-	 * @param array $row
+	 * @param array $row Row data from the CSV file.
 	 *
 	 * @since 3.4
+	 * @since 3.5.57 Fix incorrect date array key.
 	 * @return array|WP_Error
 	 */
 	private function get_payment_data( $row ) {
@@ -161,10 +162,10 @@ class RCP_Batch_Callback_Import_Payments extends RCP_Batch_Callback_CSV_Import_B
 
 		// Date.
 		if ( ! empty( $this->field_map['date'] ) && ! empty( $row[ $this->field_map['date'] ] ) ) {
-			$date = $row[ $this->field_map['membership_level_name'] ];
+			$date = $row[ $this->field_map['date'] ];
 
 			// Convert it to our desired format.
-			$data['date'] = date( 'Y-m-d H:i:s', strtotime( $date, current_time( 'timestamp' ) ) );
+			$data['date'] = wp_date( 'Y-m-d H:i:s', strtotime( $date ) );
 		}
 
 		// Membership & object ID
