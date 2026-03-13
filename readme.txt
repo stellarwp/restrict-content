@@ -257,6 +257,9 @@ https://restrictcontentpro.com/tour/screenshots/
 
 == Changelog ==
 
+= TBD =
+* Security: Improved sanitization and validation of member-related POST data.
+
 = 3.2.24 =
 * Fix: Fixed incorrect date array key in payment import process.
 
