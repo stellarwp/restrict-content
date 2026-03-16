@@ -184,7 +184,7 @@ add_action('init', 'rcp_process_lostpassword_reset');
  * @uses rcp_retrieve_password()
  *
  * @since  2.3
- * @since TBD Improved validation of redirect URLs
+ * @since 3.2.25 Improved validation of redirect URLs
  * @return void
  */
 function rcp_process_lostpassword_form() {
@@ -245,7 +245,7 @@ function rcp_retrieve_password() {
 	 * Fires when a user is initializing the reset password flow.
 	 *
 	 * @since 3.4.3
-	 * @since TBD Improved validation of redirect URLs
+	 * @since 3.2.25 Improved validation of redirect URLs
 	 *
 	 * @param array   $_POST     The form $_POST data.
 	 * @param WP_User $user_data The user whose password reset is being requested.

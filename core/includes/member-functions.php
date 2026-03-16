@@ -435,7 +435,7 @@ function rcp_get_upgrade_paths( $user_id = 0 ) {
  *
  * @access  private
  * @since   1.5
- * @since TBD Improved validation of redirect URLs
+ * @since 3.2.25 Improved validation of redirect URLs
  * @return  void
 */
 function rcp_process_profile_editor_updates() {
@@ -514,7 +514,7 @@ add_action( 'init', 'rcp_process_profile_editor_updates' );
  *
  * @access  public
  * @since   1.0
- * @since TBD Improved validation of redirect URLs
+ * @since 3.2.25 Improved validation of redirect URLs
  * @return  void
  */
 function rcp_change_password() {
