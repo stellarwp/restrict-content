@@ -435,18 +435,20 @@ function rcp_get_upgrade_paths( $user_id = 0 ) {
  *
  * @access  private
  * @since   1.5
+ * @since 3.5.58 Improved validation of redirect URLs
+ * @since 3.5.58.1 Change sanitization of redirect URLs from sanitize_text_field to sanitize_url
  * @return  void
 */
 function rcp_process_profile_editor_updates() {
 
 	// Profile field change request
 	if ( empty( $_POST['rcp_action'] ) || $_POST['rcp_action'] !== 'edit_user_profile' || !is_user_logged_in() )
-		return false;
+		return;
 
 
 	// Nonce security
 	if ( ! wp_verify_nonce( $_POST['rcp_profile_editor_nonce'], 'rcp-profile-editor-nonce' ) )
-		return false;
+		return;
 
 	$user_id      = get_current_user_id();
 	$old_data     = get_userdata( $user_id );
@@ -498,7 +500,7 @@ function rcp_process_profile_editor_updates() {
 		if( $updated ) {
 			do_action( 'rcp_user_profile_updated', $user_id, $userdata, $old_data );
 
-			wp_safe_redirect( add_query_arg( 'rcp-message', 'profile-updated', sanitize_text_field( $_POST['rcp_redirect'] ) ) );
+			wp_safe_redirect( add_query_arg( 'rcp-message', 'profile-updated', wp_validate_redirect( isset( $_POST['rcp_redirect'] ) ? sanitize_url( wp_unslash( $_POST['rcp_redirect'] ) ) : '', home_url() ) ) ); // phpcs:ignore WordPress.WP.DeprecatedFunctions.sanitize_urlFound, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 			exit;
 		} else {
@@ -513,6 +515,8 @@ add_action( 'init', 'rcp_process_profile_editor_updates' );
  *
  * @access  public
  * @since   1.0
+ * @since 3.5.58 Improved validation of redirect URLs
+ * @since 3.5.58.1 Change sanitization of redirect URLs from sanitize_text_field to sanitize_url
  * @return  void
  */
 function rcp_change_password() {
@@ -558,7 +562,7 @@ function rcp_change_password() {
 				// remove cookie with password reset info
 				setcookie( $rp_cookie, ' ', time() - YEAR_IN_SECONDS, $rp_path, COOKIE_DOMAIN, is_ssl(), true );
 				// send password change email here (if WP doesn't)
-				wp_safe_redirect( add_query_arg( 'password-reset', 'true', $_POST['rcp_redirect'] ) );
+				wp_safe_redirect( add_query_arg( 'password-reset', 'true', wp_validate_redirect( isset( $_POST['rcp_redirect'] ) ? sanitize_url( wp_unslash( $_POST['rcp_redirect'] ) ) : '', home_url() ) ) ); // phpcs:ignore WordPress.WP.DeprecatedFunctions.sanitize_urlFound, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				exit;
 			}
 		}
