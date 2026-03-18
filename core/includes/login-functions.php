@@ -184,6 +184,8 @@ add_action('init', 'rcp_process_lostpassword_reset');
  * @uses rcp_retrieve_password()
  *
  * @since  2.3
+ * @since 3.5.58 Improved validation of redirect URLs
+ * @since 3.5.58.1 Change sanitization of redirect URLs from sanitize_text_field to sanitize_url
  * @return void
  */
 function rcp_process_lostpassword_form() {
@@ -199,8 +201,8 @@ function rcp_process_lostpassword_form() {
 	$errors = rcp_retrieve_password();
 
 	if ( ! is_wp_error( $errors ) ) {
-		$redirect_to = esc_url($_POST['rcp_redirect']) . '?rcp_action=lostpassword_checkemail';
-		wp_redirect( $redirect_to );
+		$redirect_to = wp_validate_redirect( isset( $_POST['rcp_redirect'] ) ? sanitize_url( wp_unslash( $_POST['rcp_redirect'] ) ) : '', home_url() ); // phpcs:ignore WordPress.WP.DeprecatedFunctions.sanitize_urlFound, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		wp_safe_redirect( add_query_arg( 'rcp_action', 'lostpassword_checkemail', $redirect_to ) );
 		exit();
 	}
 }
@@ -244,6 +246,8 @@ function rcp_retrieve_password() {
 	 * Fires when a user is initializing the reset password flow.
 	 *
 	 * @since 3.4.3
+	 * @since 3.5.58 Improved validation of redirect URLs
+	 * @since 3.5.58.1 Change sanitization of redirect URLs from sanitize_text_field to sanitize_url
 	 *
 	 * @param array   $_POST     The form $_POST data.
 	 * @param WP_User $user_data The user whose password reset is being requested.
@@ -267,7 +271,17 @@ function rcp_retrieve_password() {
 	$message .= sprintf(__('Username: %s', 'rcp'), $user_login) . "\r\n\r\n";
 	$message .= __('If this was a mistake, just ignore this email and nothing will happen.', 'rcp') . "\r\n\r\n";
 	$message .= __('To reset your password, visit the following address:', 'rcp') . "\r\n\r\n";
-	$message .= esc_url_raw( add_query_arg( array( 'rcp_action' => 'lostpassword_reset', 'key' => $key, 'login' => rawurlencode( $user_login ) ), $_POST['rcp_redirect'] ) ) . "\r\n";
+	$redirect_base = wp_validate_redirect( isset( $_POST['rcp_redirect'] ) ? sanitize_url( wp_unslash( $_POST['rcp_redirect'] ) ) : '', home_url() ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.WP.DeprecatedFunctions.sanitize_urlFound, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+	$message .= esc_url_raw(
+		add_query_arg(
+			array(
+				'rcp_action' => 'lostpassword_reset',
+				'key'        => $key,
+				'login'      => rawurlencode( $user_login ),
+			),
+			$redirect_base
+		)
+	) . "\r\n";
 
 	if ( is_multisite() ) {
 
