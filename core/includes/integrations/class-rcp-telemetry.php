@@ -337,13 +337,8 @@ class RCP_Telemetry {
 		// We need to format the list values, so they can display properly in the WordPress Site Health section.
 		// A ordered list display better that a comma separated list, especially when there are multiple values.
 
-		$formatted_payment_gateways = array_combine(
-			range(
-				1,
-				count( $telemetry_info->payment_gateways()['enabled_gateways'] )
-			),
-			array_values( $telemetry_info->payment_gateways()['enabled_gateways'] )
-		);
+		$enabled_gateways           = $telemetry_info->payment_gateways()['enabled_gateways'];
+		$formatted_payment_gateways = $enabled_gateways ? array_combine( range( 1, count( $enabled_gateways ) ), array_values( $enabled_gateways ) ) : [];
 
 		$active_add_ons           = wp_list_pluck( $telemetry_info->active_addons(), 'name' );
 		$formatted_active_add_ons = $active_add_ons ? array_combine( range( 1, count( $active_add_ons ) ), array_values( $active_add_ons ) ) : [];
