@@ -258,7 +258,7 @@ https://restrictcontentpro.com/tour/screenshots/
 == Changelog ==
 
 = TBD =
-* Tweak - Updated branding references from StellarWP to Liquid Web.
+* Tweak: Updated branding references from StellarWP to Liquid Web.
 
 = 3.2.26 =
 * Fix: Fixed a fatal error when no payment gateways are enabled in telemetry data.
