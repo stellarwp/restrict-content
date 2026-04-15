@@ -1,7 +1,7 @@
 === Membership Plugin - Kadence Memberships ===
 Author URI: https://restrictcontentpro.com
-Author: StellarWP
-Contributors: stellarwp, reedyseth, highprrrr
+Author: Liquid Web
+Contributors: liquidweb, reedyseth, highprrrr
 Tags: restrict pages, restrict posts, restrict access, membership, registration form, access control
 Requires at least: 6.0
 Requires PHP: 7.4
@@ -256,6 +256,9 @@ Go to the demo page to see examples:
 https://restrictcontentpro.com/tour/screenshots/
 
 == Changelog ==
+
+= TBD =
+* Tweak - Updated branding references from StellarWP to Liquid Web.
 
 = 3.2.26 =
 * Fix: Fixed a fatal error when no payment gateways are enabled in telemetry data.
