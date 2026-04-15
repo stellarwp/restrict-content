@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Restrict Content
+ * Plugin Name: Kadence Memberships
  * Plugin URI: https://restrictcontentpro.com
  * Description: Set up a complete membership system for your WordPress site and deliver premium content to your members. Unlimited membership packages, membership management, discount codes, registration / login forms, and more.
  * Version: 3.2.26
@@ -185,7 +185,7 @@ final class RC_Requirements_Check
     }
 
     /**
-     * Check the posts for Restrict Content's rcp_user_level setting
+     * Check the posts for Kadence Memberships' rcp_user_level setting
      *
      * @return bool
      * @since  3.0
@@ -205,7 +205,7 @@ final class RC_Requirements_Check
     }
 
     /**
-     * Check the posts for Restrict Content shortcodes
+     * Check the posts for Kadence Memberships shortcodes
      *
      * @return bool
      * @since  3.0
@@ -354,7 +354,7 @@ final class RC_Requirements_Check
      */
     private function unmet_requirements_label()
     {
-        return esc_html__('Restrict Content Pro Requirements', 'rcp');
+        return esc_html__('Kadence Memberships Pro Requirements', 'rcp');
     }
 
     /**
@@ -639,7 +639,7 @@ final class RC_Requirements_Check
 new RC_Requirements_Check();
 
 /**
- * Process the switch between Legacy Restrict Content and Restrict Content 3.0
+ * Process the switch between Legacy Kadence Memberships and Kadence Memberships 3.0
  *
  * @since 3.0
  */
@@ -716,13 +716,13 @@ function restrict_content_add_legacy_button_to_pro()
                         type="button"
                         id="restrict_content_legacy_switch"
                         class="button-secondary danger"
-                        value="<?php _e('Downgrade to Legacy Restrict Content?', 'LION'); ?>"
+                        value="<?php _e('Downgrade to Legacy Kadence Memberships?', 'LION'); ?>"
                 />
             </td>
         </tr>
         <tr>
             <td>
-                <?php _e('After downgrading, you will lose access to most of the features in Restrict Content 3, including membership levels and collecting payments. Additionally, content restrictions made in Restrict Content 3 will be lost after downgrading. Learn More', 'LION'); ?>
+                <?php _e('After downgrading, you will lose access to most of the features in Kadence Memberships 3, including membership levels and collecting payments. Additionally, content restrictions made in Kadence Memberships 3 will be lost after downgrading. Learn More', 'LION'); ?>
             </td>
         </tr>
     </table>
@@ -736,7 +736,7 @@ function rc_admin_styles_primary( $hook_suffix )
 {
 
     if (get_option('restrict_content_chosen_version') == '3.0' ) {
-        // Only load admin CSS on Restrict Content Settings page
+        // Only load admin CSS on Kadence Memberships Settings page
         if ('toplevel_page_restrict-content-settings' == $hook_suffix
             || 'restrict_page_rcp-why-go-pro' == $hook_suffix
         ) {
@@ -831,7 +831,7 @@ add_action('admin_init', 'restrict_content_plugin_activation_redirect');
 function restrict_content_add_stripe_fee_notice()
 {
     ?>
-    <p><?php _e("Note: The Restrict Content Stripe payment gateway integration includes an additional 2% processing fee. You can remove the processing fee by upgrading to Restrict Content Pro.", "LION") ?></p>
+    <p><?php _e("Note: The Kadence Memberships Stripe payment gateway integration includes an additional 2% processing fee. You can remove the processing fee by upgrading to Kadence Memberships Pro.", "LION") ?></p>
     <?php
 }
 
@@ -847,7 +847,7 @@ function restrict_content_add_stripe_marketing_email_capture()
                 <div id="rcp_stripe_marketing_container_inner_container" class="rcp_stripe_help_box_inner_container">
                     <div class="rcp_stripe_help_box_content">
                         <h2><?php _e('Activate the Stripe Payment Gateway', 'LION'); ?></h2>
-                        <p><?php _e('Enter your email to setup the Stripe payment gateway and get tips about using Restrict Content', 'LION'); ?></p>
+                        <p><?php _e('Enter your email to setup the Stripe payment gateway and get tips about using Kadence Memberships', 'LION'); ?></p>
                         <input id="stripe_mailing_list" name="stripe_mailing_list_email" type="email"
                                placeholder="<?php _e('Email Address'); ?>">
                         <input type="checkbox" value="1" name="rc_accept_privacy_policy" id="rc_accept_privacy_policy"
@@ -931,7 +931,7 @@ function restrict_content_submit_data_to_stripe_mailing_list()
 add_action('wp_ajax_rcp_add_to_stripe_mailing_list', 'restrict_content_submit_data_to_stripe_mailing_list');
 
 /**
- * Deactivates the plugin if Restrict Content Pro is activated.
+ * Deactivates the plugin if Kadence Memberships Pro is activated.
  *
  * @since 2.2.1
  */
@@ -1042,7 +1042,7 @@ add_action(
 					<img
 						class="restrict-content-bf-2024-banner-image"
 						src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/banners/bf2024/full.svg' ); ?>"
-						alt="<?php esc_html_e( 'Black Friday Sale: Save 40% on Restrict Content Pro. Make your purchase before 12/3/24', 'rcp' ); ?>"
+						alt="<?php esc_html_e( 'Black Friday Sale: Save 40% on Kadence Memberships Pro. Make your purchase before 12/3/24', 'rcp' ); ?>"
 					>
 				</picture>
 			</a>
