@@ -2,9 +2,9 @@
 /**
  * Admin Pages
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Admin/Pages
- * @copyright   Copyright (c) 2017, Restrict Content Pro
+ * @copyright   Copyright (c) 2017, Kadence Memberships Pro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
@@ -20,24 +20,24 @@ function rcp_settings_menu() {
 	$restrict_content = restrict_content_pro();
 
 	// add settings page
-	add_menu_page( __( 'Restrict Content Pro Settings', 'rcp' ), __( 'Restrict', 'rcp' ), 'rcp_view_members', 'rcp-members', 'rcp_members_page', 'dashicons-lock' );
+	add_menu_page( __( 'Kadence Memberships Pro Settings', 'rcp' ), __( 'Restrict', 'rcp' ), 'rcp_view_members', 'rcp-members', 'rcp_members_page', 'dashicons-lock' );
 	$rcp_members_page                   = add_submenu_page( 'rcp-members', __( 'Memberships', 'rcp' ), __( 'Memberships', 'rcp' ), 'rcp_view_members', 'rcp-members', 'rcp_members_page', 1 );
 	$rcp_customers_page                 = add_submenu_page( 'rcp-members', __( 'Customers', 'rcp' ), __( 'Customers', 'rcp' ), 'rcp_view_members', 'rcp-customers', 'rcp_customers_page', 2 );
 	$rcp_subscriptions_page             = add_submenu_page( 'rcp-members', __( 'Membership Levels', 'rcp' ), __( 'Membership Levels', 'rcp' ), 'rcp_view_levels', 'rcp-member-levels', 'rcp_member_levels_page', 3 );
 	$rcp_payments_page                  = add_submenu_page( 'rcp-members', __( 'Payments', 'rcp' ), __( 'Payments', 'rcp' ), 'rcp_view_payments', 'rcp-payments', 'rcp_payments_page', 5 );
-	$rcp_settings_page                  = add_submenu_page( 'rcp-members', __( 'Restrict Content Pro Settings', 'rcp' ), __( 'Settings', 'rcp' ),'rcp_manage_settings', 'rcp-settings', 'rcp_settings_page', 7 );
+	$rcp_settings_page                  = add_submenu_page( 'rcp-members', __( 'Kadence Memberships Pro Settings', 'rcp' ), __( 'Settings', 'rcp' ),'rcp_manage_settings', 'rcp-settings', 'rcp_settings_page', 7 );
 	$rcp_tools_page                     = add_submenu_page( 'rcp-members', __( 'Tools', 'rcp' ), __( 'Tools', 'rcp' ), 'rcp_manage_settings', 'rcp-tools', 'rcp_tools_page',  8 );
 	$rcp_reminders_page                 = add_submenu_page( 'rcp-members', __( 'Subscription Reminder', 'rcp' ), __( 'Subscription Reminder', 'rcp' ), 'rcp_manage_settings', 'rcp-reminder', 'rcp_subscription_reminder_page', 11 );
 	$restrict_content_pro_help_page     = add_submenu_page( 'rcp-members', __( 'Help', 'rcp' ), __( 'Help', 'rcp' ), 'manage_options', 'rcp-need-help', 'rc_need_help_page_redesign' );
-	$restrict_content_pro_addons        = add_submenu_page( 'rcp-members', __( 'RCP Addons', 'rcp' ), __( 'RCP Addons', 'rcp' ), 'manage_options', 'rcp-addons', 'rc_pro_addons' );
+	$restrict_content_pro_addons        = add_submenu_page( 'rcp-members', __( 'Pro Addons', 'rcp' ), __( 'Pro Addons', 'rcp' ), 'manage_options', 'rcp-addons', 'rc_pro_addons' );
 
 	// If we are not in PRO include the Free menus.
 	if( false === $restrict_content->is_pro() ) {
 		$restrict_content_pro_why_go_pro    = add_submenu_page( 'rcp-members', __( 'Why Go Pro', 'rcp' ), __( 'Why Go Pro', 'rcp' ), 'manage_options', 'rcp-why-go-pro', 'rc_why_go_pro_page_redesign' );
-		$restrict_content_pro_welcome_page  = add_submenu_page( 'rcp-none', __( 'rcp-members', 'rcp' ), __( 'RCP Welcome', 'rcp' ), 'manage_options', 'restrict-content-welcome', 'rc_welcome_page_redesign' );
+		$restrict_content_pro_welcome_page  = add_submenu_page( 'rcp-none', __( 'rcp-members', 'rcp' ), __( 'Welcome', 'rcp' ), 'manage_options', 'restrict-content-welcome', 'rc_welcome_page_redesign' );
 	}
 	else {
-		$restrict_content_pro_welcome_page  = add_submenu_page( 'rcp-none', __( 'RCP Welcome', 'rcp' ), __( 'RCP Welcome', 'rcp' ), 'manage_options', 'restrict-content-pro-welcome', 'rcp_welcome_page_redesign' );
+		$restrict_content_pro_welcome_page  = add_submenu_page( 'rcp-none', __( 'Welcome', 'rcp' ), __( 'Welcome', 'rcp' ), 'manage_options', 'restrict-content-pro-welcome', 'rcp_welcome_page_redesign' );
 	}
 
 
@@ -175,7 +175,7 @@ function rc_pro_addons() {
 					</div>
 					<div class="addon-card-body">
 						<h2 class="addon-card-title">Per-Level Emails</h2>
-						<p class="addon-card-text">Restrict Content Pro allows you to set up notification email templates, but the contents are the same for each membership.</p>
+						<p class="addon-card-text">Kadence Memberships Pro allows you to set up notification email templates, but the contents are the same for each membership.</p>
 						<?php
 						printf(
 						__('<a class="addon-card-cta" href="%s" target="_blank">Learn More</a>', 'rcp' ),
@@ -250,7 +250,7 @@ function rc_pro_addons() {
 					</div>
 					<div class="addon-card-body">
 						<h2 class="addon-card-title">Group Accounts</h2>
-						<p class="addon-card-text">Sell multi-member group memberships through Restrict Content Pro.</p>
+						<p class="addon-card-text">Sell multi-member group memberships through Kadence Memberships Pro.</p>
 						<?php
 						printf(
 						__('<a class="addon-card-cta" href="%s" target="_blank">Learn More</a>', 'rcp' ),
@@ -277,7 +277,7 @@ function rc_pro_addons() {
 				<div class="restrict-content-welcome-advertisement-content">
 					<p><?php _e( 'Lock away your exclusive content. Give access to valued members.', 'rcp' ); ?></p>
 					<p class="rcp-highlight"><?php _e( 'A Full-Featured Powerful Membership Solution for WordPress.', 'rcp' ); ?></p>
-					<p><?php _e( 'Give Restrict Content Pro a spin, along with the full suite of add-ons. Enter your email and we’ll automatically send you a link to a personal WordPress demo site, no strings attached!', 'rcp' ); ?></p>
+					<p><?php _e( 'Give Kadence Memberships Pro a spin, along with the full suite of add-ons. Enter your email and we’ll automatically send you a link to a personal WordPress demo site, no strings attached!', 'rcp' ); ?></p>
 				</div>
 				<div class="restrict-content-welcome-advertisement-form">
 					<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" id="restrict_content_try_free">
@@ -288,38 +288,6 @@ function rc_pro_addons() {
 						<input type="submit" class="restrict-content-welcome-button" value="<?php _e( 'Try Now, Free!', 'rcp' ); ?>">
 					</form>
 				</div>
-			</div>
-			<div class="restrict-content-unlock-premium-features">
-				<h3><?php _e( 'Unlock Premium Features', 'rcp' ); ?></h3>
-				<p><?php _e( 'Go beyond the basics with premium features & support.', 'rcp' ); ?></p>
-				<div class="tabs">
-					<div class="tablist" role="tablist" aria-label="<?php esc_attr_e( 'Pricing Plans', 'rcp' ); ?>">
-
-						<button role="tab" aria-selected="true" aria-controls="1sitetab" id="1site">
-							<?php _e( '1 Site', 'rcp' ); ?>
-						</button>
-						<button role="tab" aria-selected="false" aria-controls="10sitetab" id="10site" tabindex="-1">
-							<?php _e( '10 Sites', 'rcp' ); ?>
-						</button>
-						<button role="tab" aria-selected="false" aria-controls="unlimitedtab" id="unlimited" tabindex="-1">
-							<?php _e( 'Unlimited', 'rcp' ); ?>
-						</button>
-					</div>
-					<div class="tabpanel" tabindex="0" role="tabpanel" id="1sitetab" aria-labelledby="1site">
-						<h4><?php _e( '$99', 'rcp' ); ?></h4>
-						<p><?php _e( 'Includes updates & support for one year.', 'rcp' ); ?></p>
-					</div>
-					<div class="tabpanel" tabindex="0" role="tabpanel" id="10sitetab" aria-labelledby="10site" hidden="">
-						<h4><?php _e( '$149', 'rcp' ); ?></h4>
-						<p><?php _e( 'Includes updates & support for one year.', 'rcp' ); ?></p>
-					</div>
-					<div class="tabpanel" tabindex="0" role="tabpanel" id="unlimitedtab" aria-labelledby="unlimited" hidden="">
-						<h4><?php _e( '$249', 'rcp' ); ?></h4>
-						<p><?php _e( 'Includes updates & support for one year.', 'rcp' ); ?></p>
-					</div>
-				</div>
-				<a href="https://restrictcontentpro.com/pricing/" class="go-pro-now"><?php _e( 'Go Pro Now', 'rcp' ); ?></a>
-				<p class="whats-included"><a href="https://restrictcontentpro.com/why-go-pro/"><?php _e( "What's included with Pro?", 'rcp' ); ?></a></p>
 			</div>
 			<?php } ?>
 		</div>
@@ -342,7 +310,7 @@ function rc_why_go_pro_page_redesign() {
 							<?php _e( 'Why Go Pro?', 'rcp' ); ?></h1>
 
 					</div>
-					<h2><?php _e( 'Grow Your Sales with Premium Features and Add-ons in Restrict Content PRO', 'rcp' ); ?></h2>
+					<h2><?php _e( 'Grow Your Sales with Premium Features and Add-ons in Kadence Memberships Pro', 'rcp' ); ?></h2>
 					<div class="rcp-pro-features-container">
 						<!-- LIMIT NUMBER OF CONNECTIONS FEATURE -->
 						<a href="https://restrictcontentpro.com/pricing/">
@@ -360,7 +328,7 @@ function rc_why_go_pro_page_redesign() {
 								<img src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/collect-payments.svg' ); ?>" >
 								<div class="feature-text">
 									<h3><?php _e( 'Remove Stripe Fee', 'rcp' ); ?></h3>
-									<p><?php _e( "Remove the 2% fee for processing Stripe payments by upgrading to Restrict Content Pro.", 'rcp' ); ?></p>
+									<p><?php _e( "Remove the 2% fee for processing Stripe payments by upgrading to Kadence Memberships Pro.", 'rcp' ); ?></p>
 								</div>
 							</div>
 						</a>
@@ -461,7 +429,7 @@ function rc_need_help_page_redesign() {
 			<p>
 				<?php
 				printf(
-					__('Are you new to Restrict Content? Check out the Getting Started with <a href="%s">Restrict Content guide.</a>', 'rcp' ),
+					__('Are you new to Kadence Memberships? Check out the Getting Started with <a href="%s">Kadence Memberships guide.</a>', 'rcp' ),
 					'https://help.ithemes.com/hc/en-us/sections/360008799334-Getting-Started'
 				);
 				?>
@@ -474,7 +442,7 @@ function rc_need_help_page_redesign() {
 						</div>
 						<div class="restrict-content-help-section-content">
 							<h3><?php _e( 'Help Center', 'rcp' ); ?></h3>
-							<p><?php _e( 'Our Help Center is filled with articles to help you learn more about using Restrict Content and Restrict Content Pro.', 'rcp' ); ?></p>
+							<p><?php _e( 'Our Help Center is filled with articles to help you learn more about using Kadence Memberships and Kadence Memberships Pro.', 'rcp' ); ?></p>
 						</div>
 						<img class="restrict-content-help-section-arrow hidden" style="display: none;" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/purple-arrow-right.svg' ); ?>" >
 					</div>
@@ -501,7 +469,7 @@ function rc_need_help_page_redesign() {
 						</div>
 						<div class="restrict-content-help-section-content">
 							<h3><?php _e( 'Support Forum', 'rcp' ); ?></h3>
-							<p><?php _e( 'If you are still having trouble after checking for a conflict, feel free to start a new thread on the Restrict Content support forum.', 'rcp' ); ?></p>
+							<p><?php _e( 'If you are still having trouble after checking for a conflict, feel free to start a new thread on the Kadence Memberships support forum.', 'rcp' ); ?></p>
 						</div>
 						<img class="restrict-content-help-section-arrow hidden" style="display:none;" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/purple-arrow-right.svg' ); ?>" >
 					</div>
@@ -514,7 +482,7 @@ function rc_need_help_page_redesign() {
 						</div>
 						<div class="restrict-content-help-section-content">
 							<h3><?php _e( 'Submit Support Ticket', 'rcp' ); ?></h3>
-							<p><?php _e( 'If you are still having trouble after checking for a conflict, feel free to start a new thread on the Restrict Content support forum.', 'rcp' ); ?></p>
+							<p><?php _e( 'If you are still having trouble after checking for a conflict, feel free to start a new thread on the Kadence Memberships support forum.', 'rcp' ); ?></p>
 						</div>
 						<img class="restrict-content-help-section-arrow hidden" style="display:none;" src="<?php echo esc_url( RCP_PLUGIN_URL . 'core/includes/images/purple-arrow-right.svg' ); ?>" >
 					</div>
@@ -528,7 +496,7 @@ function rc_need_help_page_redesign() {
 						<p>
 							<?php
 							printf(
-								__( 'Purchase any <a href="%s">Restrict Content Pro subscription</a> and get access to our ticketed support system. Our team of experts is ready to help!', 'rcp' ),
+								__( 'Purchase any <a href="%s">Kadence Memberships Pro subscription</a> and get access to our ticketed support system. Our team of experts is ready to help!', 'rcp' ),
 								'https://restrictcontentpro.com/pricing/'
 							);
 							?>
@@ -550,7 +518,7 @@ function rc_need_help_page_redesign() {
 				<div class="restrict-content-welcome-advertisement-content">
 					<p><?php _e( 'Lock away your exclusive content. Give access to valued members.', 'rcp' ); ?></p>
 					<p class="rcp-highlight"><?php _e( 'A Full-Featured Powerful Membership Solution for WordPress.', 'rcp' ); ?></p>
-					<p><?php _e( 'Give Restrict Content Pro a spin, along with the full suite of add-ons. Enter your email and we’ll automatically send you a link to a personal WordPress demo site, no strings attached!', 'rcp' ); ?></p>
+					<p><?php _e( 'Give Kadence Memberships Pro a spin, along with the full suite of add-ons. Enter your email and we’ll automatically send you a link to a personal WordPress demo site, no strings attached!', 'rcp' ); ?></p>
 				</div>
 				<div class="restrict-content-welcome-advertisement-form">
 					<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" id="restrict_content_try_free">
@@ -562,45 +530,13 @@ function rc_need_help_page_redesign() {
 					</form>
 				</div>
 			</div>
-			<div class="restrict-content-unlock-premium-features">
-				<h3><?php _e( 'Unlock Premium Features', 'rcp' ); ?></h3>
-				<p><?php _e( 'Go beyond the basics with premium features & support.', 'rcp' ); ?></p>
-				<div class="tabs">
-					<div class="tablist" role="tablist" aria-label="<?php esc_attr_e( 'Pricing Plans', 'rcp' ); ?>">
-
-						<button role="tab" aria-selected="true" aria-controls="1sitetab" id="1site">
-							<?php _e( '1 Site', 'rcp' ); ?>
-						</button>
-						<button role="tab" aria-selected="false" aria-controls="10sitetab" id="10site" tabindex="-1">
-							<?php _e( '10 Sites', 'rcp' ); ?>
-						</button>
-						<button role="tab" aria-selected="false" aria-controls="unlimitedtab" id="unlimited" tabindex="-1">
-							<?php _e( 'Unlimited', 'rcp' ); ?>
-						</button>
-					</div>
-					<div class="tabpanel" tabindex="0" role="tabpanel" id="1sitetab" aria-labelledby="1site">
-						<h4><?php _e( '$99', 'rcp' ); ?></h4>
-						<p><?php _e( 'Includes updates & support for one year.', 'rcp' ); ?></p>
-					</div>
-					<div class="tabpanel" tabindex="0" role="tabpanel" id="10sitetab" aria-labelledby="10site" hidden="">
-						<h4><?php _e( '$149', 'rcp' ); ?></h4>
-						<p><?php _e( 'Includes updates & support for one year.', 'rcp' ); ?></p>
-					</div>
-					<div class="tabpanel" tabindex="0" role="tabpanel" id="unlimitedtab" aria-labelledby="unlimited" hidden="">
-						<h4><?php _e( '$249', 'rcp' ); ?></h4>
-						<p><?php _e( 'Includes updates & support for one year.', 'rcp' ); ?></p>
-					</div>
-				</div>
-				<a href="https://restrictcontentpro.com/pricing/" class="go-pro-now"><?php _e( 'Go Pro Now', 'rcp' ); ?></a>
-				<p class="whats-included"><a href="https://restrictcontentpro.com/why-go-pro/"><?php _e( "What's included with Pro?", 'rcp' ); ?></a></p>
-			</div>
 		</div>
 	</div>
 	<?php
 }
 
 /**
- * Build out the Welcome page for Restrict Content 3.0 and Restrict Content Pro
+ * Build out the Welcome page for Kadence Memberships 3.0 and Kadence Memberships Pro
  *
  * @since 3.6
  */
@@ -625,8 +561,8 @@ function rcp_welcome_page_redesign() {
 			<div class="restrict-content-inner-container">
 				<div class="restrict-content-welcome-body-container">
 					<div class="restrict-content-welcome-body restrict-content-container-section">
-						<h2 class="restrict-content-thanks-header"><?php _e( 'Thanks for installing Restrict Content Pro!', 'rcp' ); ?></h2>
-						<p class="restrict-content-thanks-message"><?php _e( 'Restrict Content Pro is a simple, yet powerful WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.', 'rcp' ); ?></p>
+						<h2 class="restrict-content-thanks-header"><?php _e( 'Thanks for installing Kadence Memberships Pro!', 'rcp' ); ?></h2>
+						<p class="restrict-content-thanks-message"><?php _e( 'Kadence Memberships Pro is a simple, yet powerful WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.', 'rcp' ); ?></p>
 						<p class="restrict-content-thanks-message"><?php _e( 'Start your membership site and create multiple Membership Levels and collect payments with Stripe, PayPal or Braintree.', 'rcp' ); ?></p>
 					</div>
 
@@ -655,7 +591,7 @@ function rcp_welcome_page_redesign() {
 							<p>
 								<?php
 								printf(
-									__( 'Our <a href="%s">Knowledgebase</a> will help you become a Restrict Content & Restrict Content Pro expert.', 'rcp' ),
+									__( 'Our <a href="%s">Knowledgebase</a> will help you become a Kadence Memberships & Kadence Memberships Pro expert.', 'rcp' ),
 									'https://restrictcontentpro.com/knowledgebase'
 								);
 								?>
@@ -673,11 +609,11 @@ function rcp_welcome_page_redesign() {
 							</p>
 						</div>
 						<div class="restrict-content-resource-container">
-							<!-- <h3><?php _e( 'Introduction to Restrict Content Pro', 'rcp' ); ?></h3> -->
+							<!-- <h3><?php _e( 'Introduction to Kadence Memberships Pro', 'rcp' ); ?></h3> -->
 							<p>
 								<?php
 								printf(
-										__( 'Get a <a href="%s">full overview of Restrict Content Pro</a> and dive into several of its key features.', 'rcp' ),
+										__( 'Get a <a href="%s">full overview of Kadence Memberships Pro</a> and dive into several of its key features.', 'rcp' ),
 										'https://training.ithemes.com/webinar/introduction-to-restrict-content-pro/'
 								);
 								?>
@@ -711,8 +647,8 @@ function rc_welcome_page_redesign() {
 			<div class="restrict-content-inner-container">
 				<div class="restrict-content-welcome-body-container">
 					<div class="restrict-content-welcome-body restrict-content-container-section">
-						<h2 class="restrict-content-thanks-header"><?php _e( 'Thanks For Installing Restrict Content!', 'rcp' ); ?></h2>
-						<p class="restrict-content-thanks-message"><?php _e( 'Restrict Content is a simple WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.', 'rcp' ); ?></p>
+						<h2 class="restrict-content-thanks-header"><?php _e( 'Thanks For Installing Kadence Memberships!', 'rcp' ); ?></h2>
+						<p class="restrict-content-thanks-message"><?php _e( 'Kadence Memberships is a simple WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.', 'rcp' ); ?></p>
 						<p class="restrict-content-thanks-message"><?php _e( 'Start your membership site and create multiple Membership Levels and collect payments with Stripe.', 'rcp' ); ?></p>
 					</div>
 
@@ -720,7 +656,7 @@ function rc_welcome_page_redesign() {
 				<div class="restrict-content-welcome-body-container">
 					<div class="restrict-content-how-to-body restrict-content-container-section">
 						<h2><?php _e( 'Collect Payments with Stripe', 'rcp' ); ?></h2>
-						<p class="restrict-content-how-to-message"><?php _e( "Install the free Restrict Content Stripe add-on to start accepting credit and debit card payments.", 'rcp' ); ?></p>
+						<p class="restrict-content-how-to-message"><?php _e( "Install the free Kadence Memberships Stripe add-on to start accepting credit and debit card payments.", 'rcp' ); ?></p>
 						<p class="restrict-content-how-to-message"><?php _e( 'Stripe is an excellent payment gateway with a simple setup process and exceptional reliability.', 'rcp' ); ?></p>
 					</div>
 				</div>
@@ -732,7 +668,7 @@ function rc_welcome_page_redesign() {
 							<p>
 								<?php
 								printf(
-									__( 'Our <a href="%s">Help Center</a> will help you become a Restrict Content & Restrict Content Pro expert.', 'rcp' ),
+									__( 'Our <a href="%s">Help Center</a> will help you become a Kadence Memberships & Kadence Memberships Pro expert.', 'rcp' ),
 									'https://help.ithemes.com'
 								);
 								?>
@@ -743,18 +679,18 @@ function rc_welcome_page_redesign() {
 							<p>
 								 <?php
 								 printf(
-                                     __( 'Check out Restrict Content Pro and our <a href="%s">suite of add-ons</a> for building awesome membership websites.', 'rcp' ),
+                                     __( 'Check out Kadence Memberships Pro and our <a href="%s">suite of add-ons</a> for building awesome membership websites.', 'rcp' ),
                                      'https://restrictcontentpro.com/add-ons/'
 								 );
 								 ?>
 							</p>
 						</div>
 						<div class="restrict-content-resource-container">
-							<h3><?php _e( 'Introduction to Restrict Content Pro', 'rcp' ); ?></h3>
+							<h3><?php _e( 'Introduction to Kadence Memberships Pro', 'rcp' ); ?></h3>
 							<p>
 								<?php
 								printf(
-										__( 'Get a <a href="%s">full overview of Restrict Content Pro</a> and dive into several of its key features.', 'rcp' ),
+										__( 'Get a <a href="%s">full overview of Kadence Memberships Pro</a> and dive into several of its key features.', 'rcp' ),
 										'https://training.ithemes.com/webinar/introduction-to-restrict-content-pro/'
 								);
 								?>
@@ -775,7 +711,7 @@ function rc_welcome_page_redesign() {
 				<div class="restrict-content-welcome-advertisement-content">
 					<p><?php _e( 'Lock away your exclusive content. Give access to valued members.', 'rcp' ); ?></p>
 					<p class="rcp-highlight"><?php _e( 'A Full-Featured Powerful Membership Solution for WordPress.', 'rcp' ); ?></p>
-					<p><?php _e( 'Give Restrict Content Pro a spin, along with the full suite of add-ons. Enter your email and we’ll automatically send you a link to a personal WordPress demo site, no strings attached!', 'rcp' ); ?></p>
+					<p><?php _e( 'Give Kadence Memberships Pro a spin, along with the full suite of add-ons. Enter your email and we’ll automatically send you a link to a personal WordPress demo site, no strings attached!', 'rcp' ); ?></p>
 				</div>
 				<div class="restrict-content-welcome-advertisement-form">
 					<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" id="restrict_content_try_free">

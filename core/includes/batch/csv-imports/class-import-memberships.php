@@ -3,7 +3,7 @@
  * Import Memberships
  *
  * @since     3.1
- * @copyright Copyright (c) 2019, Restrict Content Pro team
+ * @copyright Copyright (c) 2019, Kadence Memberships Pro team
  * @license   GPL2+
  * @package   restrict-content-pro
  */

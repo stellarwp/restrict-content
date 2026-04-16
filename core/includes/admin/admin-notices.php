@@ -2,9 +2,9 @@
 /**
  * Admin Notices
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Admin/Notices
- * @copyright   Copyright (c) 2017, Restrict Content Pro
+ * @copyright   Copyright (c) 2017, Kadence Memberships Pro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
@@ -23,15 +23,15 @@ function rcp_admin_notices() {
 	if( current_user_can( 'rcp_manage_settings' ) ) {
 		// only show notice if settings have never been saved
 		if ( ! is_array( $rcp_options ) || empty( $rcp_options ) ) {
-			echo '<div class="notice notice-info"><p><a href="' . admin_url( "admin.php?page=rcp-settings" ) . '">' . __( 'You should now configure your Restrict Content Pro settings', 'rcp' ) . '</a></p></div>';
+			echo '<div class="notice notice-info"><p><a href="' . admin_url( "admin.php?page=rcp-settings" ) . '">' . __( 'You should now configure your Kadence Memberships Pro settings', 'rcp' ) . '</a></p></div>';
 		}
 
 		if ( rcp_check_if_upgrade_needed() ) {
-			echo '<div class="error"><p>' . __( 'The Restrict Content Pro database needs to be updated: ', 'rcp' ) . ' ' . '<a href="' . esc_url( add_query_arg( 'rcp-action', 'upgrade', admin_url() ) ) . '">' . __( 'upgrade now', 'rcp' ) . '</a></p></div>';
+			echo '<div class="error"><p>' . __( 'The Kadence Memberships Pro database needs to be updated: ', 'rcp' ) . ' ' . '<a href="' . esc_url( add_query_arg( 'rcp-action', 'upgrade', admin_url() ) ) . '">' . __( 'upgrade now', 'rcp' ) . '</a></p></div>';
 		}
 
 		if ( isset( $_GET['rcp-db'] ) && $_GET['rcp-db'] == 'updated' ) {
-			echo '<div class="updated fade"><p>' . __( 'The Restrict Content Pro database has been updated', 'rcp' ) . '</p></div>';
+			echo '<div class="updated fade"><p>' . __( 'The Kadence Memberships Pro database has been updated', 'rcp' ) . '</p></div>';
 		}
 
 		if ( false !== get_transient( 'rcp_login_redirect_invalid' ) ) {
@@ -40,8 +40,8 @@ function rcp_admin_notices() {
 
 		if ( ( ! empty( $rcp_options['paid_message'] ) || ! empty( $rcp_options['free_message'] ) ) && empty( $rcp_options['restriction_message'] ) && ! get_user_meta( get_current_user_id(), '_rcp_content_restriction_message_missing_dismissed', true ) ) {
 			echo '<div class="notice notice-info">';
-			echo '<p>' . __( 'The Restrict Content Pro "Free Content Message" and "Premium Content Message" settings have been merged into one "Restricted Content Message" setting field. Please visit the', 'rcp' ) . ' <a href="' . esc_url( admin_url( "admin.php?page=rcp-settings" ) ) . '">' . __( 'settings page', 'rcp' ) . '</a> ' . __( 'to confirm your new message.', 'rcp' ) . '</p>';
-			echo '<p>' . __( 'For more information, view our version 3.0 release post on the Restrict Content Pro blog: ', 'rcp' ) . '<a href="https://restrictcontentpro.com/?p=102444#restriction-message" target="_blank">https://restrictcontentpro.com/blog</a></p>';
+			echo '<p>' . __( 'The Kadence Memberships Pro "Free Content Message" and "Premium Content Message" settings have been merged into one "Restricted Content Message" setting field. Please visit the', 'rcp' ) . ' <a href="' . esc_url( admin_url( "admin.php?page=rcp-settings" ) ) . '">' . __( 'settings page', 'rcp' ) . '</a> ' . __( 'to confirm your new message.', 'rcp' ) . '</p>';
+			echo '<p>' . __( 'For more information, view our version 3.0 release post on the Kadence Memberships Pro blog: ', 'rcp' ) . '<a href="https://restrictcontentpro.com/?p=102444#restriction-message" target="_blank">https://restrictcontentpro.com/blog</a></p>';
 			echo '<p><a href="' . esc_url( wp_nonce_url( add_query_arg( array( 'rcp_notice' => 'content_restriction_message_missing' ) ), 'rcp_dismiss_notice', 'rcp_dismiss_notice_nonce' ) ) . '">' . __( 'Dismiss Notice', 'rcp' ) . '</a></p>';
 			echo '</div>';
 		}
@@ -49,7 +49,7 @@ function rcp_admin_notices() {
 		$stripe_user_id = get_option( 'rcp_stripe_connect_account_id' );
 		if( empty( $stripe_user_id ) && ( rcp_is_gateway_enabled( 'stripe' ) || rcp_is_gateway_enabled( 'stripe_checkout' ) ) && ! get_user_meta( get_current_user_id(), '_rcp_stripe_connect_dismissed', true ) ) {
 			echo '<div class="notice notice-info">';
-			echo '<p>' . sprintf( __( 'Restrict Content Pro now supports Stripe Connect for easier setup and improved security. <a href="%s">Click here</a> to learn more about connecting your Stripe account.', 'rcp' ), esc_url( admin_url( 'admin.php?page=rcp-settings#payments' ) ) ) . '</p>';
+			echo '<p>' . sprintf( __( 'Kadence Memberships Pro now supports Stripe Connect for easier setup and improved security. <a href="%s">Click here</a> to learn more about connecting your Stripe account.', 'rcp' ), esc_url( admin_url( 'admin.php?page=rcp-settings#payments' ) ) ) . '</p>';
 			echo '<p><a href="' . wp_nonce_url( add_query_arg( array( 'rcp_notice' => 'stripe_connect' ) ), 'rcp_dismiss_notice', 'rcp_dismiss_notice_nonce' ) . '">' . _x( 'Dismiss Notice', 'Stripe Connect', 'rcp' ) . '</a></p>';
 			echo '</div>';
 		}
@@ -58,10 +58,10 @@ function rcp_admin_notices() {
 	if( current_user_can( 'activate_plugins' ) ) {
 		if ( version_compare( PHP_VERSION, '5.6', '<' ) ) {
 			echo '<div class="error">';
-			echo '<p><strong>' . __( 'Restrict Content Pro is increasing its PHP version requirement', 'rcp' ) . '</strong></p>';
-			echo '<p>' . sprintf( __( 'Restrict Content Pro will be increasing its PHP requirement to version 5.6 or higher in version 3.0. It looks like you\'re using version %s, which means you will need to upgrade your version of PHP before upgrading to Restrict Content Pro 3.0. Newer versions of PHP are both faster and more secure. The version you\'re using <a href="%s" target="_blank">no longer receives security updates</a>, which is another great reason to update.', 'rcp' ), PHP_VERSION, 'http://php.net/eol.php' ) . '</p>';
+			echo '<p><strong>' . __( 'Kadence Memberships Pro is increasing its PHP version requirement', 'rcp' ) . '</strong></p>';
+			echo '<p>' . sprintf( __( 'Kadence Memberships Pro will be increasing its PHP requirement to version 5.6 or higher in version 3.0. It looks like you\'re using version %s, which means you will need to upgrade your version of PHP before upgrading to Kadence Memberships Pro 3.0. Newer versions of PHP are both faster and more secure. The version you\'re using <a href="%s" target="_blank">no longer receives security updates</a>, which is another great reason to update.', 'rcp' ), PHP_VERSION, 'http://php.net/eol.php' ) . '</p>';
 			echo '<p><strong>' . __( 'Which version should I upgrade to?', 'rcp' ) . '</strong></p>';
-			echo '<p>' . __( 'In order to be compatible with future versions of Restrict Content Pro, you should update your PHP version to 5.6, 7.0, 7.1, or 7.2. On a normal WordPress site, switching to PHP 5.6 should never cause issues. We would however actually recommend you switch to PHP 7.1 or higher to receive the full speed and security benefits provided to more modern and fully supported versions of PHP. However, some plugins may not be fully compatible with PHP 7+, so more testing may be required.', 'rcp' ) . '</p>';
+			echo '<p>' . __( 'In order to be compatible with future versions of Kadence Memberships Pro, you should update your PHP version to 5.6, 7.0, 7.1, or 7.2. On a normal WordPress site, switching to PHP 5.6 should never cause issues. We would however actually recommend you switch to PHP 7.1 or higher to receive the full speed and security benefits provided to more modern and fully supported versions of PHP. However, some plugins may not be fully compatible with PHP 7+, so more testing may be required.', 'rcp' ) . '</p>';
 			echo '<p><strong>' . __( 'Need help upgrading? Ask your web host!', 'rcp' ) . '</strong></p>';
 			echo '<p>' . sprintf( __( 'Many web hosts can give you instructions on how/where to upgrade your version of PHP through their control panel, or may even be able to do it for you. If they do not want to upgrade your PHP version then we would suggest you switch hosts. All of the <a href="%s" target="_blank">WordPress hosting partners</a> support PHP 7.0 and higher.', 'rcp' ), 'https://wordpress.org/hosting/' ) . '</p>';
 			echo '</div>';
@@ -69,21 +69,21 @@ function rcp_admin_notices() {
 
 		if ( function_exists( 'rcp_register_stripe_gateway' ) ) {
 			$deactivate_url = add_query_arg( array( 's' => 'restrict+content+pro+-+stripe' ), admin_url( 'plugins.php' ) );
-			echo '<div class="error"><p>' . sprintf( __( 'You are using an outdated version of the Stripe integration for Restrict Content Pro. Please <a href="%s">deactivate</a> the add-on version to configure the new version.', 'rcp' ), $deactivate_url ) . '</p></div>';
+			echo '<div class="error"><p>' . sprintf( __( 'You are using an outdated version of the Stripe integration for Kadence Memberships Pro. Please <a href="%s">deactivate</a> the add-on version to configure the new version.', 'rcp' ), $deactivate_url ) . '</p></div>';
 		}
 
 		if ( function_exists( 'rcp_register_paypal_pro_express_gateway' ) ) {
 			$deactivate_url = add_query_arg( array( 's' => 'restrict+content+pro+-+paypal+pro' ), admin_url( 'plugins.php' ) );
-			echo '<div class="error"><p>' . sprintf( __( 'You are using an outdated version of the PayPal Pro / Express integration for Restrict Content Pro. Please <a href="%s">deactivate</a> the add-on version to configure the new version.', 'rcp' ), $deactivate_url ) . '</p></div>';
+			echo '<div class="error"><p>' . sprintf( __( 'You are using an outdated version of the PayPal Pro / Express integration for Kadence Memberships Pro. Please <a href="%s">deactivate</a> the add-on version to configure the new version.', 'rcp' ), $deactivate_url ) . '</p></div>';
 		}
 
 		// Show notice about installing new Authorize.net add-on.
 		if ( rcp_is_gateway_enabled( 'authorizenet' ) && ! defined( 'RCP_ANET_VERSION' ) ) {
 			echo '<div class="error">';
-			echo '<p><strong>' . esc_html__( 'ACTION REQUIRED: You need to update your Authorize.net payment gateway for Restrict Content Pro', 'rcp' ) . '</strong></p>';
+			echo '<p><strong>' . esc_html__( 'ACTION REQUIRED: You need to update your Authorize.net payment gateway for Kadence Memberships Pro', 'rcp' ) . '</strong></p>';
 			echo '<p>' . wp_kses(
 				// translators: 1: URL to the Authorize.net documentation.
-				sprintf( __( 'The Authorize.net payment gateway has been removed from the main Restrict Content Pro plugin. To continue processing payments with this gateway you need to install the new Authorize.net add-on. Once installed, please follow the instructions to <a href="%1$s" target="_blank">enter your signature key</a> and <a href="%1$s" target="_blank">set up a webhook</a>.', 'rcp' ), 'https://restrictcontentpro.com/knowledgebase/authorize-net/#webhook' ),
+				sprintf( __( 'The Authorize.net payment gateway has been removed from the main Kadence Memberships Pro plugin. To continue processing payments with this gateway you need to install the new Authorize.net add-on. Once installed, please follow the instructions to <a href="%1$s" target="_blank">enter your signature key</a> and <a href="%1$s" target="_blank">set up a webhook</a>.', 'rcp' ), 'https://restrictcontentpro.com/knowledgebase/authorize-net/#webhook' ),
 				[
 					'a' => [
 						'href'   => [],
@@ -98,11 +98,11 @@ function rcp_admin_notices() {
 		// Show notice about ending support for Stripe Checkout.
 		if ( rcp_is_gateway_enabled( 'stripe_checkout' ) ) {
 			echo '<div class="error">';
-			echo '<p><strong>' . esc_html__( 'Restrict Content Pro: Support for Stripe Checkout is ending in version 3.2', 'rcp' ) . '</strong></p>';
+			echo '<p><strong>' . esc_html__( 'Kadence Memberships Pro: Support for Stripe Checkout is ending in version 3.2', 'rcp' ) . '</strong></p>';
 			echo '<p>' . wp_kses(
 				sprintf(
 					// translators: %s URL to the Stripe documentation.
-					__( 'Stripe will not be updating the Stripe Checkout modal to comply with Strong Customer Authentication (SCA) and as a result, the Stripe Checkout gateway will be removed from Restrict Content Pro in version 3.2. You will automatically be switched over to our Stripe Elements gateway instead. This will affect the appearance of your registration form, but will not impact payment processing or renewals. <a href="%s" target="_blank">Click here to learn more.</a>', 'rcp' ),
+					__( 'Stripe will not be updating the Stripe Checkout modal to comply with Strong Customer Authentication (SCA) and as a result, the Stripe Checkout gateway will be removed from Kadence Memberships Pro in version 3.2. You will automatically be switched over to our Stripe Elements gateway instead. This will affect the appearance of your registration form, but will not impact payment processing or renewals. <a href="%s" target="_blank">Click here to learn more.</a>', 'rcp' ),
 					'https://restrictcontentpro.com/knowledgebase/stripe/'
 				),
 				[
@@ -120,7 +120,7 @@ function rcp_admin_notices() {
 
 	// Message on settings page if email sending is disabled by RCP_DISABLE_EMAILS
 	if( $screen->id === 'restrict_page_rcp-settings' && defined( 'RCP_DISABLE_EMAILS' ) && RCP_DISABLE_EMAILS ) {
-		echo '<div class="notice notice-info"><p>' . sprintf( __( 'Restrict Content Pro will not send emails because the %s constant is active. Remove it from your code to re-enable email notifications. (Emails generated by other plugins or WordPress core are not affected.)', 'rcp' ), '<code>RCP_DISABLE_EMAILS</code>' ) . '</p></div>';
+		echo '<div class="notice notice-info"><p>' . sprintf( __( 'Kadence Memberships Pro will not send emails because the %s constant is active. Remove it from your code to re-enable email notifications. (Emails generated by other plugins or WordPress core are not affected.)', 'rcp' ), '<code>RCP_DISABLE_EMAILS</code>' ) . '</p></div>';
 	}
 
 	// Payment messages.
