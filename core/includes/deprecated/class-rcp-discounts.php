@@ -5,7 +5,7 @@
  * This class handles querying, inserting, updating, and removing discounts
  * Also includes other discount helper functions
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Classes/Discounts
  * @copyright   Copyright (c) 2017, Pippin Williamson
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License

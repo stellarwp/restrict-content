@@ -1,6 +1,6 @@
 <?php
 /**
- * Restrict Content Pro Base Class
+ * Kadence Memberships Pro Base Class
  *
  * @package   restrict-content-pro
  * @copyright Copyright (c) 2020, Sandhills Development, LLC
