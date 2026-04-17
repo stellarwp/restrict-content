@@ -23,15 +23,15 @@ function rcp_admin_notices() {
 	if( current_user_can( 'rcp_manage_settings' ) ) {
 		// only show notice if settings have never been saved
 		if ( ! is_array( $rcp_options ) || empty( $rcp_options ) ) {
-			echo '<div class="notice notice-info"><p><a href="' . admin_url( "admin.php?page=rcp-settings" ) . '">' . __( 'You should now configure your Kadence Memberships Pro settings', 'rcp' ) . '</a></p></div>';
+			echo '<div class="notice notice-info"><p><a href="' . esc_url( admin_url( 'admin.php?page=rcp-settings' ) ) . '">' . esc_html__( 'You should now configure your Kadence Memberships Pro settings', 'rcp' ) . '</a></p></div>';
 		}
 
 		if ( rcp_check_if_upgrade_needed() ) {
-			echo '<div class="error"><p>' . __( 'The Kadence Memberships Pro database needs to be updated: ', 'rcp' ) . ' ' . '<a href="' . esc_url( add_query_arg( 'rcp-action', 'upgrade', admin_url() ) ) . '">' . __( 'upgrade now', 'rcp' ) . '</a></p></div>';
+			echo '<div class="error"><p>' . esc_html__( 'The Kadence Memberships Pro database needs to be updated: ', 'rcp' ) . ' <a href="' . esc_url( add_query_arg( 'rcp-action', 'upgrade', admin_url() ) ) . '">' . esc_html__( 'upgrade now', 'rcp' ) . '</a></p></div>';
 		}
 
 		if ( isset( $_GET['rcp-db'] ) && $_GET['rcp-db'] == 'updated' ) {
-			echo '<div class="updated fade"><p>' . __( 'The Kadence Memberships Pro database has been updated', 'rcp' ) . '</p></div>';
+			echo '<div class="updated fade"><p>' . esc_html__( 'The Kadence Memberships Pro database has been updated', 'rcp' ) . '</p></div>';
 		}
 
 		if ( false !== get_transient( 'rcp_login_redirect_invalid' ) ) {
@@ -40,8 +40,8 @@ function rcp_admin_notices() {
 
 		if ( ( ! empty( $rcp_options['paid_message'] ) || ! empty( $rcp_options['free_message'] ) ) && empty( $rcp_options['restriction_message'] ) && ! get_user_meta( get_current_user_id(), '_rcp_content_restriction_message_missing_dismissed', true ) ) {
 			echo '<div class="notice notice-info">';
-			echo '<p>' . __( 'The Kadence Memberships Pro "Free Content Message" and "Premium Content Message" settings have been merged into one "Restricted Content Message" setting field. Please visit the', 'rcp' ) . ' <a href="' . esc_url( admin_url( "admin.php?page=rcp-settings" ) ) . '">' . __( 'settings page', 'rcp' ) . '</a> ' . __( 'to confirm your new message.', 'rcp' ) . '</p>';
-			echo '<p>' . __( 'For more information, view our version 3.0 release post on the Kadence Memberships Pro blog: ', 'rcp' ) . '<a href="https://restrictcontentpro.com/?p=102444#restriction-message" target="_blank">https://restrictcontentpro.com/blog</a></p>';
+			echo '<p>' . esc_html__( 'The Kadence Memberships Pro "Free Content Message" and "Premium Content Message" settings have been merged into one "Restricted Content Message" setting field. Please visit the', 'rcp' ) . ' <a href="' . esc_url( admin_url( 'admin.php?page=rcp-settings' ) ) . '">' . esc_html__( 'settings page', 'rcp' ) . '</a> ' . esc_html__( 'to confirm your new message.', 'rcp' ) . '</p>';
+			echo '<p>' . esc_html__( 'For more information, view our version 3.0 release post on the Kadence Memberships Pro blog: ', 'rcp' ) . '<a href="https://restrictcontentpro.com/?p=102444#restriction-message" target="_blank">https://restrictcontentpro.com/blog</a></p>';
 			echo '<p><a href="' . esc_url( wp_nonce_url( add_query_arg( array( 'rcp_notice' => 'content_restriction_message_missing' ) ), 'rcp_dismiss_notice', 'rcp_dismiss_notice_nonce' ) ) . '">' . __( 'Dismiss Notice', 'rcp' ) . '</a></p>';
 			echo '</div>';
 		}
@@ -49,7 +49,15 @@ function rcp_admin_notices() {
 		$stripe_user_id = get_option( 'rcp_stripe_connect_account_id' );
 		if( empty( $stripe_user_id ) && ( rcp_is_gateway_enabled( 'stripe' ) || rcp_is_gateway_enabled( 'stripe_checkout' ) ) && ! get_user_meta( get_current_user_id(), '_rcp_stripe_connect_dismissed', true ) ) {
 			echo '<div class="notice notice-info">';
-			echo '<p>' . sprintf( __( 'Kadence Memberships Pro now supports Stripe Connect for easier setup and improved security. <a href="%s">Click here</a> to learn more about connecting your Stripe account.', 'rcp' ), esc_url( admin_url( 'admin.php?page=rcp-settings#payments' ) ) ) . '</p>';
+			echo '<p>' . wp_kses(
+				// translators: %s URL to the Stripe Connect settings page.
+				sprintf( __( 'Kadence Memberships Pro now supports Stripe Connect for easier setup and improved security. <a href="%s">Click here</a> to learn more about connecting your Stripe account.', 'rcp' ), esc_url( admin_url( 'admin.php?page=rcp-settings#payments' ) ) ),
+				[
+					'a' => [
+						'href' => [],
+					],
+				]
+			) . '</p>';
 			echo '<p><a href="' . wp_nonce_url( add_query_arg( array( 'rcp_notice' => 'stripe_connect' ) ), 'rcp_dismiss_notice', 'rcp_dismiss_notice_nonce' ) . '">' . _x( 'Dismiss Notice', 'Stripe Connect', 'rcp' ) . '</a></p>';
 			echo '</div>';
 		}
@@ -58,8 +66,17 @@ function rcp_admin_notices() {
 	if( current_user_can( 'activate_plugins' ) ) {
 		if ( version_compare( PHP_VERSION, '5.6', '<' ) ) {
 			echo '<div class="error">';
-			echo '<p><strong>' . __( 'Kadence Memberships Pro is increasing its PHP version requirement', 'rcp' ) . '</strong></p>';
-			echo '<p>' . sprintf( __( 'Kadence Memberships Pro will be increasing its PHP requirement to version 5.6 or higher in version 3.0. It looks like you\'re using version %s, which means you will need to upgrade your version of PHP before upgrading to Kadence Memberships Pro 3.0. Newer versions of PHP are both faster and more secure. The version you\'re using <a href="%s" target="_blank">no longer receives security updates</a>, which is another great reason to update.', 'rcp' ), PHP_VERSION, 'http://php.net/eol.php' ) . '</p>';
+			echo '<p><strong>' . esc_html__( 'Kadence Memberships Pro is increasing its PHP version requirement', 'rcp' ) . '</strong></p>';
+			echo '<p>' . wp_kses(
+				// translators: %1$s PHP version, %2$s URL to PHP end-of-life page.
+				sprintf( __( 'Kadence Memberships Pro will be increasing its PHP requirement to version 5.6 or higher in version 3.0. It looks like you\'re using version %1$s, which means you will need to upgrade your version of PHP before upgrading to Kadence Memberships Pro 3.0. Newer versions of PHP are both faster and more secure. The version you\'re using <a href="%2$s" target="_blank">no longer receives security updates</a>, which is another great reason to update.', 'rcp' ), PHP_VERSION, 'http://php.net/eol.php' ),
+				[
+					'a' => [
+						'href'   => [],
+						'target' => [],
+					],
+				]
+			) . '</p>';
 			echo '<p><strong>' . __( 'Which version should I upgrade to?', 'rcp' ) . '</strong></p>';
 			echo '<p>' . __( 'In order to be compatible with future versions of Kadence Memberships Pro, you should update your PHP version to 5.6, 7.0, 7.1, or 7.2. On a normal WordPress site, switching to PHP 5.6 should never cause issues. We would however actually recommend you switch to PHP 7.1 or higher to receive the full speed and security benefits provided to more modern and fully supported versions of PHP. However, some plugins may not be fully compatible with PHP 7+, so more testing may be required.', 'rcp' ) . '</p>';
 			echo '<p><strong>' . __( 'Need help upgrading? Ask your web host!', 'rcp' ) . '</strong></p>';

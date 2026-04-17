@@ -11,7 +11,6 @@
  * @since       1.5
  */
 
-
 /**
  * Returns the path to the EDD templates directory
  *
