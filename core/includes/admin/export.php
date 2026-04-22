@@ -2,9 +2,9 @@
 /**
  * Export Page
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Admin/Export
- * @copyright   Copyright (c) 2020, Restrict Content Pro
+ * @copyright   Copyright (c) 2020, Kadence Memberships Pro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 

@@ -3,7 +3,7 @@
  * Membership Meta Functions
  *
  * @package   restrict-content-pro
- * @copyright Copyright (c) 2019, Restrict Content Pro team
+ * @copyright Copyright (c) 2019, Kadence Memberships Pro team
  * @license   GPL2+
  * @since     3.0
  */

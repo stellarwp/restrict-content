@@ -1,37 +1,37 @@
-=== Membership Plugin - Restrict Content ===
+=== Membership Plugin - Kadence Memberships ===
 Author URI: https://restrictcontentpro.com
-Author: StellarWP
-Contributors: stellarwp, reedyseth, highprrrr
+Author: Liquid Web
+Contributors: liquidweb, reedyseth, highprrrr
 Tags: restrict pages, restrict posts, restrict access, membership, registration form, access control
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.9
-Stable tag: 3.2.26
+Stable tag: 4.0.0
 
-Restrict Content is a powerful WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.
+Kadence Memberships is a powerful WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.
 
 == Description ==
-Restrict Content is a powerful WordPress membership plugin that allows you to monetize content access. As a content restriction plugin, Restrict Content gives you full control over who can and cannot view content on your WordPress site. As a design tool, Restrict Content helps you create pages that dynamically display content based on user role or membership level.
+Kadence Memberships is a powerful WordPress membership plugin that allows you to monetize content access. As a content restriction plugin, Kadence Memberships gives you full control over who can and cannot view content on your WordPress site. As a design tool, Kadence Memberships helps you create pages that dynamically display content based on user role or membership level.
 
-Restrict Content can power a full-fledged membership or subscription website with multiple membership levels, or just hide a page or post. Restrict Content makes it simple to limit access to posts, pages, media, custom post types, and even API requests. This gives you full control over who can and who cannot view content on your WordPress site.
+Kadence Memberships can power a full-fledged membership or subscription website with multiple membership levels, or just hide a page or post. Kadence Memberships makes it simple to limit access to posts, pages, media, custom post types, and even API requests. This gives you full control over who can and who cannot view content on your WordPress site.
 
 https://vimeo.com/650723404
 
-Restrict Content is completely customizable with features built for developers and extensible with a library of [Pro add-ons](https://restrictcontentpro.com/add-ons/pro/).
+Kadence Memberships is completely customizable with features built for developers and extensible with a library of [Pro add-ons](https://restrictcontentpro.com/add-ons/pro/).
 
 = 💪 As Powerful as a WordPress Membership Plugin ... or as Simple as a Content Restriction Plugin =
 
-Use Restrict Content as a <strong>WordPress membership plugin</strong> to:
+Use Kadence Memberships as a <strong>WordPress membership plugin</strong> to:
 
 - <strong>Create unlimited membership levels or subscription packages.</strong> Easily create free, trial, and premium memberships or subscriptions. Each plan can be used to set a user’s access to specific content on your site.
 - <strong>Sell memberships and collect payments on your WordPress site.</strong> You can even collect payments with Stripe in the free version!
 - <strong>Control content access for your members.</strong> Decide who can access specific pages, posts, archives, and even WordPress blocks based on a member’s plan, status, and more.
-- <strong>Manage your members or subscribers.</strong> Restrict Content lets you easily keep track of your memberships through an intuitive admin interface. Quickly view active, expired, cancelled, and pending memberships. Memberships can be added manually, modified in bulk, and easily searched for when you need to locate a specific record. Each membership can also be manually modified at any time.
+- <strong>Manage your members or subscribers.</strong> Kadence Memberships lets you easily keep track of your memberships through an intuitive admin interface. Quickly view active, expired, cancelled, and pending memberships. Memberships can be added manually, modified in bulk, and easily searched for when you need to locate a specific record. Each membership can also be manually modified at any time.
 - <strong>Allow members to manage their account with self-service account management. </strong> Members can easily view their account status, renewal or expiration date, and options to upgrade or cancel their account. They can also access a complete history of payments made to their account, including PDF invoices for each payment. Finally, members are able update their account name, email, and password through an included profile editor.
 - <strong>Offer prorated memberships.</strong> Customers can also upgrade and downgrade between membership levels at any time. These upgrades and downgrades are prorated based on how much the customer has already paid and how much time is left in their current membership.
 - <strong> Auto-renew membership payments.</strong> Select whether membership payments should always auto renew or let the customer decide.
 
-Use Restrict Content as a <strong>WordPress content restriction plugin</strong> to:
+Use Kadence Memberships as a <strong>WordPress content restriction plugin</strong> to:
 
 - <strong>Restrict access to your WordPress site based user role.</strong> Limit access to full content via a simple interface on the post, page, and custom post type editing screens.
 - <strong>Control user access to content<strong> based on WordPress user role, access level(s), or membership level(s).
@@ -40,7 +40,7 @@ Use Restrict Content as a <strong>WordPress content restriction plugin</strong> 
 - <strong>Restrict access to entire pages or specific sections
 - <strong>Let users register and login from the frontend of your site</strong>
 
-> “Most plugins that restrict content are heavy and need 3rd party commerce solutions like WooCommerce to work. Restrict Content Pro has EVERYTHING built-in: memberships, payment gateways and plenty of add-ons – a true, one-stop solution for membership websites!”
+> “Most plugins that restrict content are heavy and need 3rd party commerce solutions like WooCommerce to work. Kadence Memberships Pro has EVERYTHING built-in: memberships, payment gateways and plenty of add-ons – a true, one-stop solution for membership websites!”
 > David Attard, CollectiveRay
 
 = ✨ Features =
@@ -60,45 +60,45 @@ Our feature-rich plugin comes with everything you need to restrict content and s
 
 ✔️ Redirect Default Login URL - Force the default login URL to a custom URL.
 ✔️ Content Excerpts - Choose whether or not to show content excerpts to members without access to the content.
-✔️ Import/Export Data - Whether you prefer to maintain your own records of your memberships database, you wish to run your own analysis, or you simply need to import membership records into another service or application such as MailChimp or Excel, Restrict Content allows you to export all membership records to a CSV at anytime.
+✔️ Import/Export Data - Whether you prefer to maintain your own records of your memberships database, you wish to run your own analysis, or you simply need to import membership records into another service or application such as MailChimp or Excel, Kadence Memberships allows you to export all membership records to a CSV at anytime.
 ✔️ Restricted Content Message - Customize the message shown to users who do not have permission to view the content.
 ✔️ Restrict access to [WooCommerce](https://woocommerce.com/) products.
 
 = 🏋️‍♀️ More Power with Pro Features =
 
-- 🏷 <strong>Discount code support</strong> - Discount codes allow you to provide your customers with special promotional codes that give them a discount on the purchase of a membership. Restrict Content Pro supports various kinds of discount codes and site administrators can easily create any number of discounts from the admin interface. Discount codes can be set up to provide a percentage discount or a flat rate discount. Each discount code is created with a name, description, unique code, maximum uses, and optional expiration dates.
-- 📈 <strong>Detailed reporting</strong> - Restrict Content Pro provides a complete reports section where you can view the earnings of your membership website. You can view total earnings for any given period or drill down to specific membership levels.
+- 🏷 <strong>Discount code support</strong> - Discount codes allow you to provide your customers with special promotional codes that give them a discount on the purchase of a membership. Kadence Memberships Pro supports various kinds of discount codes and site administrators can easily create any number of discounts from the admin interface. Discount codes can be set up to provide a percentage discount or a flat rate discount. Each discount code is created with a name, description, unique code, maximum uses, and optional expiration dates.
+- 📈 <strong>Detailed reporting</strong> - Kadence Memberships Pro provides a complete reports section where you can view the earnings of your membership website. You can view total earnings for any given period or drill down to specific membership levels.
 - 🕵️‍♀️ <strong>Free trials</strong> - Allow prospective members to try a membership before they buy. Send emails to free trial users when their free trial is about to end.
-- ✉️ <strong>Member Email Customization</strong> - Add a personal touch to all of your member emails with Restrict Content Pro.
+- ✉️ <strong>Member Email Customization</strong> - Add a personal touch to all of your member emails with Kadence Memberships Pro.
 - 🔒 <strong>Google reCAPTCHA</strong> - Protect your member login form from bots with Google reCAPTCHA.
-- 🚀 <strong> 34 Powerful Add-ons</strong> - All Restrict Content Pro plans come with all Restrict Content Pro add-ons to add more integrations and functionality to your site.
+- 🚀 <strong> 34 Powerful Add-ons</strong> - All Kadence Memberships Pro plans come with all Kadence Memberships Pro add-ons to add more integrations and functionality to your site.
 
-**[Upgrade to Restrict Content Pro now](https://restrictcontentpro.com/pricing/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=upgrade&utm_term=description)**
+**[Upgrade to Kadence Memberships Pro now](https://restrictcontentpro.com/pricing/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=upgrade&utm_term=description)**
 
 
 = 🛠 Developer Features =
 
-Restrict Content Pro has been built with developers in mind. That means it is flexible, easy to extend, and chocked full of action hooks and filters, making it easy to modify and tweak to your specific needs. With clean and simple display options, Restrict Content Pro is designed to integrate perfectly with every theme without any custom CSS being necessary.
+Kadence Memberships Pro has been built with developers in mind. That means it is flexible, easy to extend, and chocked full of action hooks and filters, making it easy to modify and tweak to your specific needs. With clean and simple display options, Kadence Memberships Pro is designed to integrate perfectly with every theme without any custom CSS being necessary.
 
-Extensive and easy to modify template files are included with Restrict Content Pro. If you have built a theme, for clients or general distribution, you can easily customize the display of registration forms, profile editor, account pages, and more through custom template files added directly to your theme’s folder.
+Extensive and easy to modify template files are included with Kadence Memberships Pro. If you have built a theme, for clients or general distribution, you can easily customize the display of registration forms, profile editor, account pages, and more through custom template files added directly to your theme’s folder.
 
-Because of the huge number of action hooks and filters, Restrict Content Pro can be easily integrated with other plugins to help provide a more seamless experience for customers. This also makes it possible to build add-on plugins for Restrict Content Pro that extend its functionality.
+Because of the huge number of action hooks and filters, Kadence Memberships Pro can be easily integrated with other plugins to help provide a more seamless experience for customers. This also makes it possible to build add-on plugins for Kadence Memberships Pro that extend its functionality.
 
 ✔️ Theme Integration - Designed to work with any theme.
-✔️ Action Hooks & filters galore - Restrict Content contains a bunch of action hooks and filters, allowing you to easily customize the plugin to your specific needs. Check out our extensive developer docs for actions, filters, classes, constants, and functions.
-✔️ Easy to Modify Template files - Making changes to Restrict Content Pro template files is a cinch. Make a copy of any plugin template file and drop it in your theme to override the plugin’s file with your own custom markup.
-✔️ So Many Integrations - Restrict Content plays nice with a bunch of plugins and third-party services, including e-commerce systems like WooCommerce, lots of Pro payment gateways, email newsletter services, and much more!
-✔️ REST API - Restrict Content Pro includes a complete REST API, allowing you to extend the plugin and its functionality beyond WordPress and into your web application. The possibilities for what you can do are nearly limitless!
-✔️ WP-CLI Integration - Restrict Content Pro integrates with WP-CLI. Several commands are supported in order to speed up your workflow with batch processing jobs, creating memberships, and viewing customer information.
+✔️ Action Hooks & filters galore - Kadence Memberships contains a bunch of action hooks and filters, allowing you to easily customize the plugin to your specific needs. Check out our extensive developer docs for actions, filters, classes, constants, and functions.
+✔️ Easy to Modify Template files - Making changes to Kadence Memberships Pro template files is a cinch. Make a copy of any plugin template file and drop it in your theme to override the plugin’s file with your own custom markup.
+✔️ So Many Integrations - Kadence Memberships plays nice with a bunch of plugins and third-party services, including e-commerce systems like WooCommerce, lots of Pro payment gateways, email newsletter services, and much more!
+✔️ REST API - Kadence Memberships Pro includes a complete REST API, allowing you to extend the plugin and its functionality beyond WordPress and into your web application. The possibilities for what you can do are nearly limitless!
+✔️ WP-CLI Integration - Kadence Memberships Pro integrates with WP-CLI. Several commands are supported in order to speed up your workflow with batch processing jobs, creating memberships, and viewing customer information.
 ✔️ Debug mode for developers - Turn on error logging to help identify issues. Logs are kept in Restrict > Tools.
 
 = 💳 Stripe payment processing support =
 
 It’s no secret that we believe [Stripe](https://stripe.com/) is the best payment processor. Stripe currently supports 14 languages, over 35 countries and 135+ currencies. [Check support for your country](https://stripe.com/global).
 
-Hands down, Stripe has the simplest setup process and highest reliability we know of – and support for Stripe is included in Restrict Content. Stripe has a per-transaction charge which varies by country. See [Stripe’s pricing page](https://stripe.com/pricing) for more information. However, if you prefer a different payment gateway or your country does not support Stripe, we’ve got you covered...
+Hands down, Stripe has the simplest setup process and highest reliability we know of – and support for Stripe is included in Kadence Memberships. Stripe has a per-transaction charge which varies by country. See [Stripe’s pricing page](https://stripe.com/pricing) for more information. However, if you prefer a different payment gateway or your country does not support Stripe, we’ve got you covered...
 
-Besides Stripe, we have several payment gateways available to Restrict Content Pro. Visit the following links to get more details for the payment gateway of your choice.
+Besides Stripe, we have several payment gateways available to Kadence Memberships Pro. Visit the following links to get more details for the payment gateway of your choice.
 
 - [PayPal](https://restrictcontentpro.com/tour/payment-gateways/paypal/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=paypal&utm_term=description)
 - [Authorize.Net](https://restrictcontentpro.com/tour/payment-gateways/authorize-net/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=authorize-net&utm_term=description)
@@ -113,21 +113,21 @@ Besides Stripe, we have several payment gateways available to Restrict Content P
 
 = 🛒 WooCommerce integration =
 
-Restrict Content allows you to easily control who can view and/or purchase products in [WooCommerce](https://woocommerce.com/), the most popular eCommerce plugin for WordPress.
+Kadence Memberships allows you to easily control who can view and/or purchase products in [WooCommerce](https://woocommerce.com/), the most popular eCommerce plugin for WordPress.
 
 = 💬 Get reliable help =
 
-Restrict Content is backed by top-notch technical support from our full-time support team. We also have extensive [documentation site](https://help.ithemes.com/hc/en-us/categories/360004039733-Restrict-Content-Pro?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=docs&utm_term=description) available. If you’re looking for faster support via email, we encourage you to purchase a [Restrict Content Pro license](https://restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=purchase&utm_term=description).
+Kadence Memberships is backed by top-notch technical support from our full-time support team. We also have extensive [documentation site](https://help.ithemes.com/hc/en-us/categories/360004039733-Restrict-Content-Pro?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=docs&utm_term=description) available. If you’re looking for faster support via email, we encourage you to purchase a [Kadence Memberships Pro license](https://restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=purchase&utm_term=description).
 
-We check in on the [The Restrict Content forum here on WordPress.org](https://wordpress.org/support/plugin/restrict-content) about once a week to help users with basic troubleshooting and identifying bugs. If you’re looking for premium, personalized support, consider upgrading to Restrict Content Pro.
+We check in on the [The Kadence Memberships forum here on WordPress.org](https://wordpress.org/support/plugin/restrict-content) about once a week to help users with basic troubleshooting and identifying bugs. If you’re looking for premium, personalized support, consider upgrading to Kadence Memberships Pro.
 
 == 📃 Documentation ==
 
 All of our documentation can be found in the [iThemes Help Docs](https://help.ithemes.com/hc/en-us/categories/360004039733-Restrict-Content-Pro).
 
-= 🤔 Who is Restrict Content Pro for? =
+= 🤔 Who is Kadence Memberships Pro for? =
 
-No matter what kind of membership site or plans you offer, Restrict Content Pro can be adapted to suit your business needs – and set up in [many different ways](https://restrictcontentpro.com/tour/use-cases/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=use-cases&utm_term=description), based on how you want to allow members to access your site’s content.
+No matter what kind of membership site or plans you offer, Kadence Memberships Pro can be adapted to suit your business needs – and set up in [many different ways](https://restrictcontentpro.com/tour/use-cases/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=use-cases&utm_term=description), based on how you want to allow members to access your site’s content.
 
 Here are a few examples:
 
@@ -146,14 +146,14 @@ Here are a few examples:
 
 = 💌 Email marketing service provider add-ons =
 
-With a Professional or higher license, you can connect Restrict Content Pro to any of the following email marketing service providers. This allows you to add members to your mailing lists for different membership levels as well as synchronize account details.
+With a Professional or higher license, you can connect Kadence Memberships Pro to any of the following email marketing service providers. This allows you to add members to your mailing lists for different membership levels as well as synchronize account details.
 
 - [Mailchimp](https://restrictcontentpro.com/downloads/mailchimp-pro/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=mailchimp&utm_term=description)
 - [AWeber](https://restrictcontentpro.com/downloads/aweber-pro/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=aweber&utm_term=description)
 - [ConvertKit](https://restrictcontentpro.com/downloads/convertkit/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=convertkit&utm_term=description)
 - [ActiveCampaign](https://restrictcontentpro.com/downloads/activecampaign/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=activecampaign&utm_term=description)
 
-= 🔌 Other add-ons in Restrict Content Pro =
+= 🔌 Other add-ons in Kadence Memberships Pro =
 
 - [Group Accounts](https://restrictcontentpro.com/downloads/group-accounts/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=group-accounts&utm_term=description) - Sell multi-member group memberships.
 - [Drip Content](https://restrictcontentpro.com/downloads/drip-content/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=drip-content&utm_term=description) - Release content to members on a schedule.
@@ -164,14 +164,14 @@ With a Professional or higher license, you can connect Restrict Content Pro to a
 - [Restriction Timeouts](https://restrictcontentpro.com/downloads/restriction-timeouts/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=timeouts&utm_term=description) - Specify a date and time when restricted content will have its restrictions removed, making it available to everyone.
 - [Restrict Past Content](https://restrictcontentpro.com/downloads/restrict-past-content/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=past-content&utm_term=description) - Restrict content published prior to a member's join date.
 - [Hard-set Expiration Dates](https://restrictcontentpro.com/downloads/hard-set-expiration-dates/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=expiration&utm_term=description) - Allows for a specific expiration date to be assigned to membership levels.
-- [Help Scout](https://restrictcontentpro.com/downloads/help-scout/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=help-scout&utm_term=description) - Display customer's membership information from Restrict Content Pro inside of Help Scout when viewing tickets.
+- [Help Scout](https://restrictcontentpro.com/downloads/help-scout/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=help-scout&utm_term=description) - Display customer's membership information from Kadence Memberships Pro inside of Help Scout when viewing tickets.
 - [Math Verification](https://restrictcontentpro.com/downloads/math-verification/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=math&utm_term=description) - Add a math verification field to registration forms.
 - [IP Restriction](https://restrictcontentpro.com/downloads/ip-restriction/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=ip&utm_term=description) - Allow specific IP addresses to bypass content restrictions and ban other IP addresses from signing up for a membership plan.
 - [Enforce Strong Passwords](https://restrictcontentpro.com/downloads/enforce-strong-passwords/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=strong-passwords&utm_term=description) - Enforce strong passwords during registration.
 
 = 👋 Meet the team =
 
-Restrict Content is built by [iThemes](https://iThemes.com/team/?utm_medium=readme&utm_source=wporg&utm_campaign=rc-lite-plugin&utm_content=ithemes&utm_term=description). We also make popular WordPress plugins like [iThemes Security Pro](https://ithemes.com/security?utm_medium=readme&utm_source=wporg&utm_campaign=rc-lite-plugin&utm_content=popular&utm_term=description) and [BackupBuddy](https://ithemes.com/security?utm_medium=readme&utm_source=wporg&utm_campaign=rc-lite-plugin&utm_content=popular&utm_term=description) used by hundreds of thousands of people just like you.
+Kadence Memberships is built by [iThemes](https://iThemes.com/team/?utm_medium=readme&utm_source=wporg&utm_campaign=rc-lite-plugin&utm_content=ithemes&utm_term=description). We also make popular WordPress plugins like [iThemes Security Pro](https://ithemes.com/security?utm_medium=readme&utm_source=wporg&utm_campaign=rc-lite-plugin&utm_content=popular&utm_term=description) and [BackupBuddy](https://ithemes.com/security?utm_medium=readme&utm_source=wporg&utm_campaign=rc-lite-plugin&utm_content=popular&utm_term=description) used by hundreds of thousands of people just like you.
 
 = ✏️ From our blog =
 
@@ -187,11 +187,11 @@ Check out some of our popular posts for actionable advice for running membership
 == Installation ==
 
 1. Visit the plugins page within your dashboard and select ‘Add New’
-2. Search for "Restrict Content"
-3. Activate Restrict Content from your Plugins page
+2. Search for "Kadence Memberships"
+3. Activate Kadence Memberships from your Plugins page
 4. You're done!
 
-== Install Restrict Content Manually ==
+== Install Kadence Memberships Manually ==
 
 1. From the dashboard of your site, navigate to Plugins --> Add New.
 2. Select the Upload option and hit "Choose File."
@@ -215,11 +215,11 @@ Yes. You can choose exactly which content to protect with the [restrict] shortco
 
 = Can I charge customers when they register an account? =
 
-Yes! With the Restrict Content plugin, you can offer paid membership levels with manual payments or Stripe. For even more payment gateways, check out [Restrict Content Pro](https://restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=faq).
+Yes! With the Kadence Memberships plugin, you can offer paid membership levels with manual payments or Stripe. For even more payment gateways, check out [Kadence Memberships Pro](https://restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=faq).
 
 = Does the plugin protect images and other media files? =
 
-Yes. Restrict Content can restrict access to media that is embedded within a post or page, but it does not protect the original file URL on the server.
+Yes. Kadence Memberships can restrict access to media that is embedded within a post or page, but it does not protect the original file URL on the server.
 
 = Can I restrict content in my RSS feed? =
 
@@ -227,27 +227,27 @@ Yes. There’s a checkbox for this within each post/page. If enabled, that conte
 
 = Can I integrate newsletter signups with the registration form? =
 
-Not with this plugin, but [Restrict Content Pro](https://restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=faq) has integrations for many popular email marketing providers, including Mailchimp, ConvertKit, ActiveCampaign, and more.
+Not with this plugin, but [Kadence Memberships Pro](https://restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=faq) has integrations for many popular email marketing providers, including Mailchimp, ConvertKit, ActiveCampaign, and more.
 
 = Do restrictions work in REST API requests? =
 
 Yes. All restrictions apply in REST API requests - exactly the same as if viewing your site normally.
 
-= Does Restrict Content work with the Gutenberg editor / the WordPress block editor? =
+= Does Kadence Memberships work with the Gutenberg editor / the WordPress block editor? =
 
 Yes. Full page restriction settings as well as the `[restrict]`, `[register_form]`, and `[login_form]` shortcodes all work with Gutenberg.
 
 = Does this plugin support restricting access by custom user roles? =
 
-Yes! Restrict Content provides the ability to limit access based on custom roles.
+Yes! Kadence Memberships provides the ability to limit access based on custom roles.
 
 = Will the plugin work with third party page builders? =
 
-Restrict Content works with most third party page builders. However, if using the [restrict] shortcode, most page builders will require that the opening and closing shortcode tags be within the same element/block.
+Kadence Memberships works with most third party page builders. However, if using the [restrict] shortcode, most page builders will require that the opening and closing shortcode tags be within the same element/block.
 
 = Does this plugin include frontend login or registration forms? =
 
-Yes. Restrict Content includes shortcodes for a registration form, a login form, and a password reset form.
+Yes. Kadence Memberships includes shortcodes for a registration form, a login form, and a password reset form.
 
 == Screenshots ==
 
@@ -256,6 +256,9 @@ Go to the demo page to see examples:
 https://restrictcontentpro.com/tour/screenshots/
 
 == Changelog ==
+
+= 4.0.0 =
+* Tweak: Updated branding references from StellarWP to Liquid Web.
 
 = 3.2.26 =
 * Fix: Fixed a fatal error when no payment gateways are enabled in telemetry data.

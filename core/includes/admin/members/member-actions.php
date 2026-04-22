@@ -4,7 +4,7 @@
  *
  * @package     restrict-content-pro
  * @subpackage  Admin/Member Actions
- * @copyright   Copyright (c) 2017, Restrict Content Pro
+ * @copyright   Copyright (c) 2017, Kadence Memberships Pro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       2.9
  */

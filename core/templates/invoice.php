@@ -6,9 +6,9 @@
  *
  * For modifying this template, please see: https://restrictcontentpro.com/knowledgebase/editing-template-files/
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Templates/Invoice
- * @copyright   Copyright (c) 2017, Restrict Content Pro
+ * @copyright   Copyright (c) 2017, Kadence Memberships Pro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 

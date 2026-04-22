@@ -26,7 +26,7 @@ class RCP_Telemetry {
 	protected $container;
 
 	/**
-	 * The Restrict Content Instance
+	 * The Kadence Memberships Instance
 	 *
 	 * @since 3.5.28
 	 * @var Restrict_Content_Pro $restrict_content The RCP Instance.
@@ -76,21 +76,21 @@ class RCP_Telemetry {
 		$_args['permissions_url']    = 'https://restrictcontentpro.com/telemetry-tracking/';
 		$_args['tos_url']            = 'https://restrictcontentpro.com/terms-of-service/';
 		$_args['privacy_url']        = 'https://stellarwp.com/privacy-policy/';
-		$rcp_title                   = 'Restrict Content Pro';
+		$rcp_title                   = 'Kadence Memberships Pro';
 
 		if ( $this->restrict_content->is_pro() ) {
 			$_args['plugin_logo'] = RCP_WEB_ROOT . 'core/includes/images/Full-Logo-1.svg';
-			$_args['heading']     = __( 'We hope you love Restrict Content Pro.', 'rcp' );
+			$_args['heading']     = __( 'We hope you love Kadence Memberships Pro.', 'rcp' );
 		} else {
 			$_args['plugin_logo'] = RCP_WEB_ROOT . 'core/includes/images/restrict_content_logo.svg';
-			$_args['heading']     = __( 'We hope you love Restrict Content.', 'rcp' );
-			$rcp_title            = 'Restrict Content';
+			$_args['heading']     = __( 'We hope you love Kadence Memberships.', 'rcp' );
+			$rcp_title            = 'Kadence Memberships';
 		}
 
 		if ( ! $this->check_freemius_status() ) {
 			$_args['intro'] = sprintf(
-				// translators:%1\$s: The user name.
-				__( "Hi, %1\$s! This is an invitation to help our %2\$s community. If you opt in, some data about your usage of %3\$s will be shared with our teams. We will also share some helpful info on membership site management, WordPress, and our products from time to time. And if you skip this, that's okay! %4\$s will still work just fine.", 'rcp' ),
+				// translators: %1$s: The user name. %2$s, %3$s, %4$s: The product title.
+				__( "Hi, %1\$s! This is an invitation to help us improve %2\$s by sharing product usage data with Liquid Web by Nexcess. %3\$s is part of Liquid Web's collection of software solutions. If you opt in, we'll share some helpful info on membership site management, WordPress, and our products from time to time. And if you skip this, that's okay! %4\$s will still work just fine.", 'rcp' ),
 				wp_get_current_user()->display_name,
 				$rcp_title,
 				$rcp_title,
@@ -98,9 +98,10 @@ class RCP_Telemetry {
 			);
 		} else {
 			$_args['intro'] = sprintf(
-				// translators: %s: The user name.
-				__( "Hello, %s! We just wanted to let you know that we've replaced Freemius with our own Telemetry feature. This new Telemetry removes the middle man (Freemius) and as a result is much more privacy-friendly. Rather than sending helpful information to Freemius, who then sends it to us, the information is now sent directly to us. Click 'Allow & Continue' to continue sharing this helpful information using our new Telemetry feature.", 'rcp' ),
-				wp_get_current_user()->display_name
+				// translators: %1$s: The user name. %2$s: The product title.
+				__( "Hello, %1\$s! We just wanted to let you know that we've replaced Freemius with our own Telemetry feature. This new Telemetry removes the middle man (Freemius) and as a result is much more privacy-friendly. Rather than sending helpful information to Freemius, who then sends it to us here at Liquid Web by Nexcess, the information is now sent directly to us. %2\$s is part of Liquid Web's collection of software solutions. Click 'Allow & Continue' to continue sharing this helpful information using our new Telemetry feature.", 'rcp' ),
+				wp_get_current_user()->display_name,
+				$rcp_title
 			);
 		}
 
@@ -210,10 +211,10 @@ class RCP_Telemetry {
 
 		if ( $this->restrict_content->is_pro() ) {
 			$_args['plugin_logo']     = RCP_WEB_ROOT . 'core/includes/images/Full-Logo-1.svg';
-			$_args['plugin_logo_alt'] = 'Restrict Content Pro Logo';
+			$_args['plugin_logo_alt'] = 'Kadence Memberships Pro Logo';
 		} else {
 			$_args['plugin_logo']     = RCP_WEB_ROOT . 'core/includes/images/restrict_content_logo.svg';
-			$_args['plugin_logo_alt'] = 'Restrict Content Logo';
+			$_args['plugin_logo_alt'] = 'Kadence Memberships Logo';
 		}
 
 		return $_args;
@@ -325,12 +326,12 @@ class RCP_Telemetry {
 	 */
 	public function add_rcp_info_to_telemetry( array $_info ) : array {
 		$telemetry_info           = new RCP_Telemetry_Info();
-		$rcp_title                = 'Restrict Content Pro';
+		$rcp_title                = 'Kadence Memberships Pro';
 		$rcp_slug                 = 'restrict-content-pro';
 		$restrict_content_version = ! $this->restrict_content->is_pro() ? RCF_VERSION : RCP_PLUGIN_VERSION;
 
 		if ( ! $this->restrict_content->is_pro() ) {
-			$rcp_title = 'Restrict Content';
+			$rcp_title = 'Kadence Memberships';
 			$rcp_slug  = 'restrict-content';
 		}
 

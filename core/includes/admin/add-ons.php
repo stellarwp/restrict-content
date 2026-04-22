@@ -2,9 +2,9 @@
 /**
  * Admin Add-Ons
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Admin/Add-Ons
- * @copyright   Copyright (c) 2017, Restrict Content Pro
+ * @copyright   Copyright (c) 2017, Kadence Memberships Pro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
@@ -26,12 +26,12 @@ function rcp_add_ons_admin() {
 	?>
 	<div class="wrap" id="rcp-add-ons">
 		<h1>
-			<?php _e( 'Add-ons for Restrict Content Pro', 'rcp' ); ?>
+			<?php _e( 'Add-ons for Kadence Memberships Pro', 'rcp' ); ?>
 			<span>
 				&nbsp;&nbsp;<a href="https://restrictcontentpro.com/add-ons/?utm_source=plugin-add-ons-page&utm_medium=plugin&utm_campaign=Restrict%20Content%20Pro%20Add-ons%20Page&utm_content=All%20Add-ons" class="button-primary" title="<?php _e( 'Browse all add-ons', 'rcp' ); ?>" target="_blank"><?php _e( 'Browse all add-ons', 'rcp' ); ?></a>
 			</span>
 		</h1>
-		<p><?php _e( 'These add-ons <em><strong>add functionality</strong></em> to your Restrict Content Pro-powered site.', 'rcp' ); ?></p>
+		<p><?php _e( 'These add-ons <em><strong>add functionality</strong></em> to your Kadence Memberships Pro-powered site.', 'rcp' ); ?></p>
 		<h2 class="nav-tab-wrapper">
 			<?php
 			foreach( $add_ons_tabs as $tab_id => $tab_name ) {

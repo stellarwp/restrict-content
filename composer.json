@@ -31,6 +31,13 @@
 		],
 		"post-update-cmd": [
 			"@strauss"
+		],
+		"qa:zip": [
+			"@composer install",
+			"@composer install --no-dev --no-scripts",
+			"git submodule update --init --recursive",
+			"rm -f ./restrict-content.zip",
+			"sh -c 'mkdir restrict-content && git ls-files --recurse-submodules -z | tar --null -T - -cf - | tar -xf - -C restrict-content && zip -r restrict-content.zip restrict-content && rm -rf restrict-content'"
 		]
 	},
 	"require": {
@@ -38,7 +45,7 @@
 		"lucatume/di52": "^3.0",
 		"psr/container": "^1.0",
 		"stellarwp/container-contract": "^1.0",
-		"stellarwp/telemetry": "2.3.4"
+		"stellarwp/telemetry": "^2.4"
 	},
 	"autoload": {
 		"psr-4": {
