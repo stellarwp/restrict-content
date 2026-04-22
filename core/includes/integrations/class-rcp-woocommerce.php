@@ -9,6 +9,9 @@
  * @since       2.2
  */
 
+/**
+ * WooCommerce integration.
+ */
 class RCP_WooCommerce {
 
 	/**

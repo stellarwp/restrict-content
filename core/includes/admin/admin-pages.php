@@ -573,9 +573,18 @@ function rcp_welcome_page_redesign() {
 
 						<p class="restrict-content-how-to-message">
 							<?php
-							printf(
-								__( 'With Pro you can use several popular payment gateways to collect payments. We even have an <a href="%s" target="_blank">API</a> that you can use to integrate RCP with additional payment gateways. ', 'rcp' ),
-						'https://help.ithemes.com/hc/en-us/articles/360052351054-Payment-Gateway-API'
+							echo wp_kses(
+								sprintf(
+									/* translators: %s: URL to the Payment Gateway API documentation. */
+									__( 'With Pro you can use several popular payment gateways to collect payments. We even have an <a href="%s" target="_blank">API</a> that you can use to integrate Kadence Memberships Pro with additional payment gateways. ', 'rcp' ),
+									esc_url( 'https://help.ithemes.com/hc/en-us/articles/360052351054-Payment-Gateway-API' )
+								),
+								array(
+									'a' => array(
+										'href'   => array(),
+										'target' => array(),
+									),
+								)
 							);
 							?>
 							</p>

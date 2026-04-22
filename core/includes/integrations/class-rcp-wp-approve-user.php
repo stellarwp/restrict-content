@@ -9,6 +9,9 @@
  * @since       2.4
  */
 
+/**
+ * WP Approve User integration.
+ */
 class RCP_WP_Approve_User {
 
 	/**

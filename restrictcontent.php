@@ -22,6 +22,12 @@ define('RCF_VERSION', '4.0.0');
 
 // Load Strauss autoload.
 require_once plugin_dir_path( __FILE__ ) . 'vendor/strauss/autoload.php';
+
+// TODO: Remove after Strauss has been updated.
+if ( interface_exists( 'RCP\StellarWP\ContainerContract\ContainerInterface' ) && ! interface_exists( 'StellarWP\ContainerContract\ContainerInterface', false ) ) {
+	class_alias( 'RCP\StellarWP\ContainerContract\ContainerInterface', 'StellarWP\ContainerContract\ContainerInterface' );
+}
+
 // Load Composer autoload file only if we've not included this file already.
 require_once dirname(RCP_PLUGIN_FILE) . '/vendor/autoload.php';
 
