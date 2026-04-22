@@ -31,6 +31,13 @@
 		],
 		"post-update-cmd": [
 			"@strauss"
+		],
+		"qa:zip": [
+			"@composer install",
+			"@composer install --no-dev --no-scripts",
+			"git submodule update --init --recursive",
+			"rm -f ./restrict-content.zip",
+			"sh -c 'mkdir restrict-content && git ls-files --recurse-submodules -z | tar --null -T - -cf - | tar -xf - -C restrict-content && zip -r restrict-content.zip restrict-content && rm -rf restrict-content'"
 		]
 	},
 	"require": {

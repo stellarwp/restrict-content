@@ -28,3 +28,7 @@ vendor/wp-coding-standards/
 vendor/lucatume/
 vendor/psr/
 vendor/stellarwp/
+
+# QA ZIP generation.
+restrict-content/
+*.zip
