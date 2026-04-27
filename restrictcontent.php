@@ -105,7 +105,14 @@ final class RC_Requirements_Check
         $this->base = plugin_basename($this->file);
 
         // Always load translations
-        add_action('plugins_loaded', array( $this, 'load_textdomain' ));
+        // add_action('plugins_loaded', array( $this, 'load_textdomain' )); 
+		/* This is giving errors in WP.
+		* This hooks RC's textdomain loader to plugins_loaded — which fires before init. 
+		* WordPress 6.7+ specifically warns about this. Translations should always be hooked at init or later.
+		* RC's own legacy path gets it right. In legacy/restrictcontent.php line 47:
+		* 	add_action( 'init', 'rc_textdomain' );
+		*/
+		add_action('init', array( $this, 'load_textdomain' ));
 
         // Load or quit
         $this->met()
