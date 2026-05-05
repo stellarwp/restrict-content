@@ -258,6 +258,7 @@ https://restrictcontentpro.com/tour/screenshots/
 == Changelog ==
 
 = 4.0.0 =
+* Tweak: Plugin name changed to be "Kadence Memberships".
 * Tweak: Updated branding references from StellarWP to Nexcess.
 
 = 3.2.26 =
