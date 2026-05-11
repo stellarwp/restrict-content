@@ -4,8 +4,8 @@
  * Plugin URI: https://restrictcontentpro.com
  * Description: Set up a complete membership system for your WordPress site and deliver premium content to your members. Unlimited membership packages, membership management, discount codes, registration / login forms, and more.
  * Version: 4.0.0
- * Author: Nexcess
- * Author URI: https://www.nexcess.com/
+ * Author: Kadence
+ * Author URI: https://www.kadencewp.com/
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Text Domain: rcp

@@ -1,6 +1,6 @@
 === Membership Plugin - Kadence Memberships ===
-Author URI: https://restrictcontentpro.com
-Author: Nexcess
+Author URI: https://www.kadencewp.com/
+Author: Kadence
 Contributors: nexcess, reedyseth, highprrrr
 Tags: restrict pages, restrict posts, restrict access, membership, registration form, access control
 Requires at least: 6.0
