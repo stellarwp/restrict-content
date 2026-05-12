@@ -11,7 +11,7 @@
 
 namespace RCP\StellarWP\Telemetry\Contracts;
 
-use RCP\StellarWP\ContainerContract\ContainerInterface;
+use StellarWP\ContainerContract\ContainerInterface;
 
 /**
  * Class Abstract_Subscriber

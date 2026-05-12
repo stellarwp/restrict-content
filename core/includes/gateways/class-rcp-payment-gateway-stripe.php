@@ -2,7 +2,7 @@
 /**
  * Stripe Payment Gateway
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Classes/Gateways/Stripe
  * @copyright   Copyright (c) 2017, Pippin Williamson
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
@@ -64,7 +64,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 		\Stripe\Stripe::setApiVersion( '2020-08-27' );
 
 		if ( method_exists( '\Stripe\Stripe', 'setAppInfo' ) ) {
-			\Stripe\Stripe::setAppInfo( 'WordPress Restrict Content Pro', RCP_PLUGIN_VERSION, esc_url( site_url() ), 'pp_partner_DxPqC5fdD9vjrf' );
+			\Stripe\Stripe::setAppInfo( 'WordPress Kadence Memberships Pro', RCP_PLUGIN_VERSION, esc_url( site_url() ), 'pp_partner_DxPqC5fdD9vjrf' );
 		}
 	}
 
@@ -1330,11 +1330,11 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 			);
 		}
 
-		rcp_log( 'Restrict Content reached the end of webhooks processing.', true );
+		rcp_log( 'Kadence Memberships reached the end of webhooks processing.', true );
 
 		wp_send_json_success(
 			[
-				'message' => __( 'Restrict Content completed processing webhooks.', 'rcp' ),
+				'message' => __( 'Kadence Memberships completed processing webhooks.', 'rcp' ),
 			],
 			200
 		);

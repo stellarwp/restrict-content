@@ -3,7 +3,7 @@
  * Batch Functions
  *
  * @package   restrict-content-pro
- * @copyright Copyright (c) 2018, Restrict Content Pro team
+ * @copyright Copyright (c) 2018, Kadence Memberships Pro team
  * @license   GPL2+
  * @since     3.0
  */
@@ -125,7 +125,7 @@ function add_batch_job( array $config ) {
 
 	} catch ( \InvalidArgumentException $exception ) {
 		add_action( 'admin_notices', function () use ( $config, $exception ) {
-			echo '<div class="error"><p>' . sprintf( __( 'There was an error adding job: %s. Error message: %s If this issue persists, please contact the Restrict Content Pro support team.', 'rcp' ), $config['name'], $exception->getMessage() ) . '</p></div>';
+			echo '<div class="error"><p>' . sprintf( __( 'There was an error adding job: %s. Error message: %s If this issue persists, please contact the Kadence Memberships Pro support team.', 'rcp' ), $config['name'], $exception->getMessage() ) . '</p></div>';
 		} );
 		return new \WP_Error( 'invalid_job_config', sprintf( __( 'Invalid job configuration: %s', 'rcp' ), $exception->getMessage() ) );
 	}
@@ -270,7 +270,7 @@ function display_admin_notice() {
 	) );
 
 	if ( ! empty( $queue ) ) {
-		echo '<div class="notice notice-info"><p>' . __( 'Restrict Content Pro needs to perform system maintenance. This maintenance is <strong>REQUIRED</strong>.', 'rcp' ) . '</p>';
+		echo '<div class="notice notice-info"><p>' . __( 'Kadence Memberships Pro needs to perform system maintenance. This maintenance is <strong>REQUIRED</strong>.', 'rcp' ) . '</p>';
 		echo '<p>' . sprintf( __( '<a href="%s">Click here</a> to learn more and start the upgrade.', 'rcp' ), esc_url( admin_url( 'admin.php?page=rcp-tools&tab=batch&rcp-queue=rcp_core' ) ) );
 		echo '</div>';
 	}

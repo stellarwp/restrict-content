@@ -2,9 +2,9 @@
 /**
  * Settings
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Admin/Settings
- * @copyright   Copyright (c) 2017, Restrict Content Pro
+ * @copyright   Copyright (c) 2017, Kadence Memberships Pro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
@@ -59,9 +59,9 @@ function rcp_settings_page() {
 		<h1>
 		<?php
 		if ( defined( 'IS_PRO' ) && IS_PRO ) {
-			esc_html_e( 'Restrict Content Pro', 'rcp' );
+			esc_html_e( 'Kadence Memberships Pro', 'rcp' );
 		} else {
-			esc_html_e( 'Restrict Content', 'rcp' );
+			esc_html_e( 'Kadence Memberships', 'rcp' );
 		}
 		?>
 			</h1>
@@ -427,7 +427,7 @@ function rcp_settings_page() {
 									/>
 									<span class="description">
 									<?php
-									esc_html_e( 'Use Restrict Content Pro in Sandbox mode. This allows you to test the plugin with test accounts from your payment processor.', 'rcp' );
+									esc_html_e( 'Use Kadence Memberships Pro in Sandbox mode. This allows you to test the plugin with test accounts from your payment processor.', 'rcp' );
 									echo ( defined( 'RCP_GATEWAY_SANDBOX_MODE' ) && RCP_GATEWAY_SANDBOX_MODE ) ? ' ' . esc_html__( 'Note: Sandbox mode is enabled via the RCP_GATEWAY_SANDBOX_MODE constant.', 'rcp' ) : '';
 									?>
 									</span>
@@ -604,7 +604,7 @@ function rcp_settings_page() {
 							<?php
 
 							/**
-							 * Used to add html or additional functionality at the start of the Restrict Content Pro Settings > Emails tab
+							 * Used to add html or additional functionality at the start of the Kadence Memberships Pro Settings > Emails tab
 							 */
 							do_action( 'rcp_emails_settings_tab_start', $rcp_options );
 
@@ -1445,7 +1445,7 @@ function rcp_settings_page() {
 							</th>
 							<td>
 								<input type="checkbox" value="1" name="rcp_settings[remove_data_on_uninstall]" id="rcp_settings[remove_data_on_uninstall]" <?php checked( true, ! empty( $rcp_options['remove_data_on_uninstall'] ) ); ?>/>
-								<span class="description"><?php _e( 'Remove all saved data for Restrict Content Pro when the plugin is uninstalled.', 'rcp' ); ?></span>
+								<span class="description"><?php _e( 'Remove all saved data for Kadence Memberships Pro when the plugin is uninstalled.', 'rcp' ); ?></span>
 							</td>
 						</tr>
 						<tr valign="top">

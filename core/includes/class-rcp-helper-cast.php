@@ -1,10 +1,10 @@
 <?php
 /**
- * Restrict Content Pro Helper Casting Class
+ * Kadence Memberships Pro Helper Casting Class
  *
  * @since 1.0.0
  *
- * @package Restrict Content Pro
+ * @package Kadence Memberships Pro
  */
 
 /**

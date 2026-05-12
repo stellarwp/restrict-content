@@ -3,7 +3,7 @@
  * Backwards Compatibility Handler for Members
  *
  * @package   restrict-content-pro
- * @copyright Copyright (c) 2018, Restrict Content Pro team
+ * @copyright Copyright (c) 2018, Kadence Memberships Pro team
  * @license   GPL2+
  * @since     3.0
  */
@@ -140,7 +140,7 @@ class Member extends Base {
 		}
 
 		if ( $this->show_notices ) {
-			$message = __( 'All user meta has been <strong>deprecated</strong> since Restrict Content Pro 3.0! Use the <code>RCP_Membership</code> class instead.', 'rcp' );
+			$message = __( 'All user meta has been <strong>deprecated</strong> since Kadence Memberships Pro 3.0! Use the <code>RCP_Membership</code> class instead.', 'rcp' );
 			_doing_it_wrong( 'get_user_meta()', $message, 'RCP 3.0' );
 			if ( $this->show_backtrace ) {
 				$backtrace = debug_backtrace();
@@ -272,7 +272,7 @@ class Member extends Base {
 		}
 
 		if ( $this->show_notices ) {
-			$message = __( 'All user meta has been <strong>deprecated</strong> since Restrict Content Pro 3.0! Use the <code>RCP_Membership</code> class instead.', 'rcp' );
+			$message = __( 'All user meta has been <strong>deprecated</strong> since Kadence Memberships Pro 3.0! Use the <code>RCP_Membership</code> class instead.', 'rcp' );
 			_doing_it_wrong( 'update_user_meta()', $message, 'RCP 3.0' );
 			if ( $this->show_backtrace ) {
 				$backtrace = debug_backtrace();

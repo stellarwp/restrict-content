@@ -2,11 +2,11 @@
 /**
  * Emails
  *
- * This class handles all emails sent through Restrict Content Pro
+ * This class handles all emails sent through Kadence Memberships Pro
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Classes/Emails
- * @copyright   Copyright (c) 2017, Restrict Content Pro
+ * @copyright   Copyright (c) 2017, Kadence Memberships Pro
  * @license     http://opensource.org/license/gpl-2.1.php GNU Public License
  * @since       2.7
  */

@@ -13,7 +13,7 @@
 
 namespace RCP\StellarWP\Telemetry;
 
-use RCP\StellarWP\ContainerContract\ContainerInterface;
+use StellarWP\ContainerContract\ContainerInterface;
 use RCP\StellarWP\Telemetry\Admin\Admin_Subscriber;
 use RCP\StellarWP\Telemetry\Admin\Resources;
 use RCP\StellarWP\Telemetry\Contracts\Data_Provider;
@@ -114,7 +114,7 @@ class Core {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return \RCP\StellarWP\ContainerContract\ContainerInterface
+	 * @return \StellarWP\ContainerContract\ContainerInterface
 	 */
 	public function container() {
 		return $this->container;

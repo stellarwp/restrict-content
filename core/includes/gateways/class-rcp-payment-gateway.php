@@ -6,7 +6,7 @@
  *
  * @link https://restrictcontentpro.com/knowledgebase/payment-gateway-api/
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Classes/Gateway
  * @copyright   Copyright (c) 2020, Sandhills Development, LLC
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License

@@ -2,9 +2,9 @@
 /**
  * Install Functions
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Install Functions
- * @copyright   Copyright (c) 2017, Restrict Content Pro
+ * @copyright   Copyright (c) 2017, Kadence Memberships Pro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
@@ -102,7 +102,7 @@ function rcp_check_if_installed() {
 add_action( 'admin_init', 'rcp_check_if_installed' );
 
 /**
- * Creates the Restrict Content Pro database tables.
+ * Creates the Kadence Memberships Pro database tables.
  *
  * Note: This creates pre-3.0 tables only. The new tables in version 3.0 can be created like so:
  *
@@ -188,7 +188,7 @@ function rcp_create_tables() {
 }
 
 /**
- * Create pages for Restrict Content Pro
+ * Create pages for Kadence Memberships Pro
  *
  * @since 3.0.3
  * @return void

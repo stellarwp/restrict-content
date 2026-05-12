@@ -3,7 +3,7 @@
  * Import Functions
  *
  * @package   restrict-content-pro
- * @copyright Copyright (c) 2019, Restrict Content Pro team
+ * @copyright Copyright (c) 2019, Kadence Memberships Pro team
  * @license   GPL2+
  * @since     3.1
  */
@@ -31,7 +31,7 @@ function rcp_get_csv_importers() {
 			'key'           => 'memberships',
 			// Description printed on the import page.
 			// translators: %s: URL to the documentation.
-			'description'   => sprintf( __( 'Use this tool to import user memberships into Restrict Content Pro. See <a href="%s">this article</a> for further instructions and a sample CSV file.', 'rcp' ), 'https://restrictcontentpro.com/knowledgebase/can-i-import-members-from-a-csv-file/' ),
+			'description'   => sprintf( __( 'Use this tool to import user memberships into Kadence Memberships Pro. See <a href="%s">this article</a> for further instructions and a sample CSV file.', 'rcp' ), 'https://restrictcontentpro.com/knowledgebase/can-i-import-members-from-a-csv-file/' ),
 			// Batch processor callback class name.
 			'callback'      => 'RCP_Batch_Callback_Import_Memberships',
 			// Path to the above class file.
@@ -66,7 +66,7 @@ function rcp_get_csv_importers() {
 			'name'          => __( 'Payments', 'rcp' ),
 			'key'           => 'payments',
 			// translators: %s: URL to the documentation.
-			'description'   => sprintf( __( 'Use this tool to import user payments into Restrict Content Pro. See <a href="%s">this article</a> for further instructions and a sample CSV file.', 'rcp' ), 'https://restrictcontentpro.com/knowledgebase/exporting-payments/' ),
+			'description'   => sprintf( __( 'Use this tool to import user payments into Kadence Memberships Pro. See <a href="%s">this article</a> for further instructions and a sample CSV file.', 'rcp' ), 'https://restrictcontentpro.com/knowledgebase/exporting-payments/' ),
 			'callback'      => 'RCP_Batch_Callback_Import_Payments',
 			'callback_file' => RCP_PLUGIN_DIR . 'core/includes/batch/csv-imports/class-import-payments.php',
 			'columns'       => array(

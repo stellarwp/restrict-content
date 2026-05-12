@@ -13,7 +13,7 @@
 
 namespace RCP\StellarWP\Telemetry\Exit_Interview;
 
-use RCP\StellarWP\ContainerContract\ContainerInterface;
+use StellarWP\ContainerContract\ContainerInterface;
 use RCP\StellarWP\Telemetry\Admin\Resources;
 use RCP\StellarWP\Telemetry\Config;
 use RCP\StellarWP\Telemetry\Contracts\Template_Interface;
@@ -32,7 +32,7 @@ class Template implements Template_Interface {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @var \RCP\StellarWP\ContainerContract\ContainerInterface
+	 * @var \StellarWP\ContainerContract\ContainerInterface
 	 */
 	protected $container;
 
@@ -41,7 +41,7 @@ class Template implements Template_Interface {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param \RCP\StellarWP\ContainerContract\ContainerInterface $container The container.
+	 * @param \StellarWP\ContainerContract\ContainerInterface $container The container.
 	 */
 	public function __construct( ContainerInterface $container ) {
 		$this->container = $container;
@@ -61,10 +61,10 @@ class Template implements Template_Interface {
 
 		$args = [
 			'plugin_slug'        => $stellar_slug,
-			'plugin_logo'        => Resources::get_asset_path() . 'resources/images/stellar-logo.svg',
-			'plugin_logo_width'  => 151,
+			'plugin_logo'        => Resources::get_asset_path() . 'resources/images/liquid-web-logo.svg',
+			'plugin_logo_width'  => 148,
 			'plugin_logo_height' => 32,
-			'plugin_logo_alt'    => 'StellarWP Logo',
+			'plugin_logo_alt'    => 'Liquid Web Logo',
 			'heading'            => __( 'We’re sorry to see you go.', 'stellarwp-telemetry' ),
 			'intro'              => __( 'We’d love to know why you’re leaving so we can improve our plugin.', 'stellarwp-telemetry' ),
 			'uninstall_reasons'  => [

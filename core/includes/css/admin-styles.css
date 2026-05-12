@@ -1906,7 +1906,7 @@ img.restrict-content-logo {
 }
 
 .restrict-content-welcome-header {
-	background: #CFE0F4 0% 0% no-repeat padding-box;
+	background: #FFFFFF 0% 0% no-repeat padding-box;
 	border: 1px solid #D4D5D8;
 }
 
@@ -1966,6 +1966,10 @@ img.restrict-content-logo {
 	line-height: 14px;
 	letter-spacing: 0px;
 	color: #71747D;
+}
+
+.restrict-content-welcome-advertisement .logo {
+	text-align: center;
 }
 
 .restrict-content-welcome-advertisement-logo {

@@ -4,7 +4,7 @@
  *
  * This is the base class for all export methods. Each data export type (subscribers, payments, etc) extend this class
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Export Class
  * @copyright   Copyright (c) 2017, Pippin Williamson
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License

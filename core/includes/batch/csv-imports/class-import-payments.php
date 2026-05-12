@@ -3,7 +3,7 @@
  * Import Payments
  *
  * @since     3.4
- * @copyright Copyright (c) 2020, Restrict Content Pro team
+ * @copyright Copyright (c) 2020, Kadence Memberships Pro team
  * @license   GPL2+
  * @package   restrict-content-pro
  */

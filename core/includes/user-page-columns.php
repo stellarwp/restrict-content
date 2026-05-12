@@ -4,9 +4,9 @@
  *
  * Functions for adding extra columns to the Users > All Users table.
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  User Page Columns
- * @copyright   Copyright (c) 2017, Restrict Content Pro
+ * @copyright   Copyright (c) 2017, Kadence Memberships Pro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
@@ -95,9 +95,9 @@ function rcp_bulk_add_membership_select() {
 	}
 	?>
 	<div style="float: right; margin: 0 4px;">
-		<label class="screen-reader-shortcut" for="rcp-bulk-add-membership"><?php _e( 'Add RCP Membership', 'rcp' ); ?></label>
+		<label class="screen-reader-shortcut" for="rcp-bulk-add-membership"><?php _e( 'Add Membership', 'rcp' ); ?></label>
 		<select id="rcp-bulk-add-membership" name="rcp_bulk_membership[]">
-			<option value=""><?php _e( 'Add RCP Membership', 'rcp' ); ?></option>
+			<option value=""><?php _e( 'Add Membership', 'rcp' ); ?></option>
 			<?php foreach ( $levels as $level ) : ?>
 				<option value="<?php echo esc_attr( $level->get_id() ); ?>"><?php echo esc_html( $level->get_name() ); ?></option>
 			<?php endforeach; ?>

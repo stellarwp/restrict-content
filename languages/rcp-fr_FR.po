@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Restrict Content Pro\n"
+"Project-Id-Version: Kadence Memberships Pro\n"
 "Report-Msgid-Bugs-To: http://restrictcontentpro.com/support/\n"
 "POT-Creation-Date: 2020-05-04 14:03+0100\n"
 "PO-Revision-Date: 2020-09-16 13:56-0400\n"
@@ -213,8 +213,8 @@ msgid "Error"
 msgstr "Erreur"
 
 #: includes/admin/add-ons.php:29
-msgid "Add-ons for Restrict Content Pro"
-msgstr "Extensions pour Restrict Content Pro"
+msgid "Add-ons for Kadence Memberships Pro"
+msgstr "Extensions pour Kadence Memberships Pro"
 
 #: includes/admin/add-ons.php:31 includes/admin/add-ons.php:64
 msgid "Browse all add-ons"
@@ -226,7 +226,7 @@ msgid ""
 "Content Pro-powered site."
 msgstr ""
 "Ces suppléments d'extension <em><strong>ajoutent des fonctionnalités</"
-"strong></em> à votre site propulsé par Restrict Content Pro."
+"strong></em> à votre site propulsé par Kadence Memberships Pro."
 
 #: includes/admin/add-ons.php:56
 #, php-format
@@ -289,20 +289,20 @@ msgid "No users found"
 msgstr "Aucun utilisateur trouvé"
 
 #: includes/admin/admin-notices.php:26
-msgid "You should now configure your Restrict Content Pro settings"
-msgstr "Vous devez maintenant configurer vos paramètres Restrict Content Pro"
+msgid "You should now configure your Kadence Memberships Pro settings"
+msgstr "Vous devez maintenant configurer vos paramètres Kadence Memberships Pro"
 
 #: includes/admin/admin-notices.php:30
-msgid "The Restrict Content Pro database needs to be updated: "
-msgstr "La base de données de Restrict Content Pro doit être mise à jour: "
+msgid "The Kadence Memberships Pro database needs to be updated: "
+msgstr "La base de données de Kadence Memberships Pro doit être mise à jour: "
 
 #: includes/admin/admin-notices.php:30
 msgid "upgrade now"
 msgstr "mise à niveau maintenant"
 
 #: includes/admin/admin-notices.php:34
-msgid "The Restrict Content Pro database has been updated"
-msgstr "La base de données de Restrict Content Pro a été mise à jour"
+msgid "The Kadence Memberships Pro database has been updated"
+msgstr "La base de données de Kadence Memberships Pro a été mise à jour"
 
 #: includes/admin/admin-notices.php:38
 msgid ""
@@ -316,10 +316,10 @@ msgstr ""
 
 #: includes/admin/admin-notices.php:43
 msgid ""
-"Your license key for Restrict Content Pro has expired. Please renew your "
+"Your license key for Kadence Memberships Pro has expired. Please renew your "
 "license to re-enable automatic updates."
 msgstr ""
-"Votre clé de licence pour Restrict Content Pro a expiré. Veuillez renouveler "
+"Votre clé de licence pour Kadence Memberships Pro a expiré. Veuillez renouveler "
 "votre licence pour réactiver les mises à jour automatiques."
 
 #: includes/admin/admin-notices.php:48
@@ -333,11 +333,11 @@ msgstr ""
 
 #: includes/admin/admin-notices.php:55
 msgid ""
-"The Restrict Content Pro \"Free Content Message\" and \"Premium Content "
+"The Kadence Memberships Pro \"Free Content Message\" and \"Premium Content "
 "Message\" settings have been merged into one \"Restricted Content Message\" "
 "setting field. Please visit the"
 msgstr ""
-"Les paramètres de Restrict Content Pro \" Message de contenu gratuit \" et \" "
+"Les paramètres de Kadence Memberships Pro \" Message de contenu gratuit \" et \" "
 "Message de contenu Premium \" ont été fusionnés en un seul champ de réglage "
 "\" Message de contenu restreint \". Veuillez visiter le"
 
@@ -364,32 +364,32 @@ msgstr "Avis de rejet"
 #: includes/admin/admin-notices.php:64
 #, php-format
 msgid ""
-"Restrict Content Pro now supports Stripe Connect for easier setup and "
+"Kadence Memberships Pro now supports Stripe Connect for easier setup and "
 "improved security. <a href=\"%s\">Click here</a> to learn more about "
 "connecting your Stripe account."
 msgstr ""
-"Restrict Content Pro prend désormais en charge Stripe Connect pour une "
+"Kadence Memberships Pro prend désormais en charge Stripe Connect pour une "
 "installation plus facile et une sécurité améliorée. <a href=\"%s\">Cliquez "
 "ici</a> pour en savoir plus sur la connexion à votre compte Stripe."
 
 #: includes/admin/admin-notices.php:73
-msgid "Restrict Content Pro is increasing its PHP version requirement"
-msgstr "Restrict Content Pro a augmenté ses exigences en matière de version PHP"
+msgid "Kadence Memberships Pro is increasing its PHP version requirement"
+msgstr "Kadence Memberships Pro a augmenté ses exigences en matière de version PHP"
 
 #: includes/admin/admin-notices.php:74
 #, php-format
 msgid ""
-"Restrict Content Pro will be increasing its PHP requirement to version 5.6 or "
+"Kadence Memberships Pro will be increasing its PHP requirement to version 5.6 or "
 "higher in version 3.0. It looks like you're using version %s, which means you "
-"will need to upgrade your version of PHP before upgrading to Restrict Content "
+"will need to upgrade your version of PHP before upgrading to Kadence Memberships "
 "Pro 3.0. Newer versions of PHP are both faster and more secure. The version "
 "you're using <a href=\"%s\" target=\"_blank\">no longer receives security "
 "updates</a>, which is another great reason to update."
 msgstr ""
-"Restrict Content Pro va augmenter ses exigences PHP à la version 5.6 ou "
+"Kadence Memberships Pro va augmenter ses exigences PHP à la version 5.6 ou "
 "supérieure dans la version 3.0. Il semble que vous utilisez la version %s, ce "
 "qui signifie que vous devrez mettre à jour votre version de PHP avant de "
-"passer à Restrict Content Pro 3.0. Les nouvelles versions de PHP sont à la "
+"passer à Kadence Memberships Pro 3.0. Les nouvelles versions de PHP sont à la "
 "fois plus rapides et plus sûres. La version que vous utilisez <a href=\"%s\" "
 "target=\"_blank\">ne reçoit plus de mises à jour de sécurité</a>, ce qui est "
 "une autre bonne raison de mettre à jour."
@@ -400,7 +400,7 @@ msgstr "Vers quelle version dois-je mettre à niveau ?"
 
 #: includes/admin/admin-notices.php:76
 msgid ""
-"In order to be compatible with future versions of Restrict Content Pro, you "
+"In order to be compatible with future versions of Kadence Memberships Pro, you "
 "should update your PHP version to 5.6, 7.0, 7.1, or 7.2. On a normal "
 "WordPress site, switching to PHP 5.6 should never cause issues. We would "
 "however actually recommend you switch to PHP 7.1 or higher to receive the "
@@ -408,7 +408,7 @@ msgid ""
 "versions of PHP. However, some plugins may not be fully compatible with PHP "
 "7+, so more testing may be required."
 msgstr ""
-"Afin d'être compatible avec les futures versions de Restrict Content Pro, "
+"Afin d'être compatible avec les futures versions de Kadence Memberships Pro, "
 "vous devez mettre à jour votre version de PHP à 5.6, 7.0, 7.1, ou 7.2. Sur un "
 "site WordPress normal, le passage à PHP 5.6 ne devrait jamais causer de "
 "problèmes. Nous vous recommandons toutefois de passer à PHP 7.1 ou supérieur "
@@ -452,20 +452,20 @@ msgstr ""
 #, php-format
 msgid ""
 "You are using an outdated version of the PayPal Pro / Express integration for "
-"Restrict Content Pro. Please <a href=\"%s\">deactivate</a> the add-on version "
+"Kadence Memberships Pro. Please <a href=\"%s\">deactivate</a> the add-on version "
 "to configure the new version."
 msgstr ""
 "Vous utilisez une version obsolète de l'intégration PayPal Pro / Express pour "
-"Restrict Content Pro. Veuillez <a href=\"%s\">désactiver</a> la version du "
+"Kadence Memberships Pro. Veuillez <a href=\"%s\">désactiver</a> la version du "
 "supplément d'extension pour configurer la nouvelle version."
 
 #: includes/admin/admin-notices.php:95
 msgid ""
 "ACTION REQUIRED: You need to update your Authorize.net payment gateway for "
-"Restrict Content Pro"
+"Kadence Memberships Pro"
 msgstr ""
 "ACTION REQUISE : Vous devez mettre à jour votre passerelle de paiement "
-"Authorize.net pour Restrict Content Pro"
+"Authorize.net pour Kadence Memberships Pro"
 
 #: includes/admin/admin-notices.php:96
 #, php-format
@@ -477,7 +477,7 @@ msgid ""
 "key</a> and <a href=\"%s\" target=\"_blank\">set up a webhook</a>."
 msgstr ""
 "La passerelle de paiement Authorize.net a été supprimée du plugin principal "
-"Restrict Content Pro. Pour continuer à traiter les paiements avec cette "
+"Kadence Memberships Pro. Pour continuer à traiter les paiements avec cette "
 "passerelle, vous devez installer la nouvelle extension Authorize.net. Une "
 "fois installé, veuillez suivre les instructions pour <a href=\"%s\" target="
 "\"_blank\">saisissez votre clé de signature </a> et <a href=\"%s\" target="
@@ -489,9 +489,9 @@ msgstr "Installer"
 
 #: includes/admin/admin-notices.php:104
 msgid ""
-"Restrict Content Pro: Support for Stripe Checkout is ending in version 3.2"
+"Kadence Memberships Pro: Support for Stripe Checkout is ending in version 3.2"
 msgstr ""
-"Restrict Content Pro : Le support de Stripe Checkout prend fin dans la "
+"Kadence Memberships Pro : Le support de Stripe Checkout prend fin dans la "
 "version 3.2"
 
 #: includes/admin/admin-notices.php:105
@@ -499,7 +499,7 @@ msgstr ""
 msgid ""
 "Stripe will not be updating the Stripe Checkout modal to comply with Strong "
 "Customer Authentication (SCA) and as a result, the Stripe Checkout gateway "
-"will be removed from Restrict Content Pro in version 3.2. You will "
+"will be removed from Kadence Memberships Pro in version 3.2. You will "
 "automatically be switched over to our Stripe Elements gateway instead. This "
 "will affect the appearance of your registration form, but will not impact "
 "payment processing or renewals. <a href=\"%s\" target=\"_blank\">Click here "
@@ -507,7 +507,7 @@ msgid ""
 msgstr ""
 "Stripe ne mettra pas à jour le modal Stripe Checkout pour se conformer à "
 "l'authentification forte des clients (SCA) et, par conséquent, la passerelle "
-"Stripe Checkout sera supprimée de Restrict Content Pro dans la version 3.2. "
+"Stripe Checkout sera supprimée de Kadence Memberships Pro dans la version 3.2. "
 "Vous passerez automatiquement à notre passerelle Stripe Elements à la place. "
 "Cela aura une incidence sur l'apparence de votre formulaire d'inscription, "
 "mais pas sur le traitement des paiements ni sur les renouvellements. <a href="
@@ -516,11 +516,11 @@ msgstr ""
 #: includes/admin/admin-notices.php:114
 #, php-format
 msgid ""
-"Restrict Content Pro will not send emails because the %s constant is active. "
+"Kadence Memberships Pro will not send emails because the %s constant is active. "
 "Remove it from your code to re-enable email notifications. (Emails generated "
 "by other plugins or WordPress core are not affected.)"
 msgstr ""
-"Restrict Content Pro n'enverra pas d'e-mails car la constante %s est active. "
+"Kadence Memberships Pro n'enverra pas d'e-mails car la constante %s est active. "
 "Supprimez-la de votre code pour réactiver les notifications par e-mail. (Les "
 "courriels générés par d'autres plugins ou le noyau WordPress ne sont pas "
 "affectés.)"
@@ -776,8 +776,8 @@ msgid "Security check failed"
 msgstr "Échec du contrôle de sécurité"
 
 #: includes/admin/admin-pages.php:23 includes/admin/admin-pages.php:30
-msgid "Restrict Content Pro Settings"
-msgstr "Paramètres de Restrict Content Pro"
+msgid "Kadence Memberships Pro Settings"
+msgstr "Paramètres de Kadence Memberships Pro"
 
 #: includes/admin/admin-pages.php:23
 msgid "Restrict"
@@ -2487,13 +2487,13 @@ msgstr ""
 msgid ""
 "Discount codes all you to give special offers to new registrations, giving "
 "extra incentive for users to sign up for your website's premium content "
-"section. Restrict Content Pro's discount codes work just like any other. "
+"section. Kadence Memberships Pro's discount codes work just like any other. "
 "There are two kinds:"
 msgstr ""
 "Codes de réduction à donner l'offres spéciales pour les nouvelles "
 "inscriptions, offrant une incitation supplémentaire pour les utilisateurs à "
 "s'inscrire à la section du contenu premium de votre site Web. Les codes de "
-"réduction de Restrict Content Pro fonctionnent comme tous les autres. Il en "
+"réduction de Kadence Memberships Pro fonctionnent comme tous les autres. Il en "
 "existe deux sortes :"
 
 #: includes/admin/help/help-menus.php:215
@@ -2681,7 +2681,7 @@ msgid ""
 "payment, or a recurring membership payment, it is logged here."
 msgstr ""
 "Cette page est un journal de tous les paiements qui ont déjà été enregistrés "
-"avec Restrict Content Pro. Chaque fois qu'un paiement est effectué, qu'il "
+"avec Kadence Memberships Pro. Chaque fois qu'un paiement est effectué, qu'il "
 "s'agisse d'un paiement d'inscription unique ou d'un paiement d'abonnement "
 "récurent, il est journalisé ici."
 
@@ -2719,11 +2719,11 @@ msgstr ""
 #: includes/admin/help/help-menus.php:299
 msgid ""
 "This Settings page lets you configure all of the options available for "
-"Restrict Content Pro. You should configure the settings as desired before "
+"Kadence Memberships Pro. You should configure the settings as desired before "
 "using the plugin."
 msgstr ""
 "Cette page Paramètres vous permet de configurer toutes les options "
-"disponibles pour Restrict Content Pro. Vous devez configurer les paramètres "
+"disponibles pour Kadence Memberships Pro. Vous devez configurer les paramètres "
 "comme vous le souhaitez avant d'utiliser le plugin."
 
 #: includes/admin/help/help-menus.php:300
@@ -2739,11 +2739,11 @@ msgstr ""
 
 #: includes/admin/help/help-menus.php:305
 msgid ""
-"Restrict Content Pro automatically creates several pages for use inside the "
+"Kadence Memberships Pro automatically creates several pages for use inside the "
 "plugin. Each page should contain a specific shortcode to display the correct "
 "contents."
 msgstr ""
-"Restrict Content Pro crée automatiquement plusieurs pages à utiliser dans le "
+"Kadence Memberships Pro crée automatiquement plusieurs pages à utiliser dans le "
 "plugin. Chaque page doit contenir un code court spécifique pour afficher le "
 "contenu correct."
 
@@ -3115,12 +3115,12 @@ msgstr ""
 #, php-format
 msgid ""
 "<strong>Opt into beta versions</strong> - this option allows you to test the "
-"Restrict Content Pro beta versions. If enabled, you'll receive an update "
+"Kadence Memberships Pro beta versions. If enabled, you'll receive an update "
 "notification in WordPress when a new beta version is available. You can read "
 "more about beta testing in <a href=\"%s\">our help article</a>."
 msgstr ""
 "<strong>Optez pour les versions bêta</strong> - cette option vous permet de "
-"tester les versions bêta de Restrict Content Pro. Si cette option est "
+"tester les versions bêta de Kadence Memberships Pro. Si cette option est "
 "activée, vous recevrez une notification de mise à jour dans WordPress "
 "lorsqu'une nouvelle version bêta est disponible. Vous pouvez en savoir plus "
 "sur les bêta-tests dans <a href=\"%s\">notre article d'aide</a>."
@@ -3346,7 +3346,7 @@ msgstr ""
 #: includes/admin/import/import-functions.php:30
 #, php-format
 msgid ""
-"Use this tool to import user memberships into Restrict Content Pro. See <a "
+"Use this tool to import user memberships into Kadence Memberships Pro. See <a "
 "href=\"%s\">this article</a> for further instructions and a sample CSV file."
 msgstr ""
 "Utilisez cet outil pour importer des adhésions d'utilisateurs dans Restrict "
@@ -4626,8 +4626,8 @@ msgid "Hello"
 msgstr "Bonjour"
 
 #: includes/admin/settings/settings.php:50
-msgid "Restrict Content Pro"
-msgstr "Restrict Content Pro"
+msgid "Kadence Memberships Pro"
+msgstr "Kadence Memberships Pro"
 
 #: includes/admin/settings/settings.php:54
 #, php-format
@@ -4658,10 +4658,10 @@ msgstr "Activer la licence"
 #: includes/admin/settings/settings.php:98
 #, php-format
 msgid ""
-"Enter license key for Restrict Content Pro. This is required for automatic "
+"Enter license key for Kadence Memberships Pro. This is required for automatic "
 "updates and <a href=\"%s\">support</a>."
 msgstr ""
-"Entrer la clé de licence Restrict Content Pro. Ceci est nécessaire pour les "
+"Entrer la clé de licence Kadence Memberships Pro. Ceci est nécessaire pour les "
 "mises à jour automatiques et le <a href=\"%s\">support</a>."
 
 #: includes/admin/settings/settings.php:118
@@ -4857,10 +4857,10 @@ msgstr "Mode test"
 
 #: includes/admin/settings/settings.php:360
 msgid ""
-"Use Restrict Content Pro in Sandbox mode. This allows you to test the plugin "
+"Use Kadence Memberships Pro in Sandbox mode. This allows you to test the plugin "
 "with test accounts from your payment processor."
 msgstr ""
-"Utilisez Restrict Content Pro en mode test. Cela vous permet de tester "
+"Utilisez Kadence Memberships Pro en mode test. Cela vous permet de tester "
 "l'extension avec les comptes de test de votre processeur de paiement."
 
 #: includes/admin/settings/settings.php:360
@@ -6233,9 +6233,9 @@ msgstr "Supprimer les données lors de la désinstallation"
 
 #: includes/admin/settings/settings.php:1743
 msgid ""
-"Remove all saved data for Restrict Content Pro when the plugin is uninstalled."
+"Remove all saved data for Kadence Memberships Pro when the plugin is uninstalled."
 msgstr ""
-"Supprimez toutes les données enregistrées de Restrict Content Pro lorsque le "
+"Supprimez toutes les données enregistrées de Kadence Memberships Pro lorsque le "
 "plugin est désinstallé."
 
 #: includes/admin/settings/settings.php:1754
@@ -6591,8 +6591,8 @@ msgid "Restriction Options"
 msgstr "Options de confidentialité"
 
 #: includes/admin/tools/tools-page.php:26
-msgid "Restrict Content Pro Tools"
-msgstr "Outils Restrict Content Pro"
+msgid "Kadence Memberships Pro Tools"
+msgstr "Outils Kadence Memberships Pro"
 
 #: includes/admin/tools/tools-page.php:62
 msgid "System Info"
@@ -6615,9 +6615,9 @@ msgid "Debug Log"
 msgstr "Journal de débogage"
 
 #: includes/admin/tools/tools-page.php:144
-msgid "Any Restrict Content Pro errors that occur will be logged to this file."
+msgid "Any Kadence Memberships Pro errors that occur will be logged to this file."
 msgstr ""
-"Toutes les erreurs de Restrict Content Pro qui se produisent seront "
+"Toutes les erreurs de Kadence Memberships Pro qui se produisent seront "
 "enregistrées dans ce fichier."
 
 #: includes/admin/tools/tools-page.php:150
@@ -6667,7 +6667,7 @@ msgstr "Téléversement CSV"
 #: includes/admin/tools/tools-page.php:408
 msgid ""
 "Each column from your CSV file needs to be mapped to its corresponding "
-"Restrict Content Pro field. Select the column that should be mapped to each "
+"Kadence Memberships Pro field. Select the column that should be mapped to each "
 "field below. Any columns not needed can be ignored."
 msgstr ""
 "Chaque colonne de votre fichier CSV doit être affectée à son champ Restrict "
@@ -6724,7 +6724,7 @@ msgstr ""
 #, php-format
 msgid ""
 "There was an error adding job: %s. Error message: %s If this issue persists, "
-"please contact the Restrict Content Pro support team."
+"please contact the Kadence Memberships Pro support team."
 msgstr ""
 "Il y a eu une erreur lors de l'ajout d'une tâche : %s. Message d'erreur : %s "
 "Si ce problème persiste, veuillez contacter l'équipe de support de Restrict "
@@ -6745,10 +6745,10 @@ msgstr "Identification de tâche invalide."
 
 #: includes/batch/batch-functions.php:273
 msgid ""
-"Restrict Content Pro needs to perform system maintenance. This maintenance is "
+"Kadence Memberships Pro needs to perform system maintenance. This maintenance is "
 "<strong>REQUIRED</strong>."
 msgstr ""
-"Restrict Content Pro doit effectuer la maintenance du système. Cette "
+"Kadence Memberships Pro doit effectuer la maintenance du système. Cette "
 "maintenance est <strong>OBLIGATOIRE</strong>."
 
 #: includes/batch/batch-functions.php:274
@@ -7353,11 +7353,11 @@ msgstr ""
 
 #: includes/compat/class-member.php:143 includes/compat/class-member.php:275
 msgid ""
-"All user meta has been <strong>deprecated</strong> since Restrict Content Pro "
+"All user meta has been <strong>deprecated</strong> since Kadence Memberships Pro "
 "3.0! Use the <code>RCP_Membership</code> class instead."
 msgstr ""
 "Toutes les méta utilisateurs ont été <strong>dépréciées</strong> depuis "
-"Restrict Content Pro 3.0 ! Utilisez plutôt la classe <code>RCP_Membership</"
+"Kadence Memberships Pro 3.0 ! Utilisez plutôt la classe <code>RCP_Membership</"
 "code>."
 
 #: includes/content-filters.php:113
@@ -7486,12 +7486,12 @@ msgstr "Impossible de trouver le client à partir de l'identifiant du membre."
 
 #: includes/deprecated/functions.php:2372
 msgid ""
-"The Braintree payment gateway in Restrict Content Pro requires PHP version "
+"The Braintree payment gateway in Kadence Memberships Pro requires PHP version "
 "5.4 or later. Please contact your web host and request that your version be "
 "upgraded to 5.4 or later. Your site will be unable to take Braintree payments "
 "until PHP is upgraded."
 msgstr ""
-"La passerelle de paiement Braintree dans Restrict Content Pro nécessite PHP "
+"La passerelle de paiement Braintree dans Kadence Memberships Pro nécessite PHP "
 "version 5.4 ou ultérieure. Veuillez contacter votre hébergeur et demander que "
 "votre version soit mise à jour vers la version 5.4 ou supérieure. Votre site "
 "ne pourra pas accepter les paiements Braintree tant que PHP n'aura pas été "
@@ -9795,11 +9795,11 @@ msgstr "Vous n'avez effectué aucun paiement."
 
 #~ msgid ""
 #~ "Your version of PHP is below the minimum version of PHP required by "
-#~ "Restrict Content Pro. Please contact your host and request that your "
+#~ "Kadence Memberships Pro. Please contact your host and request that your "
 #~ "version be upgraded to 5.3 or later."
 #~ msgstr ""
 #~ "Votre version PHP est inférieure à la version PHP minimale requise par "
-#~ "Restrict Content Pro. Veuillez contacter votre hébergeur et demander que "
+#~ "Kadence Memberships Pro. Veuillez contacter votre hébergeur et demander que "
 #~ "votre version soit mise à niveau vers la version 5.3 ou ultérieure."
 
 #~ msgid "Invoice Items:"

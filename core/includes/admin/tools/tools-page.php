@@ -2,9 +2,9 @@
 /**
  * Tools Page
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Admin/Tools
- * @copyright   Copyright (c) 2017, Restrict Content Pro
+ * @copyright   Copyright (c) 2017, Kadence Memberships Pro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
@@ -28,10 +28,10 @@ function rcp_tools_page() {
 	<div class="wrap">
 		<h1><?php
 			if( defined('IS_PRO') && IS_PRO ) {
-				_e( 'Restrict Content Pro Tools', 'rcp' );
+				_e( 'Kadence Memberships Pro Tools', 'rcp' );
 			}
 			else {
-				_e( 'Restrict Content Tools', 'rcp' );
+				_e( 'Kadence Memberships Tools', 'rcp' );
 			}
 		?></h1>
 		<h2 class="nav-tab-wrapper">
@@ -155,7 +155,7 @@ function rcp_tools_display_debug() {
 		<h3><?php _e( 'Debug Log', 'rcp' ); ?></h3>
 		<div class="inside">
 			<form id="rcp-debug-log" method="post">
-				<p><label for="rcp-debug-log-contents"><?php _e( 'Any Restrict Content Pro errors that occur will be logged to this file.', 'rcp' ); ?></label></p>
+				<p><label for="rcp-debug-log-contents"><?php _e( 'Any Kadence Memberships Pro errors that occur will be logged to this file.', 'rcp' ); ?></label></p>
 				<textarea id="rcp-debug-log-contents" name="rcp-debug-log-contents" class="large-text" rows="15"><?php echo esc_textarea( $logs->get_log() ); ?></textarea>
 				<p class="submit">
 					<input type="hidden" name="rcp-action" value="submit_debug_log">
@@ -419,13 +419,13 @@ function rcp_tools_display_import() {
 				<div id="rcp-import-<?php echo sanitize_html_class( $importer['key'] ); ?>-options" class="rcp-import-options" style="display:none;">
 
 					<p>
-						<?php printf( __( 'Each column from your CSV file needs to be mapped to its corresponding Restrict Content Pro field. Select the column that should be mapped to each field below. Any columns not needed can be ignored.', 'rcp' ) ); ?>
+						<?php printf( __( 'Each column from your CSV file needs to be mapped to its corresponding Kadence Memberships Pro field. Select the column that should be mapped to each field below. Any columns not needed can be ignored.', 'rcp' ) ); ?>
 					</p>
 
 					<table class="widefat striped" width="100%" cellpadding="0" cellspacing="0">
 						<thead>
 						<tr>
-							<th><strong><?php _e( 'RCP Field', 'rcp' ); ?></strong></th>
+							<th><strong><?php _e( 'Memberships Pro Field', 'rcp' ); ?></strong></th>
 							<th><strong><?php _e( 'CSV Column', 'rcp' ); ?></strong></th>
 							<th><strong><?php _e( 'Data Preview', 'rcp' ); ?></strong></th>
 						</tr>
