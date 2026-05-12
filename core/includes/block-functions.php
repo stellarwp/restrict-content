@@ -4,21 +4,21 @@
  *
  * Handles creation of Block Category, Registering blocks, and providing data to blocks
  *
- * @package Restrict Content Pro
- * @copyright Copyright (c) 2021, Restrict Content Pro
+ * @package Kadence Memberships Pro
+ * @copyright Copyright (c) 2021, Kadence Memberships Pro
  * @license http://opensource.org/license/gpl-2.1.php GNU Public License
  */
 
 /**
  * Add the RCP category to the blocks menu
  *
- * @since 3.5.8 Add the Restrict Content Pro Category
+ * @since 3.5.8 Add the Kadence Memberships Pro Category
  */
 function rcp_add_restrict_content_pro_block_category( $categories ) {
 	$categories[] = array (
 		'slug' 	=> 'restrict-content-pro',
 		'icon' 	=> 'lock',
-		'title' => __( 'Restrict Content Pro', 'rcp' ),
+		'title' => __( 'Kadence Memberships Pro', 'rcp' ),
 	);
 	return $categories;
 }

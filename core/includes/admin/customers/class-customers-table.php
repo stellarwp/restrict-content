@@ -3,7 +3,7 @@
  * Customers List Table
  *
  * @package   restrict-content-pro
- * @copyright Copyright (c) 2018, Restrict Content Pro
+ * @copyright Copyright (c) 2018, Kadence Memberships Pro
  * @license   GPL2+
  * @since     3.0
  */

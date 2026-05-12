@@ -4,9 +4,9 @@
  *
  * These are kept here for backwards compatibility with extensions that might be using them
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Deprecated Functions
- * @copyright   Copyright (c) 2017, Restrict Content Pro
+ * @copyright   Copyright (c) 2017, Kadence Memberships Pro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.5
  */
@@ -2369,7 +2369,7 @@ function rcp_is_braintree_subscriber( $member_id = 0 ) {
 function rcp_braintree_php_version_check() {
 
 	if ( current_user_can( 'rcp_manage_settings' ) && version_compare( PHP_VERSION, '5.4', '<' ) && array_key_exists( 'braintree', rcp_get_enabled_payment_gateways() ) ) {
-		echo '<div class="error"><p>' . __( 'The Braintree payment gateway in Restrict Content Pro requires PHP version 5.4 or later. Please contact your web host and request that your version be upgraded to 5.4 or later. Your site will be unable to take Braintree payments until PHP is upgraded.', 'rcp' ) . '</p></div>';
+		echo '<div class="error"><p>' . __( 'The Braintree payment gateway in Kadence Memberships Pro requires PHP version 5.4 or later. Please contact your web host and request that your version be upgraded to 5.4 or later. Your site will be unable to take Braintree payments until PHP is upgraded.', 'rcp' ) . '</p></div>';
 	}
 
 }

@@ -3,7 +3,7 @@
  * Edit Membership
  *
  * @package   restrict-content-pro
- * @copyright Copyright (c) 2018, Restrict Content Pro team
+ * @copyright Copyright (c) 2018, Kadence Memberships Pro team
  * @license   GPL2+
  * @since     3.0
  */
@@ -359,7 +359,7 @@ $payments = $membership->get_payments( array( 'number' => 5 ) );
 							<strong><?php _e( 'Disabling Auto Renew:', 'rcp' ); ?></strong> <?php _e( 'The subscription at the payment gateway will be cancelled, but the membership status will not change.', 'rcp' ); ?>
 						</p>
 						<?php else : ?>
-							<p><?php _e( 'Changing the recurring indicator will not set up or remove a subscription with the gateway. This checkbox is for updating RCP records only.', 'rcp' ); ?></p>
+							<p><?php _e( 'Changing the recurring indicator will not set up or remove a subscription with the gateway. This checkbox is for updating Kadence Memberships Pro records only.', 'rcp' ); ?></p>
 						<?php endif; ?>
 					</div>
 					<div class="notice notice-warning inline hidden" id="rcp-membership-gateway-subscription-id-update-notice">

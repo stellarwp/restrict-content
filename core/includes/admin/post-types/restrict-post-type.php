@@ -4,7 +4,7 @@
  *
  * @package     restrict-content-pro
  * @subpackage  Admin/Restrict Post Type
- * @copyright   Copyright (c) 2017, Restrict Content Pro
+ * @copyright   Copyright (c) 2017, Kadence Memberships Pro
  * @license     GPL2+
  * @since       2.9
  */

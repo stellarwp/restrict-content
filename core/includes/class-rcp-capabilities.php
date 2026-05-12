@@ -2,7 +2,7 @@
 /**
  * Roles and Capabilities
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Classes/Roles
  * @copyright   Copyright (c) 2017, Pippin Williamson
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License

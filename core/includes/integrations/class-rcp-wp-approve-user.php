@@ -2,13 +2,16 @@
 /**
  * WP Approve User Integration
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Integrations/WP Approve User
- * @copyright   Copyright (c) 2017, Restrict Content Pro
+ * @copyright   Copyright (c) 2017, Kadence Memberships Pro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       2.4
  */
 
+/**
+ * WP Approve User integration.
+ */
 class RCP_WP_Approve_User {
 
 	/**

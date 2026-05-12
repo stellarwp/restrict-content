@@ -4,8 +4,8 @@
  *
  * Adds CAPTCHA to the registration form and validates the submission.
  *
- * @package     Restrict Content Pro
- * @copyright   Copyright (c) 2017, Restrict Content Pro
+ * @package     Kadence Memberships Pro
+ * @copyright   Copyright (c) 2017, Kadence Memberships Pro
  * @license     http://opensource.org/license/gpl-2.1.php GNU Public License
  */
 

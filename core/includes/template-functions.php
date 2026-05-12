@@ -4,13 +4,12 @@
  *
  * Functions related to loading and displaying template files
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Template Functions
  * @copyright   Copyright (c) 2017, Pippin Williamson
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.5
  */
-
 
 /**
  * Returns the path to the EDD templates directory

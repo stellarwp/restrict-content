@@ -4,7 +4,7 @@
  *
  * Export members to a CSV
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Export Class
  * @copyright   Copyright (c) 2020, Sandhills Development, LLC
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License

@@ -5,9 +5,9 @@
  * This class handles querying, inserting, updating, and removing membership levels
  * Also includes other membership level helper functions
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Classes/Membership Levels
- * @copyright   Copyright (c) 2017, Restrict Content Pro
+ * @copyright   Copyright (c) 2017, Kadence Memberships Pro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.5
  */

@@ -2,9 +2,9 @@
 /**
  * Customers Page
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Admin/Customers Page
- * @copyright   Copyright (c) 2018, Restrict Content Pro
+ * @copyright   Copyright (c) 2018, Kadence Memberships Pro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       3.0
  */

@@ -13,7 +13,7 @@
 
 namespace RCP\StellarWP\Telemetry;
 
-use RCP\StellarWP\ContainerContract\ContainerInterface;
+use StellarWP\ContainerContract\ContainerInterface;
 
 /**
  * A configuration class to help set up the library.
@@ -29,7 +29,7 @@ class Config {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @var ?\RCP\StellarWP\ContainerContract\ContainerInterface
+	 * @var ?\StellarWP\ContainerContract\ContainerInterface
 	 */
 	protected static $container;
 
@@ -76,7 +76,7 @@ class Config {
 	 *
 	 * @throws \RuntimeException Throws exception if container is not set.
 	 *
-	 * @return \RCP\StellarWP\ContainerContract\ContainerInterface
+	 * @return \StellarWP\ContainerContract\ContainerInterface
 	 */
 	public static function get_container() {
 		if ( null === self::$container ) {
@@ -160,7 +160,7 @@ class Config {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param \RCP\StellarWP\ContainerContract\ContainerInterface $container Container object.
+	 * @param \StellarWP\ContainerContract\ContainerInterface $container Container object.
 	 *
 	 * @return void
 	 */

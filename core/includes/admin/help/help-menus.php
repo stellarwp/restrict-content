@@ -2,9 +2,9 @@
 /**
  * Help Menus
  *
- * @package     Restrict Content Pro
+ * @package     Kadence Memberships Pro
  * @subpackage  Admin/Help Menus
- * @copyright   Copyright (c) 2017, Restrict Content Pro
+ * @copyright   Copyright (c) 2017, Kadence Memberships Pro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
@@ -231,7 +231,7 @@ function rcp_render_discounts_tab_content( $id ) {
 		case 'general':
 			ob_start();
 			?>
-			<p><?php _e( 'Discount codes allow you to give special offers to new registrations, giving extra incentive for users to sign up for your website\'s premium content section. Restrict Content Pro\'s discount codes work just like any other. There are two kinds:', 'rcp' ); ?></p>
+			<p><?php _e( 'Discount codes allow you to give special offers to new registrations, giving extra incentive for users to sign up for your website\'s premium content section. Kadence Memberships Pro\'s discount codes work just like any other. There are two kinds:', 'rcp' ); ?></p>
 			<ul>
 				<li><?php _e( 'Flat - a flat dollar amount discount. This will take the specified number of dollars (or whatever your currency is) off of the base membership price.', 'rcp' ); ?></li>
 				<li>
@@ -301,7 +301,7 @@ function rcp_render_payments_tab_content( $id ) {
 		case 'general':
 			ob_start();
 			?>
-			<p><?php _e( 'This page is a log of all payments that have ever been recorded with Restrict Content Pro. Each time a payment is made, whether it is a one-time sign up payment, or a recurring membership payment, it is logged here.', 'rcp' ); ?></p>
+			<p><?php _e( 'This page is a log of all payments that have ever been recorded with Kadence Memberships Pro. Each time a payment is made, whether it is a one-time sign up payment, or a recurring membership payment, it is logged here.', 'rcp' ); ?></p>
 			<p><?php _e( 'You can see the membership package the payment was made for, the date is was made, the total amount paid, and the user that made the payment.', 'rcp' ); ?></p>
 			<p><?php _e( 'At the bottom of the payments list, you can also see the total amount that has been earned from membership payments.', 'rcp' ); ?></p>
 			<p><?php _e( 'Payment data is permanent and cannot be manipulated or changed.', 'rcp' ); ?></p>
@@ -333,7 +333,7 @@ function rcp_render_settings_tab_content( $id ) {
 		case 'general':
 			ob_start();
 			?>
-			<p><?php _e( 'This Settings page lets you configure all of the options available for Restrict Content Pro. You should configure the settings as desired before using the plugin.', 'rcp' ); ?></p>
+			<p><?php _e( 'This Settings page lets you configure all of the options available for Kadence Memberships Pro. You should configure the settings as desired before using the plugin.', 'rcp' ); ?></p>
 			<p>
 				<?php
 				printf(
@@ -356,7 +356,7 @@ function rcp_render_settings_tab_content( $id ) {
 		case 'pages':
 			ob_start();
 			?>
-			<p><?php _e( 'Restrict Content Pro automatically creates several pages for use inside the plugin. Each page should contain a specific shortcode to display the correct contents.', 'rcp' ); ?></p>
+			<p><?php _e( 'Kadence Memberships Pro automatically creates several pages for use inside the plugin. Each page should contain a specific shortcode to display the correct contents.', 'rcp' ); ?></p>
 			<p><?php _e( '<strong>Registration Page</strong> - This is the page that contains the [register_form] short code. This option is necessary in order to generate the link (to the registration page) used by short codes such as [subscription_details], which shows the details of a user\'s current membership, or a link to the registration page if not logged in.', 'rcp' ); ?></p>
 			<p><?php _e( '<strong>Success Page</strong> - This is the page that users are sent to after they have a successful registration. If the user is signing up for a free account, they will be sent to this page and immediately logged in. If the user is signing up for a premium membership, they will be sent to this page after submitting payment.', 'rcp' ); ?></p>
 			<p><?php _e( '<strong>Account Page</strong> - This page displays the currently logged in user\'s membership information. It contains the [subscription_details] shortcode.', 'rcp' ); ?></p>
@@ -477,7 +477,7 @@ function rcp_render_settings_tab_content( $id ) {
 					wp_kses(
 						/* translators: %s is the URL for the beta testing help article */
 						__(
-							'<strong>Opt into beta versions</strong> - this option allows you to test the Restrict Content Pro beta versions. If enabled, you\'ll receive an update notification in WordPress when a new beta version is available. You can read more about beta testing in <a href="%s">our help article</a>.',
+							'<strong>Opt into beta versions</strong> - this option allows you to test the Kadence Memberships Pro beta versions. If enabled, you\'ll receive an update notification in WordPress when a new beta version is available. You can read more about beta testing in <a href="%s">our help article</a>.',
 							'rcp'
 						),
 						array(

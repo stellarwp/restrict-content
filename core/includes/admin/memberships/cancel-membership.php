@@ -3,7 +3,7 @@
  * Cancel Membership
  *
  * @package   restrict-content-pro
- * @copyright Copyright (c) 2018, Restrict Content Pro team
+ * @copyright Copyright (c) 2018, Kadence Memberships Pro team
  * @license   GPL2+
  * @since     3.0
  */
