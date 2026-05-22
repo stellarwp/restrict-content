@@ -459,6 +459,7 @@ function rc_process_change_password_form() {
 			wp_safe_redirect( $base . '?rc_action=lostpassword&rc_key_error=invalidkey' );
 		}
 
+		exit;
 	}
 }
 add_action( 'init', 'rc_process_change_password_form' );
