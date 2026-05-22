@@ -165,7 +165,7 @@ function rc_process_login_form() {
 	}
 
 	// Redirect to the success page.
-	$redirect = ! empty( $_POST['rc_redirect'] ) ? $_POST['rc_redirect'] : home_url();
+	$redirect = wp_validate_redirect( $_POST['rc_redirect'] ?? '', home_url() );
 
 	wp_safe_redirect( esc_url_raw( $redirect ) );
 
@@ -239,8 +239,11 @@ function rc_process_lost_password_form() {
 	$errors = rc_send_password_reset_email();
 
 	if ( ! is_wp_error( $errors ) ) {
-		$redirect_to = esc_url( $_POST['rc_redirect'] ) . '?rc_action=lostpassword_checkemail';
-		wp_redirect( $redirect_to );
+		$base        = wp_validate_redirect( $_POST['rc_redirect'] ?? '', home_url() );
+		$redirect_to = $base . '?rc_action=lostpassword_checkemail';
+
+		wp_safe_redirect( $redirect_to );
+		
 		exit();
 	}
 }
@@ -297,13 +300,14 @@ function rc_send_password_reset_email() {
 	do_action( 'retrieve_password', $user_login );
 
 	$key = get_password_reset_key( $user_data );
+	$base = wp_validate_redirect( $_POST['rc_redirect'] ?? '', home_url() );
 
 	$message = __( 'Someone requested that the password be reset for the following account:', 'restrict-content' ) . "\r\n\r\n";
 	$message .= network_home_url( '/' ) . "\r\n\r\n";
 	$message .= sprintf( __( 'Username: %s', 'restrict-content' ), $user_login ) . "\r\n\r\n";
 	$message .= __( 'If this was a mistake, just ignore this email and nothing will happen.', 'restrict-content' ) . "\r\n\r\n";
 	$message .= __( 'To reset your password, visit the following address:', 'restrict-content' ) . "\r\n\r\n";
-	$message .= esc_url_raw( add_query_arg( array( 'rc_action' => 'lostpassword_reset', 'key' => $key, 'login' => rawurlencode( $user_login ) ), $_POST['rc_redirect'] ) ) . "\r\n";
+	$message .= esc_url_raw( add_query_arg( array( 'rc_action' => 'lostpassword_reset', 'key' => $key, 'login' => rawurlencode( $user_login ) ), $base ) ) . "\r\n";
 
 	if ( is_multisite() ) {
 
@@ -412,6 +416,8 @@ function rc_process_change_password_form() {
 	}
 
 	$user = check_password_reset_key( sanitize_text_field( $_POST['rc_password_reset_key'] ), sanitize_text_field( $_POST['rc_password_reset_login'] ) );
+	
+	$base = wp_validate_redirect( $_POST['rc_redirect'] ?? '', home_url() );
 
 	if ( $user instanceof WP_User ) {
 
@@ -441,16 +447,16 @@ function rc_process_change_password_form() {
 
 			wp_password_change_notification( $user );
 
-			wp_safe_redirect( add_query_arg( 'password-reset', 'true', $_POST['rc_redirect'] ) );
+			wp_safe_redirect( add_query_arg( 'password-reset', 'true', $base ) );
 			exit;
 		}
 
 	} elseif ( is_wp_error( $user ) ) {
 
 		if ( 'expired_key' === $user->get_error_code() ) {
-			wp_safe_redirect( esc_url( $_POST['rc_redirect'] ) . '?rc_action=lostpassword&rc_key_error=expiredkey' );
+			wp_safe_redirect( $base . '?rc_action=lostpassword&rc_key_error=expiredkey' );
 		} else {
-			wp_safe_redirect( esc_url( $_POST['rc_redirect'] ) . '?rc_action=lostpassword&rc_key_error=invalidkey' );
+			wp_safe_redirect( $base . '?rc_action=lostpassword&rc_key_error=invalidkey' );
 		}
 
 	}
@@ -591,7 +597,7 @@ function rc_process_registration_form() {
 		'user_password' => $user_data['password']
 	) );
 
-	$redirect_url = ! empty( $_POST['rc_redirect'] ) ? esc_url( $_POST['rc_redirect'] ) : esc_url( home_url() );
+	$redirect_url = wp_validate_redirect( $_POST['rc_redirect'] ?? '', home_url() );
 
 	if ( $is_ajax ) {
 		wp_send_json_success( array(
