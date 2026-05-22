@@ -240,7 +240,7 @@ function rc_process_lost_password_form() {
 
 	if ( ! is_wp_error( $errors ) ) {
 		$base        = wp_validate_redirect( $_POST['rc_redirect'] ?? '', home_url() );
-		$redirect_to = $base . '?rc_action=lostpassword_checkemail';
+		$redirect_to = add_query_arg( 'rc_action', 'lostpassword_checkemail', $base );
 
 		wp_safe_redirect( $redirect_to );
 		
