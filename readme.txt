@@ -257,6 +257,10 @@ https://restrictcontentpro.com/tour/screenshots/
 
 == Changelog ==
 
+= 4.0.1 =
+* Updated: Users with legacy content are now requested to abandon legacy version.
+* Security: Strengthened security measures for password recovery.
+
 = 4.0.0 =
 * Tweak: Plugin name changed to be "Kadence Memberships".
 * Tweak: Updated branding references from StellarWP to Nexcess.
