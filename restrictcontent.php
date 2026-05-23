@@ -160,7 +160,6 @@ final class RC_Requirements_Check
      */
     private function load()
     {
-
         // If the user has expressly chosen a version then load that version.
         if (get_option('restrict_content_chosen_version') ) {
             $user_selected_version = get_option('restrict_content_chosen_version');
@@ -179,15 +178,35 @@ final class RC_Requirements_Check
                 || $this->restrict_content_check_posts_for_meta()
                 || $this->restrict_content_check_posts_for_shortcode()
             ) {
-                // Set chosen version
                 update_option('restrict_content_chosen_version', 'legacy');
+
                 $this->load_legacy_restrict_content();
             } else {
-                // Set chosen version
                 update_option('restrict_content_chosen_version', '3.0');
                 $this->load_restrict_content_3();
             }
         }
+    }
+
+    /**
+     * Plugin specific text to require user to update from legacy version via wp notice
+     * 
+     * @since  4.0.1
+     */
+    public function legacy_migration_needed_notice(): void {
+        ?>
+        <div class="notice notice-warning">
+            <p>
+                <?php
+                printf(
+                    /* translators: %s: settings page URL */
+                    esc_html__( 'The legacy version of Kadence Memberships is deprecated. Please migrate to new version in the %s', 'restrict-content' ),
+                    '<a href="' . esc_url( admin_url( 'admin.php?page=restrict-content-settings' ) ) . '">' . esc_html__( 'settings', 'restrict-content' ) . '</a>'
+                );
+                ?>
+            </p>
+        </div>
+        <?php
     }
 
     /**
@@ -240,11 +259,21 @@ final class RC_Requirements_Check
 
     /**
      * Load version of Restrict pre 3.0
+     * 
+     * @deprecated 4.0.1 Avoid loading legacy version, use `load_restrict_content_3()` instead.
      *
      * @since 3.0
      */
     private function load_legacy_restrict_content()
     {
+        _doing_it_wrong(
+            __FUNCTION__,
+            __( 'The legacy version of Kadence Memberships is deprecated. Please migrate to Restrict Content 3.0 in the settings.', 'restrict-content' ),
+            '4.0.1'
+        );
+
+        add_action( 'admin_notices', array( $this, 'legacy_migration_needed_notice' ) );
+
         include_once dirname($this->file) . '/legacy/restrictcontent.php';
     }
 
