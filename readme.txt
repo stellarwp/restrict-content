@@ -257,6 +257,9 @@ https://restrictcontentpro.com/tour/screenshots/
 
 == Changelog ==
 
+= 4.0.1 =
+* Security: Strengthened security measures for password recovery.
+
 = 4.0.0 =
 * Tweak: Plugin name changed to be "Kadence Memberships".
 * Tweak: Updated branding references from StellarWP to Nexcess.
