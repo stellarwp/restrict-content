@@ -18,7 +18,7 @@ defined('ABSPATH') || exit;
 define('RCP_PLUGIN_FILE', __FILE__);
 define('RCP_ROOT', plugin_dir_path(__FILE__));
 define('RCP_WEB_ROOT', plugin_dir_url(__FILE__));
-define('RCF_VERSION', '4.0.0');
+define('RCF_VERSION', '4.0.1');
 
 // Load Strauss autoload.
 require_once plugin_dir_path( __FILE__ ) . 'vendor/strauss/autoload.php';
