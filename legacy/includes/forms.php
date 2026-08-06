@@ -239,8 +239,8 @@ function rc_process_lost_password_form() {
 	$errors = rc_send_password_reset_email();
 
 	if ( ! is_wp_error( $errors ) ) {
-		$redirect_to = esc_url( $_POST['rc_redirect'] ) . '?rc_action=lostpassword_checkemail';
-		wp_redirect( $redirect_to );
+		$redirect_base = wp_validate_redirect( isset( $_POST['rc_redirect'] ) ? sanitize_url( wp_unslash( $_POST['rc_redirect'] ) ) : '', home_url() ); // phpcs:ignore WordPress.WP.DeprecatedFunctions.sanitize_urlFound, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		wp_safe_redirect( add_query_arg( 'rc_action', 'lostpassword_checkemail', $redirect_base ) );
 		exit();
 	}
 }
@@ -303,7 +303,17 @@ function rc_send_password_reset_email() {
 	$message .= sprintf( __( 'Username: %s', 'restrict-content' ), $user_login ) . "\r\n\r\n";
 	$message .= __( 'If this was a mistake, just ignore this email and nothing will happen.', 'restrict-content' ) . "\r\n\r\n";
 	$message .= __( 'To reset your password, visit the following address:', 'restrict-content' ) . "\r\n\r\n";
-	$message .= esc_url_raw( add_query_arg( array( 'rc_action' => 'lostpassword_reset', 'key' => $key, 'login' => rawurlencode( $user_login ) ), $_POST['rc_redirect'] ) ) . "\r\n";
+	$redirect_base = wp_validate_redirect( isset( $_POST['rc_redirect'] ) ? sanitize_url( wp_unslash( $_POST['rc_redirect'] ) ) : '', home_url() ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.WP.DeprecatedFunctions.sanitize_urlFound, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+	$message .= esc_url_raw(
+		add_query_arg(
+			array(
+				'rc_action' => 'lostpassword_reset',
+				'key'       => $key,
+				'login'     => rawurlencode( $user_login ),
+			),
+			$redirect_base
+		)
+	) . "\r\n";
 
 	if ( is_multisite() ) {
 

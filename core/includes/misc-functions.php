@@ -159,6 +159,9 @@ function rcp_get_currency_symbol( $currency = false ) {
 		case 'CHF':
 			$symbol = '&#67;&#72;&#70;';
 			break;
+		case 'CNY':
+			$symbol = '&#20803;';
+			break;
 		case 'CZK':
 			$symbol = '&#75;&#269;';
 			break;
@@ -256,6 +259,7 @@ function rcp_get_currencies() {
 		'SGD' => __( 'Singapore Dollar (&#36;)', 'rcp' ),
 		'SEK' => __( 'Swedish Krona (&#107;&#114;)', 'rcp' ),
 		'CHF' => __( 'Swiss Franc (&#67;&#72;&#70;)', 'rcp' ),
+		'CNY' => __( 'Chinese Yuan (&#20803;)', 'rcp' ),
 		'TWD' => __( 'Taiwan New Dollars (&#78;&#84;&#36;)', 'rcp' ),
 		'THB' => __( 'Thai Baht (&#3647;)', 'rcp' ),
 		'TRY' => __( 'Turkish Lira (&#8356;)', 'rcp' ),
