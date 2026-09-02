@@ -6,7 +6,7 @@ Tags: restrict pages, restrict posts, restrict access, membership, registration 
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.9
-Stable tag: 4.0.2
+Stable tag: 4.0.3
 
 Kadence Memberships is a powerful WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.
 
@@ -256,6 +256,14 @@ Go to the demo page to see examples:
 https://restrictcontentpro.com/tour/screenshots/
 
 == Changelog ==
+
+= 4.0.3 =
+* Fix: Stripe subscription renewals now record a renewal payment and extend the membership expiration.
+* Fix: Stripe payments in a currency with a different number of decimals than the store currency were recorded with the wrong amount.
+* Fix: Free trials on paid membership levels were processed as free memberships, so no Stripe subscription was created and access ended with the trial.
+* Fix: A declined card no longer leaves a duplicate pending membership behind on the next attempt.
+* Fix: Stripe card declines were rejected by their own security check, so failed registrations were never recorded as failed.
+* Fix: Resolved PHP warnings that could occur when another plugin using Composer was active on the same site.
 
 = 4.0.2 =
 * New: Added Chinese Yuan (&#20803;) to the list of available currencies.
