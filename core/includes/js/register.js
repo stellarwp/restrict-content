@@ -439,7 +439,10 @@ function rcp_get_registration_form_state() {
 		membership_level: $level.val(),
 		is_free: $level.attr( 'rel' ) == 0,
 		lifetime: $level.data( 'duration' ) === 'forever',
-		level_has_trial: rcp_script_options.trial_levels.indexOf( $level.val() ) !== -1,
+		// Older template overrides have no data-has-trial, so fall back to the localized list.
+		// Its IDs are numbers while the level value is a string, hence the coercion.
+		level_has_trial: true === $level.data( 'has-trial' )
+			|| rcp_script_options.trial_levels.map( Number ).indexOf( parseInt( $level.val(), 10 ) ) !== -1,
 		discount_code: $( '#rcp_discount_code' ).val(),
 		gateway: rcp_get_gateway().val(),
 		gateway_data: rcp_get_gateway(),

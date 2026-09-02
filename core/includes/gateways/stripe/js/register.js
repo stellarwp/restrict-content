@@ -15,17 +15,37 @@ function rcpStripeHandlePaymentFailure( payment_id, message ) {
 
 	let $ = jQuery;
 
+	function report( nonce ) {
+		$.ajax( {
+			type: 'post',
+			dataType: 'json',
+			url: rcp_script_options.ajaxurl,
+			data: {
+				action: 'rcp_stripe_handle_initial_payment_failure',
+				payment_id: payment_id,
+				message: message,
+				nonce: nonce
+			},
+			success: function ( response ) { }
+		} );
+	}
+
+	/*
+	 * Registration creates the account and logs the visitor in, which leaves the nonce printed
+	 * on the page belonging to the logged out visitor. Ask for one that matches who they are
+	 * now, and fall back to the printed one if that request fails.
+	 */
 	$.ajax( {
 		type: 'post',
 		dataType: 'json',
 		url: rcp_script_options.ajaxurl,
-		data: {
-			action: 'rcp_stripe_handle_initial_payment_failure',
-			payment_id: payment_id,
-			message: message,
-			nonce: rcp_script_options.stripe_payment_nonce
+		data: { action: 'rcp_stripe_generate_payment_nonce' },
+		success: function ( response ) {
+			report( response && response.success ? response.data : rcp_script_options.stripe_payment_nonce );
 		},
-		success: function ( response ) { }
+		error: function () {
+			report( rcp_script_options.stripe_payment_nonce );
+		}
 	} );
 
 }
