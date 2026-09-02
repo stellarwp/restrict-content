@@ -419,7 +419,7 @@ function rcp_settings_page() {
 									<label for="rcp_settings[sandbox]"><?php _e( 'Sandbox Mode', 'rcp' ); ?></label>
 								</th>
 								<td>
-									<input type="checkbox" value="1" name="rcp_settings[sandbox]" id="rcp_settings[sandbox]" 
+									<input type="checkbox" value="1" name="rcp_settings[sandbox]" id="rcp_settings[sandbox]"
 									<?php
 									checked( rcp_is_sandbox() );
 									echo ( defined( 'RCP_GATEWAY_SANDBOX_MODE' ) && RCP_GATEWAY_SANDBOX_MODE ) ? ' disabled="disabled"' : '';
@@ -1111,7 +1111,7 @@ function rcp_settings_page() {
 								<label for="rcp_settings[hide_premium]"><?php _e( 'Hide Restricted Posts', 'rcp' ); ?></label>
 							</th>
 							<td>
-								<input type="checkbox" value="1" name="rcp_settings[hide_premium]" id="rcp_settings[hide_premium]" 
+								<input type="checkbox" value="1" name="rcp_settings[hide_premium]" id="rcp_settings[hide_premium]"
 								<?php
 								if ( isset( $rcp_options['hide_premium'] ) ) {
 									checked( '1', $rcp_options['hide_premium'] );}
@@ -1152,7 +1152,7 @@ function rcp_settings_page() {
 								<label for="rcp_settings[hijack_login_url]"><?php _e( 'Redirect Default Login URL', 'rcp' ); ?></label>
 							</th>
 							<td>
-								<input type="checkbox" value="1" name="rcp_settings[hijack_login_url]" id="rcp_settings[hijack_login_url]" 
+								<input type="checkbox" value="1" name="rcp_settings[hijack_login_url]" id="rcp_settings[hijack_login_url]"
 								<?php
 								if ( isset( $rcp_options['hijack_login_url'] ) ) {
 									checked( '1', $rcp_options['hijack_login_url'] );}
@@ -1192,7 +1192,7 @@ function rcp_settings_page() {
 								<label for="rcp_settings[auto_add_users]"><?php _e( 'Auto Add Users to Level', 'rcp' ); ?></label>
 							</th>
 							<td>
-								<input type="checkbox" value="1" name="rcp_settings[auto_add_users]" id="rcp_settings[auto_add_users]" 
+								<input type="checkbox" value="1" name="rcp_settings[auto_add_users]" id="rcp_settings[auto_add_users]"
 								<?php
 								if ( isset( $rcp_options['auto_add_users'] ) ) {
 									checked( '1', $rcp_options['auto_add_users'] );}
@@ -1263,7 +1263,7 @@ function rcp_settings_page() {
 								<label for="rcp_settings[disable_css]"><?php _e( 'Disable Form CSS', 'rcp' ); ?></label><br/>
 							</th>
 							<td>
-								<input type="checkbox" value="1" name="rcp_settings[disable_css]" id="rcp_settings[disable_css]" 
+								<input type="checkbox" value="1" name="rcp_settings[disable_css]" id="rcp_settings[disable_css]"
 								<?php
 								if ( isset( $rcp_options['disable_css'] ) ) {
 									checked( '1', $rcp_options['disable_css'] );}
@@ -1277,7 +1277,7 @@ function rcp_settings_page() {
 								<label for="rcp_settings[enable_terms]"><?php _e( 'Agree to Terms', 'rcp' ); ?></label>
 							</th>
 							<td>
-								<input type="checkbox" value="1" name="rcp_settings[enable_terms]" id="rcp_settings[enable_terms]" 
+								<input type="checkbox" value="1" name="rcp_settings[enable_terms]" id="rcp_settings[enable_terms]"
 								<?php
 								if ( isset( $rcp_options['enable_terms'] ) ) {
 									checked( '1', $rcp_options['enable_terms'] );}
@@ -1291,12 +1291,7 @@ function rcp_settings_page() {
 								<label for="rcp_settings[terms_label]">&nbsp;&mdash;&nbsp;<?php _e( 'Agree to Terms Label', 'rcp' ); ?></label>
 							</th>
 							<td>
-								<input type="text" id="rcp_settings[terms_label]" style="width: 300px;" name="rcp_settings[terms_label]" value="
-								<?php
-								if ( isset( $rcp_options['terms_label'] ) ) {
-									echo esc_attr( $rcp_options['terms_label'] );}
-								?>
-								" />
+								<input type="text" id="rcp_settings[terms_label]" style="width: 300px;" name="rcp_settings[terms_label]" value="<?php echo isset( $rcp_options['terms_label'] ) ? esc_attr( $rcp_options['terms_label'] ) : ''; ?>" />
 								<p class="description"><?php _e( 'Label shown next to the agree to terms checkbox.', 'rcp' ); ?></p>
 							<td>
 						</tr>
@@ -1305,12 +1300,7 @@ function rcp_settings_page() {
 								<label for="rcp_settings[terms_link]">&nbsp;&mdash;&nbsp;<?php _e( 'Terms Link', 'rcp' ); ?></label>
 							</th>
 							<td>
-								<input type="text" id="rcp_settings[terms_link]" style="width: 300px;" name="rcp_settings[terms_link]" value="
-								<?php
-								if ( isset( $rcp_options['terms_link'] ) ) {
-									echo esc_attr( $rcp_options['terms_link'] );}
-								?>
-								" placeholder="https://" />
+								<input type="text" id="rcp_settings[terms_link]" style="width: 300px;" name="rcp_settings[terms_link]" value="<?php echo isset( $rcp_options['terms_link'] ) ? esc_attr( $rcp_options['terms_link'] ) : ''; ?>" placeholder="https://" />
 								<p class="description"><?php _e( 'Optional - the URL to your terms page. If set, the terms label will link to this URL.', 'rcp' ); ?></p>
 							<td>
 						</tr>
@@ -1319,7 +1309,7 @@ function rcp_settings_page() {
 								<label for="rcp_settings[enable_privacy_policy]"><?php _e( 'Agree to Privacy Policy', 'rcp' ); ?></label>
 							</th>
 							<td>
-								<input type="checkbox" value="1" name="rcp_settings[enable_privacy_policy]" id="rcp_settings[enable_privacy_policy]" 
+								<input type="checkbox" value="1" name="rcp_settings[enable_privacy_policy]" id="rcp_settings[enable_privacy_policy]"
 								<?php
 								if ( isset( $rcp_options['enable_privacy_policy'] ) ) {
 									checked( '1', $rcp_options['enable_privacy_policy'] );}
@@ -1333,12 +1323,7 @@ function rcp_settings_page() {
 								<label for="rcp_settings[privacy_policy_label]">&nbsp;&mdash;&nbsp;<?php _e( 'Agree to Privacy Policy Label', 'rcp' ); ?></label>
 							</th>
 							<td>
-								<input type="text" id="rcp_settings[privacy_policy_label]" style="width: 300px;" name="rcp_settings[privacy_policy_label]" value="
-								<?php
-								if ( isset( $rcp_options['privacy_policy_label'] ) ) {
-									echo esc_attr( $rcp_options['privacy_policy_label'] );}
-								?>
-								" />
+								<input type="text" id="rcp_settings[privacy_policy_label]" style="width: 300px;" name="rcp_settings[privacy_policy_label]" value="<?php echo isset( $rcp_options['privacy_policy_label'] ) ? esc_attr( $rcp_options['privacy_policy_label'] ) : ''; ?>" />
 								<p class="description"><?php _e( 'Label shown next to the agree to privacy policy checkbox.', 'rcp' ); ?></p>
 							<td>
 						</tr>
@@ -1347,12 +1332,7 @@ function rcp_settings_page() {
 								<label for="rcp_settings[privacy_policy_link]">&nbsp;&mdash;&nbsp;<?php _e( 'Privacy Policy Link', 'rcp' ); ?></label>
 							</th>
 							<td>
-								<input type="text" id="rcp_settings[privacy_policy_link]" style="width: 300px;" name="rcp_settings[privacy_policy_link]" value="
-								<?php
-								if ( isset( $rcp_options['privacy_policy_link'] ) ) {
-									echo esc_attr( $rcp_options['privacy_policy_link'] );}
-								?>
-								" placeholder="https://" />
+								<input type="text" id="rcp_settings[privacy_policy_link]" style="width: 300px;" name="rcp_settings[privacy_policy_link]" value="<?php echo isset( $rcp_options['privacy_policy_link'] ) ? esc_attr( $rcp_options['privacy_policy_link'] ) : ''; ?>" placeholder="https://" />
 								<p class="description"><?php _e( 'Optional - the URL to your privacy policy page. If set, the privacy policy label will link to this URL.', 'rcp' ); ?></p>
 							<td>
 						</tr>
@@ -1386,13 +1366,7 @@ function rcp_settings_page() {
 							<td>
 								<input type="text" id="rcp_settings[recaptcha_public_key]" style="width: 300px;"
 									   name="rcp_settings[recaptcha_public_key]"
-									   value="
-								<?php
-								if ( isset( $rcp_options['recaptcha_public_key'] ) ) {
-									echo esc_attr( $rcp_options['recaptcha_public_key'] );
-								}
-								?>
-								" />
+									   value="<?php echo isset( $rcp_options['recaptcha_public_key'] ) ? esc_attr( $rcp_options['recaptcha_public_key'] ) : ''; ?>" />
 								<p class="description"><?php esc_html_e( 'This your own personal reCAPTCHA Site key. Go to', 'rcp' ); ?> <a
 											href="https://www.google.com/recaptcha/"><?php esc_html_e( 'your account', 'rcp' ); ?></a>, <?php esc_html_e( 'then click on your domain (or add a new one) to find your site key.', 'rcp' ); ?>
 								</p>
@@ -1405,13 +1379,7 @@ function rcp_settings_page() {
 							<td>
 								<input type="text" id="rcp_settings[recaptcha_private_key]" style="width: 300px;"
 									   name="rcp_settings[recaptcha_private_key]"
-									   value="
-								<?php
-								if ( isset( $rcp_options['recaptcha_private_key'] ) ) {
-									echo esc_attr( $rcp_options['recaptcha_private_key'] );
-								}
-								?>
-								" />
+									   value="<?php echo isset( $rcp_options['recaptcha_private_key'] ) ? esc_attr( $rcp_options['recaptcha_private_key'] ) : ''; ?>" />
 								<p class="description"><?php esc_html_e( 'This your own personal reCAPTCHA Secret key. Go to', 'rcp' ); ?> <a
 											href="https://www.google.com/recaptcha/"><?php esc_html_e( 'your account', 'rcp' ); ?></a>, <?php esc_html_e( 'then click on your domain (or add a new one) to find your secret key.', 'rcp' ); ?>
 								</p>

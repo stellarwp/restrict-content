@@ -1,7 +1,4 @@
 <?php
-
-use RCP\Membership_Level;
-
 /**
  * RCP Registration Class
  *
@@ -12,6 +9,11 @@ use RCP\Membership_Level;
  * @since       2.5
  */
 
+use RCP\Membership_Level;
+
+/**
+ * Builds and holds the state of a single registration.
+ */
 class RCP_Registration {
 
 	/**
@@ -348,6 +350,11 @@ class RCP_Registration {
 			$pending_payment_id = rcp_get_membership_meta( $this->membership->get_id(), 'pending_payment_id', true );
 		}
 
+		// Or, look for an attempt this customer abandoned moments ago.
+		if ( empty( $pending_payment_id ) ) {
+			$pending_payment_id = $this->find_recoverable_payment_id();
+		}
+
 		if ( empty( $pending_payment_id ) ) {
 			return;
 		}
@@ -381,11 +388,109 @@ class RCP_Registration {
 
 		$this->recovered_payment = $payment;
 
-		// Use the same `transaction_type` as the recovered payment.
+		/*
+		 * Use the same `transaction_type` as the recovered payment. rcp_get_payment_recovery_url()
+		 * sends no membership_id, so a "Complete Payment" link relies on this to get back to
+		 * `renewal`.
+		 */
 		$this->registration_type = $this->recovered_payment->transaction_type;
 
 		rcp_log( sprintf( 'Using recovered payment #%d for registration. Transaction type: %s.', $this->recovered_payment->id, $this->recovered_payment->transaction_type ) );
 
+	}
+
+	/**
+	 * Find a signup this customer just had declined.
+	 *
+	 * A declined card fails the payment, disables the membership and deletes its
+	 * `pending_payment_id` meta, so the only handle left is the hidden form field, which a page
+	 * reload loses. Matching on exactly that wreckage keeps this away from renewals and from
+	 * payments still in flight at an off-site gateway.
+	 *
+	 * @see rcp_remove_subscription_data_on_failure()
+	 *
+	 * @since 4.0.6
+	 *
+	 * @return int Payment ID, or 0 if there is nothing worth recovering.
+	 */
+	protected function find_recoverable_payment_id() {
+
+		$user_id = get_current_user_id();
+
+		// Renewals, upgrades and downgrades already know which membership they belong to.
+		if ( 'new' !== $this->registration_type ) {
+			return 0;
+		}
+
+		if ( empty( $user_id ) || ! $this->get_membership_level_id() ) {
+			return 0;
+		}
+
+		/**
+		 * How long an abandoned attempt stays recoverable.
+		 *
+		 * @since 4.0.6
+		 *
+		 * @param int              $window       Number of seconds.
+		 * @param RCP_Registration $registration Registration object.
+		 */
+		$window = apply_filters( 'rcp_registration_recovery_window', HOUR_IN_SECONDS, $this );
+
+		/**
+		 * Payments database handler.
+		 *
+		 * @var RCP_Payments $rcp_payments_db
+		 */
+		global $rcp_payments_db;
+
+		$payments = $rcp_payments_db->get_payments(
+			array(
+				'user_id'          => $user_id,
+				'object_id'        => $this->get_membership_level_id(),
+				'status'           => 'failed',
+				'transaction_type' => 'new',
+				'number'           => 5,
+				'orderby'          => 'id',
+				'order'            => 'DESC',
+			)
+		);
+
+		if ( empty( $payments ) ) {
+			return 0;
+		}
+
+		$cutoff = current_time( 'timestamp' ) - $window;
+
+		foreach ( $payments as $payment ) {
+			$fields = (array) $payment;
+
+			if ( ! empty( $fields['transaction_id'] ) || empty( $fields['membership_id'] ) ) {
+				continue;
+			}
+
+			if ( strtotime( $fields['date'], current_time( 'timestamp' ) ) < $cutoff ) {
+				continue;
+			}
+
+			$membership = rcp_get_membership( $fields['membership_id'] );
+
+			if ( empty( $membership ) || $membership->get_user_id() != $user_id ) {
+				continue;
+			}
+
+			/*
+			 * A signup the failure handler tore down is left pending and disabled. Requiring both
+			 * keeps this off memberships disabled for any other reason, whose term would otherwise
+			 * be restored here without payment, and off attempts still live at the gateway.
+			 */
+			if ( 'pending' !== $membership->get_status() || ! $membership->is_disabled() ) {
+				continue;
+			}
+
+			return (int) $fields['id'];
+		}
+
+		return 0;
 	}
 
 	/**

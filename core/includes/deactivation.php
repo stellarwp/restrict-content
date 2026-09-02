@@ -18,5 +18,7 @@
 function rcp_clear_cron_jobs() {
 	wp_clear_scheduled_hook( 'rcp_expired_users_check' );
 	wp_clear_scheduled_hook( 'rcp_send_expiring_soon_notice' );
+	wp_clear_scheduled_hook( 'rcp_stripe_cleanup_webhook_locks' );
 }
 register_deactivation_hook( RCP_PLUGIN_FILE, 'rcp_clear_cron_jobs' );
+

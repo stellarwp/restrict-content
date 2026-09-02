@@ -1069,6 +1069,9 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 				rcp_log( sprintf( 'Processing Stripe %s webhook.', $event->type ) );
 
+				// Set by the invoice branch below for a confirmed subscription renewal.
+				$is_renewal_invoice = false;
+
 				// setup payment data
 				$payment_data = array(
 					// phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
@@ -1089,19 +1092,85 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 					// Successful one-time payment.
 					if ( empty( $payment_event->invoice ) ) {
 
-						$payment_data['amount']         = $payment_event->amount / rcp_stripe_get_currency_multiplier();
+						$payment_data['amount']         = $payment_event->amount / rcp_stripe_get_currency_multiplier( rcp_stripe_object_get_currency( $payment_event ) );
 						$payment_data['transaction_id'] = $payment_event->id;
 
 						// Successful subscription payment.
 					} else {
 
-						$payment_data['amount']         = $invoice->amount_due / rcp_stripe_get_currency_multiplier();
+						$payment_data['amount']         = $invoice->amount_due / rcp_stripe_get_currency_multiplier( rcp_stripe_object_get_currency( $invoice ) );
 						$payment_data['transaction_id'] = $payment_event->id;
 
 						if ( ! empty( $payment_event->discount ) ) {
 							$payment_data['discount_code'] = $payment_event->discount->coupon_id;
 						}
 					}
+				} elseif ( 'invoice.payment_succeeded' === $event->type && ! empty( $invoice ) ) {
+					/*
+					 * Successful recurring subscription payment.
+					 *
+					 * Stripe delivers both `charge.succeeded` and `invoice.payment_succeeded` for
+					 * the same renewal and we handle both, so record the same charge ID the branch
+					 * above records. Whichever event is processed second is then caught by the
+					 * duplicate check below instead of renewing twice. `charge.refunded` also
+					 * looks payments up by charge ID.
+					 *
+					 * Leaving the transaction ID empty makes this a no-op and falls through to the
+					 * `rcp_stripe_{$event->type}` action, which is the pre-existing behaviour.
+					 */
+					$invoice_id = rcp_stripe_object_get_id( $invoice, 'id' );
+
+					if ( ! rcp_stripe_invoice_is_renewal( $invoice ) ) {
+						rcp_log( sprintf( 'Stripe webhook: invoice %s is not a subscription renewal. Skipping.', $invoice_id ) );
+					} else {
+						$invoice_transaction_id = rcp_stripe_get_invoice_transaction_id( $invoice );
+
+						if ( empty( $invoice_transaction_id ) ) {
+							// Any other ID would not match `charge.succeeded` and would duplicate.
+							rcp_log( sprintf( 'Stripe webhook: could not resolve the charge for invoice %s. Deferring to charge.succeeded.', $invoice_id ), true );
+						} else {
+							$is_renewal_invoice = true;
+
+							// `amount_due`, matching the charge.succeeded branch above.
+							$payment_data['amount']         = rcp_stripe_object_get_amount( $invoice, 'amount_due' ) / rcp_stripe_get_currency_multiplier( rcp_stripe_object_get_currency( $invoice ) );
+							$payment_data['transaction_id'] = $invoice_transaction_id;
+						}
+					}
+				}
+
+				/*
+				 * Take an exclusive lock on this transaction. Both webhooks for a renewal arrive
+				 * at once and the block below makes an API call before inserting, so without this
+				 * both requests can pass the duplicate check and renew twice.
+				 */
+				if ( ! empty( $payment_data['transaction_id'] ) ) {
+					$webhook_lock_key   = $payment_data['transaction_id'];
+					$webhook_lock_token = wp_generate_password( 20, false );
+
+					if ( ! rcp_stripe_acquire_webhook_lock( $webhook_lock_key, $webhook_lock_token ) ) {
+						/*
+						 * Answer 409, not 200. If the holder dies before inserting the payment, a
+						 * 200 tells Stripe the event was handled and the renewal is lost. A 409
+						 * has Stripe redeliver, and the duplicate check below catches it then.
+						 */
+						rcp_log( sprintf( 'Stripe webhook: transaction %s is already being processed.', $webhook_lock_key ), true );
+
+						wp_send_json_error(
+							[
+								// translators: %s The transaction id.
+								'message' => sprintf( __( 'Transaction %s is already being processed.', 'rcp' ), esc_html( $webhook_lock_key ) ),
+							],
+							409
+						);
+					}
+
+					// Every exit below goes through wp_send_json_*() -> wp_die(), so release on shutdown.
+					add_action(
+						'shutdown',
+						function () use ( $webhook_lock_key, $webhook_lock_token ) {
+							rcp_stripe_release_webhook_lock( $webhook_lock_key, $webhook_lock_token );
+						}
+					);
 				}
 
 				if ( ! empty( $payment_data['transaction_id'] ) && ! $rcp_payments->payment_exists( $payment_data['transaction_id'] ) ) {
@@ -1153,7 +1222,15 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 						}
 					}
 
-					$pending_payment_id = rcp_get_membership_meta( $this->membership->get_id(), 'pending_payment_id', true );
+					/*
+					 * A confirmed renewal must never consume a pending payment. That meta is
+					 * written at registration and can be left behind by an abandoned signup or
+					 * level change, in which case completing it here would swallow the renewal:
+					 * the payment row would be overwritten and renew() would never run, so the
+					 * member stays charged but expires.
+					 */
+					$pending_payment_id = $is_renewal_invoice ? '' : rcp_get_membership_meta( $this->membership->get_id(), 'pending_payment_id', true );
+
 					if ( ! empty( $pending_payment_id ) ) {
 
 						// Completing a pending payment. Account activation is handled in rcp_complete_registration()
