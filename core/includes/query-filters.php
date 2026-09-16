@@ -78,42 +78,13 @@ add_action( 'pre_get_posts', 'rcp_hide_premium_posts', 99999 );
  * @since 3.5.47
  *
  * @param string   $where The WHERE clause of the query.
- * @param WP_Query $query The WP_Query instance.
+ * @param WP_Query $query The WP_Query instance. Unused, and kept so the callback keeps the
+ *                        signature posts_where passes.
  *
  * @return string Modified WHERE clause.
  */
 function rcp_filter_premium_posts_where( $where, $query ) {
 	global $wpdb;
-
-	// Add JOIN for meta tables if not already present.
-	if (
-		! strpos( $where, 'INNER JOIN' )
-		&& ! strpos( $where, 'LEFT JOIN' )
-	) {
-		$query->set(
-			'meta_query',
-			[
-				'relation' => 'OR',
-				[
-					'key'   => '_is_paid',
-					'value' => '1',
-				],
-				[
-					'key' => 'rcp_subscription_level',
-				],
-				[
-					'key'     => 'rcp_user_level',
-					'value'   => 'All',
-					'compare' => '!=',
-				],
-				[
-					'key'     => 'rcp_access_level',
-					'value'   => 'None',
-					'compare' => '!=',
-				],
-			]
-		);
-	}
 
 	// Add WHERE clause to exclude posts with premium restrictions.
 	$where .= " AND NOT EXISTS (
@@ -181,59 +152,13 @@ function rcp_hide_premium_posts_from_rest_api( $args ) {
 		return $args;
 	}
 
-	// Use database-level filtering instead of post__not_in for better performance.
-	// Handle both post-level meta restrictions and term-based restrictions.
-	$args['meta_query'] = [
-		'relation' => 'AND',
-		[
-			'relation' => 'OR',
-			[
-				'key'     => '_is_paid',
-				'value'   => '1',
-				'compare' => '!=',
-			],
-			[
-				'key'     => '_is_paid',
-				'compare' => 'NOT EXISTS',
-			],
-		],
-		[
-			'relation' => 'OR',
-			[
-				'key'     => 'rcp_subscription_level',
-				'compare' => 'NOT EXISTS',
-			],
-			[
-				'key'     => 'rcp_subscription_level',
-				'value'   => '',
-				'compare' => '=',
-			],
-		],
-		[
-			'relation' => 'OR',
-			[
-				'key'     => 'rcp_user_level',
-				'compare' => 'NOT EXISTS',
-			],
-			[
-				'key'     => 'rcp_user_level',
-				'value'   => 'All',
-				'compare' => '=',
-			],
-		],
-		[
-			'relation' => 'OR',
-			[
-				'key'     => 'rcp_access_level',
-				'compare' => 'NOT EXISTS',
-			],
-			[
-				'key'     => 'rcp_access_level',
-				'value'   => 'None',
-				'compare' => '=',
-			],
-		],
-	];
+	/*
+	 * Restrictions are applied through the WHERE clause rather than a meta_query. WP_Meta_Query
+	 * cannot share a table alias across NOT EXISTS clauses, so the equivalent meta_query self-joins
+	 * the postmeta table once per clause, and the SQL_CALC_FOUND_ROWS core adds for pagination then
+	 * forces that whole join product to be built before the LIMIT can apply.
+	 */
+	add_filter( 'posts_where', 'rcp_filter_premium_posts_where', 10, 2 );
 
 	return $args;
 }

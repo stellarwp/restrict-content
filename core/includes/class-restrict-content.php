@@ -26,7 +26,7 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 	 * @since 3.0
 	 */
 	final class Restrict_Content_Pro {
-		const VERSION = '4.0.3';
+		const VERSION = '4.0.7';
 
 		/**
 		 * Stores the base slug for the extension.
@@ -332,7 +332,6 @@ if ( ! class_exists( 'Restrict_Content_Pro' ) ) :
 			require_once( RCP_PLUGIN_DIR . 'core/includes/gateways/class-rcp-payment-gateways.php' );
 			require_once( RCP_PLUGIN_DIR . 'core/includes/gateways/gateway-actions.php' );
 			require_once( RCP_PLUGIN_DIR . 'core/includes/gateways/gateway-functions.php' );
-			rcp_load_gateway_files();
 
 			// Membership Levels
 			require_once( RCP_PLUGIN_DIR . 'core/includes/membership-levels/class-rcp-membership-level.php' );
