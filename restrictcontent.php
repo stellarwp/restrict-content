@@ -3,7 +3,7 @@
  * Plugin Name: Kadence Memberships
  * Plugin URI: https://restrictcontentpro.com
  * Description: Set up a complete membership system for your WordPress site and deliver premium content to your members. Unlimited membership packages, membership management, discount codes, registration / login forms, and more.
- * Version: 4.0.2
+ * Version: 4.0.3
  * Author: Kadence
  * Author URI: https://www.kadencewp.com/
  * Requires at least: 6.0
@@ -18,7 +18,7 @@ defined('ABSPATH') || exit;
 define('RCP_PLUGIN_FILE', __FILE__);
 define('RCP_ROOT', plugin_dir_path(__FILE__));
 define('RCP_WEB_ROOT', plugin_dir_url(__FILE__));
-define('RCF_VERSION', '4.0.2');
+define('RCF_VERSION', '4.0.3');
 
 // Load Strauss autoload.
 require_once plugin_dir_path( __FILE__ ) . 'vendor/strauss/autoload.php';
@@ -28,12 +28,36 @@ if ( interface_exists( 'RCP\StellarWP\ContainerContract\ContainerInterface' ) &&
 	class_alias( 'RCP\StellarWP\ContainerContract\ContainerInterface', 'StellarWP\ContainerContract\ContainerInterface' );
 }
 
-// Load Composer autoload file only if we've not included this file already.
-require_once dirname(RCP_PLUGIN_FILE) . '/vendor/autoload.php';
+// Autoload RCP\ classes from core/includes/ — vendor/autoload.php skipped because
+// Strauss (delete_vendor_files) leaves stale mappings that poison other plugins.
+spl_autoload_register( 'rcp_autoload' );
 
 use RCP\StellarWP\Telemetry\Config;
 use RCP\StellarWP\Telemetry\Core as Telemetry;
 use RCP\Container;
+
+/**
+ * Autoload RCP\ classes from core/includes/.
+ *
+ * @since 4.0.3
+ *
+ * @param string $class Fully-qualified class name.
+ * @return void
+ */
+function rcp_autoload( $class ) {
+	$prefix     = 'RCP\\';
+	$prefix_len = strlen( $prefix );
+
+	if ( strncmp( $prefix, $class, $prefix_len ) !== 0 ) {
+		return;
+	}
+
+	$file = RCP_ROOT . 'core/includes/' . str_replace( '\\', '/', substr( $class, $prefix_len ) ) . '.php';
+
+	if ( file_exists( $file ) ) {
+		require_once $file;
+	}
+}
 
 $rc_options = get_option('rc_settings');
 

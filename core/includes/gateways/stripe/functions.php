@@ -384,15 +384,49 @@ add_action( 'rcp_update_membership_billing_card', 'rcp_stripe_update_membership_
  * Return the multiplier for the currency. Most currencies are multiplied by 100. Zere decimal
  * currencies should not be multiplied so use 1.
  *
- * @param string $currency
+ * @param string $currency Currency code. Defaults to the store currency.
  *
  * @since 2.5
  * @return int
  */
 function rcp_stripe_get_currency_multiplier( $currency = '' ) {
-	$multiplier = ( rcp_is_zero_decimal_currency( $currency ) ) ? 1 : 100;
+	if ( rcp_is_zero_decimal_currency( $currency ) ) {
+		$multiplier = 1;
+	} elseif ( rcp_stripe_is_three_decimal_currency( $currency ) ) {
+		$multiplier = 1000;
+	} else {
+		$multiplier = 100;
+	}
 
 	return apply_filters( 'rcp_stripe_get_currency_multiplier', $multiplier, $currency );
+}
+
+/**
+ * Determines if a currency is one Stripe bills in thousandths.
+ *
+ * Stripe sends and expects these amounts x1000 rather than x100. Without this they are
+ * recorded ten times too large.
+ *
+ * @link https://docs.stripe.com/currencies#three-decimal
+ *
+ * @since 4.0.6
+ *
+ * @param string $currency Currency code. Defaults to the store currency.
+ *
+ * @return bool
+ */
+function rcp_stripe_is_three_decimal_currency( $currency = '' ) {
+	$currency = $currency ? strtoupper( $currency ) : strtoupper( rcp_get_currency() );
+
+	$three_decimal_currencies = array(
+		'BHD',
+		'JOD',
+		'KWD',
+		'OMR',
+		'TND',
+	);
+
+	return apply_filters( 'rcp_stripe_is_three_decimal_currency', in_array( $currency, $three_decimal_currencies, true ), $currency );
 }
 
 /**
@@ -872,6 +906,29 @@ add_action( 'wp_ajax_rcp_stripe_handle_initial_payment_failure', 'rcp_stripe_han
 add_action( 'wp_ajax_nopriv_rcp_stripe_handle_initial_payment_failure', 'rcp_stripe_handle_initial_payment_failure' );
 
 /**
+ * Issue a payment nonce for the current user.
+ *
+ * Registration creates the account and logs the visitor in mid flow, so the nonce printed with
+ * the page was minted for the logged out visitor and no longer verifies. Nonces cannot be
+ * regenerated in the request that sets the auth cookie either, because the session token is not
+ * readable until the browser sends it back.
+ *
+ * @since 4.0.6
+ *
+ * @return void
+ */
+function rcp_stripe_generate_payment_nonce() {
+
+	if ( ! is_user_logged_in() ) {
+		wp_send_json_error( __( 'You must be logged in to perform this action.', 'rcp' ) );
+	}
+
+	wp_send_json_success( wp_create_nonce( 'rcp_process_stripe_payment' ) );
+}
+
+add_action( 'wp_ajax_rcp_stripe_generate_payment_nonce', 'rcp_stripe_generate_payment_nonce' );
+
+/**
  * Create a setup intent while saving a new billing card.
  *
  * This is slightly different from `rcp_stripe_create_payment_intent()` because we get the Stripe customer
@@ -1238,3 +1295,428 @@ function rcp_stripe_cancel_subscriptions_after_deleting_level( $membership_id, $
 }
 
 add_action( 'rcp_membership_pre_cancel', 'rcp_stripe_cancel_subscriptions_after_deleting_level', 10, 2 );
+
+/**
+ * Normalize a Stripe ID that may be either a string or an expanded object.
+ *
+ * @since 4.0.6
+ *
+ * @param mixed $value String ID, expanded StripeObject, or null.
+ *
+ * @return string The ID, or an empty string.
+ */
+function rcp_stripe_normalize_id( $value ): string {
+	if ( is_string( $value ) ) {
+		return $value;
+	}
+
+	if ( is_object( $value ) && ! empty( $value->id ) && is_string( $value->id ) ) {
+		return $value->id;
+	}
+
+	return '';
+}
+
+/**
+ * Safely read a key from a Stripe object or array.
+ *
+ * Property syntax must be avoided for optional keys: \Stripe\StripeObject::__get() writes to
+ * the error log when the key is absent, which would mean a log line on every renewal.
+ *
+ * @since 4.0.6
+ *
+ * @param mixed  $source Stripe object, array, or anything else.
+ * @param string $key    Key to read.
+ *
+ * @return mixed The value, or null if it is absent or the source is not readable.
+ */
+function rcp_stripe_object_get( $source, string $key ) {
+	if ( is_array( $source ) ) {
+		return array_key_exists( $key, $source ) ? $source[ $key ] : null;
+	}
+
+	if ( $source instanceof \ArrayAccess ) {
+		return $source->offsetExists( $key ) ? $source->offsetGet( $key ) : null;
+	}
+
+	return null;
+}
+
+/**
+ * Read an ID held under a key on a Stripe object.
+ *
+ * @since 4.0.6
+ *
+ * @param mixed  $source Stripe object or array.
+ * @param string $key    Key holding a string ID or an expanded object.
+ *
+ * @return string
+ */
+function rcp_stripe_object_get_id( $source, string $key ): string {
+	return rcp_stripe_normalize_id( rcp_stripe_object_get( $source, $key ) );
+}
+
+/**
+ * Read a numeric amount held under a key on a Stripe object.
+ *
+ * @since 4.0.6
+ *
+ * @param mixed  $source Stripe object or array.
+ * @param string $key    Key holding an amount in the currency's smallest unit.
+ *
+ * @return float The amount, or 0 if absent or not numeric.
+ */
+function rcp_stripe_object_get_amount( $source, string $key ): float {
+	$value = rcp_stripe_object_get( $source, $key );
+
+	return is_numeric( $value ) ? (float) $value : 0.0;
+}
+
+/**
+ * Determine whether a paid invoice represents a recurring renewal.
+ *
+ * `subscription_create` must be excluded. RCP takes the initial payment with a standalone
+ * PaymentIntent and creates the subscription with a future billing anchor, so signup emits a
+ * separate invoice. Treating it as a renewal can complete a still-pending initial payment
+ * with an amount of 0. Where such an invoice carries a real charge, `charge.succeeded`
+ * already handles it.
+ *
+ * @since 4.0.6
+ *
+ * @param mixed $invoice Invoice object from the webhook.
+ *
+ * @return bool
+ */
+function rcp_stripe_invoice_is_renewal( $invoice ): bool {
+	$default = array(
+		'subscription_cycle', // A subscription advancing into a new period.
+		'subscription',       // Legacy value on older invoices.
+	);
+
+	/**
+	 * Filters the invoice `billing_reason` values treated as recurring renewals.
+	 *
+	 * @since 4.0.6
+	 *
+	 * @param string[] $billing_reasons Allowed billing reasons.
+	 * @param mixed    $invoice         The invoice being evaluated.
+	 */
+	$allowed = apply_filters( 'rcp_stripe_invoice_renewal_billing_reasons', $default, $invoice );
+	$allowed = array_filter( (array) $allowed, 'is_string' );
+
+	if ( empty( $allowed ) ) {
+		$allowed = $default;
+	}
+
+	$billing_reason = rcp_stripe_object_get( $invoice, 'billing_reason' );
+
+	/*
+	 * Stripe has set a billing reason on every invoice since 2018. If one is missing the
+	 * rendering is unusual, so only treat it as a renewal when the invoice belongs to a
+	 * subscription. Failing open here would let signup invoices renew memberships.
+	 */
+	if ( ! is_string( $billing_reason ) || '' === $billing_reason ) {
+		return '' !== rcp_stripe_object_get_id( $invoice, 'subscription' );
+	}
+
+	return in_array( $billing_reason, $allowed, true );
+}
+
+/**
+ * Get the charge ID belonging to a PaymentIntent.
+ *
+ * Makes one API call and never throws. An empty return tells the caller to defer to the
+ * `charge.succeeded` webhook; letting the exception escape would return HTTP 500 to Stripe,
+ * which triggers retries and eventually disables the endpoint.
+ *
+ * @since 4.0.6
+ *
+ * @param string $payment_intent_id PaymentIntent ID.
+ *
+ * @return string Charge ID, or an empty string if it could not be resolved.
+ */
+function rcp_stripe_get_payment_intent_charge_id( string $payment_intent_id ): string {
+	if ( empty( $payment_intent_id ) ) {
+		return '';
+	}
+
+	/**
+	 * Short circuits resolving a PaymentIntent's charge ID, skipping the API call.
+	 *
+	 * @since 4.0.6
+	 *
+	 * @param string|null $charge_id         Charge ID to return, or null to query the API.
+	 * @param string      $payment_intent_id The PaymentIntent being resolved.
+	 */
+	$pre = apply_filters( 'rcp_stripe_pre_get_payment_intent_charge_id', null, $payment_intent_id );
+
+	if ( null !== $pre ) {
+		return (string) $pre;
+	}
+
+	try {
+		$intent = \Stripe\PaymentIntent::retrieve( $payment_intent_id );
+	} catch ( Exception $e ) {
+		rcp_log( sprintf( 'Stripe Gateway: could not retrieve PaymentIntent %s. %s', $payment_intent_id, $e->getMessage() ), true );
+
+		return '';
+	}
+
+	return rcp_stripe_get_payment_intent_charge_id_from_object( $intent );
+}
+
+/**
+ * Extract the charge ID from a PaymentIntent object.
+ *
+ * The gateway pins Stripe API version 2020-08-27, which exposes an expanded `charges` list.
+ * `latest_charge` is read as well so this keeps working if the pinned version is raised to
+ * 2022-11-15 or later, where `charges` was removed.
+ *
+ * @since 4.0.6
+ *
+ * @param mixed $intent PaymentIntent object.
+ *
+ * @return string Charge ID, or an empty string.
+ */
+function rcp_stripe_get_payment_intent_charge_id_from_object( $intent ): string {
+	$charges = rcp_stripe_object_get( rcp_stripe_object_get( $intent, 'charges' ), 'data' );
+
+	if ( is_array( $charges ) && ! empty( $charges ) ) {
+		$charge_id = rcp_stripe_normalize_id( reset( $charges ) );
+
+		if ( '' !== $charge_id ) {
+			return $charge_id;
+		}
+	}
+
+	return rcp_stripe_object_get_id( $intent, 'latest_charge' );
+}
+
+/**
+ * Determine the transaction ID to record for a paid invoice.
+ *
+ * Stripe delivers both `charge.succeeded` and `invoice.payment_succeeded` for a single
+ * renewal and RCP processes both. The only idempotency guard is
+ * RCP_Payments::payment_exists() on the transaction ID, so this must return the same value
+ * the `charge.succeeded` handler records, which is the charge ID. `charge.refunded` also
+ * looks payments up by charge ID.
+ *
+ * @since 4.0.6
+ *
+ * @param mixed $invoice Invoice object.
+ *
+ * @return string One of:
+ *                - The charge ID, whenever the invoice has an associated charge.
+ *                - The invoice ID, when Stripe recorded neither a charge nor a PaymentIntent.
+ *                  Nothing was charged, so no `charge.succeeded` will ever fire, and this is
+ *                  the only way a credit balance or zero amount renewal gets recorded.
+ *                - An empty string, when a payment exists but its charge could not be
+ *                  resolved. The caller must do nothing and let `charge.succeeded` handle the
+ *                  renewal rather than record an ID that will not match.
+ */
+function rcp_stripe_get_invoice_transaction_id( $invoice ): string {
+	$charge_id = rcp_stripe_object_get_id( $invoice, 'charge' );
+
+	if ( '' !== $charge_id ) {
+		return $charge_id;
+	}
+
+	$intent_id = rcp_stripe_object_get_id( $invoice, 'payment_intent' );
+
+	if ( '' !== $intent_id ) {
+		// A PaymentIntent exists, so a charge exists or is about to. Never guess an ID here.
+		return rcp_stripe_get_payment_intent_charge_id( $intent_id );
+	}
+
+	return rcp_stripe_object_get_id( $invoice, 'id' );
+}
+
+/**
+ * Build the option name used for a Stripe webhook processing lock.
+ *
+ * @since 4.0.6
+ *
+ * @param string $key Lock key, usually a transaction ID.
+ *
+ * @return string
+ */
+function rcp_stripe_get_webhook_lock_name( string $key ): string {
+	return 'rcp_stripe_webhook_lock_' . md5( $key );
+}
+
+/**
+ * Attempt to acquire an exclusive lock for processing a Stripe webhook.
+ *
+ * Both webhooks for a renewal arrive at once and the caller makes an API call before
+ * inserting the payment, so without this both requests can pass the duplicate check.
+ *
+ * Uses `INSERT IGNORE` against the options table, whose `option_name` column carries a UNIQUE
+ * key, so exactly one caller can win. Raw SQL keeps the options cache from masking the
+ * result. wp_cache_add() is not a substitute: it is only atomic with a persistent object
+ * cache and silently becomes a no-op without one.
+ *
+ * @since 4.0.6
+ *
+ * @param string $key     Lock key, usually a transaction ID.
+ * @param string $token   Caller token, written as the value so only the owner can release it.
+ * @param int    $timeout Seconds after which an existing lock is considered abandoned.
+ *
+ * @return bool True if the lock was acquired.
+ */
+function rcp_stripe_acquire_webhook_lock( string $key, string $token, int $timeout = 300 ): bool {
+	global $wpdb;
+
+	if ( '' === $key || '' === $token ) {
+		return false;
+	}
+
+	$lock_name = rcp_stripe_get_webhook_lock_name( $key );
+	$value     = time() . ':' . $token;
+
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+	$wpdb->query(
+		$wpdb->prepare(
+			"INSERT IGNORE INTO `$wpdb->options` ( `option_name`, `option_value`, `autoload` ) VALUES ( %s, %s, 'no' )",
+			$lock_name,
+			$value
+		)
+	);
+
+	$inserted = (int) $wpdb->rows_affected;
+
+	if ( 1 === $inserted ) {
+		return true;
+	}
+
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+	$existing = $wpdb->get_var( $wpdb->prepare( "SELECT `option_value` FROM `$wpdb->options` WHERE `option_name` = %s LIMIT 1", $lock_name ) );
+
+	if ( null === $existing ) {
+		return false;
+	}
+
+	$started = (int) strtok( (string) $existing, ':' );
+
+	if ( ( $started + $timeout ) > time() ) {
+		return false;
+	}
+
+	/*
+	 * The holder abandoned the lock. Take it over conditionally on the value just read, so
+	 * that only one of several waiting callers succeeds.
+	 */
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+	$wpdb->query(
+		$wpdb->prepare(
+			"UPDATE `$wpdb->options` SET `option_value` = %s WHERE `option_name` = %s AND `option_value` = %s",
+			$value,
+			$lock_name,
+			$existing
+		)
+	);
+
+	$stolen = (int) $wpdb->rows_affected;
+
+	return 1 === $stolen;
+}
+
+/**
+ * Release a Stripe webhook processing lock.
+ *
+ * Scoped to the caller's token. A request that stalled past the timeout and had its lock
+ * taken over must not delete the new owner's row.
+ *
+ * @since 4.0.6
+ *
+ * @param string $key   Lock key, usually a transaction ID.
+ * @param string $token The token the lock was acquired with.
+ *
+ * @return void
+ */
+function rcp_stripe_release_webhook_lock( string $key, string $token ): void {
+	global $wpdb;
+
+	if ( '' === $key || '' === $token ) {
+		return;
+	}
+
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+	$wpdb->query(
+		$wpdb->prepare(
+			"DELETE FROM `$wpdb->options` WHERE `option_name` = %s AND `option_value` LIKE %s",
+			rcp_stripe_get_webhook_lock_name( $key ),
+			'%:' . $wpdb->esc_like( $token )
+		)
+	);
+}
+
+/**
+ * Delete Stripe webhook locks left behind by requests that never reached shutdown.
+ *
+ * A lock is released on `shutdown`, so one only survives when the process dies outright, for
+ * example on a fatal error or a hard timeout. Those rows are harmless because
+ * rcp_stripe_acquire_webhook_lock() takes over anything past its timeout, but nothing would
+ * ever remove them.
+ *
+ * @since 4.0.6
+ *
+ * @param int $max_age Seconds after which a lock is considered garbage.
+ *
+ * @return int Number of locks deleted.
+ */
+function rcp_stripe_cleanup_webhook_locks( int $max_age = DAY_IN_SECONDS ): int {
+	global $wpdb;
+
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+	$wpdb->query(
+		$wpdb->prepare(
+			"DELETE FROM `$wpdb->options`
+			 WHERE `option_name` LIKE %s
+			 AND CAST( SUBSTRING_INDEX( `option_value`, ':', 1 ) AS UNSIGNED ) < %d",
+			$wpdb->esc_like( 'rcp_stripe_webhook_lock_' ) . '%',
+			time() - $max_age
+		)
+	);
+
+	$deleted = (int) $wpdb->rows_affected;
+
+	if ( $deleted > 0 ) {
+		rcp_log( sprintf( 'Stripe webhook: cleaned up %d abandoned webhook locks.', $deleted ) );
+	}
+
+	return $deleted;
+}
+
+/**
+ * Cron callback for the webhook lock sweep.
+ *
+ * WordPress hands a callback an empty string when the action fires with no arguments, so the
+ * typed function above cannot be hooked directly.
+ *
+ * @since 4.0.6
+ *
+ * @return void
+ */
+function rcp_stripe_run_webhook_lock_cleanup(): void {
+	rcp_stripe_cleanup_webhook_locks();
+}
+
+add_action( 'rcp_stripe_cleanup_webhook_locks', 'rcp_stripe_run_webhook_lock_cleanup' );
+
+/**
+ * Read the currency code from a Stripe object.
+ *
+ * Returning an empty string leaves rcp_stripe_get_currency_multiplier() on the store
+ * currency, which is the behaviour that applied before the currency was passed through.
+ *
+ * @since 4.0.6
+ *
+ * @param mixed $source Stripe object or array.
+ *
+ * @return string Currency code, or an empty string.
+ */
+function rcp_stripe_object_get_currency( $source ): string {
+	$currency = rcp_stripe_object_get( $source, 'currency' );
+
+	return is_string( $currency ) ? $currency : '';
+}

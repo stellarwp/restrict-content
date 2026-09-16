@@ -92,7 +92,7 @@ add_action( 'wp_ajax_nopriv_rcp_calc_discount', 'rcp_calc_total_ajax' );
 /**
  * Validates the entire registration state
  *
- * @param array $args
+ * @param array $args Registration state submitted by the registration form.
  *
  * @since 3.0.6
  * @return array|bool
@@ -144,6 +144,16 @@ function rcp_validate_registration_state( $args = array() ) {
 	);
 
 	rcp_setup_registration( $return['level_id'], $return['discount_code'] );
+
+	/*
+	 * The request carries `level_has_trial`, but the form cannot determine it reliably, so derive
+	 * it and the customer's eligibility here instead.
+	 */
+	$trial_level    = rcp_get_membership_level( $return['level_id'] );
+	$trial_customer = rcp_get_customer();
+
+	$return['level_has_trial'] = $trial_level instanceof \RCP\Membership_Level && $trial_level->has_trial();
+	$return['trial_eligible']  = empty( $trial_customer ) || ! $trial_customer->has_trialed();
 
 	/**
 	 * 100% discount
@@ -209,11 +219,6 @@ function rcp_validate_registration_state( $args = array() ) {
 	 * Free trial
 	 * Force auto renew on and disable option if this is a free trial.
 	 */
-	$customer = rcp_get_customer(); // current customer
-	if ( $customer && $customer->has_trialed() ) {
-		$return['trial_eligible'] = false;
-	}
-
 	if ( $return['level_has_trial'] && $return['trial_eligible'] ) {
 		$return['recurring'] = rcp_gateway_supports( $return['gateway'], 'trial' );
 	}

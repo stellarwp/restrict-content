@@ -1038,6 +1038,19 @@ function rcp_registration_is_recurring() {
 		$auto_renew = false;
 	}
 
+	/*
+	 * A trial on a paid level has nothing to charge today, so without a subscription the membership
+	 * expires when the trial ends. Force auto renew on whenever the gateway can carry the trial
+	 * itself, instead of relying on the auto renew checkbox.
+	 */
+	if ( ! $auto_renew && '2' != rcp_get_auto_renew_behavior() && rcp_get_registration_recurring_total() > 0 && rcp_get_registration()->is_trial() ) {
+		$gateway = ! empty( $_POST['rcp_gateway'] ) ? sanitize_text_field( wp_unslash( $_POST['rcp_gateway'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+
+		$auto_renew = ! empty( $gateway )
+			&& rcp_gateway_supports( $gateway, 'trial' )
+			&& rcp_gateway_supports( $gateway, 'recurring' );
+	}
+
 	return apply_filters( 'rcp_registration_is_recurring', $auto_renew );
 
 }
@@ -1774,7 +1787,17 @@ function rcp_complete_registration( $payment_id ) {
 
 	rcp_log( sprintf( 'Completing registration for customer #%d via payment #%d.', $customer->get_id(), $pending_payment_id ) );
 
-	if ( ! empty( $payment->transaction_type ) && 'renewal' != $payment->transaction_type ) {
+	/*
+	 * renew() does not fire `rcp_membership_post_activate`, so a membership reaching its first
+	 * term under a payment labelled `renewal` would lose its activation email. times_billed is
+	 * still the pre-payment count here. The is_active() test keeps an already running membership
+	 * on renew(), which is the only branch that extends the expiration.
+	 */
+	$never_activated = empty( $membership->get_activated_date() )
+		&& 0 === $membership->get_times_billed()
+		&& ! $membership->is_active();
+
+	if ( $never_activated || ( ! empty( $payment->transaction_type ) && 'renewal' != $payment->transaction_type ) ) {
 		// If this is a brand new membership, activate it.
 		$membership->activate();
 	} else {

@@ -22,6 +22,9 @@
  * Daily: Check and update member counts
  * @see rcp_check_member_counts()
  *
+ * Daily: Delete abandoned Stripe webhook locks
+ * @see rcp_stripe_cleanup_webhook_locks()
+ *
  * @return void
  */
 function rcp_setup_cron_jobs() {
@@ -40,6 +43,10 @@ function rcp_setup_cron_jobs() {
 
 	if ( ! wp_next_scheduled( 'rcp_mark_abandoned_payments' ) ) {
 		wp_schedule_event( current_time( 'timestamp' ), 'daily', 'rcp_mark_abandoned_payments' );
+	}
+
+	if ( ! wp_next_scheduled( 'rcp_stripe_cleanup_webhook_locks' ) ) {
+		wp_schedule_event( current_time( 'timestamp' ), 'daily', 'rcp_stripe_cleanup_webhook_locks' );
 	}
 }
 add_action('wp', 'rcp_setup_cron_jobs');

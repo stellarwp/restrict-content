@@ -117,7 +117,7 @@ function rcp_currency_filter( $price ) {
 /**
  * Return the symbol for a specific currency
  *
- * @param bool $currency
+ * @param bool|string $currency Currency code. Default false.
  *
  * @since 2.9.5
  * @return string
@@ -1162,7 +1162,7 @@ function rcp_is_valid_membership_currency( $currency_code, $membership ) {
 /**
  * Determines if RCP is using a zero-decimal currency.
  *
- * @param  string $currency
+ * @param  string $currency Currency code. Defaults to the store currency.
  *
  * @access public
  * @since  2.5
@@ -1170,9 +1170,8 @@ function rcp_is_valid_membership_currency( $currency_code, $membership ) {
  */
 function rcp_is_zero_decimal_currency( $currency = '' ) {
 
-	if ( ! $currency ) {
-		$currency = strtoupper( rcp_get_currency() );
-	}
+	// Gateways report currency codes in lowercase, so normalize before comparing.
+	$currency = $currency ? strtoupper( $currency ) : strtoupper( rcp_get_currency() );
 
 	$zero_dec_currencies = array(
 		'BIF',
