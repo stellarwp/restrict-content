@@ -5,8 +5,8 @@ Contributors: nexcess, reedyseth, highprrrr
 Tags: restrict pages, restrict posts, restrict access, membership, registration form, access control
 Requires at least: 6.0
 Requires PHP: 7.4
-Tested up to: 6.9
-Stable tag: 4.0.3
+Tested up to: 7.1
+Stable tag: 4.0.4
 
 Kadence Memberships is a powerful WordPress membership plugin that gives you full control over who can and cannot view content on your WordPress site.
 
@@ -256,6 +256,11 @@ Go to the demo page to see examples:
 https://restrictcontentpro.com/tour/screenshots/
 
 == Changelog ==
+
+= 4.0.4 =
+* Fix: Further reduced database load from the Hide Restricted Posts filtering on REST API and query requests.
+* Fix: Activation and test emails no longer fail to send when an email template field was left blank.
+* Fix: Prevented gateway labels from being translated before the plugin's translations were ready, which could trigger a PHP notice.
 
 = 4.0.3 =
 * Fix: Stripe subscription renewals now record a renewal payment and extend the membership expiration.

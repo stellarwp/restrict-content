@@ -1653,68 +1653,29 @@ function rcp_process_send_test_email() {
 	$message = '';
 
 	$email_type = sanitize_text_field( wp_unslash( $_GET['email'] ) );
-	switch ( $email_type ) {
-		case 'active':
-			$subject = $rcp_options['active_subject'];
-			$message = $rcp_options['active_email'];
-			break;
-		case 'active_admin':
-			$subject = $rcp_options['active_subject_admin'];
-			$message = $rcp_options['active_email_admin'];
-			break;
-		case 'cancelled':
-			$subject = $rcp_options['cancelled_subject'];
-			$message = $rcp_options['cancelled_email'];
-			break;
-		case 'cancelled_admin':
-			$subject = $rcp_options['cancelled_subject_admin'];
-			$message = $rcp_options['cancelled_email_admin'];
-			break;
-		case 'expired':
-			$subject = $rcp_options['expired_subject'];
-			$message = $rcp_options['expired_email'];
-			break;
-		case 'expired_admin':
-			$subject = $rcp_options['expired_subject_admin'];
-			$message = $rcp_options['expired_email_admin'];
-			break;
-		case 'free':
-			$subject = $rcp_options['free_subject'];
-			$message = $rcp_options['free_email'];
-			break;
-		case 'free_admin':
-			$subject = $rcp_options['free_subject_admin'];
-			$message = $rcp_options['free_email_admin'];
-			break;
-		case 'trial':
-			$subject = $rcp_options['trial_subject'];
-			$message = $rcp_options['trial_email'];
-			break;
-		case 'trial_admin':
-			$subject = $rcp_options['trial_subject_admin'];
-			$message = $rcp_options['trial_email_admin'];
-			break;
-		case 'payment_received':
-			$subject = $rcp_options['payment_received_subject'];
-			$message = $rcp_options['payment_received_email'];
-			break;
-		case 'payment_received_admin':
-			$subject = $rcp_options['payment_received_subject_admin'];
-			$message = $rcp_options['payment_received_email_admin'];
-			break;
-		case 'renewal_payment_failed':
-			$subject = $rcp_options['renewal_payment_failed_subject'];
-			$message = $rcp_options['renewal_payment_failed_email'];
-			break;
-		case 'renewal_payment_failed_admin':
-			$subject = $rcp_options['renewal_payment_failed_subject_admin'];
-			$message = $rcp_options['renewal_payment_failed_email_admin'];
-			break;
+
+	$allowed_templates = array(
+		'active',
+		'cancelled',
+		'expired',
+		'free',
+		'trial',
+		'payment_received',
+		'renewal_payment_failed',
+	);
+
+	$is_admin_email = '_admin' === substr( $email_type, -6 );
+	$base_template  = $is_admin_email ? substr( $email_type, 0, -6 ) : $email_type;
+	$suffix         = $is_admin_email ? '_admin' : '';
+
+	if ( in_array( $base_template, $allowed_templates, true ) ) {
+		$subject = isset( $rcp_options[ $base_template . '_subject' . $suffix ] ) ? $rcp_options[ $base_template . '_subject' . $suffix ] : '';
+		$message = isset( $rcp_options[ $base_template . '_email' . $suffix ] ) ? $rcp_options[ $base_template . '_email' . $suffix ] : '';
 	}
 
 	if ( empty( $subject ) || empty( $message ) ) {
-		// translators: %s: Error message.
-		wp_die( esc_html__( 'Test email not sent: email subject or message is blank.', 'rcp' ), esc_html__( 'Error', 'rcp' ), array( 'response' => 400 ) );
+		wp_safe_redirect( admin_url( 'admin.php?page=rcp-settings&rcp_message=test_email_blank#emails' ) );
+		exit;
 	}
 
 	$emails            = new RCP_Emails();
