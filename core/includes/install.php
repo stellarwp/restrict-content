@@ -54,10 +54,8 @@ function rcp_options_install( $network_wide = false ) {
 		update_option( 'rcp_reminder_notices', $notices );
 	}
 
-	// Insert default email templates.
-	if ( empty( $rcp_options ) ) {
-		$rcp_options = rcp_create_default_email_templates();
-	}
+	// Insert default email templates, filling in any that are missing.
+	$rcp_options = rcp_fill_missing_email_templates( $rcp_options );
 
 	// Hide premium content by default.
 	$rcp_options = wp_parse_args(
@@ -421,9 +419,24 @@ function rcp_create_default_email_templates() {
 	$templates['payment_received_subject'] = sprintf( __( 'Your %s payment has been received', 'rcp' ), $site_name );
 	$payment_received_email                = __( 'Hi %displayname%,', 'rcp' ) . "\n\n";
 	$payment_received_email               .= sprintf( __( 'Your %s payment has been received.', 'rcp' ), '%subscription_name%' ) . "\n\n";
-	$payment_received_email               .= sprintf( __( 'Payment Amount: ', 'rcp' ), '%amount%' ) . "\n\n";
-	$payment_received_email               .= sprintf( __( 'Invoice: ', 'rcp' ), '%invoice_url%' );
+	// translators: %s: The amount template tag.
+	$payment_received_email               .= sprintf( __( 'Payment amount: %s', 'rcp' ), '%amount%' ) . "\n\n";
+	// translators: %s: The invoice URL template tag.
+	$payment_received_email               .= sprintf( __( 'Invoice: %s', 'rcp' ), '%invoice_url%' );
 	$templates['payment_received_email']   = $payment_received_email;
+
+	// Payment Received Email (admin).
+	// translators: %s: The site name.
+	$templates['payment_received_subject_admin'] = sprintf( __( 'New payment on %s', 'rcp' ), $site_name );
+	$payment_received_admin_email                = __( 'Hello', 'rcp' ) . "\n\n";
+	// translators: %1$s: The display name template tag, %2$s: The username template tag.
+	$payment_received_admin_email               .= sprintf( __( 'A payment has been received from %1$s (%2$s).', 'rcp' ), '%displayname%', '%username%' ) . "\n\n";
+	// translators: %s: The membership level template tag.
+	$payment_received_admin_email               .= sprintf( __( 'Membership level: %s', 'rcp' ), '%subscription_name%' ) . "\n\n";
+	// translators: %s: The amount template tag.
+	$payment_received_admin_email               .= sprintf( __( 'Payment amount: %s', 'rcp' ), '%amount%' ) . "\n\n";
+	$payment_received_admin_email               .= __( 'Thank you', 'rcp' );
+	$templates['payment_received_email_admin']   = $payment_received_admin_email;
 
 	// Renewal Payment Failed Email (member)
 	$templates['renewal_payment_failed_subject'] = sprintf( __( 'Your %s payment could not be processed', 'rcp' ), $site_name );
@@ -440,6 +453,31 @@ function rcp_create_default_email_templates() {
 	$templates['renewal_payment_failed_email_admin']   = $renewal_payment_failed_admin_email;
 
 	return $templates;
+
+}
+
+/**
+ * Fill in any email templates that are missing or blank with their defaults.
+ *
+ * Sites that already had settings when a default template was introduced never received it, which leaves
+ * the email body empty and stops that email from ever being sent.
+ *
+ * @since 4.0.7
+ *
+ * @param array<string, mixed> $rcp_options Current settings.
+ *
+ * @return array<string, mixed> Settings with the missing templates filled in.
+ */
+function rcp_fill_missing_email_templates( $rcp_options ) {
+
+	foreach ( rcp_create_default_email_templates() as $key => $default ) {
+		// Blank means unset or an empty string. Anything the site stored, "0" included, is its own.
+		if ( ! isset( $rcp_options[ $key ] ) || '' === $rcp_options[ $key ] ) {
+			$rcp_options[ $key ] = $default;
+		}
+	}
+
+	return $rcp_options;
 
 }
 

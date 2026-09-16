@@ -9,6 +9,12 @@
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       2.6
  */
+
+/**
+ * RCP_Upgrades class
+ *
+ * @since 2.6
+ */
 class RCP_Upgrades {
 
 	private $version = '';
@@ -47,6 +53,7 @@ class RCP_Upgrades {
 		$this->v31_upgrades();
 		$this->v32_upgrades();
 		$this->v35_upgrades();
+		$this->email_template_upgrades();
 
 		// If upgrades have occurred or the DB version is different from the version constant
 		if ( $this->upgraded || $this->version <> RCP_PLUGIN_VERSION ) {
@@ -326,6 +333,40 @@ class RCP_Upgrades {
 
 			update_option( 'rcp_settings', $rcp_options );
 		}
+	}
+
+	/**
+	 * Restore email templates left blank by earlier installs.
+	 *
+	 * Not version gated: affected sites are on current versions, they simply never received the
+	 * templates, so there is no version to compare against. The option records that it has run.
+	 *
+	 * @access private
+	 * @return void
+	 */
+	private function email_template_upgrades() {
+
+		if ( get_option( 'rcp_email_templates_backfilled' ) ) {
+			return;
+		}
+
+		global $rcp_options;
+
+		$rcp_options = (array) $rcp_options;
+		$filled      = rcp_fill_missing_email_templates( $rcp_options );
+
+		if ( $filled !== $rcp_options ) {
+			rcp_log( 'Filling in missing email templates.', true );
+
+			$rcp_options    = $filled;
+			$this->upgraded = update_option( 'rcp_settings', $rcp_options );
+
+			if ( ! $this->upgraded ) {
+				return;
+			}
+		}
+
+		update_option( 'rcp_email_templates_backfilled', 1 );
 	}
 
 }

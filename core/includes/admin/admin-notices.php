@@ -486,6 +486,11 @@ function rcp_admin_notices() {
 				$text  = __( 'Test email failed to send.', 'rcp' );
 				$class = 'error';
 				break;
+
+			case 'test_email_blank':
+				$text  = __( 'Test email not sent: the subject or message is blank.', 'rcp' );
+				$class = 'error';
+				break;
 		}
 
 		if( $message ) {
