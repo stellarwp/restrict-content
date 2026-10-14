@@ -108,7 +108,14 @@ function rcp_save_post_type_restrictions() {
 
 				case 'specific' :
 
-					$levels = array_map( 'absint', $_POST['rcp_subscription_level'] );
+					// No checkboxes ticked means the key is absent from $_POST. Fall back to "any" so the content stays restricted.
+					$levels = ! empty( $_POST['rcp_subscription_level'] ) ? array_map( 'absint', (array) $_POST['rcp_subscription_level'] ) : array();
+
+					if ( empty( $levels ) ) {
+						$this_post_type_restrictions['subscription_level'] = 'any';
+
+						break;
+					}
 
 					foreach ( $levels as $level_id ) {
 
