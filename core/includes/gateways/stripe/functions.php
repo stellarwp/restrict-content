@@ -182,6 +182,7 @@ add_action( 'rcp_before_update_billing_card_form', 'rcp_stripe_update_card_form_
  * @param RCP_Membership $membership Membership object.
  *
  * @since 3.0
+ * @since 4.0.9 Exits after redirecting so the request ends once the card is updated.
  * @return void
  */
 function rcp_stripe_update_membership_billing_card( $membership ) {
@@ -376,7 +377,7 @@ function rcp_stripe_update_membership_billing_card( $membership ) {
 	}
 
 	wp_redirect( add_query_arg( 'card', 'updated' ) );
-	return;
+	exit;
 }
 add_action( 'rcp_update_membership_billing_card', 'rcp_stripe_update_membership_billing_card' );
 

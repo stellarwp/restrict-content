@@ -149,9 +149,16 @@ function rcp_save_meta_data( $post_id ) {
 
 				case 'specific' :
 
-					$is_paid = true;
+					// No checkboxes ticked means the key is absent from $_POST. Fall back to "any" so the content stays restricted.
+					$levels = ! empty( $_POST['rcp_subscription_level'] ) ? array_map( 'absint', (array) $_POST['rcp_subscription_level'] ) : array();
 
-					$levels = array_map( 'absint', $_POST[ 'rcp_subscription_level' ] );
+					if ( empty( $levels ) ) {
+						update_post_meta( $post_id, 'rcp_subscription_level', 'any' );
+
+						break;
+					}
+
+					$is_paid = true;
 
 					foreach( $levels as $level ) {
 
