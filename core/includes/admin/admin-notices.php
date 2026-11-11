@@ -11,6 +11,9 @@
 /**
  * Display admin notices
  *
+ * @since 1.5
+ * @since 4.0.10 Updated the database upgrade notice.
+ *
  * @return void
  */
 function rcp_admin_notices() {
@@ -27,11 +30,7 @@ function rcp_admin_notices() {
 		}
 
 		if ( rcp_check_if_upgrade_needed() ) {
-			echo '<div class="error"><p>' . esc_html__( 'The Kadence Memberships Pro database needs to be updated: ', 'rcp' ) . ' <a href="' . esc_url( add_query_arg( 'rcp-action', 'upgrade', admin_url() ) ) . '">' . esc_html__( 'upgrade now', 'rcp' ) . '</a></p></div>';
-		}
-
-		if ( isset( $_GET['rcp-db'] ) && $_GET['rcp-db'] == 'updated' ) {
-			echo '<div class="updated fade"><p>' . esc_html__( 'The Kadence Memberships Pro database has been updated', 'rcp' ) . '</p></div>';
+			echo '<div class="error"><p>' . esc_html__( 'The Kadence Memberships Pro database needs to be updated: ', 'rcp' ) . ' <a href="' . esc_url( wp_nonce_url( add_query_arg( 'rcp-action', 'upgrade', admin_url() ), 'rcp_upgrade' ) ) . '">' . esc_html__( 'upgrade now', 'rcp' ) . '</a></p></div>';
 		}
 
 		if ( false !== get_transient( 'rcp_login_redirect_invalid' ) ) {

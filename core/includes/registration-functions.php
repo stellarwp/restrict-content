@@ -24,6 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @access public
  * @since  1.0
+ * @since  4.0.10 Validates the membership level on renewals.
  * @return void
  */
 function rcp_process_registration() {
@@ -120,6 +121,13 @@ function rcp_process_registration() {
 	// If the membership level is inactive and the registration type is not renewal, upgrade, or downgrade, show an error.
 	if ( ! $can_process_registration_to_inactive_levels && 'active' !== $membership_level->get_status() ) {
 		rcp_errors()->add( 'inactive_level', __( 'Invalid membership level selected', 'rcp' ), 'register' );
+	}
+
+	// A renewal must use the membership's own level.
+	$renewal_membership = isset( $recovered_payment->membership_id ) ? rcp_get_membership( absint( $recovered_payment->membership_id ) ) : rcp_get_registration()->get_membership();
+
+	if ( 'renewal' === $registration_type && $renewal_membership instanceof RCP_Membership && absint( $renewal_membership->get_object_id() ) !== absint( $membership_level->get_id() ) ) {
+		rcp_errors()->add( 'invalid_level', __( 'Invalid membership level selected', 'rcp' ), 'register' );
 	}
 
 	if ( $membership_level->is_free() && ! $membership_level->is_lifetime() && $has_trialed ) {
@@ -546,6 +554,7 @@ add_action( 'wp_ajax_nopriv_rcp_generate_registration_nonce', 'rcp_generate_regi
  * Send registration payment to the gateway for processing.
  *
  * @since 3.2
+ * @since 4.0.10 Validates the payment before sending it to the gateway.
  * @return void
  */
 function rcp_send_registration_to_gateway() {
@@ -574,6 +583,12 @@ function rcp_send_registration_to_gateway() {
 	$payment = $rcp_payments_db->get_payment( absint( sanitize_text_field( wp_unslash( $_POST['rcp_registration_payment_id'] ) ) ) );
 
 	if ( empty( $payment ) ) {
+		rcp_errors()->add( 'invalid_payment', __( 'Invalid payment. Please try again.', 'rcp' ), 'register' );
+
+		return;
+	}
+
+	if ( ! isset( $payment->user_id, $payment->object_id ) || absint( $payment->user_id ) !== get_current_user_id() || absint( $payment->object_id ) !== absint( rcp_get_registration()->get_membership_level_id() ) ) {
 		rcp_errors()->add( 'invalid_payment', __( 'Invalid payment. Please try again.', 'rcp' ), 'register' );
 
 		return;
