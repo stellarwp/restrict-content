@@ -936,6 +936,7 @@ add_action( 'wp_ajax_rcp_stripe_generate_payment_nonce', 'rcp_stripe_generate_pa
  * ID from the posted membership_id and attach that to the payment intent.
  *
  * @since 3.2
+ * @since 4.0.10 Rejects a membership that doesn't belong to the current user.
  * @return void
  */
 function rcp_stripe_create_setup_intent_for_saved_card() {
@@ -964,6 +965,10 @@ function rcp_stripe_create_setup_intent_for_saved_card() {
 
 	if ( empty( $membership ) ) {
 		wp_send_json_error( __( 'Missing membership ID.', 'rcp' ) );
+	}
+
+	if ( $membership->get_user_id() !== get_current_user_id() ) {
+		wp_send_json_error( __( 'You are not authorized to perform this action.', 'rcp' ) );
 	}
 
 	$subscription_id = $membership->get_gateway_subscription_id();
