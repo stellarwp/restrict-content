@@ -60,7 +60,13 @@ class RCP_WP_Approve_User {
 	 * @return  bool
 	 */
 	private function is_pending( $user_id = 0 ) {
-		return (bool) is_user_logged_in() && ! get_user_meta( $user_id, 'wp-approve-user', true ) && ! user_can( $user_id, 'edit_pages' );
+		if ( ! is_user_logged_in() || user_can( $user_id, 'edit_pages' ) ) {
+			return false;
+		}
+
+		$status = get_user_meta( $user_id, 'wp-approve-user', true );
+
+		return 'approved' !== $status && true !== $status && '1' !== $status;
 	}
 
 	/**
