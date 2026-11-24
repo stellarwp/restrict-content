@@ -9,6 +9,10 @@
  */
 
 use RCP\Membership_Level;
+use Stripe\Charge;
+use Stripe\Event;
+use Stripe\Invoice;
+use Stripe\Stripe;
 
 /**
  * Generate an idempotency key.
@@ -1536,6 +1540,283 @@ function rcp_stripe_get_invoice_transaction_id( $invoice ): string {
 
 	return rcp_stripe_object_get_id( $invoice, 'id' );
 }
+
+/**
+ * Replace a webhook event's invoice or charge with a copy in the gateway's pinned API version.
+ *
+ * Stripe renders `data.object` in the event's API version, not the version the gateway pins.
+ * From 2025-06-30.basil, invoices no longer carry `subscription`, `charge` or `payment_intent`,
+ * and charges no longer carry `invoice`. The object is replaced in place, so hooks that receive
+ * the event see the same shape as the webhook handler.
+ *
+ * Throws on API errors so the webhook answers 500 and Stripe retries the event.
+ *
+ * @since 4.0.11
+ *
+ * @param Event $event Webhook event.
+ *
+ * @return void
+ */
+function rcp_stripe_pin_event_object_version( $event ): void {
+	if ( rcp_stripe_object_get( $event, 'api_version' ) === Stripe::getApiVersion() ) {
+		return;
+	}
+
+	$object = rcp_stripe_object_get( rcp_stripe_object_get( $event, 'data' ), 'object' );
+	$id     = rcp_stripe_object_get_id( $object, 'id' );
+
+	// A payload without an ID cannot be fetched, and retrying would not change that.
+	if ( '' === $id ) {
+		return;
+	}
+
+	switch ( rcp_stripe_object_get( $object, 'object' ) ) {
+		case 'invoice':
+			$event->data['object'] = Invoice::retrieve( $id );
+			break;
+		case 'charge':
+			$event->data['object'] = Charge::retrieve( $id );
+			break;
+	}
+}
+
+/**
+ * Get the paid Stripe payments that the webhook could not record.
+ *
+ * @since 4.0.11
+ *
+ * @return array<string, array{reason: string, customer: string, amount: float, currency: string, created: int, livemode: bool, event_id: string}> Entries keyed by Stripe invoice or charge ID, oldest first.
+ */
+function rcp_stripe_get_unrecorded_payments(): array {
+	$payments = get_option( 'rcp_stripe_unrecorded_payments', array() );
+
+	if ( ! is_array( $payments ) ) {
+		return array();
+	}
+
+	/**
+	 * Written by rcp_stripe_flag_unrecorded_payment().
+	 *
+	 * @var array<string, array{reason: string, customer: string, amount: float, currency: string, created: int, livemode: bool, event_id: string}> $payments
+	 */
+	return $payments;
+}
+
+/**
+ * Remember a paid Stripe payment that the webhook could not record, so an admin notice shows it.
+ *
+ * The webhook still answers 200. A 5xx would have Stripe redeliver events this site can never
+ * match, which on an account shared with other plugins is every charge they take. For the same
+ * reason a payment is only remembered when its Stripe customer already has a membership here.
+ * A renewal arrives as an invoice and as a charge, and both share one entry keyed by the invoice ID.
+ * Payments of zero, such as a trial invoice, are left out because nothing was charged.
+ *
+ * @since 4.0.11
+ *
+ * @param Event  $event         Webhook event.
+ * @param mixed  $payment_event Invoice or charge from the event, in the pinned API version.
+ * @param string $reason        Why it was not recorded: `membership_not_found` or `charge_unresolved`.
+ *
+ * @return void
+ */
+function rcp_stripe_flag_unrecorded_payment( $event, $payment_event, string $reason ): void {
+	if ( ! in_array( rcp_stripe_object_get( $event, 'type' ), array( 'charge.succeeded', 'invoice.payment_succeeded' ), true ) ) {
+		return;
+	}
+
+	$is_invoice  = 'invoice' === rcp_stripe_object_get( $payment_event, 'object' );
+	$customer_id = rcp_stripe_object_get_id( $payment_event, 'customer' );
+	$key         = $is_invoice ? '' : rcp_stripe_object_get_id( $payment_event, 'invoice' );
+
+	if ( '' === $key ) {
+		$key = rcp_stripe_object_get_id( $payment_event, 'id' );
+	}
+
+	if ( '' === $customer_id || '' === $key ) {
+		return;
+	}
+
+	$amount = rcp_stripe_object_get_amount( $payment_event, $is_invoice ? 'amount_paid' : 'amount' );
+
+	// A trial or a full discount paid nothing, so there is no payment to record.
+	if ( $amount <= 0 ) {
+		return;
+	}
+
+	if ( 'membership_not_found' === $reason && ! rcp_get_membership_by( 'gateway_customer_id', $customer_id ) ) {
+		return;
+	}
+
+	$currency = rcp_stripe_object_get_currency( $payment_event );
+	$payments = rcp_stripe_get_unrecorded_payments();
+
+	// Adding it again moves it to the newest position.
+	unset( $payments[ $key ] );
+
+	$payments[ $key ] = array(
+		'reason'   => $reason,
+		'customer' => $customer_id,
+		'amount'   => $amount / rcp_stripe_get_currency_multiplier( $currency ),
+		'currency' => strtoupper( $currency ),
+		'created'  => absint( rcp_stripe_object_get( $event, 'created' ) ),
+		'livemode' => (bool) rcp_stripe_object_get( $event, 'livemode' ),
+		'event_id' => rcp_stripe_object_get_id( $event, 'id' ),
+	);
+
+	// Keep the newest 20, so a misconfigured endpoint cannot grow the option without limit.
+	update_option( 'rcp_stripe_unrecorded_payments', array_slice( $payments, -20, null, true ), false );
+}
+
+/**
+ * Forget unrecorded Stripe payments once they have been recorded.
+ *
+ * @since 4.0.11
+ *
+ * @param string[] $ids Stripe invoice and charge IDs.
+ *
+ * @return void
+ */
+function rcp_stripe_clear_unrecorded_payments( array $ids ): void {
+	$payments  = rcp_stripe_get_unrecorded_payments();
+	$remaining = array_diff_key( $payments, array_flip( array_filter( $ids ) ) );
+
+	if ( count( $remaining ) === count( $payments ) ) {
+		return;
+	}
+
+	if ( ! $remaining ) {
+		delete_option( 'rcp_stripe_unrecorded_payments' );
+		return;
+	}
+
+	update_option( 'rcp_stripe_unrecorded_payments', $remaining, false );
+}
+
+/**
+ * Print a list of paid Stripe payments that the webhook could not record.
+ *
+ * @since 4.0.11
+ *
+ * @param array<string, array{reason: string, customer: string, amount: float, currency: string, created: int, livemode: bool, event_id: string}> $payments Entries to list, keyed by Stripe invoice or charge ID.
+ *
+ * @return void
+ */
+function rcp_stripe_unrecorded_payments_list( array $payments ): void {
+	$reasons = array(
+		'membership_not_found' => __( 'no membership found', 'rcp' ),
+		'charge_unresolved'    => __( 'charge not found', 'rcp' ),
+	);
+
+	$date_format = get_option( 'date_format' );
+	$date_format = is_string( $date_format ) ? $date_format : 'F j, Y';
+	?>
+	<ul>
+		<?php foreach ( $payments as $id => $payment ) : ?>
+			<?php
+			$id     = (string) $id;
+			$url    = 'https://dashboard.stripe.com/' . ( $payment['livemode'] ? '' : 'test/' ) . ( 0 === strpos( $id, 'in_' ) ? 'invoices/' : 'payments/' ) . rawurlencode( $id );
+			$amount = number_format_i18n( $payment['amount'], 2 ) . ' ' . $payment['currency'];
+			?>
+			<li>
+				<a href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html( $id ); ?></a>
+				<?php
+				echo esc_html(
+					sprintf(
+						// translators: 1: amount and currency, 2: date, 3: Stripe customer ID, 4: why it was not recorded.
+						__( '%1$s on %2$s, customer %3$s (%4$s)', 'rcp' ),
+						trim( $amount ),
+						wp_date( $date_format, $payment['created'] ),
+						$payment['customer'],
+						$reasons[ $payment['reason'] ] ?? ''
+					)
+				);
+				?>
+			</li>
+		<?php endforeach; ?>
+	</ul>
+	<?php
+}
+
+/**
+ * Show an admin notice for paid Stripe payments that the webhook could not record.
+ *
+ * The newest five stay in view and the rest sit behind a collapsible, so dismissing the
+ * notice never clears a payment the admin had no way to see.
+ *
+ * @since 4.0.11
+ *
+ * @return void
+ */
+function rcp_stripe_unrecorded_payments_notice(): void {
+	if ( ! current_user_can( 'rcp_manage_settings' ) ) {
+		return;
+	}
+
+	$payments = rcp_stripe_get_unrecorded_payments();
+
+	if ( ! $payments ) {
+		return;
+	}
+
+	$newest      = array_reverse( $payments, true );
+	$in_view     = array_slice( $newest, 0, 5, true );
+	$folded      = array_slice( $newest, 5, null, true );
+	$total       = count( $payments );
+	$dismiss_url = wp_nonce_url( add_query_arg( array( 'rcp_notice' => 'stripe_unrecorded_payments' ) ), 'rcp_dismiss_notice', 'rcp_dismiss_notice_nonce' );
+	?>
+	<div class="notice notice-error">
+		<p>
+			<strong>
+				<?php
+				echo esc_html(
+					sprintf(
+						// translators: %d is the number of payments.
+						_n( 'Kadence Memberships Pro could not record %d Stripe payment.', 'Kadence Memberships Pro could not record %d Stripe payments.', $total, 'rcp' ),
+						$total
+					)
+				);
+				?>
+			</strong>
+			<?php esc_html_e( 'The customer was charged, but no renewal was added to their membership. Open the payment in Stripe, then add it to the right membership.', 'rcp' ); ?>
+		</p>
+		<?php rcp_stripe_unrecorded_payments_list( $in_view ); ?>
+		<?php if ( $folded ) : ?>
+			<details>
+				<summary>
+					<?php
+					echo esc_html(
+						sprintf(
+							// translators: %d is the number of payments behind the collapsible.
+							_n( 'Show %d more payment', 'Show %d more payments', count( $folded ), 'rcp' ),
+							count( $folded )
+						)
+					);
+					?>
+				</summary>
+				<?php rcp_stripe_unrecorded_payments_list( $folded ); ?>
+			</details>
+		<?php endif; ?>
+		<p><a href="<?php echo esc_url( $dismiss_url ); ?>"><?php esc_html_e( 'Dismiss Notice', 'rcp' ); ?></a></p>
+	</div>
+	<?php
+}
+add_action( 'admin_notices', 'rcp_stripe_unrecorded_payments_notice' );
+
+/**
+ * Clear the unrecorded payments when an admin dismisses their notice.
+ *
+ * @since 4.0.11
+ *
+ * @param string $notice Slug of the dismissed notice.
+ *
+ * @return void
+ */
+function rcp_stripe_dismiss_unrecorded_payments_notice( $notice ): void {
+	if ( 'stripe_unrecorded_payments' === $notice && current_user_can( 'rcp_manage_settings' ) ) {
+		delete_option( 'rcp_stripe_unrecorded_payments' );
+	}
+}
+add_action( 'rcp_dismiss_notices', 'rcp_stripe_dismiss_unrecorded_payments_notice' );
 
 /**
  * Build the option name used for a Stripe webhook processing lock.

@@ -1,12 +1,6 @@
 <?php
-
-use RCP\Membership_Level;
-
 /**
- * RCP Payments class
- *
- * This class handles querying, inserting, updating, and removing payments
- * Also handles calculating earnings
+ * Payments
  *
  * @package     Kadence Memberships Pro
  * @subpackage  Classes/Payments
@@ -15,6 +9,14 @@ use RCP\Membership_Level;
  * @since       1.5
  */
 
+use RCP\Membership_Level;
+
+/**
+ * RCP Payments class
+ *
+ * This class handles querying, inserting, updating, and removing payments
+ * Also handles calculating earnings
+ */
 class RCP_Payments {
 
 	/**
@@ -61,6 +63,7 @@ class RCP_Payments {
 	 * @access  public
 	 * @param   array $payment_data Array All of the payment data, such as amount, date, user ID, etc
 	 * @since   1.5
+	 * @since   4.0.11 A renewal only takes over the pending payment of the same, never-activated membership.
 	 * @return  int|false ID of the newly created payment, or false on failure.
 	 */
 	public function insert( $payment_data = array() ) {
@@ -117,6 +120,10 @@ class RCP_Payments {
 		if ( ! empty( $args['user_id'] ) && 'complete' == $args['status'] ) {
 			$last_pending_payment = get_user_meta( $args['user_id'], 'rcp_pending_payment_id', true );
 			$pending_payment      = ! empty( $last_pending_payment ) ? $this->get_payment( $last_pending_payment ) : false;
+
+			if ( $pending_payment && 'renewal' === $args['transaction_type'] && ! $this->renewal_can_complete_pending_payment( $pending_payment, absint( $args['membership_id'] ) ) ) {
+				$pending_payment = false;
+			}
 
 			if ( ! empty( $pending_payment ) && $args['amount'] == $pending_payment->amount && $args['subscription'] == $pending_payment->subscription ) {
 				$this->update( $pending_payment->id, $args );
@@ -1236,4 +1243,30 @@ class RCP_Payments {
 		return delete_metadata( 'rcp_payment', $payment_id, $meta_key, $meta_value );
 	}
 
+	/**
+	 * Determines whether a renewal may complete the user's pending payment instead of being inserted.
+	 *
+	 * Only the pending payment of the same membership qualifies, and only while that membership was
+	 * never activated, such as an admin recording a manual signup payment. Any other pending payment
+	 * is left over from another checkout, and completing it would activate or renew the wrong way.
+	 *
+	 * @since 4.0.11
+	 *
+	 * @param object $pending_payment The user's pending payment.
+	 * @param int    $membership_id   ID of the membership being renewed.
+	 *
+	 * @return bool True if the pending payment should be completed instead.
+	 */
+	private function renewal_can_complete_pending_payment( object $pending_payment, int $membership_id ): bool {
+
+		if ( ! isset( $pending_payment->membership_id ) || absint( $pending_payment->membership_id ) !== $membership_id ) {
+			return false;
+		}
+
+		$membership = rcp_get_membership( absint( $pending_payment->membership_id ) );
+
+		// A pending status alone is not enough: Braintree sets an activated membership back to pending when it goes past due.
+		return $membership instanceof RCP_Membership && 'pending' === $membership->get_status() && ! $membership->get_activated_date();
+
+	}
 }

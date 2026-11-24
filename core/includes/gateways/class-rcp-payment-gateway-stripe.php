@@ -874,6 +874,10 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 	 * - invoice.payment_succeeded
 	 * - invoice.payment_failed
 	 *
+	 * @since 2.1
+	 * @since 4.0.11 Reads invoices and charges in the pinned Stripe API version, flags paid payments it cannot record,
+	 *            and keeps a renewal charge from completing a leftover pending payment.
+	 *
 	 * @access public
 	 * @return void
 	 */
@@ -927,9 +931,8 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 		try {
 
 			\Stripe\Stripe::setMaxNetworkRetries( 3 );
-			$event         = \Stripe\Event::retrieve( $event_id );
-			$payment_event = $event->data->object;
-			$membership    = false;
+			$event      = \Stripe\Event::retrieve( $event_id );
+			$membership = false;
 
 			rcp_log( sprintf( 'Event ID: %s; Event Type: %s', $event->id, $event->type ) );
 
@@ -949,7 +952,8 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 				);
 			}
 
-			if ( empty( $payment_event->customer ) ) {
+			// `customer` exists in every API version, so events we never handle exit before any API call.
+			if ( '' === rcp_stripe_object_get_id( rcp_stripe_object_get( $event->data, 'object' ), 'customer' ) ) {
 				rcp_log( 'Exiting Stripe webhook - no customer attached to event.' );
 
 				wp_send_json_success(
@@ -959,6 +963,10 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 					200
 				);
 			}
+
+			// Read invoices and charges in the pinned API version.
+			rcp_stripe_pin_event_object_version( $event );
+			$payment_event = $event->data->object;
 
 			$invoice = $customer = $subscription = false;
 
@@ -1032,6 +1040,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 			if ( ! $membership instanceof RCP_Membership ) {
 				rcp_log( sprintf( 'Exiting Stripe webhook - membership not found. Customer ID: %s.', $payment_event->customer ), true );
+				rcp_stripe_flag_unrecorded_payment( $event, $payment_event, 'membership_not_found' );
 
 				wp_send_json_error(
 					[
@@ -1069,7 +1078,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 				rcp_log( sprintf( 'Processing Stripe %s webhook.', $event->type ) );
 
-				// Set by the invoice branch below for a confirmed subscription renewal.
+				// Set by either branch below for a confirmed subscription renewal.
 				$is_renewal_invoice = false;
 
 				// setup payment data
@@ -1101,6 +1110,9 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 						$payment_data['amount']         = $invoice->amount_due / rcp_stripe_get_currency_multiplier( rcp_stripe_object_get_currency( $invoice ) );
 						$payment_data['transaction_id'] = $payment_event->id;
 
+						// Either renewal event can arrive first, so both must skip the pending payment.
+						$is_renewal_invoice = rcp_stripe_invoice_is_renewal( $invoice );
+
 						if ( ! empty( $payment_event->discount ) ) {
 							$payment_data['discount_code'] = $payment_event->discount->coupon_id;
 						}
@@ -1128,6 +1140,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 						if ( empty( $invoice_transaction_id ) ) {
 							// Any other ID would not match `charge.succeeded` and would duplicate.
 							rcp_log( sprintf( 'Stripe webhook: could not resolve the charge for invoice %s. Deferring to charge.succeeded.', $invoice_id ), true );
+							rcp_stripe_flag_unrecorded_payment( $event, $invoice, 'charge_unresolved' );
 						} else {
 							$is_renewal_invoice = true;
 
@@ -1254,6 +1267,8 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 						}
 					}
 
+					rcp_stripe_clear_unrecorded_payments( array( rcp_stripe_object_get_id( $invoice, 'id' ), $payment_data['transaction_id'] ) );
+
 					do_action( 'rcp_gateway_payment_processed', $member, $payment_id, $this );
 					do_action( 'rcp_stripe_charge_succeeded', $customer->get_user_id(), $payment_data, $event );
 
@@ -1265,6 +1280,8 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 					);
 
 				} elseif ( ! empty( $payment_data['transaction_id'] ) && $rcp_payments->payment_exists( $payment_data['transaction_id'] ) ) {
+
+					rcp_stripe_clear_unrecorded_payments( array( rcp_stripe_object_get_id( $invoice, 'id' ), $payment_data['transaction_id'] ) );
 
 					do_action( 'rcp_ipn_duplicate_payment', $payment_data['transaction_id'], $member, $this );
 					rcp_log( 'Duplicate payment found. Transaction ID: ' . $payment_data['transaction_id'] );
