@@ -266,7 +266,8 @@ function rcp_transition_membership_status_hook( $old_status, $new_status, $membe
 add_action( 'rcp_transition_membership_status', 'rcp_transition_membership_status_hook', 10, 3 );
 
 /**
- * Removes the membership level assigned role from a customer when their membership expires.
+ * Removes the membership level assigned role from a customer when their membership expires,
+ * unless another active membership still grants it.
  *
  * Note: `administrator` role is never removed.
  *
@@ -274,15 +275,26 @@ add_action( 'rcp_transition_membership_status', 'rcp_transition_membership_statu
  * @param int    $membership_id ID of the membership.
  *
  * @since 3.0
+ * @since 4.0.11 Keeps the role when another active membership grants it.
  * @return void
  */
 function rcp_update_expired_membership_role( $old_status, $membership_id ) {
 
-	$membership       = rcp_get_membership( $membership_id );
+	$membership = rcp_get_membership( $membership_id );
+
+	if ( ! $membership instanceof RCP_Membership ) {
+		return;
+	}
+
 	$membership_level = rcp_get_membership_level( $membership->get_object_id() );
 	$default_role     = get_option( 'default_role', 'subscriber' );
 
-	if ( $membership_level instanceof Membership_Level && $membership_level->get_role() !== $default_role && 'administrator' !== $membership_level->get_role() ) {
+	if (
+		$membership_level instanceof Membership_Level
+		&& $membership_level->get_role() !== $default_role
+		&& 'administrator' !== $membership_level->get_role()
+		&& ! $membership->other_active_membership_grants_role( $membership_level->get_role() )
+	) {
 		$user = get_userdata( $membership->get_user_id() );
 		$user->remove_role( $membership_level->get_role() );
 	}

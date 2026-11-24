@@ -664,3 +664,36 @@ function rcp_print_membership_status( $membership_id, $echo = true ) {
 	return $print_status;
 
 }
+
+/**
+ * Get the ID of the pending payment that a gateway payment for this membership should complete.
+ *
+ * A pending payment of type `new` is the signup payment, so once the membership has been activated
+ * it can only be left over from that signup. The incoming payment is then a renewal, and completing
+ * the old payment instead would activate the membership without extending it.
+ *
+ * @since 4.0.11
+ *
+ * @param RCP_Membership $membership Membership the gateway payment belongs to.
+ *
+ * @return int Pending payment ID, or 0 when there is none to complete.
+ */
+function rcp_get_membership_pending_payment_id( RCP_Membership $membership ): int {
+
+	$pending_payment_id = absint( rcp_get_membership_meta( $membership->get_id(), 'pending_payment_id', true ) );
+
+	if ( ! $pending_payment_id || ! $membership->get_activated_date() ) {
+		return $pending_payment_id;
+	}
+
+	$pending_payment = ( new RCP_Payments() )->get_payment( $pending_payment_id );
+
+	if ( isset( $pending_payment->transaction_type ) && 'new' === $pending_payment->transaction_type ) {
+		rcp_log( sprintf( 'Ignoring pending payment #%d left over from the signup of membership #%d.', $pending_payment_id, $membership->get_id() ) );
+
+		return 0;
+	}
+
+	return $pending_payment_id;
+
+}

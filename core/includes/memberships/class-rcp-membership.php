@@ -1960,6 +1960,45 @@ class RCP_Membership {
 	}
 
 	/**
+	 * Determines whether another active membership of the same customer grants a role.
+	 *
+	 * @since 4.0.11
+	 *
+	 * @param string $role Role slug.
+	 *
+	 * @return bool True if another active membership's level grants the role.
+	 */
+	public function other_active_membership_grants_role( string $role ): bool {
+
+		$customer = $this->get_customer();
+
+		if ( ! $customer instanceof RCP_Customer ) {
+			return false;
+		}
+
+		$memberships = $customer->get_memberships(
+			array(
+				'status' => array( 'active', 'cancelled' ),
+			)
+		);
+
+		foreach ( $memberships as $membership ) {
+			if ( (int) $membership->get_id() === (int) $this->get_id() || ! $membership->is_active() ) {
+				continue;
+			}
+
+			$membership_level = rcp_get_membership_level( absint( $membership->get_object_id() ) );
+
+			if ( $membership_level instanceof Membership_Level && $role === $membership_level->get_role() ) {
+				return true;
+			}
+		}
+
+		return false;
+
+	}
+
+	/**
 	 * Determines whether or not the membership can be renewed.
 	 *
 	 * @access public
@@ -2422,6 +2461,7 @@ class RCP_Membership {
 	 *
 	 * @access public
 	 * @since  3.0
+	 * @since  4.0.11 Keeps the role when another active membership grants it.
 	 * @return void
 	 */
 	public function disable() {
@@ -2446,7 +2486,7 @@ class RCP_Membership {
 		}
 
 		/**
-		 * Remove associated user role.
+		 * Remove associated user role, unless another active membership still grants it.
 		 *
 		 * Note: `administrator` role is never removed.
 		 */
@@ -2454,8 +2494,14 @@ class RCP_Membership {
 		$membership_level = rcp_get_membership_level( $this->get_object_id() );
 		$old_role         = $membership_level instanceof Membership_Level ? $membership_level->get_role() : $old_role;
 		$user_id          = $this->get_user_id();
-		$user             = ! empty( $user_id ) ? new WP_User( $user_id ) : false;
-		if ( $user instanceof WP_User && 'administrator' !== $old_role ) {
+		$keeps_role       = $membership_level instanceof Membership_Level && $this->other_active_membership_grants_role( $membership_level->get_role() );
+
+		/*
+		 * Load the user only after that check: it can expire another membership, which removes its role,
+		 * and an earlier copy of the user would write that role back in remove_role().
+		 */
+		$user = ! empty( $user_id ) ? new WP_User( $user_id ) : false;
+		if ( $user instanceof WP_User && 'administrator' !== $old_role && ! $keeps_role ) {
 			$user->remove_role( $old_role );
 		}
 
