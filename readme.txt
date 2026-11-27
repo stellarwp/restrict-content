@@ -3,7 +3,7 @@ Author URI: https://www.kadencewp.com/
 Author: Kadence
 Contributors: nexcess, reedyseth, highprrrr
 Tags: restrict pages, restrict posts, restrict access, membership, registration form, access control
-Requires at least: 6.0
+Requires at least: 6.6
 Requires PHP: 7.4
 Tested up to: 7.1
 Stable tag: 4.0.7

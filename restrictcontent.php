@@ -6,7 +6,7 @@
  * Version: 4.0.7
  * Author: Kadence
  * Author URI: https://www.kadencewp.com/
- * Requires at least: 6.0
+ * Requires at least: 6.6
  * Requires PHP: 7.4
  * Text Domain: rcp
  * Domain Path: languages
